@@ -1,0 +1,24 @@
+[package]
+name = "unic"
+version = "0.1.0"
+authors = ["The UNIC Project Developers"]
+homepage = "https://github.com/behnam/rust-unic/"
+repository = "https://github.com/behnam/rust-unic/"
+license = "MIT/Apache-2.0"
+keywords = ["text", "unicode"]
+description = "UNIC - Unicode and Internationalization Crates"
+categories = ["parsing", "rendering", "encoding", "development-tools"]
+readme = "README.md"
+
+[workspace]
+
+[dependencies]
+unic-ucd = { path = "components/ucd/", version = "0.1" }
+unic-bidi = { path = "components/bidi/", version = "0.1" }
+unic-idna = { path = "components/idna/", version = "0.1" }
+unic-normal = { path = "components/normal/", version = "0.1" }
+
+[features]
+default = []
+bench_it = []
+with_serde = []

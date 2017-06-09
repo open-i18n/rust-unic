@@ -1,0 +1,14 @@
+[package]
+name = "unic-normal"
+version = "0.1.0"
+authors = ["The UNIC Project Developers"]
+homepage = "https://github.com/behnam/rust-unic/"
+repository = "https://github.com/behnam/rust-unic/"
+license = "MIT/Apache-2.0"
+keywords = ["text", "unicode", "normalization", "decomposition", "recomposition"]
+description = "UNIC - Unicode Normalization Forms"
+categories = ["parsing", "rendering", "encoding", "development-tools"]
+readme = "README.md"
+
+[dependencies]
+unic-ucd-normal = { path = "../ucd/normal/", version = "0.1" }

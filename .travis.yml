@@ -1,0 +1,45 @@
+language: rust
+sudo: false
+os: linux
+dist: trusty
+
+rust:
+  - nightly
+  - beta
+  - stable
+  - 1.15.0
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - rust: nightly
+
+notifications:
+  email:
+    on_success: never
+
+env:
+  - RUST_BACKTRACE=full
+
+script:
+  - cargo build --verbose --all
+  - cargo doc   --verbose --all --no-deps
+
+  - cargo test  --verbose --all
+  - cargo test  --verbose --all --features with_serde
+
+  # Stop here if not running on nightly rust
+  - if [ "$TRAVIS_RUST_VERSION" != "nightly" ] ; then exit ; fi
+
+  - cargo test  --verbose --features 'bench_it'
+  - cargo bench --verbose --features 'bench_it'
+
+# TODO: - rustdoc --test README.md -L target/debug -L target/debug/deps
+
+# TODO: Enable auto update for gh-pages
+#after_success: |
+#  cargo doc && \
+#  echo '<meta http-equiv="refresh" content="0;url=YOURLIBNAME/index.html">' > target/doc/index.html && \
+#  sudo pip install ghp-import && \
+#  ghp-import -n target/doc && \
+#  git push -qf https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages

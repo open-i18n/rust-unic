@@ -1,0 +1,17 @@
+[package]
+name = "unic-idna-punycode"
+version = "0.1.0"
+authors = ["The UNIC Project Developers"]
+homepage = "https://github.com/behnam/rust-unic/"
+repository = "https://github.com/behnam/rust-unic/"
+license = "MIT/Apache-2.0"
+keywords = ["text", "unicode"]
+description = "UNIC - Implementation of Punycode (RFC 3492) algorithm"
+
+[[test]]
+name = "tests"
+harness = false
+
+[dev-dependencies]
+rustc-test = "0.1"
+rustc-serialize = "0.3"

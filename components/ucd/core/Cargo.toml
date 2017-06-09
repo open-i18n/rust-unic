@@ -1,0 +1,13 @@
+[package]
+name = "unic-ucd-core"
+version = "0.1.0"
+authors = ["The UNIC Project Developers"]
+homepage = "https://github.com/behnam/rust-unic/"
+repository = "https://github.com/behnam/rust-unic/"
+license = "MIT/Apache-2.0"
+keywords = ["text", "unicode"]
+description = "UNIC - Unicode Character Database - Version"
+
+[features]
+default = []
+unstable = []   # Used for benchmakrs
