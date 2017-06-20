@@ -7,6 +7,7 @@ repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
 keywords = ["text", "unicode", "rtl", "layout", "bidi"]
 description = "UNIC - Unicode Bidirectional Algorithm"
+readme = "README.md"
 
 [features]
 default = []
