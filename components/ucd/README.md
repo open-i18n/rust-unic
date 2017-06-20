@@ -1,6 +1,7 @@
 # UNIC — Unicode Character Database
 
 [![Crates.io](https://img.shields.io/crates/v/unic-ucd.svg)](https://crates.io/crates/unic-ucd)
+[![Documentation](https://docs.rs/unic-ucd/badge.svg)](https://docs.rs/unic-ucd/)
 
 This UNIC component provides access to character properties as defined in the
 [Unicode® Standard Annex #44 - Unicode Character
