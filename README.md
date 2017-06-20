@@ -1,7 +1,10 @@
 # UNIC: Unicode and Internationalization Crates for Rust
 
 https://github.com/behnam/rust-unic
+
+[![Travis](https://img.shields.io/travis/behnam/rust-unic.svg)](https://travis-ci.org/behnam/rust-unic/)
 [![Crates.io](https://img.shields.io/crates/v/unic.svg)](https://crates.io/crates/unic)
+[![Documentation](https://docs.rs/unic/badge.svg)](https://docs.rs/unic/)
 
 **UNIC** is a project to develop components for the Rust programming language
 to provide high-quality and easy-to-use crates for Unicode

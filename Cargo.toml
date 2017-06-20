@@ -22,3 +22,6 @@ unic-normal = { path = "components/normal/", version = "0.1.0" }
 default = []
 bench_it = []
 with_serde = []
+
+[badges]
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }
