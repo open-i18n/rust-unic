@@ -38,7 +38,7 @@
 #[macro_use]
 extern crate matches;
 
-extern crate unic_bidi;
+extern crate unic_ucd_bidi;
 extern crate unic_normal;
 extern crate unic_ucd_normal;
 extern crate unic_idna_punycode;
@@ -48,7 +48,7 @@ mod tables;
 
 use std::ascii::AsciiExt;
 
-use unic_bidi::{BidiClass, bidi_class};
+use unic_ucd_bidi::{BidiClass, bidi_class};
 use unic_normal::StrNormalForm;
 use unic_ucd_normal::is_combining_mark;
 
