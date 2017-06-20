@@ -1,4 +1,7 @@
-Copyright 2015, The UNIC Project Developers
+* Copyright 2011-2015 The Rust Project developers.
+* Copyright 2013-2016 The rust-url developers.
+* Copyright 2015-2017 The Servo Project developers.
+* Copyright 2017 The UNIC Project developers.
 
 See [AUTHORS](AUTHORS) for the list of developers.
 
