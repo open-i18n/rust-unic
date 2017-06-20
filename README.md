@@ -2,7 +2,7 @@
 
 [![UNIC-Logo](.cargo/logo.png)](https://github.com/behnam/rust-unic/)
 
-[![Unicode-9.0.0](https://img.shields.io/badge/unicode-9.0.0-red.svg)](http://www.unicode.org/versions/Unicode9.0.0/)
+[![Unicode-10.0.0](https://img.shields.io/badge/unicode-10.0.0-red.svg)](http://www.unicode.org/versions/Unicode10.0.0/)
 [![Release](https://img.shields.io/github/release/behnam/rust-unic.svg)](https://github.com/behnam/rust-unic/)
 [![Travis](https://img.shields.io/travis/behnam/rust-unic.svg)](https://travis-ci.org/behnam/rust-unic/)
 [![Crates.io](https://img.shields.io/crates/v/unic.svg)](https://crates.io/crates/unic/)
@@ -106,3 +106,26 @@ Some of the reasons to have a combined repository these components are:
     structured formats for the destination programming language. In a combined
     repository, it's easier to maining these bootstraping tools, expand
     coverage, and use better data structures for more efficiency.
+
+## Versioning
+
+Being a Rust repository, we follow *Semantic Versioning* practices, meaning
+that API remains stable for `0.0.x` and `Y.x` ($$where Y > 0$$). So, any
+API-breaking change gets a *big* version bump.
+
+Besides API-breaking changes, big version bumps will also happen for every
+major or minor Unicode version update. (As of mid-2017, Unicode is expected to
+have a major update every year, with no minor updates.) See [Unicode Character
+Encoding Stability Policies](http://unicode.org/policies/stability_policy.html)
+for details on Unicode versioning and other stability policies.
+
+For small version bumps, all parents of components getting an update will also
+get a version bump. This ensures that depending on any super-crate (`unic`)
+version requires all the components to be up-to-date.
+
+When updating package versions, all components being updated get the same
+version of the super-crate. Therefore, if a component A was at version `0.2.4`,
+and now `unic` package is bumping to version `0.2.7`, component A will also
+become `0.2.7`. This method works very well with Semantic Versioning and allows
+easier understand of relations between different versions of components, to the
+super-crate and among themselves.

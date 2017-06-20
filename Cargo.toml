@@ -1,6 +1,6 @@
 [package]
 name = "unic"
-version = "0.1.2"
+version = "0.2.0"
 authors = ["The UNIC Project Developers"]
 homepage = "https://github.com/behnam/rust-unic/"
 repository = "https://github.com/behnam/rust-unic/"
@@ -16,10 +16,10 @@ travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 [workspace]
 
 [dependencies]
-unic-ucd = { path = "components/ucd/", version = "0.1.2" }
-unic-bidi = { path = "components/bidi/", version = "0.1.0" }
-unic-idna = { path = "components/idna/", version = "0.1.0" }
-unic-normal = { path = "components/normal/", version = "0.1.2" }
+unic-ucd = { path = "components/ucd/", version = "0.2.0" }
+unic-bidi = { path = "components/bidi/", version = "0.2.0" }
+unic-idna = { path = "components/idna/", version = "0.2.0" }
+unic-normal = { path = "components/normal/", version = "0.2.0" }
 
 [features]
 default = []
