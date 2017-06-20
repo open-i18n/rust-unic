@@ -1,6 +1,6 @@
 [package]
 name = "unic-idna"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["The UNIC Project Developers"]
 homepage = "https://github.com/behnam/rust-unic/"
 repository = "https://github.com/behnam/rust-unic/"

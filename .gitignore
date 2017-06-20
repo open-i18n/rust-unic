@@ -1,5 +1,5 @@
 *.pyc
 *.rs.bk
 *.rs.rustfmt
-/target/
+target/
 Cargo.lock

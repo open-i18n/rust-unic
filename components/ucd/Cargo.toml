@@ -1,6 +1,6 @@
 [package]
 name = "unic-ucd"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["The UNIC Project Developers"]
 homepage = "https://github.com/behnam/rust-unic/"
 repository = "https://github.com/behnam/rust-unic/"
@@ -8,12 +8,8 @@ license = "MIT/Apache-2.0"
 keywords = ["text", "unicode"]
 description = "UNIC - Unicode Character Database"
 
-[features]
-default = []
-bench_it = []
-
 [dependencies]
-unic-ucd-core = { path = "core/", version = "0.1" }
-unic-ucd-bidi = { path = "bidi/", version = "0.1" }
-unic-ucd-normal = { path = "normal/", version = "0.1" }
-unic-ucd-utils = { path = "utils/", version = "0.1" }
+unic-ucd-core = { path = "core/", version = "0.1.1" }
+unic-ucd-bidi = { path = "bidi/", version = "0.1.1" }
+unic-ucd-normal = { path = "normal/", version = "0.1.1" }
+unic-ucd-utils = { path = "utils/", version = "0.1.1" }
