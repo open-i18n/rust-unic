@@ -49,7 +49,8 @@ fn bsearch_lookup_table<T>(
 const CANONICAL_COMPOSITION_LOOKUP: &'static [(char, Slice)] = include!("canonical_composition_lookup.rsv");
 const CANONICAL_COMPOSITION_VALUES: &'static [(char, char)] = include!("canonical_composition_values.rsv");
 
-pub fn composition(c: char) -> Option<&'static ([(char, char)])> {
+/// Canonical Composition of the character.
+pub fn canonical_composition(c: char) -> Option<&'static ([(char, char)])> {
     bsearch_lookup_table(c, CANONICAL_COMPOSITION_LOOKUP, CANONICAL_COMPOSITION_VALUES)
 }
 
@@ -57,6 +58,7 @@ pub fn composition(c: char) -> Option<&'static ([(char, char)])> {
 const CANONICAL_DECOMPOSITION_LOOKUP: &'static [(char, Slice)] = include!("canonical_decomposition_lookup.rsv");
 const CANONICAL_DECOMPOSITION_VALUES: &'static [char] = include!("canonical_decomposition_values.rsv");
 
+/// Canonical Decomposition of the character.
 pub fn canonical_decomposition(c: char) -> Option<&'static [char]> {
     bsearch_lookup_table(c, CANONICAL_DECOMPOSITION_LOOKUP, CANONICAL_DECOMPOSITION_VALUES)
 }
@@ -65,6 +67,7 @@ pub fn canonical_decomposition(c: char) -> Option<&'static [char]> {
 const COMPATIBILITY_DECOMPOSITION_LOOKUP: &'static [(char, Slice)] = include!("compatibility_decomposition_lookup.rsv");
 const COMPATIBILITY_DECOMPOSITION_VALUES: &'static [char] = include!("compatibility_decomposition_values.rsv");
 
+/// Compatibility Decomposition of the character.
 pub fn compatibility_decomposition(c: char) -> Option<&'static [char]> {
     bsearch_lookup_table(c, COMPATIBILITY_DECOMPOSITION_LOOKUP, COMPATIBILITY_DECOMPOSITION_VALUES)
 }

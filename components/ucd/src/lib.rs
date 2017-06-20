@@ -9,12 +9,14 @@
 // except according to those terms.
 
 
-#![forbid(unsafe_code)]
+#![forbid(unsafe_code, missing_docs)]
 
 //! # UNIC — Unicode Character Database
 //!
-//!  This UNIC component provides access to character properties as defined in the [Unicode®
-//!  Standard Annex #44 - Unicode Character Database](http://unicode.org/reports/tr44/).
+//! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
+//!
+//! This UNIC component provides access to character properties as defined in the [Unicode
+//! Standard Annex #44 - Unicode Character Database](http://unicode.org/reports/tr44/).
 
 
 pub extern crate unic_ucd_core as core;

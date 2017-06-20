@@ -12,10 +12,19 @@
 use super::{bidi_class, BidiClass, is_explicit, is_rtl};
 
 
+/// Methods for bidi properties of character types.
 pub trait BidiChar {
+
+    /// Get `BidiClass` of the character.
     fn bidi_class(self) -> BidiClass;
+
+    /// Whether the character is an *explicit* bidi formatting character.
     fn is_explicit(self) -> bool;
+
+    /// Whether the character has *left-to-right* (LTR) bidi directionality.
     fn is_ltr(self) -> bool;
+
+    /// Whether the character has *right-to-left* (RTL) bidi directionality.
     fn is_rtl(self) -> bool;
 }
 
@@ -42,9 +51,16 @@ impl BidiChar for char {
 }
 
 
+/// Methods for bidi properties of string types.
 pub trait BidiStr {
+
+    /// Whether the string has any *explicit* bidi formatting character.
     fn has_explicit(&self) -> bool;
+
+    /// Whether the string has any character with *left-to-right* (LTR) bidi directionality.
     fn has_ltr(&self) -> bool;
+
+    /// Whether the string has any character with *right-to-left* (RTL) bidi directionality.
     fn has_rtl(&self) -> bool;
 }
 

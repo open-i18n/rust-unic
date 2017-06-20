@@ -9,6 +9,14 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+
+#![deny(unsafe_code)]
+#![forbid(missing_docs)]
+
+//! # UNIC — IDNA — Punycode (RFC 3492)
+//!
+//! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
+//!
 //! Implementation of Punycode ([RFC 3492](http://tools.ietf.org/html/rfc3492)) algorithm.
 //!
 //! Since Punycode fundamentally works on Unicode Code-Points,
@@ -150,6 +158,7 @@ pub fn encode_str(input: &str) -> Option<String> {
 ///
 /// Return None on overflow, which can only happen on inputs that would take more than
 /// 63 encoded bytes, the DNS limit on domain name labels.
+#[allow(unsafe_code)]
 pub fn encode(input: &[char]) -> Option<String> {
     // Handle "basic" (ASCII) code points. They are encoded as-is.
     let output_bytes = input

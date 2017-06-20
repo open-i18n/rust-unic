@@ -10,12 +10,13 @@
 // except according to those terms.
 
 
-#![forbid(unsafe_code)]
-
+#![forbid(unsafe_code, missing_docs)]
 
 //! # UNIC — Unicode Bidirectional Algorithm
 //!
-//! This UNIC component implements algorithms from [Unicode® Standard Annex #9 - Unicode
+//! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
+//!
+//! This UNIC component implements algorithms from [Unicode Standard Annex #9 - Unicode
 //! Bidirectional Algorithm](http://unicode.org/reports/tr9/), a.k.a.  *UBA*, used for display of
 //! mixed right-to-left and left-to-right text.  It is written in safe Rust, compatible with the
 //! current stable release.

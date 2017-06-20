@@ -9,8 +9,13 @@
 // except according to those terms.
 
 
-//! Functions for computing canonical and compatible decompositions for Unicode characters.
+#![deny(unsafe_code)]
+#![forbid(missing_docs)]
 
+//! # UNIC — UCD — Normalization
+//!
+//! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
+//!
 //! Unicode character properties for composition and decomposition.
 //!
 //! ```rust
@@ -28,8 +33,7 @@ mod tables;
 mod hangul;
 
 pub use tables::UNICODE_VERSION;
-pub use tables::{canonical_decomposition, compatibility_decomposition, composition,
-                 canonical_combining_class};
+pub use tables::{canonical_decomposition, compatibility_decomposition, canonical_composition, canonical_combining_class};
 pub use tables::is_combining_mark;
 
 use std::cmp::Ordering::{Equal, Less, Greater};
@@ -107,7 +111,7 @@ fn d<F>(c: char, i: &mut F, k: bool)
 /// for more information.
 pub fn compose(a: char, b: char) -> Option<char> {
     hangul::compose(a, b).or_else(
-        || match composition(a) {
+        || match canonical_composition(a) {
             None => None,
             Some(candidates) => {
                 match candidates.binary_search_by(

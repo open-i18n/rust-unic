@@ -33,7 +33,10 @@ use unic_ucd_bidi::BidiClass;
 #[cfg_attr(feature = "with_serde", derive(Serialize, Deserialize))]
 pub struct Level(u8);
 
+/// LTR level with smallest number value (0).
 pub const LTR_LEVEL: Level = Level(0);
+
+/// RTL level with smallest number value (0).
 pub const RTL_LEVEL: Level = Level(1);
 
 const MAX_DEPTH: u8 = 125;
@@ -191,6 +194,7 @@ impl Level {
         }
     }
 
+    /// Create a `Vec<Level>` from a slice of `u8` numbers
     pub fn vec(v: &[u8]) -> Vec<Level> {
         v.iter().map(|&x| x.into()).collect()
     }

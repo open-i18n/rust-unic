@@ -1,6 +1,6 @@
 [package]
 name = "unic-ucd"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["The UNIC Project Developers"]
 homepage = "https://github.com/behnam/rust-unic/"
 repository = "https://github.com/behnam/rust-unic/"
@@ -12,5 +12,5 @@ readme = "README.md"
 [dependencies]
 unic-ucd-core = { path = "core/", version = "0.1.1" }
 unic-ucd-bidi = { path = "bidi/", version = "0.1.1" }
-unic-ucd-normal = { path = "normal/", version = "0.1.1" }
+unic-ucd-normal = { path = "normal/", version = "0.1.2" }
 unic-ucd-utils = { path = "utils/", version = "0.1.1" }

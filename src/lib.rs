@@ -11,7 +11,7 @@
 
 #![forbid(unsafe_code)]
 
-//! # UNIC: Unicode and Internationalization Crates for RUST
+//! # UNIC: Unicode and Internationalization Crates for Rust
 //!
 //! The `unic` super-crate (this) is a collection of all UNIC components, providing
 //! an easy way of access to all functionalities, when all or many are needed,
@@ -20,13 +20,13 @@
 //!
 //! ## Components
 //!
-//! -   [`unic::ucd`](../components/ucd): Unicode Character Database.
+//! -   [`ucd`](/unic_ucd): Unicode Character Database.
 //!
-//! -   [`unic::bidi`](../components/bidi): Unicode Bidirectional Algorithm (USA\#9).
+//! -   [`bidi`](/unic_bidi): Unicode Bidirectional Algorithm (USA\#9).
 //!
-//! -   [`unic::normal`](../components/normal): Unicode Normalization Forms (USA\#15).
+//! -   [`normal`](/unic_normal): Unicode Normalization Forms (USA\#15).
 //!
-//! -   [`unic::idna`](../components/idna): Unicode IDNA Compatibility Processing (UTS\#46).
+//! -   [`idna`](/unic_idna): Unicode IDNA Compatibility Processing (UTS\#46).
 
 pub extern crate unic_bidi as bidi;
 pub extern crate unic_idna as idna;

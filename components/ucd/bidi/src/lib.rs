@@ -11,7 +11,12 @@
 
 
 #![forbid(unsafe_code)]
+#![deny(missing_docs)]
 
+//! # UNIC — UCD — Bidi
+//!
+//! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
+//!
 //! Accessor for `Bidi_Class` property from Unicode Character Database (UCD)
 
 

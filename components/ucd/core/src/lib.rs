@@ -9,8 +9,12 @@
 // except according to those terms.
 
 
-#![forbid(unsafe_code)]
+#![forbid(unsafe_code, missing_docs)]
 
+//! # UNIC — UCD — Core
+//!
+//! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
+//!
 //! Core create indicating the version of Unicode Character Database.
 
 

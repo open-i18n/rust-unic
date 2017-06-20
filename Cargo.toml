@@ -1,6 +1,6 @@
 [package]
 name = "unic"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["The UNIC Project Developers"]
 homepage = "https://github.com/behnam/rust-unic/"
 repository = "https://github.com/behnam/rust-unic/"
@@ -13,10 +13,10 @@ readme = "README.md"
 [workspace]
 
 [dependencies]
-unic-ucd = { path = "components/ucd/", version = "0.1.1" }
+unic-ucd = { path = "components/ucd/", version = "0.1.2" }
 unic-bidi = { path = "components/bidi/", version = "0.1.0" }
-unic-idna = { path = "components/idna/", version = "0.1.1" }
-unic-normal = { path = "components/normal/", version = "0.1.0" }
+unic-idna = { path = "components/idna/", version = "0.1.0" }
+unic-normal = { path = "components/normal/", version = "0.1.2" }
 
 [features]
 default = []

@@ -9,9 +9,15 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+
+#![forbid(unsafe_code)]
+#![deny(missing_docs)]
+
 //! # UNIC — Unicode IDNA Compatibility Processing
 //!
-//! This UNIC component implements algorithms from [Unicode® Technical Standard #46 - Unicode IDNA
+//! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
+//!
+//! This UNIC component implements algorithms from [Unicode Technical Standard #46 - Unicode IDNA
 //! Compatibility Processing](http://unicode.org/reports/tr46/).
 //!
 //! Quoting from [UTS #46’s introduction](http://www.unicode.org/reports/tr46/#Introduction):
@@ -67,7 +73,9 @@ pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
 pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
 
 
+/// Prefix used in Punycode encoding.
 pub static PUNYCODE_PREFIX: &'static str = "xn--";
+
 
 fn map_char(codepoint: char, flags: Flags, output: &mut String, errors: &mut Vec<Error>) {
     match *find_char(codepoint) {
@@ -360,13 +368,16 @@ fn processing(domain: &str, flags: Flags, errors: &mut Vec<Error>) -> String {
     validated
 }
 
+/// Optional settings for processing and conversion algorithms.
 #[derive(Copy, Clone)]
+#[allow(missing_docs)]
 pub struct Flags {
     pub use_std3_ascii_rules: bool,
     pub transitional_processing: bool,
     pub verify_dns_length: bool,
 }
 
+/// Error types recorded during UTS #46 processing.
 #[derive(PartialEq, Eq, Clone, Copy, Debug)]
 enum Error {
     PunycodeError,

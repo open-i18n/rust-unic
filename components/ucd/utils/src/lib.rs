@@ -9,11 +9,16 @@
 // except according to those terms.
 
 
-#![forbid(unsafe_code)]
+#![forbid(unsafe_code, missing_docs)]
 
+//! # UNIC — UCD — Utils
+//!
+//! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
+//!
 //! Utilities for working with Unicode Code Points
 //!
-//! Definitions:
+//! ## Definitions
+//!
 //! * [**Unicode Code Point**](http://unicode.org/glossary/#code_point)
 //! * [**Unicode Scalar Value**](http://unicode.org/glossary/#unicode_scalar_value)
 
