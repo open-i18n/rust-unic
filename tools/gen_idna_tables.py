@@ -49,7 +49,7 @@ def test_data_path(name):
 @memoize
 def get_unicode_version():
     with open(data_path("ReadMe.txt")) as readme_file:
-        pattern = "for version (\d+)\.(\d+)\.(\d+) of"
+        pattern = "for Version (\d+)\.(\d+)\.(\d+) of"
         return re.search(pattern, readme_file.read()).groups()
 
 
