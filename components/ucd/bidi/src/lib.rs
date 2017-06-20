@@ -103,7 +103,8 @@ mod tests {
                 // Default R + Arabic Extras
                 (0x07C0, R),
                 (0x085F, R),
-                (0x0860, R),
+                (0x0860, AL),
+                (0x0870, R),
                 (0x089F, R),
                 (0x08A0, AL),
                 (0x089F, R),
