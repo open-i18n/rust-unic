@@ -10,6 +10,9 @@ description = "UNIC - Unicode and Internationalization Crates"
 categories = ["parsing", "rendering", "encoding", "development-tools"]
 readme = "README.md"
 
+[badges]
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }
+
 [workspace]
 
 [dependencies]
@@ -22,6 +25,3 @@ unic-normal = { path = "components/normal/", version = "0.1.2" }
 default = []
 bench_it = []
 with_serde = []
-
-[badges]
-travis-ci = { repository = "behnam/rust-unic", branch = "master" }

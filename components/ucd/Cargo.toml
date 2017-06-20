@@ -9,6 +9,9 @@ keywords = ["text", "unicode"]
 description = "UNIC - Unicode Character Database"
 readme = "README.md"
 
+[badges]
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }
+
 [dependencies]
 unic-ucd-core = { path = "core/", version = "0.1.1" }
 unic-ucd-bidi = { path = "bidi/", version = "0.1.1" }

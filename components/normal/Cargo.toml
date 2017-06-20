@@ -10,5 +10,8 @@ description = "UNIC - Unicode Normalization Forms"
 categories = ["parsing", "rendering", "encoding", "development-tools"]
 readme = "README.md"
 
+[badges]
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }
+
 [dependencies]
 unic-ucd-normal = { path = "../ucd/normal/", version = "0.1.2" }

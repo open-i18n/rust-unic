@@ -8,5 +8,8 @@ license = "MIT/Apache-2.0"
 keywords = ["text", "unicode"]
 description = "UNIC - Unicode Character Database - Bidi Properties"
 
+[badges]
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }
+
 [dependencies]
 unic-ucd-core = { path = "../core/", version = "0.1.1" }

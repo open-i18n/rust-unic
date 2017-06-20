@@ -9,6 +9,9 @@ keywords = ["text", "unicode"]
 description = "UNIC - Unicode IDNA Compatibility Processing"
 readme = "README.md"
 
+[badges]
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }
+
 [[test]]
 name = "tests"
 harness = false

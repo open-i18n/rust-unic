@@ -7,3 +7,6 @@ repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
 keywords = ["text", "unicode"]
 description = "UNIC - Unicode Character Database - Version"
+
+[badges]
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }

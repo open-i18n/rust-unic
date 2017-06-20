@@ -9,6 +9,9 @@ keywords = ["text", "unicode"]
 description = "UNIC - Implementation of Punycode (RFC 3492) algorithm"
 readme = "README.md"
 
+[badges]
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }
+
 [[test]]
 name = "tests"
 harness = false
