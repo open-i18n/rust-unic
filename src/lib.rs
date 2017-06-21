@@ -20,13 +20,13 @@
 //!
 //! ## Components
 //!
-//! -   [`ucd`](/unic_ucd): Unicode Character Database.
+//! -   [`ucd`](/unic-ucd): Unicode Character Database.
 //!
-//! -   [`bidi`](/unic_bidi): Unicode Bidirectional Algorithm (USA\#9).
+//! -   [`bidi`](/unic-bidi): Unicode Bidirectional Algorithm (USA\#9).
 //!
-//! -   [`normal`](/unic_normal): Unicode Normalization Forms (USA\#15).
+//! -   [`normal`](/unic-normal): Unicode Normalization Forms (USA\#15).
 //!
-//! -   [`idna`](/unic_idna): Unicode IDNA Compatibility Processing (UTS\#46).
+//! -   [`idna`](/unic-idna): Unicode IDNA Compatibility Processing (UTS\#46).
 
 pub extern crate unic_bidi as bidi;
 pub extern crate unic_idna as idna;
