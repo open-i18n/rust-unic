@@ -14,10 +14,7 @@
 
 extern crate unic;
 
-
-use unic::ucd::bidi::BidiClass;
-use unic::ucd::bidi::{BidiChar, BidiStr};
-
+use unic::ucd::bidi::{BidiClass, BidiChar, BidiStr};
 
 fn main() {
     let text = concat![
