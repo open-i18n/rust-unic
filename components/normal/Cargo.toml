@@ -1,6 +1,6 @@
 [package]
 name = "unic-normal"
-version = "0.1.2"
+version = "0.2.0"
 authors = ["The UNIC Project Developers"]
 homepage = "https://github.com/behnam/rust-unic/"
 repository = "https://github.com/behnam/rust-unic/"
@@ -14,4 +14,4 @@ readme = "README.md"
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
 [dependencies]
-unic-ucd-normal = { path = "../ucd/normal/", version = "0.1.2" }
+unic-ucd-normal = { path = "../ucd/normal/", version = "0.2.0" }
