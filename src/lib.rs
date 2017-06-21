@@ -9,7 +9,7 @@
 // except according to those terms.
 
 
-#![forbid(unsafe_code)]
+#![forbid(unsafe_code, missing_docs)]
 
 //! # UNIC: Unicode and Internationalization Crates for Rust
 //!
@@ -17,16 +17,6 @@
 //! an easy way of access to all functionalities, when all or many are needed,
 //! instead of importing components one-by-one, and ensuring all components
 //! imported are compatible in algorithms and consistent data-wise.
-//!
-//! ## Components
-//!
-//! -   [`ucd`](/unic-ucd): Unicode Character Database.
-//!
-//! -   [`bidi`](/unic-bidi): Unicode Bidirectional Algorithm (USA\#9).
-//!
-//! -   [`normal`](/unic-normal): Unicode Normalization Forms (USA\#15).
-//!
-//! -   [`idna`](/unic-idna): Unicode IDNA Compatibility Processing (UTS\#46).
 //!
 //!
 //! ## A Basic Example
@@ -110,10 +100,19 @@
 //! }
 //! ```
 
-pub extern crate unic_bidi as bidi;
-pub extern crate unic_idna as idna;
-pub extern crate unic_normal as normal;
+
+/// Unicode Character Database.
 pub extern crate unic_ucd as ucd;
+
+/// Unicode Bidirectional Algorithm (USA\#9).
+pub extern crate unic_bidi as bidi;
+
+/// Unicode Normalization Forms (USA\#15).
+pub extern crate unic_normal as normal;
+
+/// Unicode IDNA Compatibility Processing (UTS\#46).
+pub extern crate unic_idna as idna;
+
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data
 pub use ucd::UNICODE_VERSION;
