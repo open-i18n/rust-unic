@@ -133,3 +133,45 @@ and now `unic` package is bumping to version `0.2.7`, component A will also
 become `0.2.7`. This method works very well with Semantic Versioning and allows
 easier understand of relations between different versions of components, to the
 super-crate and among themselves.
+
+## How to Use UNIC
+
+In `Cargo.toml`:
+
+```toml
+[dependencies]
+unic = "0.2.0"  # This has Unicode 10.0.0 data and algorithms
+```
+
+And `example.rs`:
+
+```rust
+extern crate unic;
+
+use unic::ucd::bidi::{BidiClass, BidiChar, BidiStr};
+
+fn main() {
+    let text = concat![
+        "א",
+        "ב",
+        "ג",
+        "a",
+        "b",
+        "c",
+    ];
+
+    assert!(!text.has_explicit());
+    assert!(text.has_rtl());
+    assert!(text.has_ltr());
+
+    assert_eq!(text.chars().nth(0).unwrap().bidi_class(), BidiClass::R);
+    assert!(!text.chars().nth(0).unwrap().is_explicit());
+    assert!(!text.chars().nth(0).unwrap().is_ltr());
+    assert!(text.chars().nth(0).unwrap().is_rtl());
+
+    assert_eq!(text.chars().nth(3).unwrap().bidi_class(), BidiClass::L);
+    assert!(!text.chars().nth(3).unwrap().is_explicit());
+    assert!(text.chars().nth(3).unwrap().is_ltr());
+    assert!(!text.chars().nth(3).unwrap().is_rtl());
+}
+```
