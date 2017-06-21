@@ -8,7 +8,7 @@
 [![Crates.io](https://img.shields.io/crates/v/unic.svg)](https://crates.io/crates/unic/)
 [![Documentation](https://docs.rs/unic/badge.svg)](https://docs.rs/unic/)
 
-https://github.com/behnam/rust-unic
+<https://github.com/behnam/rust-unic>
 
 **UNIC** is a project to develop components for the Rust programming language
 to provide high-quality and easy-to-use crates for Unicode
@@ -72,13 +72,17 @@ this crate.
 ### Major Components
 
 -   [`unic::ucd`](components/ucd): Unicode Character Database.
+    [![Crates.io](https://img.shields.io/crates/v/unic-ucd.svg)](https://crates.io/crates/unic-ucd/)
 
 -   [`unic::bidi`](components/bidi): Unicode Bidirectional Algorithm (USA\#9).
+    [![Crates.io](https://img.shields.io/crates/v/unic-bidi.svg)](https://crates.io/crates/unic-bidi/)
 
 -   [`unic::normal`](components/normal): Unicode Normalization Forms (USA\#15).
+    [![Crates.io](https://img.shields.io/crates/v/unic-normal.svg)](https://crates.io/crates/unic-normal/)
 
 -   [`unic::idna`](components/idna): Unicode IDNA Compatibility Processing
     (UTS\#46).
+    [![Crates.io](https://img.shields.io/crates/v/unic-idna.svg)](https://crates.io/crates/unic-idna/)
 
 ## Code Organization: Combined Repository
 
