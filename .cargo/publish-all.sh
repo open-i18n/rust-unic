@@ -24,6 +24,7 @@ set -e
 COMPONENTS="
     ucd/core/
     ucd/utils/
+    ucd/age/
     ucd/bidi/
     ucd/normal/
     ucd/

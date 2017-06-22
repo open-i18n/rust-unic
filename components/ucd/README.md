@@ -19,7 +19,7 @@ Here's a list of components (available or planned) for this super-crate:
 - [X] `utils`: Providing basic utilities for working with Unicode characters.
 
 
-- [ ] `age`: Character Age.
+- [X] `age`: Character Age.
 - [ ] `name`: Character Name.
 - [ ] `category`: Character General Category.
 
