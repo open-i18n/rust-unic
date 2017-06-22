@@ -19,6 +19,7 @@
 
 
 /// Type of `UNICODE_VERSION` value:
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub struct UnicodeVersion(
     pub u32, // Major version
     pub u32, // Minor version

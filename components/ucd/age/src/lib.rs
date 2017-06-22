@@ -33,6 +33,7 @@ pub use traits::CharAge;
 #[cfg(test)]
 mod tests {
     use super::Age;
+    use unic_ucd_core::UnicodeVersion;
 
     #[test]
     fn test_age() {
@@ -69,6 +70,22 @@ mod tests {
         assert_eq!(Age::of('\u{e01ee}'), V4_0);
         assert_eq!(Age::of('\u{e01ef}'), V4_0);
 
+        assert_eq!(Age::of('\u{10000}'), V4_0);
+
+        assert_eq!(Age::of('\u{20000}'), V3_1);
+
+        assert_eq!(Age::of('\u{30000}'), Unassigned);
+        assert_eq!(Age::of('\u{40000}'), Unassigned);
+        assert_eq!(Age::of('\u{50000}'), Unassigned);
+        assert_eq!(Age::of('\u{60000}'), Unassigned);
+        assert_eq!(Age::of('\u{70000}'), Unassigned);
+        assert_eq!(Age::of('\u{80000}'), Unassigned);
+        assert_eq!(Age::of('\u{90000}'), Unassigned);
+        assert_eq!(Age::of('\u{a0000}'), Unassigned);
+        assert_eq!(Age::of('\u{b0000}'), Unassigned);
+        assert_eq!(Age::of('\u{c0000}'), Unassigned);
+        assert_eq!(Age::of('\u{d0000}'), Unassigned);
+        assert_eq!(Age::of('\u{e0000}'), Unassigned);
         assert_eq!(Age::of('\u{efffd}'), Unassigned);
 
         assert_eq!(Age::of('\u{efffe}'), V2_0);
@@ -83,5 +100,58 @@ mod tests {
         assert_eq!(Age::of('\u{100001}'), V2_0);
         assert_eq!(Age::of('\u{10fffe}'), V2_0);
         assert_eq!(Age::of('\u{10ffff}'), V2_0);
+    }
+
+    #[test]
+    fn test_age_to_unicode_version() {
+        assert_eq!(
+            Age::V1_1.to_unicode_version(),
+            Some(UnicodeVersion(1, 1, 0))
+        );
+        assert_eq!(Age::Unassigned.to_unicode_version(), None);
+    }
+
+    #[test]
+    fn test_age_from_unicode_version() {
+        assert_eq!(
+            Age::from_unicode_version(UnicodeVersion(1, 1, 0)),
+            Some(Age::V1_1)
+        );
+        assert_eq!(Age::from_unicode_version(UnicodeVersion(1, 0, 0)), None);
+    }
+
+    #[test]
+    fn test_age_cmp() {
+        use Age::*;
+
+        assert!(V1_1 == V1_1);
+        assert!(V1_1 < V2_0);
+        assert!(V1_1 < V3_0);
+        assert!(V1_1 < V10_0);
+        assert!(V1_1 < Unassigned);
+
+        assert!(V2_0 > V1_1);
+        assert!(V2_0 == V2_0);
+        assert!(V2_0 < V3_0);
+        assert!(V2_0 < V10_0);
+        assert!(V2_0 < Unassigned);
+
+        assert!(V3_0 > V1_1);
+        assert!(V3_0 > V2_0);
+        assert!(V3_0 == V3_0);
+        assert!(V3_0 < V10_0);
+        assert!(V3_0 < Unassigned);
+
+        assert!(V10_0 > V1_1);
+        assert!(V10_0 > V2_0);
+        assert!(V10_0 > V3_0);
+        assert!(V10_0 == V10_0);
+        assert!(V10_0 < Unassigned);
+
+        assert!(Unassigned > V1_1);
+        assert!(Unassigned > V2_0);
+        assert!(Unassigned > V3_0);
+        assert!(Unassigned > V10_0);
+        assert!(Unassigned == Unassigned);
     }
 }
