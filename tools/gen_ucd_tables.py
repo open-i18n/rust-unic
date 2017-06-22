@@ -30,6 +30,7 @@ from unicode_utils import is_surrogate
 
 OUTPUT_DIRS = {
     'UCD_CORE': path("components/ucd/core/src"),
+    'UCD_AGE': path("components/ucd/age/src/tables"),
     'UCD_BIDI': path("components/ucd/bidi/src/tables"),
     'UCD_NORMAL': path("components/ucd/normal/src/tables"),
     'NORMAL_TESTS': path("components/normal/tests"),
@@ -100,6 +101,69 @@ EXPANDED_CATEGORIES = {
 }
 
 
+# == Age ==
+
+@memoize
+def get_age_info():
+    age_groups = {}
+
+    for line in fileinput.input(data_path("DerivedAge.txt")):
+        # remove comments
+        line, _, _ = line.partition('#')
+
+        # skip empty lines
+        if len(line.strip()) == 0:
+            continue
+
+        fields = line.split(';')
+
+        # skip surrogate codepoints; they don't occur in Rust strings
+        if fields[0].strip() == 'D800..DFFF':
+            continue
+
+        first, _, last = fields[0].strip().partition('..')
+        if not last:
+            last = first
+        first, last = int(first, 16), int(last, 16)
+
+        age = 'V%s' % fields[1].strip().replace(".", "_")
+
+        if age not in age_groups:
+            age_groups[age] = []
+        age_groups[age].append((first, last))
+
+    # optimize if possible
+    for age in age_groups:
+        age_groups[age] = ranges_from_codepoints(codepoints_from_ranges(age_groups[age]))
+
+    return (
+        sorted(age_groups.keys()),
+        range_value_triplets_from_ranges(age_groups),
+    )
+
+def emit_age_tables(dir):
+    (age_type, age_values) = get_age_info()
+
+    with open(join(dir, 'age_type.rsv'), "w") as type_file:
+        rustout.emit_class(
+            __file__,
+            type_file,
+            age_type,
+        )
+
+    with open(join(dir, 'age_values.rsv'), "w") as values_file:
+        rustout.emit_table(
+            __file__,
+            values_file,
+            age_values,
+            print_fun=lambda x: "(%s, %s, %s)" % (
+                rustout.char_literal(x[0]),
+                rustout.char_literal(x[1]),
+                x[2],
+            ),
+        )
+
+
 # == Bidi ==
 
 @memoize
@@ -109,9 +173,8 @@ def get_bidi_class_info():
     # Mapping of codepoint to Bidi_Class property:
     bidi_class_groups = {}
     for cp in unicode_data:
-        [code_org, name, gen_cat, combining_class, bidi_class,
-         decomp, deci, digit, num, mirror,
-         old, iso, upcase, lowcase, titlecase] = unicode_data[cp]
+        [_, name, gen_cat, combining_class, bidi_class, decomp, deci, digit,
+         num, mirror, old, iso, upcase, lowcase, titlecase] = unicode_data[cp]
 
         if bidi_class not in bidi_class_groups:
             bidi_class_groups[bidi_class] = []
@@ -147,7 +210,7 @@ def get_bidi_class_info():
 
     return (
         sorted(bidi_class_groups.keys()),
-        range_value_triplets(bidi_class_groups),
+        range_value_triplets_from_codepoints(bidi_class_groups),
     )
 
 
@@ -227,9 +290,8 @@ def get_normal_form_info():
     general_category_mark = []
 
     for cp in unicode_data:
-        [code_org, name, gen_cat, combining_class, bidi_class,
-         decomp, deci, digit, num, mirror,
-         old, iso, upcase, lowcase, titlecase] = unicode_data[cp]
+        [_, name, gen_cat, combining_class, bidi_class, decomp, deci, digit,
+         num, mirror, old, iso, upcase, lowcase, titlecase] = unicode_data[cp]
 
         # GC=Mark
         if 'M' in [gen_cat] + EXPANDED_CATEGORIES.get(gen_cat, []):
@@ -255,7 +317,7 @@ def get_normal_form_info():
                 canonical_decomposition[cp] = seq
 
     general_category_mark = ranges_from_codepoints(general_category_mark)
-    canonical_combining_class = range_value_triplets(canonical_combining_class)
+    canonical_combining_class = range_value_triplets_from_codepoints(canonical_combining_class)
 
     return (
         general_category_mark,
@@ -408,11 +470,20 @@ def emit_normal_tests_tables(dir):
 
 # == Misc ==
 
-def range_value_triplets(groups):
+def range_value_triplets_from_codepoints(groups):
     list = [
         (x, y, value)
         for value in groups
         for (x, y) in ranges_from_codepoints(groups[value])
+    ]
+    list.sort(key=lambda x: x[0])
+    return list
+
+def range_value_triplets_from_ranges(groups):
+    list = [
+        (x, y, value)
+        for value in groups
+        for (x, y) in groups[value]
     ]
     list.sort(key=lambda x: x[0])
     return list
@@ -446,6 +517,10 @@ if __name__ == "__main__":
 
     # Core
     emit_unicode_version(OUTPUT_DIRS['UCD_CORE'])
+
+    # Age
+    emit_unicode_version(OUTPUT_DIRS['UCD_AGE'])
+    emit_age_tables(OUTPUT_DIRS['UCD_AGE'])
 
     # Bidi
     emit_unicode_version(OUTPUT_DIRS['UCD_BIDI'])

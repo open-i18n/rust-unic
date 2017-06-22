@@ -20,6 +20,7 @@
 
 
 pub extern crate unic_ucd_core as core;
+pub extern crate unic_ucd_age as age;
 pub extern crate unic_ucd_bidi as bidi;
 pub extern crate unic_ucd_normal as normal;
 pub extern crate unic_ucd_utils as utils;
