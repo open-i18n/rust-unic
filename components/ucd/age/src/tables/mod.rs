@@ -68,15 +68,13 @@ impl Age {
 // TODO: Optimize: put Unassigned ranges into the table, then only store (start, age) instead of
 // (start, end, age)
 fn bsearch_range_value_table(ch: char, r: &'static [(char, char, Age)]) -> Age {
-    match r.binary_search_by(
-        |&(lo, hi, _)| if lo <= ch && ch <= hi {
-            Equal
-        } else if hi < ch {
-            Less
-        } else {
-            Greater
-        }
-    ) {
+    match r.binary_search_by(|&(lo, hi, _)| if lo <= ch && ch <= hi {
+        Equal
+    } else if hi < ch {
+        Less
+    } else {
+        Greater
+    }) {
         Ok(idx) => {
             let (_, _, cat) = r[idx];
             cat
@@ -84,4 +82,3 @@ fn bsearch_range_value_table(ch: char, r: &'static [(char, char, Age)]) -> Age {
         Err(_) => Unassigned,
     }
 }
-

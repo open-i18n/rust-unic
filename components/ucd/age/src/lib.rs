@@ -44,7 +44,7 @@ mod tests {
 
         assert_eq!(Age::of('\u{0100}'), V1_1);
         assert_eq!(Age::of('\u{01f5}'), V1_1);
-        assert_eq!(Age::of('\u{037e}'), V1_1);  // start == end
+        assert_eq!(Age::of('\u{037e}'), V1_1); // start == end
         assert_eq!(Age::of('\u{200c}'), V1_1);
 
         assert_eq!(Age::of('\u{01f6}'), V3_0);

@@ -26,15 +26,13 @@ fn bsearch_lookup_table<T>(
     r: &'static [(char, Slice)],
     chars_table: &'static [T],
 ) -> Option<&'static [T]> {
-    match r.binary_search_by(
-        |&(val, _)| if c == val {
-            Equal
-        } else if val < c {
-            Less
-        } else {
-            Greater
-        }
-    ) {
+    match r.binary_search_by(|&(val, _)| if c == val {
+        Equal
+    } else if val < c {
+        Less
+    } else {
+        Greater
+    }) {
         Ok(idx) => {
             let ref slice = r[idx].1;
             let offset = slice.offset as usize;
@@ -46,46 +44,63 @@ fn bsearch_lookup_table<T>(
 }
 
 // == Canonical Composition (C) ==
-const CANONICAL_COMPOSITION_LOOKUP: &'static [(char, Slice)] = include!("canonical_composition_lookup.rsv");
-const CANONICAL_COMPOSITION_VALUES: &'static [(char, char)] = include!("canonical_composition_values.rsv");
+const CANONICAL_COMPOSITION_LOOKUP: &'static [(char, Slice)] =
+    include!("canonical_composition_lookup.rsv");
+const CANONICAL_COMPOSITION_VALUES: &'static [(char, char)] =
+    include!("canonical_composition_values.rsv");
 
 /// Canonical Composition of the character.
 pub fn canonical_composition(c: char) -> Option<&'static ([(char, char)])> {
-    bsearch_lookup_table(c, CANONICAL_COMPOSITION_LOOKUP, CANONICAL_COMPOSITION_VALUES)
+    bsearch_lookup_table(
+        c,
+        CANONICAL_COMPOSITION_LOOKUP,
+        CANONICAL_COMPOSITION_VALUES,
+    )
 }
 
 // == Canonical Decomposition (D) ==
-const CANONICAL_DECOMPOSITION_LOOKUP: &'static [(char, Slice)] = include!("canonical_decomposition_lookup.rsv");
-const CANONICAL_DECOMPOSITION_VALUES: &'static [char] = include!("canonical_decomposition_values.rsv");
+const CANONICAL_DECOMPOSITION_LOOKUP: &'static [(char, Slice)] =
+    include!("canonical_decomposition_lookup.rsv");
+const CANONICAL_DECOMPOSITION_VALUES: &'static [char] =
+    include!("canonical_decomposition_values.rsv");
 
 /// Canonical Decomposition of the character.
 pub fn canonical_decomposition(c: char) -> Option<&'static [char]> {
-    bsearch_lookup_table(c, CANONICAL_DECOMPOSITION_LOOKUP, CANONICAL_DECOMPOSITION_VALUES)
+    bsearch_lookup_table(
+        c,
+        CANONICAL_DECOMPOSITION_LOOKUP,
+        CANONICAL_DECOMPOSITION_VALUES,
+    )
 }
 
 // == Compatibility Decomposition (KD) ==
-const COMPATIBILITY_DECOMPOSITION_LOOKUP: &'static [(char, Slice)] = include!("compatibility_decomposition_lookup.rsv");
-const COMPATIBILITY_DECOMPOSITION_VALUES: &'static [char] = include!("compatibility_decomposition_values.rsv");
+const COMPATIBILITY_DECOMPOSITION_LOOKUP: &'static [(char, Slice)] =
+    include!("compatibility_decomposition_lookup.rsv");
+const COMPATIBILITY_DECOMPOSITION_VALUES: &'static [char] =
+    include!("compatibility_decomposition_values.rsv");
 
 /// Compatibility Decomposition of the character.
 pub fn compatibility_decomposition(c: char) -> Option<&'static [char]> {
-    bsearch_lookup_table(c, COMPATIBILITY_DECOMPOSITION_LOOKUP, COMPATIBILITY_DECOMPOSITION_VALUES)
+    bsearch_lookup_table(
+        c,
+        COMPATIBILITY_DECOMPOSITION_LOOKUP,
+        COMPATIBILITY_DECOMPOSITION_VALUES,
+    )
 }
 
 // == Canonical Combining Class (ccc) ==
-const CANONICAL_COMBINING_CLASS_VALUES: &'static [(char, char, u8)] = include!("canonical_combining_class_values.rsv");
+const CANONICAL_COMBINING_CLASS_VALUES: &'static [(char, char, u8)] =
+    include!("canonical_combining_class_values.rsv");
 
 fn bsearch_range_value_table(c: char, r: &'static [(char, char, u8)]) -> u8 {
     use std::cmp::Ordering::{Equal, Less, Greater};
-    match r.binary_search_by(
-        |&(lo, hi, _)| if lo <= c && c <= hi {
-            Equal
-        } else if hi < c {
-            Less
-        } else {
-            Greater
-        }
-    ) {
+    match r.binary_search_by(|&(lo, hi, _)| if lo <= c && c <= hi {
+        Equal
+    } else if hi < c {
+        Less
+    } else {
+        Greater
+    }) {
         Ok(idx) => {
             let (_, _, result) = r[idx];
             result
@@ -106,16 +121,13 @@ const GENERAL_CATEGORY_MARK: &'static [(char, char)] = include!("general_categor
 pub fn is_combining_mark(c: char) -> bool {
     fn bsearch_range_table(c: char, r: &'static [(char, char)]) -> bool {
         use std::cmp::Ordering::{Equal, Less, Greater};
-        r.binary_search_by(
-                |&(lo, hi)| if lo <= c && c <= hi {
-                    Equal
-                } else if hi < c {
-                    Less
-                } else {
-                    Greater
-                }
-            )
-            .is_ok()
+        r.binary_search_by(|&(lo, hi)| if lo <= c && c <= hi {
+            Equal
+        } else if hi < c {
+            Less
+        } else {
+            Greater
+        }).is_ok()
     }
 
     bsearch_range_table(c, GENERAL_CATEGORY_MARK)

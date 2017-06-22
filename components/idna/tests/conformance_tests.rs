@@ -14,8 +14,9 @@ use unic_idna;
 pub fn collect_tests<F: FnMut(String, TestFn)>(add_test: &mut F) {
     // http://www.unicode.org/Public/idna/latest/IdnaTest.txt
     for (i, line) in include_str!("../../../data/idna/test/IdnaTest.txt")
-            .lines()
-            .enumerate() {
+        .lines()
+        .enumerate()
+    {
         if line == "" || line.starts_with("#") {
             continue;
         }
@@ -51,75 +52,73 @@ pub fn collect_tests<F: FnMut(String, TestFn)>(add_test: &mut F) {
         let test_name = format!("UTS #46 line {}", i + 1);
         add_test(
             test_name,
-            TestFn::dyn_test_fn(
-                move || {
-                    let result = unic_idna::to_ascii(
-                        &source,
-                        unic_idna::Flags {
-                            use_std3_ascii_rules: true,
-                            transitional_processing: test_type == "T",
-                            verify_dns_length: true,
-                        },
-                    );
+            TestFn::dyn_test_fn(move || {
+                let result = unic_idna::to_ascii(
+                    &source,
+                    unic_idna::Flags {
+                        use_std3_ascii_rules: true,
+                        transitional_processing: test_type == "T",
+                        verify_dns_length: true,
+                    },
+                );
 
-                    if to_ascii.starts_with("[") {
-                        if to_ascii.starts_with("[C") {
-                            // http://unicode.org/reports/tr46/#Deviations
-                            // applications that perform IDNA2008 lookup are not required to check
-                            // for these contexts
-                            return;
-                        }
-                        if to_ascii == "[V2]" {
-                            // Everybody ignores V2
-                            // https://github.com/servo/rust-url/pull/240
-                            // https://github.com/whatwg/url/issues/53#issuecomment-181528158
-                            // http://www.unicode.org/review/pri317/
-                            return;
-                        }
-                        let res = result.ok();
-                        assert!(
-                            res == None,
-                            "Expected error. result: {} | original: {} | source: {}",
-                            res.unwrap(),
-                            original,
-                            source
-                        );
+                if to_ascii.starts_with("[") {
+                    if to_ascii.starts_with("[C") {
+                        // http://unicode.org/reports/tr46/#Deviations
+                        // applications that perform IDNA2008 lookup are not required to check
+                        // for these contexts
                         return;
                     }
-
-                    let to_ascii = if to_ascii.len() > 0 {
-                        to_ascii.to_string()
-                    } else {
-                        if to_unicode.len() > 0 {
-                            to_unicode.to_string()
-                        } else {
-                            source.clone()
-                        }
-                    };
-
-                    if nv8 == "NV8" {
-                        // This result isn't valid under IDNA2008. Skip it
+                    if to_ascii == "[V2]" {
+                        // Everybody ignores V2
+                        // https://github.com/servo/rust-url/pull/240
+                        // https://github.com/whatwg/url/issues/53#issuecomment-181528158
+                        // http://www.unicode.org/review/pri317/
                         return;
                     }
-
+                    let res = result.ok();
                     assert!(
-                        result.is_ok(),
-                        "Couldn't parse {} | original: {} | error: {:?}",
-                        source,
-                        original,
-                        result.err()
-                    );
-                    let output = result.ok().unwrap();
-                    assert!(
-                        output == to_ascii,
-                        "result: {} | expected: {} | original: {} | source: {}",
-                        output,
-                        to_ascii,
+                        res == None,
+                        "Expected error. result: {} | original: {} | source: {}",
+                        res.unwrap(),
                         original,
                         source
                     );
+                    return;
                 }
-            ),
+
+                let to_ascii = if to_ascii.len() > 0 {
+                    to_ascii.to_string()
+                } else {
+                    if to_unicode.len() > 0 {
+                        to_unicode.to_string()
+                    } else {
+                        source.clone()
+                    }
+                };
+
+                if nv8 == "NV8" {
+                    // This result isn't valid under IDNA2008. Skip it
+                    return;
+                }
+
+                assert!(
+                    result.is_ok(),
+                    "Couldn't parse {} | original: {} | error: {:?}",
+                    source,
+                    original,
+                    result.err()
+                );
+                let output = result.ok().unwrap();
+                assert!(
+                    output == to_ascii,
+                    "result: {} | expected: {} | original: {} | source: {}",
+                    output,
+                    to_ascii,
+                    original,
+                    source
+                );
+            }),
         )
     }
 }

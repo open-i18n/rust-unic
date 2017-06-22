@@ -14,19 +14,15 @@ use super::Age;
 
 /// Methods for character age property.
 pub trait CharAge {
-
     /// Get `Age` of the character.
     fn age(self) -> Age;
-
 }
 
 impl CharAge for char {
-
     #[inline]
     fn age(self) -> Age {
         Age::of(self)
     }
-
 }
 
 
