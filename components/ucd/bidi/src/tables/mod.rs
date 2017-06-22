@@ -21,7 +21,7 @@ pub const UNICODE_VERSION: (u64, u64, u64) = include!("unicode_version.rsv");
 /// * http://www.unicode.org/reports/tr44/#Bidi_Class_Values
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[allow(missing_docs)]
-// Compare with `bidi_class_type.rsv`
+// NOTE: [UNIC_UPDATE_ON_UNICODE_UPDATE] Source: `bidi_class_type.rsv`
 pub enum BidiClass {
     AL,
     AN,
