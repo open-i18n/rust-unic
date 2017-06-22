@@ -24,6 +24,7 @@ from common import UCD_DATA_DIR, UCD_TEST_DATA_DIR
 URL_PREFIX = 'http://www.unicode.org/Public/UCD/latest/ucd/'
 
 DATA_FILES = [
+    "DerivedAge.txt",
     "DerivedNormalizationProps.txt",
     "ReadMe.txt",
     "UnicodeData.txt",
