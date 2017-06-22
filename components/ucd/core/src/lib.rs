@@ -18,8 +18,34 @@
 //! Core create indicating the version of Unicode Character Database.
 
 
+/// Type of `UNICODE_VERSION` value:
+pub struct UnicodeVersion(
+    pub u32, // Major version
+    pub u32, // Minor version
+    pub u32 // Micro (or Update) version
+);
+
+
+impl UnicodeVersion {
+    /// Major version
+    pub fn major(&self) -> u32 {
+        self.0
+    }
+
+    /// Minor version
+    pub fn minor(&self) -> u32 {
+        self.1
+    }
+
+    /// Micro (or Update) version
+    pub fn micro(&self) -> u32 {
+        self.2
+    }
+}
+
+
 /// The [Unicode version](http://www.unicode.org/versions/) of data
-pub const UNICODE_VERSION: (u64, u64, u64) = include!("unicode_version.rsv");
+pub const UNICODE_VERSION: UnicodeVersion = include!("unicode_version.rsv");
 
 
 #[cfg(test)]
@@ -28,6 +54,10 @@ mod tests {
 
     #[test]
     fn valid_versions() {
-        assert!(UNICODE_VERSION.0 > 0);
+        assert!(UNICODE_VERSION.major() > 0);
+
+        // Current release schedule of Unicode is to have one Major version update each year, with
+        // no Minor updates. We hard-code this internal policy while it stans.
+        assert!(UNICODE_VERSION.minor() == 0);
     }
 }

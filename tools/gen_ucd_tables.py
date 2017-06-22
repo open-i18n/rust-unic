@@ -17,12 +17,13 @@ import re
 import os
 import sys
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "pylib"))
-
 from os.path import join
 
-import rustout
+sys.path.append(join(os.path.dirname(__file__), "pylib"))
+
 import common
+import rustout
+import unicode_utils
 
 from common import path, memoize
 from unicode_utils import is_surrogate
@@ -37,20 +38,18 @@ OUTPUT_DIRS = {
 }
 
 
-def data_path(name):
-    return join(common.UCD_DATA_DIR, name)
+def data_path(name): return join(common.UCD_DATA_DIR, name)
 
 
-def test_data_path(name):
-    return join(common.UCD_TEST_DATA_DIR, name)
+def test_data_path(name): return join(common.UCD_TEST_DATA_DIR, name)
 
 
-# == Core ==
+# == Version ==
 
 @memoize
 def get_unicode_version():
     with open(data_path("ReadMe.txt")) as readme_file:
-        pattern = "for Version (\d+)\.(\d+)\.(\d+) of the Unicode"
+        pattern = "for Version (\d+)\.(\d+)\.(\d+) of"
         return re.search(pattern, readme_file.read()).groups()
 
 
@@ -59,8 +58,10 @@ def emit_unicode_version(dir):
         rustout.emit_value(
             __file__,
             version_file, get_unicode_version(),
-            print_fun=lambda x: "(%s, %s, %s)" % x)
+            print_fun=lambda x: "UnicodeVersion(%s, %s, %s)" % x)
 
+
+# == Shared ==
 
 @memoize
 def get_unicode_data():
@@ -134,12 +135,14 @@ def get_age_info():
 
     # optimize if possible
     for age in age_groups:
-        age_groups[age] = ranges_from_codepoints(codepoints_from_ranges(age_groups[age]))
+        age_groups[age] = ranges_from_codepoints(
+            codepoints_from_ranges(age_groups[age]))
 
     return (
         sorted(age_groups.keys()),
         range_value_triplets_from_ranges(age_groups),
     )
+
 
 def emit_age_tables(dir):
     (age_type, age_values) = get_age_info()
@@ -317,7 +320,8 @@ def get_normal_form_info():
                 canonical_decomposition[cp] = seq
 
     general_category_mark = ranges_from_codepoints(general_category_mark)
-    canonical_combining_class = range_value_triplets_from_codepoints(canonical_combining_class)
+    canonical_combining_class = range_value_triplets_from_codepoints(
+        canonical_combining_class)
 
     return (
         general_category_mark,
@@ -478,6 +482,7 @@ def range_value_triplets_from_codepoints(groups):
     ]
     list.sort(key=lambda x: x[0])
     return list
+
 
 def range_value_triplets_from_ranges(groups):
     list = [

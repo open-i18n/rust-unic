@@ -44,10 +44,11 @@
 #[macro_use]
 extern crate matches;
 
-extern crate unic_ucd_bidi;
-extern crate unic_normal;
-extern crate unic_ucd_normal;
 extern crate unic_idna_punycode;
+extern crate unic_normal;
+extern crate unic_ucd_bidi;
+extern crate unic_ucd_core;
+extern crate unic_ucd_normal;
 
 mod tables;
 

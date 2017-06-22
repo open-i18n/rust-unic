@@ -12,9 +12,11 @@
 
 use std::cmp::Ordering::{Equal, Less, Greater};
 
+use unic_ucd_core::UnicodeVersion;
+
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data
-pub const UNICODE_VERSION: (u64, u64, u64) = include!("unicode_version.rsv");
+pub const UNICODE_VERSION: UnicodeVersion = include!("unicode_version.rsv");
 
 pub struct Slice {
     pub offset: u16,

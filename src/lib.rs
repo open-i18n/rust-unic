@@ -110,3 +110,6 @@ pub extern crate unic_bidi as bidi;
 pub extern crate unic_idna as idna;
 pub extern crate unic_normal as normal;
 pub extern crate unic_ucd as ucd;
+
+/// The [Unicode version](http://www.unicode.org/versions/) of data
+pub use ucd::UNICODE_VERSION;

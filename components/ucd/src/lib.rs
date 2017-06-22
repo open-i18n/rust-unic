@@ -26,6 +26,7 @@ pub extern crate unic_ucd_normal as normal;
 pub extern crate unic_ucd_utils as utils;
 
 
+/// The [Unicode version](http://www.unicode.org/versions/) of data
 pub use core::UNICODE_VERSION;
 
 

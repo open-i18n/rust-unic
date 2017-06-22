@@ -19,6 +19,8 @@
 //!
 //! Accessor for `Age` property from Unicode Character Database (UCD)
 
+extern crate unic_ucd_core;
+
 
 mod tables;
 mod traits;

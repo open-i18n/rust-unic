@@ -28,6 +28,8 @@
 //! }
 //! ```
 
+extern crate unic_ucd_core;
+
 
 mod tables;
 mod hangul;
