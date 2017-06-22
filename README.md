@@ -150,10 +150,18 @@ extern crate unic;
 
 use unic::bidi::BidiInfo;
 use unic::normal::StrNormalForm;
+use unic::ucd::age::{Age, CharAge};
 use unic::ucd::bidi::{BidiClass, BidiChar, BidiStr};
 use unic::ucd::normal::compose;
 
 fn main() {
+
+    // Age
+
+    assert_eq!(Age::of('A'), Age::V1_1);
+    assert_eq!(Age::of('\u{A0000}'), Age::Unassigned);
+    assert_eq!(Age::of('\u{10FFFF}'), Age::V2_0);
+    assert_eq!('🦊'.age(), Age::V9_0);
 
     // Bidi
 

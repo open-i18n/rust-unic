@@ -1,11 +1,33 @@
+// Copyright 2015 The Servo Project Developers.
+// Copyright 2017 The UNIC Project Developers.
+//
+// See the COPYRIGHT file at the top-level directory of this distribution.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+#![forbid(unsafe_code)]
+
 extern crate unic;
+
 
 use unic::bidi::BidiInfo;
 use unic::normal::StrNormalForm;
+use unic::ucd::age::{Age, CharAge};
 use unic::ucd::bidi::{BidiClass, BidiChar, BidiStr};
 use unic::ucd::normal::compose;
 
 fn main() {
+
+    // Age
+
+    assert_eq!(Age::of('A'), Age::V1_1);
+    assert_eq!(Age::of('\u{A0000}'), Age::Unassigned);
+    assert_eq!(Age::of('\u{10FFFF}'), Age::V2_0);
+    assert_eq!('🦊'.age(), Age::V9_0);
 
     // Bidi
 
@@ -55,7 +77,7 @@ fn main() {
 
     // Normalization
 
-    assert_eq!(compose('A', '\u{30a}'), Some('Å'));
+    assert_eq!(compose('A', '\u{030A}'), Some('Å'));
 
     let s = "ÅΩ";
     let c = s.nfc().collect::<String>();
