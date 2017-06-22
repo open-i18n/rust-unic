@@ -38,9 +38,13 @@ COMPONENTS="
 -() {
     cmd="$@"
     echo
-    echo -n "   `tput bold; tput setaf 4`Executing`tput sgr0` "
-    echo "$cmd"
+    echo "`tput bold; tput setaf 4`============`tput sgr0` "
+    echo "`tput bold; tput setaf 4`   Executing`tput sgr0` $cmd"
+    echo
     $cmd
+    echo "`tput bold; tput setaf 4`   Succeeded`tput sgr0` $cmd"
+    echo "`tput bold; tput setaf 4`------------`tput sgr0` "
+    echo
 }
 
 
@@ -48,8 +52,13 @@ COMPONENTS="
 
 - cargo update --verbose
 
+# First test all components and stop if anything goes wrong
 for component in $COMPONENTS; do
     - cargo test    --verbose --manifest-path components/$component/Cargo.toml
+done
+
+# Then publish all components, and ignore failures (usually because of the version being released already)
+for component in $COMPONENTS; do
     - cargo publish --verbose --manifest-path components/$component/Cargo.toml || true
 done
 
