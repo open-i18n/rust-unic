@@ -48,7 +48,11 @@
 //!     assert_eq!(Age::of('A'), Age::V1_1);
 //!     assert_eq!(Age::of('\u{A0000}'), Age::Unassigned);
 //!     assert_eq!(Age::of('\u{10FFFF}'), Age::V2_0);
+//!
 //!     assert_eq!('🦊'.age(), Age::V9_0);
+//!     assert_eq!('🦊'.age().to_unicode_version().unwrap().major(), 9);
+//!     assert_eq!('🦊'.age().to_unicode_version().unwrap().minor(), 0);
+//!     assert_eq!('🦊'.age().to_unicode_version().unwrap().micro(), 0);
 //!
 //!     // Bidi
 //!
