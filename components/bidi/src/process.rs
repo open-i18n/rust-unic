@@ -474,7 +474,7 @@ mod tests {
     }
 
     #[test]
-    fn test_process_text() {
+    fn test_bidi_info() {
         let text = "abc123";
         assert_eq!(
             BidiInfo::new(text, Some(Level::ltr())),

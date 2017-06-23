@@ -9,7 +9,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![cfg(all(test, feature = "unstable"))]
+#![cfg(all(test, feature = "bench_it"))]
 #![feature(test)]
 
 extern crate test;
@@ -22,8 +22,10 @@ use unic_bidi::BidiInfo;
 
 const LTR_TEXTS: &[&str] = &["abc\ndef\nghi", "abc 123\ndef 456\nghi 789"];
 
-const BIDI_TEXTS: &[&str] =
-    &["ابجد\nهوز\nحتی", "ابجد ۱۲۳\nهوز ۴۵۶\nحتی ۷۸۹"];
+const BIDI_TEXTS: &[&str] = &[
+    "ابجد\nهوز\nحتی",
+    "ابجد ۱۲۳\nهوز ۴۵۶\nحتی ۷۸۹\nabc\ndef",
+];
 
 
 fn bench_bidi_info_new(b: &mut Bencher, texts: &[&str]) {
