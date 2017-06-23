@@ -30,6 +30,7 @@ COMPONENTS="
     ucd
     bidi
     normal
+    idna/mapping
     idna/punycode
     idna
 "
