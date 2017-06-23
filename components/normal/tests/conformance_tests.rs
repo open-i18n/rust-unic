@@ -24,7 +24,7 @@ type TestDatum = (
     &'static str,
     &'static str,
 );
-const TEST_DATA: &'static [TestDatum] = include!("conformance_tests_data.rsv");
+const TEST_DATA: &'static [TestDatum] = include!("tables/conformance_tests_data.rsv");
 
 
 #[test]

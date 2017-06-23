@@ -34,7 +34,7 @@ OUTPUT_DIRS = {
     'UCD_AGE': path("components/ucd/age/src/tables"),
     'UCD_BIDI': path("components/ucd/bidi/src/tables"),
     'UCD_NORMAL': path("components/ucd/normal/src/tables"),
-    'NORMAL_TESTS': path("components/normal/tests"),
+    'NORMAL_TESTS': path("components/normal/tests/tables"),
 }
 
 
