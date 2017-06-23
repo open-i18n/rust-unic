@@ -10,13 +10,7 @@
 // except according to those terms.
 
 
-use unic_ucd_core::UnicodeVersion;
-
 use std::cmp::Ordering;
-
-
-/// The version of [Unicode IDNA Compatibility Processing](http://www.unicode.org/reports/tr46/)
-pub const UNICODE_VERSION: UnicodeVersion = include!("unicode_version.rsv");
 
 
 #[repr(u8)]
@@ -48,8 +42,8 @@ pub struct StringTableSlice {
 use self::Mapping::*;
 
 
-static MAP: &'static [Range] = include!("idna_map.rsv");
-static MAP_STRING: &'static str = include!("idna_map_string.rsv");
+static MAP: &'static [Range] = include!("tables/idna_map.rsv");
+static MAP_STRING: &'static str = include!("tables/idna_map_string.rsv");
 
 
 pub fn decode_slice(slice: &StringTableSlice) -> &'static str {
