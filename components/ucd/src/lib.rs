@@ -26,6 +26,7 @@ pub extern crate unic_ucd_normal as normal;
 pub extern crate unic_ucd_utils as utils;
 
 
+/// The [Unicode version](http://www.unicode.org/versions/) of data
 pub use core::UNICODE_VERSION;
 
 
@@ -37,4 +38,3 @@ pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
 
 /// UNIC component description.
 pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
-

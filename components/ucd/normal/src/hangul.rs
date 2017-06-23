@@ -12,7 +12,7 @@
 //! Conjoining Jamo composition to/decomposition from Hangul syllables.
 //!
 //! Ref: Section 3.12 Conjoining Jamo Behavior, Unicode 9.0.0
-//! http://www.unicode.org/versions/Unicode9.0.0/ch03.pdf#M9.32468.Heading.310.Combining.Jamo.Behavior
+//! <http://www.unicode.org/versions/Unicode9.0.0/ch03.pdf>
 
 
 pub const S_BASE: u32 = 0xAC00;
@@ -31,7 +31,8 @@ pub const S_COUNT: u32 = (L_COUNT * N_COUNT);
 #[allow(unsafe_code)]
 #[inline(always)]
 pub fn decompose<F>(s: char, f: &mut F)
-    where F: FnMut(char)
+where
+    F: FnMut(char),
 {
     use std::mem::transmute;
 
@@ -61,7 +62,8 @@ pub fn compose(a: char, b: char) -> Option<char> {
     let v = b as u32;
     // Compose an LPart and a VPart
     if L_BASE <= l && l < (L_BASE + L_COUNT) // l should be an L choseong jamo
-        && V_BASE <= v && v < (V_BASE + V_COUNT) {
+        && V_BASE <= v && v < (V_BASE + V_COUNT)
+    {
         // v should be a V jungseong jamo
         let r = S_BASE + (l - L_BASE) * N_COUNT + (v - V_BASE) * T_COUNT;
         return unsafe { Some(transmute(r)) };
@@ -69,7 +71,8 @@ pub fn compose(a: char, b: char) -> Option<char> {
     // Compose an LVPart and a TPart
     if S_BASE <= l && l <= (S_BASE+S_COUNT-T_COUNT) // l should be a syllable block
         && T_BASE <= v && v < (T_BASE+T_COUNT) // v should be a T jongseong jamo
-        && (l - S_BASE) % T_COUNT == 0 {
+        && (l - S_BASE) % T_COUNT == 0
+    {
         // l should be an LV syllable block (not LVT)
         let r = l + (v - T_BASE);
         return unsafe { Some(transmute(r)) };

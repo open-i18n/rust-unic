@@ -28,12 +28,15 @@
 //! }
 //! ```
 
+extern crate unic_ucd_core;
+
 
 mod tables;
 mod hangul;
 
 pub use tables::UNICODE_VERSION;
-pub use tables::{canonical_decomposition, compatibility_decomposition, canonical_composition, canonical_combining_class};
+pub use tables::{canonical_decomposition, compatibility_decomposition, canonical_composition,
+                 canonical_combining_class};
 pub use tables::is_combining_mark;
 
 use std::cmp::Ordering::{Equal, Less, Greater};
@@ -44,7 +47,8 @@ use std::ops::FnMut;
 /// See [Unicode Standard Annex #15](http://www.unicode.org/reports/tr15/)
 /// for more information.
 pub fn decompose_canonical<F>(c: char, mut i: F)
-    where F: FnMut(char)
+where
+    F: FnMut(char),
 {
     d(c, &mut i, false);
 }
@@ -53,14 +57,16 @@ pub fn decompose_canonical<F>(c: char, mut i: F)
 /// See [Unicode Standard Annex #15](http://www.unicode.org/reports/tr15/)
 /// for more information.
 pub fn decompose_compatible<F>(c: char, mut i: F)
-    where F: FnMut(char)
+where
+    F: FnMut(char),
 {
     d(c, &mut i, true);
 }
 
 // FIXME: This is a workaround, we should use `F` instead of `&mut F`
 fn d<F>(c: char, i: &mut F, k: bool)
-    where F: FnMut(char)
+where
+    F: FnMut(char),
 {
     // 7-bit ASCII never decomposes
     if c <= '\x7f' {
@@ -110,28 +116,24 @@ fn d<F>(c: char, i: &mut F, k: bool)
 /// See [Unicode Standard Annex #15](http://www.unicode.org/reports/tr15/)
 /// for more information.
 pub fn compose(a: char, b: char) -> Option<char> {
-    hangul::compose(a, b).or_else(
-        || match canonical_composition(a) {
-            None => None,
-            Some(candidates) => {
-                match candidates.binary_search_by(
-                    |&(val, _)| if b == val {
-                        Equal
-                    } else if val < b {
-                        Less
-                    } else {
-                        Greater
-                    }
-                ) {
-                    Ok(idx) => {
-                        let (_, result) = candidates[idx];
-                        Some(result)
-                    }
-                    Err(_) => None,
+    hangul::compose(a, b).or_else(|| match canonical_composition(a) {
+        None => None,
+        Some(candidates) => {
+            match candidates.binary_search_by(|&(val, _)| if b == val {
+                Equal
+            } else if val < b {
+                Less
+            } else {
+                Greater
+            }) {
+                Ok(idx) => {
+                    let (_, result) = candidates[idx];
+                    Some(result)
                 }
+                Err(_) => None,
             }
         }
-    )
+    })
 }
 
 #[cfg(test)]

@@ -55,7 +55,9 @@ fn get_string<'a>(map: &'a Object, key: &str) -> &'a str {
 }
 
 pub fn collect_tests<F: FnMut(String, TestFn)>(add_test: &mut F) {
-    match Json::from_str(include_str!("../../../../data/punycode/test/punycode.js_data.json")) {
+    match Json::from_str(include_str!(
+        "../../../../data/punycode/test/punycode.js_data.json"
+    )) {
         Ok(Json::Array(tests)) => {
             for (i, test) in tests.into_iter().enumerate() {
                 match test {
@@ -70,11 +72,9 @@ pub fn collect_tests<F: FnMut(String, TestFn)>(add_test: &mut F) {
                         };
                         add_test(
                             test_name,
-                            TestFn::dyn_test_fn(
-                                move || {
-                                    one_test(get_string(&o, "decoded"), get_string(&o, "encoded"))
-                                }
-                            ),
+                            TestFn::dyn_test_fn(move || {
+                                one_test(get_string(&o, "decoded"), get_string(&o, "encoded"))
+                            }),
                         )
                     }
                     _ => panic!(),

@@ -44,10 +44,11 @@
 #[macro_use]
 extern crate matches;
 
-extern crate unic_ucd_bidi;
-extern crate unic_normal;
-extern crate unic_ucd_normal;
 extern crate unic_idna_punycode;
+extern crate unic_normal;
+extern crate unic_ucd_bidi;
+extern crate unic_ucd_core;
+extern crate unic_ucd_normal;
 
 mod tables;
 
@@ -132,9 +133,9 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
                         if !matches!(
                             bidi_class(c),
                             BidiClass::L | BidiClass::EN | BidiClass::ES | BidiClass::CS |
-                            BidiClass::ET | BidiClass::ON |
-                            BidiClass::BN |
-                            BidiClass::NSM
+                                BidiClass::ET | BidiClass::ON |
+                                BidiClass::BN |
+                                BidiClass::NSM
                         ) {
                             return false;
                         }
@@ -191,10 +192,11 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
                         if !matches!(
                             char_class,
                             BidiClass::R | BidiClass::AL | BidiClass::AN | BidiClass::EN |
-                            BidiClass::ES | BidiClass::CS |
-                            BidiClass::ET |
-                            BidiClass::ON | BidiClass::BN |
-                            BidiClass::NSM
+                                BidiClass::ES | BidiClass::CS |
+                                BidiClass::ET |
+                                BidiClass::ON |
+                                BidiClass::BN |
+                                BidiClass::NSM
                         ) {
                             return false;
                         }
@@ -220,10 +222,11 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
                 }
             }
             match last {
-                Some(c) if matches!(
-                    bidi_class(c),
-                    BidiClass::R | BidiClass::AL | BidiClass::EN | BidiClass::AN
-                ) => {}
+                Some(c)
+                    if matches!(
+                        bidi_class(c),
+                        BidiClass::R | BidiClass::AL | BidiClass::EN | BidiClass::AN
+                    ) => {}
                 _ => {
                     return false;
                 }
@@ -275,16 +278,12 @@ fn validate(label: &str, is_bidi_domain: bool, flags: Flags, errors: &mut Vec<Er
         errors.push(Error::ValidityCriteria);
     }
     // V6: Check against Mapping Table
-    else if label
-                  .chars()
-                  .any(
-        |c| match *find_char(c) {
-            Mapping::Valid => false,
-            Mapping::Deviation(_) => flags.transitional_processing,
-            Mapping::DisallowedStd3Valid => flags.use_std3_ascii_rules,
-            _ => true,
-        }
-    ) {
+    else if label.chars().any(|c| match *find_char(c) {
+        Mapping::Valid => false,
+        Mapping::Deviation(_) => flags.transitional_processing,
+        Mapping::DisallowedStd3Valid => flags.use_std3_ascii_rules,
+        _ => true,
+    }) {
         errors.push(Error::ValidityCriteria);
     }
     // V7: ContextJ rules
@@ -310,26 +309,18 @@ fn processing(domain: &str, flags: Flags, errors: &mut Vec<Error>) -> String {
     // Find out if it's a Bidi Domain Name
     //
     // First, check for literal bidi chars
-    let mut is_bidi_domain =
-        domain
-            .chars()
-            .any(|c| matches!(bidi_class(c), BidiClass::R | BidiClass::AL | BidiClass::AN));
+    let mut is_bidi_domain = domain.chars().any(|c| {
+        matches!(bidi_class(c), BidiClass::R | BidiClass::AL | BidiClass::AN)
+    });
     if !is_bidi_domain {
         // Then check for punycode-encoded bidi chars
         for label in normalized.split('.') {
             if label.starts_with(PUNYCODE_PREFIX) {
                 match unic_idna_punycode::decode_to_string(&label[PUNYCODE_PREFIX.len()..]) {
                     Some(decoded_label) => {
-                        if decoded_label
-                               .chars()
-                               .any(
-                            |c| {
-                                matches!(
-                                    bidi_class(c),
-                                    BidiClass::R | BidiClass::AL | BidiClass::AN
-                                )
-                            }
-                        ) {
+                        if decoded_label.chars().any(|c| {
+                            matches!(bidi_class(c), BidiClass::R | BidiClass::AL | BidiClass::AN)
+                        }) {
                             is_bidi_domain = true;
                         }
                     }

@@ -14,7 +14,6 @@ use super::{bidi_class, BidiClass, is_explicit, is_rtl};
 
 /// Methods for bidi properties of character types.
 pub trait BidiChar {
-
     /// Get `BidiClass` of the character.
     fn bidi_class(self) -> BidiClass;
 
@@ -53,7 +52,6 @@ impl BidiChar for char {
 
 /// Methods for bidi properties of string types.
 pub trait BidiStr {
-
     /// Whether the string has any *explicit* bidi formatting character.
     fn has_explicit(&self) -> bool;
 

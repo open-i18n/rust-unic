@@ -23,5 +23,5 @@ unic-normal = { path = "components/normal/", version = "0.2.0" }
 
 [features]
 default = []
-bench_it = []
+bench_it = ["unic-bidi/bench_it"]
 with_serde = []

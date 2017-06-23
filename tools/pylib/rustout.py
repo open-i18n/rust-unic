@@ -14,8 +14,6 @@ import sys
 from collections import OrderedDict
 from itertools import chain
 
-
-sys.path.append(os.path.join(os.path.dirname(__file__)))
 import common
 
 from unicode_utils import is_surrogate, codepoints_from_string

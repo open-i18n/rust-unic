@@ -19,16 +19,14 @@ fn main() {
     let mut tests = Vec::new();
     {
         let mut add_test = |name, run| {
-            tests.push(
-                test::TestDescAndFn {
-                    desc: test::TestDesc {
-                        name: test::DynTestName(name),
-                        ignore: false,
-                        should_panic: test::ShouldPanic::No,
-                    },
-                    testfn: run,
-                }
-            )
+            tests.push(test::TestDescAndFn {
+                desc: test::TestDesc {
+                    name: test::DynTestName(name),
+                    ignore: false,
+                    should_panic: test::ShouldPanic::No,
+                },
+                testfn: run,
+            })
         };
         punycode_tests::collect_tests(&mut add_test);
     }

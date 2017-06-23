@@ -17,14 +17,14 @@ import re
 import os
 import sys
 
+from os.path import join
 from collections import OrderedDict
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "pylib"))
+sys.path.append(join(os.path.dirname(__file__), "pylib"))
 
-from os.path import join
-
-import rustout
 import common
+import rustout
+import unicode_utils
 
 from rustout import char_escape
 from common import path, memoize
@@ -36,12 +36,10 @@ OUTPUT_DIRS = {
 }
 
 
-def data_path(name):
-    return join(common.IDNA_DATA_DIR, name)
+def data_path(name): return join(common.IDNA_DATA_DIR, name)
 
 
-def test_data_path(name):
-    return join(common.IDNA_TEST_DATA_DIR, name)
+def test_data_path(name): return join(common.IDNA_TEST_DATA_DIR, name)
 
 
 # == Version ==
@@ -58,7 +56,7 @@ def emit_unicode_version(dir):
         rustout.emit_value(
             __file__,
             version_file, get_unicode_version(),
-            print_fun=lambda x: "(%s, %s, %s)" % x)
+            print_fun=lambda x: "UnicodeVersion(%s, %s, %s)" % x)
 
 
 # == Map ==

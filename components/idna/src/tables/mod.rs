@@ -10,8 +10,11 @@
 // except according to those terms.
 
 
+use unic_ucd_core::UnicodeVersion;
+
+
 /// The version of [Unicode IDNA Compatibility Processing](http://www.unicode.org/reports/tr46/)
-pub const UNICODE_VERSION: (u64, u64, u64) = include!("unicode_version.rsv");
+pub const UNICODE_VERSION: UnicodeVersion = include!("unicode_version.rsv");
 
 
 #[repr(u8)]
