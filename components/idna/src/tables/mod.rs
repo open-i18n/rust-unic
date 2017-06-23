@@ -12,6 +12,8 @@
 
 use unic_ucd_core::UnicodeVersion;
 
+use std::cmp::Ordering;
+
 
 /// The version of [Unicode IDNA Compatibility Processing](http://www.unicode.org/reports/tr46/)
 pub const UNICODE_VERSION: UnicodeVersion = include!("unicode_version.rsv");
@@ -56,19 +58,13 @@ pub fn decode_slice(slice: &StringTableSlice) -> &'static str {
     &MAP_STRING[start..(start + len)]
 }
 
-pub fn find_char(codepoint: char) -> &'static Mapping {
-    let mut min = 0;
-    let mut max = MAP.len() - 1;
-    while max > min {
-        let mid = (min + max) >> 1;
-        if codepoint > MAP[mid].to {
-            min = mid;
-        } else if codepoint < MAP[mid].from {
-            max = mid;
-        } else {
-            min = mid;
-            max = mid;
-        }
-    }
-    &MAP[min].mapping
+fn find_char(codepoint: char) -> &'static Mapping {
+    let r = TABLE.binary_search_by(|ref range| if codepoint > range.to {
+        Ordering::Less
+    } else if codepoint < range.from {
+        Ordering::Greater
+    } else {
+        Ordering::Equal
+    });
+    r.ok().map(|i| &TABLE[i].mapping).unwrap()
 }
