@@ -15,7 +15,7 @@
 extern crate unic_ucd;
 
 
-use unic_ucd::bidi::{bidi_class, BidiClass};
+use unic_ucd::bidi::BidiClass;
 use unic_ucd::normal::is_combining_mark;
 use unic_ucd::utils::iter_all_chars;
 
@@ -27,7 +27,7 @@ use unic_ucd::utils::iter_all_chars;
 fn test_bidi_nsm_against_gen_cat() {
     // Every NSM must be a GC=Mark
     for cp in iter_all_chars() {
-        if bidi_class(cp) == BidiClass::NSM {
+        if BidiClass::of(cp) == BidiClass::NSM {
             assert!(is_combining_mark(cp));
         }
     }
@@ -35,7 +35,7 @@ fn test_bidi_nsm_against_gen_cat() {
     // Every GC!=Mark must not be an NSM
     for cp in iter_all_chars() {
         if !is_combining_mark(cp) {
-            assert!(bidi_class(cp) != BidiClass::NSM);
+            assert!(BidiClass::of(cp) != BidiClass::NSM);
         }
     }
 }

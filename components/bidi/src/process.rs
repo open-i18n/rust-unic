@@ -21,7 +21,7 @@ use level;
 use prepare;
 use format_chars;
 
-use unic_ucd_bidi::{BidiClass, bidi_class};
+use unic_ucd_bidi::BidiClass;
 use level::Level;
 use prepare::LevelRun;
 
@@ -77,7 +77,7 @@ impl<'text> InitialInfo<'text> {
         let mut para_level = default_para_level;
 
         for (i, c) in text.char_indices() {
-            let class = bidi_class(c);
+            let class = BidiClass::of(c);
             original_classes.extend(repeat(class).take(c.len_utf8()));
             match class {
                 B => {

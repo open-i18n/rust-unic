@@ -9,16 +9,13 @@
 // except according to those terms.
 
 
-use super::{bidi_class, BidiClass, is_explicit, is_rtl};
+use super::{BidiClass, BidiClassCategory};
 
 
 /// Methods for bidi properties of character types.
-pub trait BidiChar {
+pub trait CharBidiClass {
     /// Get `BidiClass` of the character.
     fn bidi_class(self) -> BidiClass;
-
-    /// Whether the character is an *explicit* bidi formatting character.
-    fn is_explicit(self) -> bool;
 
     /// Whether the character has *left-to-right* (LTR) bidi directionality.
     fn is_ltr(self) -> bool;
@@ -27,33 +24,28 @@ pub trait BidiChar {
     fn is_rtl(self) -> bool;
 }
 
-impl BidiChar for char {
+impl CharBidiClass for char {
     #[inline]
     fn bidi_class(self) -> BidiClass {
-        bidi_class(self)
-    }
-
-    #[inline]
-    fn is_explicit(self) -> bool {
-        is_explicit(bidi_class(self))
+        BidiClass::of(self)
     }
 
     #[inline]
     fn is_ltr(self) -> bool {
-        !is_rtl(bidi_class(self))
+        BidiClass::of(self).is_ltr()
     }
 
     #[inline]
     fn is_rtl(self) -> bool {
-        is_rtl(bidi_class(self))
+        BidiClass::of(self).is_rtl()
     }
 }
 
 
 /// Methods for bidi properties of string types.
-pub trait BidiStr {
+pub trait StrBidiClass {
     /// Whether the string has any *explicit* bidi formatting character.
-    fn has_explicit(&self) -> bool;
+    fn has_bidi_explicit(&self) -> bool;
 
     /// Whether the string has any character with *left-to-right* (LTR) bidi directionality.
     fn has_ltr(&self) -> bool;
@@ -62,10 +54,12 @@ pub trait BidiStr {
     fn has_rtl(&self) -> bool;
 }
 
-impl BidiStr for str {
+impl StrBidiClass for str {
     #[inline]
-    fn has_explicit(&self) -> bool {
-        self.chars().any(|ch| ch.is_explicit())
+    fn has_bidi_explicit(&self) -> bool {
+        self.chars().any(|ch| {
+            ch.bidi_class().category() == BidiClassCategory::Explicit_Formatting
+        })
     }
 
     #[inline]
@@ -84,35 +78,38 @@ impl BidiStr for str {
 mod tests {
     #[test]
     fn test_bidi_char() {
-        use super::{BidiChar, BidiClass};
+        use super::{CharBidiClass, BidiClass, BidiClassCategory};
 
         let ch = '\u{0041}'; // U+0041 LATIN CAPITAL LETTER A "A"
         assert_eq!(ch.bidi_class(), BidiClass::L);
+        assert_eq!(ch.bidi_class().category(), BidiClassCategory::Strong);
         assert!(ch.is_ltr());
         assert!(!ch.is_rtl());
 
         let ch = '\u{05D0}'; // U+05D0 HEBREW LETTER ALEF "א"
         assert_eq!(ch.bidi_class(), BidiClass::R);
+        assert_eq!(ch.bidi_class().category(), BidiClassCategory::Strong);
         assert!(!ch.is_ltr());
         assert!(ch.is_rtl());
 
         let ch = '\u{0627}'; // U+0627 ARABIC LETTER ALEF "ا"
         assert_eq!(ch.bidi_class(), BidiClass::AL);
+        assert_eq!(ch.bidi_class().category(), BidiClassCategory::Strong);
         assert!(!ch.is_ltr());
         assert!(ch.is_rtl());
     }
 
     #[test]
     fn test_bidi_str() {
-        use super::BidiStr;
+        use super::StrBidiClass;
 
         let text = "";
-        assert!(!text.has_explicit());
+        assert!(!text.has_bidi_explicit());
         assert!(!text.has_ltr());
         assert!(!text.has_rtl());
 
         let text = "\u{0041}\u{05D0}\u{0627}";
-        assert!(!text.has_explicit());
+        assert!(!text.has_bidi_explicit());
         assert!(text.has_ltr());
         assert!(text.has_rtl());
     }

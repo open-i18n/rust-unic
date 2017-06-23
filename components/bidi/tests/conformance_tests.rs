@@ -15,7 +15,7 @@
 extern crate unic_bidi;
 
 
-use unic_bidi::{bidi_class, BidiInfo, format_chars, level, Level};
+use unic_bidi::{BidiClass, BidiInfo, format_chars, level, Level};
 
 
 const BASIC_TEST_DATA: &'static str = include_str!("../../../data/ucd/test/BidiTest.txt");
@@ -306,6 +306,6 @@ fn test_gen_char_from_bidi_class() {
     ] {
         let class_name = format!("{:?}", class);
         let sample_char = gen_char_from_bidi_class(&class_name);
-        assert_eq!(bidi_class(sample_char), class);
+        assert_eq!(BidiClass::of(sample_char), class);
     }
 }

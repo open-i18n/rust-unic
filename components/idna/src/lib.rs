@@ -55,7 +55,7 @@ mod tables;
 
 use std::ascii::AsciiExt;
 
-use unic_ucd_bidi::{BidiClass, bidi_class};
+use unic_ucd_bidi::BidiClass;
 use unic_normal::StrNormalForm;
 use unic_ucd_normal::is_combining_mark;
 
@@ -119,7 +119,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
 
     let mut chars = label.chars();
     let first_char_class = match chars.next() {
-        Some(c) => bidi_class(c),
+        Some(c) => BidiClass::of(c),
         None => return true, // empty string
     };
 
@@ -131,7 +131,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
                 match chars.next() {
                     Some(c) => {
                         if !matches!(
-                            bidi_class(c),
+                            BidiClass::of(c),
                             BidiClass::L | BidiClass::EN | BidiClass::ES | BidiClass::CS |
                                 BidiClass::ET | BidiClass::ON |
                                 BidiClass::BN |
@@ -152,7 +152,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
             let mut last_non_nsm = rev_chars.next();
             loop {
                 match last_non_nsm {
-                    Some(c) if bidi_class(c) == BidiClass::NSM => {
+                    Some(c) if BidiClass::of(c) == BidiClass::NSM => {
                         last_non_nsm = rev_chars.next();
                         continue;
                     }
@@ -162,7 +162,8 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
                 }
             }
             match last_non_nsm {
-                Some(c) if bidi_class(c) == BidiClass::L || bidi_class(c) == BidiClass::EN => {}
+                Some(c)
+                    if BidiClass::of(c) == BidiClass::L || BidiClass::of(c) == BidiClass::EN => {}
                 Some(_) => {
                     return false;
                 }
@@ -180,7 +181,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
             loop {
                 match chars.next() {
                     Some(c) => {
-                        let char_class = bidi_class(c);
+                        let char_class = BidiClass::of(c);
 
                         if char_class == BidiClass::EN {
                             found_en = true;
@@ -212,7 +213,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
             loop {
                 // must end in L or EN followed by 0 or more NSM
                 match last {
-                    Some(c) if bidi_class(c) == BidiClass::NSM => {
+                    Some(c) if BidiClass::of(c) == BidiClass::NSM => {
                         last = rev_chars.next();
                         continue;
                     }
@@ -224,7 +225,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
             match last {
                 Some(c)
                     if matches!(
-                        bidi_class(c),
+                        BidiClass::of(c),
                         BidiClass::R | BidiClass::AL | BidiClass::EN | BidiClass::AN
                     ) => {}
                 _ => {
@@ -310,7 +311,10 @@ fn processing(domain: &str, flags: Flags, errors: &mut Vec<Error>) -> String {
     //
     // First, check for literal bidi chars
     let mut is_bidi_domain = domain.chars().any(|c| {
-        matches!(bidi_class(c), BidiClass::R | BidiClass::AL | BidiClass::AN)
+        matches!(
+            BidiClass::of(c),
+            BidiClass::R | BidiClass::AL | BidiClass::AN
+        )
     });
     if !is_bidi_domain {
         // Then check for punycode-encoded bidi chars
@@ -319,7 +323,10 @@ fn processing(domain: &str, flags: Flags, errors: &mut Vec<Error>) -> String {
                 match unic_idna_punycode::decode_to_string(&label[PUNYCODE_PREFIX.len()..]) {
                     Some(decoded_label) => {
                         if decoded_label.chars().any(|c| {
-                            matches!(bidi_class(c), BidiClass::R | BidiClass::AL | BidiClass::AN)
+                            matches!(
+                                BidiClass::of(c),
+                                BidiClass::R | BidiClass::AL | BidiClass::AN
+                            )
                         }) {
                             is_bidi_domain = true;
                         }

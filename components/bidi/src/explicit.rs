@@ -13,7 +13,7 @@
 //!
 //! http://www.unicode.org/reports/tr9/#Explicit_Levels_and_Directions
 
-use unic_ucd_bidi::{BidiClass, is_rtl};
+use unic_ucd_bidi::BidiClass;
 
 use super::level::Level;
 
@@ -58,7 +58,7 @@ pub fn compute(
                     }
                 }
 
-                let new_level = if is_rtl(original_classes[i]) {
+                let new_level = if original_classes[i].is_rtl() {
                     last_level.new_explicit_next_rtl()
                 } else {
                     last_level.new_explicit_next_ltr()
