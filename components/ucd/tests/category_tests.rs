@@ -20,7 +20,7 @@ use unic_ucd::normal::is_combining_mark;
 use unic_ucd::utils::iter_all_chars;
 
 
-/// Bidi_Class=NSM := General_Category in { Mn (Nonspacing_Mark), Me (Enclosing_Mark) }
+/// `Bidi_Class=NSM := General_Category in { Mn (Nonspacing_Mark), Me (Enclosing_Mark) }`
 ///
 /// <http://www.unicode.org/reports/tr9/#NSM>
 #[test]
@@ -35,7 +35,7 @@ fn test_bidi_nsm_against_gen_cat() {
     // Every GC!=Mark must not be an NSM
     for cp in iter_all_chars() {
         if !is_combining_mark(cp) {
-            assert!(BidiClass::of(cp) != BidiClass::NSM);
+            assert_ne!(BidiClass::of(cp), BidiClass::NSM);
         }
     }
 }

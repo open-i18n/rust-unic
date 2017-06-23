@@ -31,7 +31,7 @@ fn bsearch_lookup_table<T>(
         Ordering::Greater
     }) {
         Ok(idx) => {
-            let ref slice = r[idx].1;
+            let slice = &r[idx].1;
             let offset = slice.offset as usize;
             let length = slice.length as usize;
             Some(&chars_table[offset..(offset + length)])

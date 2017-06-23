@@ -55,7 +55,7 @@ const MAP_STRING: &'static str = include!("tables/idna_map_string.rsv");
 impl Mapping {
     /// Get Mapping status of the character.
     pub fn of(ch: char) -> &'static Mapping {
-        let r = MAP.binary_search_by(|ref range| if ch > range.to {
+        let r = MAP.binary_search_by(|range| if ch > range.to {
             Ordering::Less
         } else if ch < range.from {
             Ordering::Greater

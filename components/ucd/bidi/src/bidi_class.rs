@@ -12,8 +12,9 @@
 use std::cmp::Ordering;
 
 
-/// Represents the Unicode character [Bidi_Class](http://www.unicode.org/reports/tr44/#Bidi_Class)
-/// property, also known as the *bidirectional character type*.
+/// Represents the Unicode character
+/// [*Bidi_Class*](http://www.unicode.org/reports/tr44/#Bidi_Class) property, also known as the
+/// *bidirectional character type*.
 ///
 /// * <http://www.unicode.org/reports/tr9/#Bidirectional_Character_Types>
 /// * <http://www.unicode.org/reports/tr44/#Bidi_Class_Values>

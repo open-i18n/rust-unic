@@ -73,22 +73,14 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
         // LTR label
         BidiClass::L => {
             // Rule 5
-            loop {
-                match chars.next() {
-                    Some(c) => {
-                        if !matches!(
-                            BidiClass::of(c),
-                            BidiClass::L | BidiClass::EN | BidiClass::ES | BidiClass::CS |
-                                BidiClass::ET | BidiClass::ON |
-                                BidiClass::BN |
-                                BidiClass::NSM
-                        ) {
-                            return false;
-                        }
-                    }
-                    None => {
-                        break;
-                    }
+            while let Some(c) = chars.next() {
+                if !matches!(
+                    BidiClass::of(c),
+                    BidiClass::L | BidiClass::EN | BidiClass::ES | BidiClass::CS |
+                        BidiClass::ET | BidiClass::ON | BidiClass::BN |
+                        BidiClass::NSM
+                ) {
+                    return false;
                 }
             }
 
@@ -124,33 +116,23 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
             let mut found_an = false;
 
             // Rule 2
-            loop {
-                match chars.next() {
-                    Some(c) => {
-                        let char_class = BidiClass::of(c);
+            while let Some(c) = chars.next() {
+                let char_class = BidiClass::of(c);
 
-                        if char_class == BidiClass::EN {
-                            found_en = true;
-                        }
-                        if char_class == BidiClass::AN {
-                            found_an = true;
-                        }
+                if char_class == BidiClass::EN {
+                    found_en = true;
+                }
+                if char_class == BidiClass::AN {
+                    found_an = true;
+                }
 
-                        if !matches!(
-                            char_class,
-                            BidiClass::R | BidiClass::AL | BidiClass::AN | BidiClass::EN |
-                                BidiClass::ES | BidiClass::CS |
-                                BidiClass::ET |
-                                BidiClass::ON |
-                                BidiClass::BN |
-                                BidiClass::NSM
-                        ) {
-                            return false;
-                        }
-                    }
-                    None => {
-                        break;
-                    }
+                if !matches!(
+                    char_class,
+                    BidiClass::R | BidiClass::AL | BidiClass::AN | BidiClass::EN |
+                        BidiClass::ES | BidiClass::CS | BidiClass::ET |
+                        BidiClass::ON | BidiClass::BN | BidiClass::NSM
+                ) {
+                    return false;
                 }
             }
             // Rule 3
@@ -194,7 +176,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
     return true;
 }
 
-/// http://www.unicode.org/reports/tr46/#Validity_Criteria
+// http://www.unicode.org/reports/tr46/#Validity_Criteria
 fn validate(label: &str, is_bidi_domain: bool, flags: Flags, errors: &mut Vec<Error>) {
     let first_char = label.chars().next();
     if first_char == None {
@@ -213,7 +195,7 @@ fn validate(label: &str, is_bidi_domain: bool, flags: Flags, errors: &mut Vec<Er
     // TODO: Add *CheckHyphens* flag.
 
     // V3: neither begin nor end with a U+002D HYPHEN-MINUS
-    else if label.starts_with("-") || label.ends_with("-") {
+    else if label.starts_with('-') || label.ends_with('-') {
         errors.push(Error::ValidityCriteria);
     }
     // V4: not contain a U+002E FULL STOP
@@ -245,7 +227,7 @@ fn validate(label: &str, is_bidi_domain: bool, flags: Flags, errors: &mut Vec<Er
     }
 }
 
-/// http://www.unicode.org/reports/tr46/#Processing
+// http://www.unicode.org/reports/tr46/#Processing
 fn processing(domain: &str, flags: Flags, errors: &mut Vec<Error>) -> String {
     let mut mapped = String::new();
     for c in domain.chars() {
@@ -340,7 +322,7 @@ enum Error {
 #[derive(Debug)]
 pub struct Errors(Vec<Error>);
 
-/// http://www.unicode.org/reports/tr46/#ToASCII
+/// <http://www.unicode.org/reports/tr46/#ToASCII>
 pub fn to_ascii(domain: &str, flags: Flags) -> Result<String, Errors> {
     let mut errors = Vec::new();
     let mut result = String::new();
@@ -364,7 +346,7 @@ pub fn to_ascii(domain: &str, flags: Flags) -> Result<String, Errors> {
     }
 
     if flags.verify_dns_length {
-        let domain = if result.ends_with(".") {
+        let domain = if result.ends_with('.') {
             &result[..result.len() - 1]
         } else {
             &*result
@@ -383,7 +365,7 @@ pub fn to_ascii(domain: &str, flags: Flags) -> Result<String, Errors> {
     }
 }
 
-/// http://www.unicode.org/reports/tr46/#ToUnicode
+/// <http://www.unicode.org/reports/tr46/#ToUnicode>
 ///
 /// Only `use_std3_ascii_rules` is used in `flags`.
 pub fn to_unicode(domain: &str, mut flags: Flags) -> (String, Result<(), Errors>) {

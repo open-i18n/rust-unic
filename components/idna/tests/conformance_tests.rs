@@ -17,11 +17,11 @@ pub fn collect_tests<F: FnMut(String, TestFn)>(add_test: &mut F) {
         .lines()
         .enumerate()
     {
-        if line == "" || line.starts_with("#") {
+        if line == "" || line.starts_with('#') {
             continue;
         }
         // Remove comments
-        let mut line = match line.find("#") {
+        let mut line = match line.find('#') {
             Some(index) => &line[0..index],
             None => line,
         };
@@ -39,7 +39,7 @@ pub fn collect_tests<F: FnMut(String, TestFn)>(add_test: &mut F) {
         let source = unescape(original);
         let to_unicode = pieces.remove(0);
         let to_ascii = pieces.remove(0);
-        let nv8 = if pieces.len() > 0 {
+        let nv8 = if !pieces.is_empty() {
             pieces.remove(0)
         } else {
             ""
@@ -62,7 +62,7 @@ pub fn collect_tests<F: FnMut(String, TestFn)>(add_test: &mut F) {
                     },
                 );
 
-                if to_ascii.starts_with("[") {
+                if to_ascii.starts_with('[') {
                     if to_ascii.starts_with("[C") {
                         // http://unicode.org/reports/tr46/#Deviations
                         // applications that perform IDNA2008 lookup are not required to check
@@ -87,14 +87,12 @@ pub fn collect_tests<F: FnMut(String, TestFn)>(add_test: &mut F) {
                     return;
                 }
 
-                let to_ascii = if to_ascii.len() > 0 {
+                let to_ascii = if !to_ascii.is_empty() {
                     to_ascii.to_string()
+                } else if !to_unicode.is_empty() {
+                    to_unicode.to_string()
                 } else {
-                    if to_unicode.len() > 0 {
-                        to_unicode.to_string()
-                    } else {
-                        source.clone()
-                    }
+                    source.clone()
                 };
 
                 if nv8 == "NV8" {
@@ -138,7 +136,7 @@ fn unescape(input: &str) -> String {
                             let c2 = chars.next().unwrap().to_digit(16).unwrap();
                             let c3 = chars.next().unwrap().to_digit(16).unwrap();
                             let c4 = chars.next().unwrap().to_digit(16).unwrap();
-                            match char::from_u32((((c1 * 16 + c2) * 16 + c3) * 16 + c4)) {
+                            match char::from_u32(((c1 * 16 + c2) * 16 + c3) * 16 + c4) {
                                 Some(c) => output.push(c),
                                 None => {
                                     output
