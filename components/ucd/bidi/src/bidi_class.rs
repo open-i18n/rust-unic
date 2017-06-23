@@ -59,7 +59,6 @@ const BIDI_CLASS_TABLE: &'static [(char, char, BidiClass)] =
 ///
 /// * <http://www.unicode.org/reports/tr9/#Table_Bidirectional_Character_Types>
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-#[allow(non_camel_case_types)]
 pub enum BidiClassCategory {
     /// Left-to-right and right-to-left types.
     Strong,
@@ -68,7 +67,7 @@ pub enum BidiClassCategory {
     Weak,
 
     /// Directional formatting characters.
-    Explicit_Formatting,
+    ExplicitFormatting,
 
     /// Everything else.
     Neutral,
@@ -89,7 +88,7 @@ impl BidiClass {
             L | R | AL => Strong,
             EN | ES | ET | AN | CS | NSM | BN => Weak,
             B | S | WS | ON => Neutral,
-            LRE | LRO | RLE | RLO | PDF | LRI | RLI | FSI | PDI => Explicit_Formatting,
+            LRE | LRO | RLE | RLO | PDF | LRI | RLI | FSI | PDI => ExplicitFormatting,
         }
     }
 

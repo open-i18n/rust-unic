@@ -58,7 +58,7 @@ impl StrBidiClass for str {
     #[inline]
     fn has_bidi_explicit(&self) -> bool {
         self.chars().any(|ch| {
-            ch.bidi_class().category() == BidiClassCategory::Explicit_Formatting
+            ch.bidi_class().category() == BidiClassCategory::ExplicitFormatting
         })
     }
 
