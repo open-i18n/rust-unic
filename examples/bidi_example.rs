@@ -29,7 +29,7 @@ fn main() {
 
     // Resolve embedding levels within the text.  Pass `None` to detect the
     // paragraph level automatically.
-    let bidi_info = BidiInfo::new(&text, None);
+    let bidi_info = BidiInfo::new(text, None);
 
     // This paragraph has embedding level 1 because its first strong character is RTL.
     assert_eq!(bidi_info.paragraphs.len(), 1);
