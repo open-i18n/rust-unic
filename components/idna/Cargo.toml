@@ -23,6 +23,7 @@ rustc-serialize = "0.3"
 [dependencies]
 matches = "0.1"
 unic-idna-punycode = { path = "punycode/", version = "0.2.0" }
+unic-idna-mapping = { path = "mapping/", version = "0.2.0" }
 unic-normal = { path = "../normal/", version = "0.2.0" }
 unic-ucd-bidi = { path = "../ucd/bidi/", version = "0.2.0" }
 unic-ucd-core = { path = "../ucd/core/", version = "0.2.0" }

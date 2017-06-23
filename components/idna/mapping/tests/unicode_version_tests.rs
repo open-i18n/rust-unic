@@ -1,4 +1,3 @@
-// Copyright 2015 The Servo Project Developers.
 // Copyright 2017 The UNIC Project Developers.
 //
 // See the COPYRIGHT file at the top-level directory of this distribution.
@@ -10,13 +9,14 @@
 // except according to those terms.
 
 
-mod age;
-
-use unic_ucd_core::UnicodeVersion;
-
-
-pub use self::age::Age;
+extern crate unic_ucd_core;
+extern crate unic_idna_mapping;
 
 
-/// The [Unicode version](http://www.unicode.org/versions/) of data
-pub const UNICODE_VERSION: UnicodeVersion = include!("unicode_version.rsv");
+#[test]
+fn test_version_against_ucd_core() {
+    assert_eq!(
+        unic_ucd_core::UNICODE_VERSION,
+        unic_idna_mapping::UNICODE_VERSION
+    );
+}

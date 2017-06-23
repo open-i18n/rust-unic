@@ -14,7 +14,7 @@
 extern crate unic;
 
 
-use unic::ucd::bidi::{BidiClass, BidiChar, BidiStr};
+use unic::ucd::bidi::{BidiClass, BidiClassCategory, CharBidiClass, StrBidiClass};
 
 
 fn main() {
@@ -27,17 +27,23 @@ fn main() {
         "c",
     ];
 
-    assert!(!text.has_explicit());
+    assert!(!text.has_bidi_explicit());
     assert!(text.has_rtl());
     assert!(text.has_ltr());
 
     assert_eq!(text.chars().nth(0).unwrap().bidi_class(), BidiClass::R);
-    assert!(!text.chars().nth(0).unwrap().is_explicit());
+    assert_eq!(
+        text.chars().nth(0).unwrap().bidi_class().category(),
+        BidiClassCategory::Strong
+    );
     assert!(!text.chars().nth(0).unwrap().is_ltr());
     assert!(text.chars().nth(0).unwrap().is_rtl());
 
     assert_eq!(text.chars().nth(3).unwrap().bidi_class(), BidiClass::L);
-    assert!(!text.chars().nth(3).unwrap().is_explicit());
+    assert_eq!(
+        text.chars().nth(0).unwrap().bidi_class().category(),
+        BidiClassCategory::Strong
+    );
     assert!(text.chars().nth(3).unwrap().is_ltr());
     assert!(!text.chars().nth(3).unwrap().is_rtl());
 }

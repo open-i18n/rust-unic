@@ -22,14 +22,14 @@ set -e
 
 # List of components, in order of dependency
 COMPONENTS="
-    ucd/core/
-    ucd/utils/
-    ucd/age/
-    ucd/bidi/
-    ucd/normal/
-    ucd/
-    bidi/
-    normal/
+    ucd/core
+    ucd/utils
+    ucd/age
+    ucd/bidi
+    ucd/normal
+    ucd
+    bidi
+    normal
     idna/punycode
     idna
 "

@@ -25,9 +25,14 @@
 extern crate unic_ucd_core;
 
 
-mod tables;
+mod age;
 mod traits;
 
-pub use tables::UNICODE_VERSION;
-pub use tables::Age;
+pub use age::Age;
 pub use traits::CharAge;
+
+use unic_ucd_core::UnicodeVersion;
+
+
+/// The [Unicode version](http://www.unicode.org/versions/) of data
+pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv");

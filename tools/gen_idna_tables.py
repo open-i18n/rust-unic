@@ -32,7 +32,7 @@ from unicode_utils import is_surrogate, cp_to_char
 
 
 OUTPUT_DIRS = {
-    'IDNA': path("components/idna/src/tables"),
+    'IDNA_MAPPING': path("components/idna/mapping/src/tables"),
 }
 
 
@@ -143,5 +143,5 @@ if __name__ == "__main__":
     common.cleanup_output_dirs(OUTPUT_DIRS.values())
 
     # IDNA
-    emit_unicode_version(OUTPUT_DIRS['IDNA'])
-    emit_idna_map_tables(OUTPUT_DIRS['IDNA'])
+    emit_unicode_version(OUTPUT_DIRS['IDNA_MAPPING'])
+    emit_idna_map_tables(OUTPUT_DIRS['IDNA_MAPPING'])

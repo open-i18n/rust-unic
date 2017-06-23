@@ -54,7 +54,7 @@ pub enum Age {
 
 use Age::*;
 
-pub const AGE_TABLE: &'static [(char, char, Age)] = include!("age_values.rsv");
+pub const AGE_TABLE: &'static [(char, char, Age)] = include!("tables/age_values.rsv");
 
 impl Age {
     /// Find the character Age

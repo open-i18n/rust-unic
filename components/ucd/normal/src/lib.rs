@@ -31,16 +31,22 @@
 extern crate unic_ucd_core;
 
 
-mod tables;
+mod composition;
+mod gen_cat;
 mod hangul;
 
-pub use tables::UNICODE_VERSION;
-pub use tables::{canonical_decomposition, compatibility_decomposition, canonical_composition,
-                 canonical_combining_class};
-pub use tables::is_combining_mark;
+pub use composition::{canonical_decomposition, compatibility_decomposition, canonical_composition,
+                      canonical_combining_class};
+pub use gen_cat::is_combining_mark;
 
-use std::cmp::Ordering::{Equal, Less, Greater};
+use std::cmp::Ordering;
 use std::ops::FnMut;
+
+use unic_ucd_core::UnicodeVersion;
+
+
+/// The [Unicode version](http://www.unicode.org/versions/) of data
+pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv");
 
 
 /// Compute canonical Unicode decomposition for character.
@@ -120,11 +126,11 @@ pub fn compose(a: char, b: char) -> Option<char> {
         None => None,
         Some(candidates) => {
             match candidates.binary_search_by(|&(val, _)| if b == val {
-                Equal
+                Ordering::Equal
             } else if val < b {
-                Less
+                Ordering::Less
             } else {
-                Greater
+                Ordering::Greater
             }) {
                 Ok(idx) => {
                     let (_, result) = candidates[idx];
@@ -134,32 +140,4 @@ pub fn compose(a: char, b: char) -> Option<char> {
             }
         }
     })
-}
-
-#[cfg(test)]
-mod tests {
-    use std::char;
-
-    use super::*;
-
-    #[test]
-    fn test_is_combining_mark_ascii() {
-        for cp in 0..0x7f {
-            assert!(!is_combining_mark(char::from_u32(cp).unwrap()));
-        }
-    }
-
-    // TODO: Add more tests for edge cases, Hangul comp/decomp, etc
-
-    #[test]
-    fn test_is_combining_mark_misc() {
-        // https://github.com/unicode-rs/unicode-normalization/issues/16
-        // U+11C3A BHAIKSUKI VOWEL SIGN O
-        // Category: Mark, Nonspacing [Mn]
-        assert!(is_combining_mark('\u{11C3A}'));
-
-        // U+11C3F BHAIKSUKI SIGN VIRAMA
-        // Category: Mark, Nonspacing [Mn]
-        assert!(is_combining_mark('\u{11C3F}'));
-    }
 }

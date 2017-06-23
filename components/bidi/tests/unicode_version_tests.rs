@@ -15,8 +15,5 @@ extern crate unic_bidi;
 
 #[test]
 fn test_version_against_ucd_core() {
-    assert_eq!(
-        unic_ucd_core::UNICODE_VERSION,
-        unic_bidi::UNICODE_VERSION
-    );
+    assert_eq!(unic_ucd_core::UNICODE_VERSION, unic_bidi::UNICODE_VERSION);
 }

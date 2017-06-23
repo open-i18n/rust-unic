@@ -88,7 +88,8 @@ mod prepare;
 mod process;
 
 
-pub use unic_ucd_bidi::{BidiClass, bidi_class, UNICODE_VERSION};
+pub use unic_ucd_bidi::UNICODE_VERSION;
+pub use unic_ucd_bidi::{BidiClass, BidiClassCategory};
 pub use level::Level;
 pub use prepare::LevelRun;
 pub use process::{ParagraphInfo, BidiInfo};
