@@ -58,13 +58,13 @@ pub fn decode_slice(slice: &StringTableSlice) -> &'static str {
     &MAP_STRING[start..(start + len)]
 }
 
-fn find_char(codepoint: char) -> &'static Mapping {
-    let r = TABLE.binary_search_by(|ref range| if codepoint > range.to {
+pub fn find_char(codepoint: char) -> &'static Mapping {
+    let r = MAP.binary_search_by(|ref range| if codepoint > range.to {
         Ordering::Less
     } else if codepoint < range.from {
         Ordering::Greater
     } else {
         Ordering::Equal
     });
-    r.ok().map(|i| &TABLE[i].mapping).unwrap()
+    r.ok().map(|i| &MAP[i].mapping).unwrap()
 }
