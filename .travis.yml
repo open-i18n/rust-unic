@@ -31,8 +31,8 @@ script:
   # Stop here if not running on nightly rust
   - if [ "$TRAVIS_RUST_VERSION" != "nightly" ] ; then exit ; fi
 
-  - cargo test  --verbose --features 'bench_it'
-  - cargo bench --verbose --features 'bench_it'
+  - cargo test  --verbose --all --features 'bench_it'
+  - cargo bench --verbose --all --features 'bench_it'
 
 # TODO: - rustdoc --test README.md -L target/debug -L target/debug/deps
 
