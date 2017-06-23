@@ -16,8 +16,8 @@ extern crate unic;
 
 use unic::bidi::BidiInfo;
 use unic::normal::StrNormalForm;
-use unic::ucd::age::{Age, CharAge};
-use unic::ucd::bidi::{BidiClass, CharBidiClass, StrBidiClass};
+use unic::ucd::{Age, CharAge};
+use unic::ucd::{BidiClass, CharBidiClass, StrBidiClass};
 use unic::ucd::normal::compose;
 
 #[test]

@@ -11,7 +11,7 @@
 
 use std::fmt::{self, Write};
 
-use unic_ucd_normal::{canonical_combining_class, decompose_canonical, decompose_compatible};
+use unic_ucd_normal::{CanonicalCombiningClass, decompose_canonical, decompose_compatible};
 
 
 // Helper functions used for Unicode normalization
@@ -94,12 +94,12 @@ impl<I: Iterator<Item = char>> Iterator for Decompositions<I> {
                 let sorted = &mut self.sorted;
                 {
                     let callback = |d| {
-                        let class = canonical_combining_class(d);
-                        if class == 0 && !*sorted {
+                        let ccc = CanonicalCombiningClass::of(d);
+                        if ccc.is_not_reordered() && !*sorted {
                             canonical_sort(buffer);
                             *sorted = true;
                         }
-                        buffer.push((d, class));
+                        buffer.push((d, ccc));
                     };
                     match self.kind {
                         Canonical => decompose_canonical(ch, callback),

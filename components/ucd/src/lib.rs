@@ -38,3 +38,8 @@ pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
 
 /// UNIC component description.
 pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
+
+
+pub use age::{Age, CharAge};
+pub use bidi::{BidiClass, CharBidiClass, StrBidiClass};
+pub use normal::{CanonicalCombiningClass};

@@ -43,10 +43,18 @@ example:
 
 ### Unicode Character Database
 
-| **Property Name** | **Property Type** | **UNIC Status** | **UNIC Implementation Type** |
-|-------------------|-------------------|-----------------|------------------------------|
-| Age               | Catalog           | `unic-ucd-age`  | `enum`                       |
-| Bidi_Class        | Enumeration       | `unic-ucd-bidi` | `enum`                       |
+### General
+
+| **Property Name** (short name)  | **Property Type** | **UNIC Component** | **UNIC Implementation**            |
+|---------------------------------|-------------------|--------------------|------------------------------------|
+| **General**                     |                   |                    |                                    |
+| Age (age)                       | Catalog           | `unic-ucd-age`     | `enum Age`                         |
+| **Bidirectional**               |                   |                    |                                    |
+| Bidi_Class                (bc)  | Enumeration       | `unic-ucd-bidi`    | `enum BidiClass`                   |
+| **Normalization**               |                   |                    |                                    |
+| Canonical_Combining_Class (ccc) | Enumeration       | `unic-ucd-bidi`    | `u8 trait CanonicalCombiningClass` |
+| Decomposition_Type (dt)         | Enumeration       | `unic-ucd-normal`  | Not Implemented                    |
+| Decomposition_Mapping (dm)      | String            | `unic-ucd-normal`  | Not Implemented                    |
 
 
 ## Named Unicode Algorithms
@@ -57,7 +65,7 @@ standards published by the Unicode Consortium.
 
 The following table shows their implementation status in UNIC.
 
-| **Name**                                       | **Reference** | **UNIC Status**                  |
+| **Name**                                       | **Reference** | **UNIC Component**               |
 |------------------------------------------------|---------------|----------------------------------|
 | Canonical Ordering                             | Section 3.11  | `unic-ucd-normal`                |
 | Canonical Composition                          | Section 3.11  | `unic-ucd-normal`                |

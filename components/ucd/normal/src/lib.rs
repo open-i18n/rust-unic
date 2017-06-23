@@ -31,12 +31,13 @@
 extern crate unic_ucd_core;
 
 
+mod canonical_combining_class;
 mod composition;
 mod gen_cat;
 mod hangul;
 
-pub use composition::{canonical_decomposition, compatibility_decomposition, canonical_composition,
-                      canonical_combining_class};
+pub use canonical_combining_class::CanonicalCombiningClass;
+pub use composition::{canonical_decomposition, compatibility_decomposition, canonical_composition};
 pub use gen_cat::is_combining_mark;
 
 use std::cmp::Ordering;

@@ -176,8 +176,8 @@ def get_bidi_class_info():
     # Mapping of codepoint to Bidi_Class property:
     bidi_class_groups = {}
     for cp in unicode_data:
-        [_, name, gen_cat, combining_class, bidi_class, decomp, deci, digit,
-         num, mirror, old, iso, upcase, lowcase, titlecase] = unicode_data[cp]
+        [_, name, gen_cat, ccc, bidi_class, decomp, deci, digit, num, mirror,
+         old, iso, upcase, lowcase, titlecase] = unicode_data[cp]
 
         if bidi_class not in bidi_class_groups:
             bidi_class_groups[bidi_class] = []
@@ -293,18 +293,18 @@ def get_normal_form_info():
     general_category_mark = []
 
     for cp in unicode_data:
-        [_, name, gen_cat, combining_class, bidi_class, decomp, deci, digit,
-         num, mirror, old, iso, upcase, lowcase, titlecase] = unicode_data[cp]
+        [_, name, gen_cat, ccc, bidi_class, decomp, deci, digit, num, mirror,
+         old, iso, upcase, lowcase, titlecase] = unicode_data[cp]
 
         # GC=Mark
         if 'M' in [gen_cat] + EXPANDED_CATEGORIES.get(gen_cat, []):
             general_category_mark.append(cp)
 
         # record combining class, if any
-        if combining_class != "0":
-            if combining_class not in canonical_combining_class:
-                canonical_combining_class[combining_class] = []
-            canonical_combining_class[combining_class].append(cp)
+        if ccc != "0":
+            if ccc not in canonical_combining_class:
+                canonical_combining_class[ccc] = []
+            canonical_combining_class[ccc].append(cp)
 
         # store decomposition, if given
         if decomp != "":
