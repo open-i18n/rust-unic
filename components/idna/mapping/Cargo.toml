@@ -1,6 +1,6 @@
 [package]
 name = "unic-idna-mapping"
-version = "0.2.0"
+version = "0.4.0"
 authors = ["The UNIC Project Developers"]
 homepage = "https://github.com/behnam/rust-unic/"
 repository = "https://github.com/behnam/rust-unic/"
@@ -16,4 +16,4 @@ rustc-test = "0.1"
 rustc-serialize = "0.3"
 
 [dependencies]
-unic-ucd-core = { path = "../../ucd/core/", version = "0.2.0" }
+unic-ucd-core = { path = "../../ucd/core/", version = "0.4.0" }
