@@ -44,25 +44,22 @@
 #[macro_use]
 extern crate matches;
 
-extern crate unic_idna_punycode;
 extern crate unic_normal;
 extern crate unic_ucd_bidi;
 extern crate unic_ucd_core;
 extern crate unic_ucd_normal;
 
-mod map;
+extern crate unic_idna_mapping as mapping;
+extern crate unic_idna_punycode as punycode;
+
+
 mod process;
 
-
-use unic_ucd_core::UnicodeVersion;
-
+pub use mapping::UNICODE_VERSION;
 pub use process::PUNYCODE_PREFIX;
 pub use process::{Flags, Errors};
 pub use process::{to_ascii, to_unicode};
 
-
-/// The version of [Unicode IDNA Compatibility Processing](http://www.unicode.org/reports/tr46/)
-pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv");
 
 /// UNIC component version.
 pub const PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");

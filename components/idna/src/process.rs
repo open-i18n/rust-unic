@@ -12,12 +12,12 @@
 
 use std::ascii::AsciiExt;
 
-use unic_ucd_bidi::BidiClass;
 use unic_normal::StrNormalForm;
+use unic_ucd_bidi::BidiClass;
 use unic_ucd_normal::is_combining_mark;
-use unic_idna_punycode as punycode;
 
-use map::{decode_slice, find_char, Mapping};
+use mapping::Mapping;
+use punycode;
 
 
 /// Prefix used in Punycode encoding.
@@ -25,13 +25,13 @@ pub static PUNYCODE_PREFIX: &'static str = "xn--";
 
 
 fn map_char(codepoint: char, flags: Flags, output: &mut String, errors: &mut Vec<Error>) {
-    match *find_char(codepoint) {
+    match *Mapping::of(codepoint) {
         Mapping::Valid => output.push(codepoint),
         Mapping::Ignored => {}
-        Mapping::Mapped(ref slice) => output.push_str(decode_slice(slice)),
+        Mapping::Mapped(ref slice) => output.push_str(slice.value()),
         Mapping::Deviation(ref slice) => {
             if flags.transitional_processing {
-                output.push_str(decode_slice(slice))
+                output.push_str(slice.value())
             } else {
                 output.push(codepoint)
             }
@@ -50,7 +50,7 @@ fn map_char(codepoint: char, flags: Flags, output: &mut String, errors: &mut Vec
             if flags.use_std3_ascii_rules {
                 errors.push(Error::DissallowedMappedInStd3);
             }
-            output.push_str(decode_slice(slice))
+            output.push_str(slice.value())
         }
     }
 }
@@ -225,7 +225,7 @@ fn validate(label: &str, is_bidi_domain: bool, flags: Flags, errors: &mut Vec<Er
         errors.push(Error::ValidityCriteria);
     }
     // V6: Check against Mapping Table
-    else if label.chars().any(|c| match *find_char(c) {
+    else if label.chars().any(|c| match *Mapping::of(c) {
         Mapping::Valid => false,
         Mapping::Deviation(_) => flags.transitional_processing,
         Mapping::DisallowedStd3Valid => flags.use_std3_ascii_rules,
