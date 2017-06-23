@@ -57,7 +57,7 @@ fn test_sample() {
     assert!(text.chars().nth(3).unwrap().is_ltr());
     assert!(!text.chars().nth(3).unwrap().is_rtl());
 
-    let bidi_info = BidiInfo::new(&text, None);
+    let bidi_info = BidiInfo::new(text, None);
     assert_eq!(bidi_info.paragraphs.len(), 1);
 
     let para = &bidi_info.paragraphs[0];

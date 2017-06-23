@@ -11,7 +11,7 @@
 
 //! 3.3.2 Explicit Levels and Directions
 //!
-//! http://www.unicode.org/reports/tr9/#Explicit_Levels_and_Directions
+//! <http://www.unicode.org/reports/tr9/#Explicit_Levels_and_Directions>
 
 use unic_ucd_bidi::BidiClass;
 
@@ -21,7 +21,7 @@ use BidiClass::*;
 
 /// Compute explicit embedding levels for one paragraph of text (X1-X8).
 ///
-/// `processing_classes[i]` must contain the BidiClass of the char at byte index `i`,
+/// `processing_classes[i]` must contain the `BidiClass` of the char at byte index `i`,
 /// for each char in `text`.
 pub fn compute(
     text: &str,
@@ -30,9 +30,9 @@ pub fn compute(
     levels: &mut [Level],
     processing_classes: &mut [BidiClass],
 ) {
-    assert!(text.len() == original_classes.len());
+    assert_eq!(text.len(), original_classes.len());
 
-    // http://www.unicode.org/reports/tr9/#X1
+    // <http://www.unicode.org/reports/tr9/#X1>
     let mut stack = DirectionalStatusStack::new();
     stack.push(para_level, OverrideStatus::Neutral);
 
@@ -90,7 +90,7 @@ pub fn compute(
                 }
             }
 
-            // http://www.unicode.org/reports/tr9/#X6a
+            // <http://www.unicode.org/reports/tr9/#X6a>
             PDI => {
                 if overflow_isolate_count > 0 {
                     overflow_isolate_count -= 1;
@@ -99,8 +99,8 @@ pub fn compute(
                     loop {
                         // Pop everything up to and including the last Isolate status.
                         match stack.vec.pop() {
+                            None |
                             Some(Status { status: OverrideStatus::Isolate, .. }) => break,
-                            None => break,
                             _ => continue,
                         }
                     }
@@ -115,7 +115,7 @@ pub fn compute(
                 }
             }
 
-            // http://www.unicode.org/reports/tr9/#X7
+            // <http://www.unicode.org/reports/tr9/#X7>
             PDF => {
                 if overflow_isolate_count > 0 {
                     continue;
@@ -135,7 +135,7 @@ pub fn compute(
             // Nothing
             B | BN => {}
 
-            // http://www.unicode.org/reports/tr9/#X6
+            // <http://www.unicode.org/reports/tr9/#X6>
             _ => {
                 let last = stack.last();
                 levels[i] = last.level;

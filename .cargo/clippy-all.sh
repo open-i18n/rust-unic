@@ -20,21 +20,18 @@
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ROOT="$DIR/.."
 . "$DIR/common.sh"
 
 
 # Steps
 
-- cargo update --verbose
+- cargo clean --verbose
 
-# First test all components and stop if anything goes wrong
 for component in $COMPONENTS; do
-    - cargo test    --verbose --manifest-path "components/$component/Cargo.toml"
+    - cd "$ROOT/components/$component"
+    - cargo clippy --verbose
+    - cd "$ROOT"
 done
 
-# Then publish all components, and ignore failures (usually because of the version being released already)
-for component in $COMPONENTS; do
-    - cargo publish --verbose --manifest-path "components/$component/Cargo.toml" || true
-done
-
-- cargo publish --verbose
+- cargo clippy --verbose

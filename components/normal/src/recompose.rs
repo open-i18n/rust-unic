@@ -75,7 +75,7 @@ impl<I: Iterator<Item = char>> Iterator for Recompositions<I> {
                             self.composee = Some(ch);
                             continue;
                         }
-                        let k = self.composee.clone().unwrap();
+                        let k = self.composee.unwrap();
 
                         match self.last_ccc {
                             None => {

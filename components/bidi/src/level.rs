@@ -168,7 +168,7 @@ impl Level {
     /// The next LTR (even) level greater than this, or fail if number is larger than `max_depth`.
     #[inline]
     pub fn new_explicit_next_ltr(&self) -> Result<Level, Error> {
-        Level::new_explicit(self.0 + 2 & !1)
+        Level::new_explicit((self.0 + 2) & !1)
     }
 
     /// The next RTL (odd) level greater than this, or fail if number is larger than `max_depth`.

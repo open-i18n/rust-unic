@@ -87,14 +87,11 @@ where
     }
 
     // First check the canonical decompositions
-    match canonical_decomposition(c) {
-        Some(canon) => {
-            for x in canon {
-                d(*x, i, k);
-            }
-            return;
+    if let Some(canon) = canonical_decomposition(c) {
+        for x in canon {
+            d(*x, i, k);
         }
-        None => (),
+        return;
     }
 
     // Bottom out if we're not doing compat.
@@ -104,14 +101,11 @@ where
     }
 
     // Then check the compatibility decompositions
-    match compatibility_decomposition(c) {
-        Some(compat) => {
-            for x in compat {
-                d(*x, i, k);
-            }
-            return;
+    if let Some(compat) = compatibility_decomposition(c) {
+        for x in compat {
+            d(*x, i, k);
         }
-        None => (),
+        return;
     }
 
     // Finally bottom out.

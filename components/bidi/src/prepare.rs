@@ -61,7 +61,7 @@ pub fn isolating_run_sequences(
 
     for run in runs {
         assert!(run.len() > 0);
-        assert!(stack.len() > 0);
+        assert!(!stack.is_empty());
 
         let start_class = original_classes[run.start];
         let end_class = original_classes[run.end - 1];
@@ -85,7 +85,7 @@ pub fn isolating_run_sequences(
         }
     }
     // Pop any remaning sequences off the stack.
-    sequences.extend(stack.into_iter().rev().filter(|seq| seq.len() > 0));
+    sequences.extend(stack.into_iter().rev().filter(|seq| !seq.is_empty()));
 
     // Determine the `sos` and `eos` class for each sequence.
     // http://www.unicode.org/reports/tr9/#X10
@@ -140,23 +140,21 @@ pub fn isolating_run_sequences(
 ///
 /// http://www.unicode.org/reports/tr9/#BD7
 fn level_runs(levels: &[Level], original_classes: &[BidiClass]) -> Vec<LevelRun> {
-    assert!(levels.len() == original_classes.len());
+    assert_eq!(levels.len(), original_classes.len());
 
     let mut runs = Vec::new();
-    if levels.len() == 0 {
+    if levels.is_empty() {
         return runs;
     }
 
     let mut current_run_level = levels[0];
     let mut current_run_start = 0;
     for i in 1..levels.len() {
-        if !removed_by_x9(original_classes[i]) {
-            if levels[i] != current_run_level {
-                // End the last run and start a new one.
-                runs.push(current_run_start..i);
-                current_run_level = levels[i];
-                current_run_start = i;
-            }
+        if !removed_by_x9(original_classes[i]) && levels[i] != current_run_level {
+            // End the last run and start a new one.
+            runs.push(current_run_start..i);
+            current_run_level = levels[i];
+            current_run_start = i;
         }
     }
     runs.push(current_run_start..levels.len());

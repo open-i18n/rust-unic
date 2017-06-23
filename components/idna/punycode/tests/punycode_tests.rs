@@ -18,14 +18,13 @@ fn one_test(decoded: &str, encoded: &str) {
         None => panic!("Decoding {} failed.", encoded),
         Some(result) => {
             let result = result.into_iter().collect::<String>();
-            assert!(
-                result == decoded,
-                format!(
-                    "Incorrect decoding of \"{}\":\n   \"{}\"\n!= \"{}\"\n",
-                    encoded,
-                    result,
-                    decoded
-                )
+            assert_eq!(
+                result,
+                decoded,
+                "Incorrect decoding of \"{}\":\n   \"{}\"\n!= \"{}\"\n",
+                encoded,
+                result,
+                decoded
             )
         }
     }
@@ -33,14 +32,13 @@ fn one_test(decoded: &str, encoded: &str) {
     match encode_str(decoded) {
         None => panic!("Encoding {} failed.", decoded),
         Some(result) => {
-            assert!(
-                result == encoded,
-                format!(
-                    "Incorrect encoding of \"{}\":\n   \"{}\"\n!= \"{}\"\n",
-                    decoded,
-                    result,
-                    encoded
-                )
+            assert_eq!(
+                result,
+                encoded,
+                "Incorrect encoding of \"{}\":\n   \"{}\"\n!= \"{}\"\n",
+                decoded,
+                result,
+                encoded
             )
         }
     }
