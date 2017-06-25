@@ -12,7 +12,7 @@
 use std::collections::VecDeque;
 use std::fmt::{self, Write};
 
-use unic_ucd_normal::{canonical_combining_class, compose};
+use unic_ucd_normal::{CanonicalCombiningClass, compose};
 
 use decompose::Decompositions;
 
@@ -67,9 +67,9 @@ impl<I: Iterator<Item = char>> Iterator for Recompositions<I> {
             match self.state {
                 Composing => {
                     for ch in self.iter.by_ref() {
-                        let ch_class = canonical_combining_class(ch);
+                        let ch_ccc = CanonicalCombiningClass::of(ch);
                         if self.composee.is_none() {
-                            if ch_class != 0 {
+                            if !ch_ccc.is_not_reordered() {
                                 return Some(ch);
                             }
                             self.composee = Some(ch);
@@ -85,26 +85,26 @@ impl<I: Iterator<Item = char>> Iterator for Recompositions<I> {
                                         continue;
                                     }
                                     None => {
-                                        if ch_class == 0 {
+                                        if ch_ccc.is_not_reordered() {
                                             self.composee = Some(ch);
                                             return Some(k);
                                         }
                                         self.buffer.push_back(ch);
-                                        self.last_ccc = Some(ch_class);
+                                        self.last_ccc = Some(ch_ccc);
                                     }
                                 }
                             }
-                            Some(l_class) => {
-                                if l_class >= ch_class {
+                            Some(last_ccc) => {
+                                if last_ccc >= ch_ccc {
                                     // `ch` is blocked from `composee`
-                                    if ch_class == 0 {
+                                    if ch_ccc == 0 {
                                         self.composee = Some(ch);
                                         self.last_ccc = None;
                                         self.state = Purging;
                                         return Some(k);
                                     }
                                     self.buffer.push_back(ch);
-                                    self.last_ccc = Some(ch_class);
+                                    self.last_ccc = Some(ch_ccc);
                                     continue;
                                 }
                                 match compose(k, ch) {
@@ -114,7 +114,7 @@ impl<I: Iterator<Item = char>> Iterator for Recompositions<I> {
                                     }
                                     None => {
                                         self.buffer.push_back(ch);
-                                        self.last_ccc = Some(ch_class);
+                                        self.last_ccc = Some(ch_ccc);
                                     }
                                 }
                             }
