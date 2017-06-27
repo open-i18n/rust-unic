@@ -80,7 +80,7 @@ From the
 | **Bidirectional**               |                   |                    |                                    |
 | Bidi_Class                (bc)  | Enumeration       | `unic-ucd-bidi`    | `enum BidiClass`                   |
 | **Normalization**               |                   |                    |                                    |
-| Canonical_Combining_Class (ccc) | Enumeration       | `unic-ucd-bidi`    | `u8 trait CanonicalCombiningClass` |
+| Canonical_Combining_Class (ccc) | Enumeration       | `unic-ucd-normal`  | `u8 trait CanonicalCombiningClass` |
 | Decomposition_Type (dt)         | Enumeration       | `unic-ucd-normal`  | `enum DecompositionType`           |
 
 
