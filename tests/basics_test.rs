@@ -20,6 +20,7 @@ use unic::ucd::{Age, CharAge};
 use unic::ucd::{BidiClass, CharBidiClass, StrBidiClass};
 use unic::ucd::normal::compose;
 
+#[cfg_attr(rustfmt, rustfmt_skip)]
 #[test]
 fn test_sample() {
 

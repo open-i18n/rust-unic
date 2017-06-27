@@ -17,6 +17,7 @@ extern crate unic;
 use unic::bidi::BidiInfo;
 
 
+#[cfg_attr(rustfmt, rustfmt_skip)]
 fn main() {
     let text = concat![
         "א",
