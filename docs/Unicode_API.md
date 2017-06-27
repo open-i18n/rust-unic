@@ -11,8 +11,10 @@ Rust.
 Unicode Character Properties are a major part of the Unicode Standard, defined in *Section 3.5,
 Properties* of the [Unicode Standard](http://www.unicode.org/versions/latest/) and explained
 more in *Unicode Character Database (UCD)* ([UAX\#44](http://www.unicode.org/reports/tr44/)).
+
 Some of these properties are now *deprecated*, meaning that they are no longer recommended for
-use, therefore UNIC will not implement these properties unless there is clear demand for them.
+use. Some other properties are considered *contributory* properties. Neither of these groups of
+properties will be support in UNIC, unless there is clear demand for them.
 
 Other specifications published by the Unicode Consortium, like the *Unicode IDNA Compatibility
 Processing* ([UTS\#46](www.unicode.org/reports/tr46/)) and the *Unicode Emoji*
@@ -26,24 +28,50 @@ for a complete list of these specifications and their current status.
 
 ### Naming Convension
 
-The character properties defined in these specifications follow a common naming convension. The
-UNIC API for character properties is based on this convension and tries to stay as close as
+The character properties defined in Unicode specifications follow a common naming convension.
+Each charcter property and (non-numeric) property value has a name and an abbreviation.
+
+The UNIC API for character properties is based on this convension and tries to stay as close as
 possible to this naming schemes, making it easier to use the library when familiar with the
 Unicode convensions.
 
-Each charcter property and (non-numeric) property value has a name and an abbreviation. For
-example:
+NOTE: Since Rust does not support aliases for `enum` variants, only the *long names* are
+supported in UNIC components. Property abbreviation names are provided in the documentation (to
+help using them as variable-name, etc, if desired) and is also used in specific cases to prevent
+namespace collision.
 
-|                    | *Name*           | *Abbreviation* |
-|--------------------|------------------|----------------|
-| **Property**       | General_Category | gc             |
-| **Property Value** | Uppercase_Letter | Lu             |
-| **Property Value** | Cased_Letter     | LC             |
+Example:
+
+|                    | *Unicode Name*        | *UNIC Name*                               |
+|--------------------|-----------------------|-------------------------------------------|
+| **Property**       | General_Category (gc) | `GeneralCategory`                         |
+| **Property Value** | Uppercase_Letter (Lu) | `UppercaseLetter` / `is_uppercase_letter` |
+| **Property Value** | Cased_Letter (LC)     | `is_cased_letter()`                       |
+
+In UNIC, the common way of accessing property values is using static function `of()` on the
+property type (`enum` or `trait`).
+
+For example, *Some_Example* Unicode character property will be available via
+`SomeExample::of(ch)`.
+
+Rust `trait` types are used for Unicode numeric properties. In this case, name collision could
+happen is with helper methods of property `trait`s, when property values have similar names,
+therefore all the helper methods for specific property will be *prefixed* with the *abbreviation
+name* of the property.  (This won't happen for `enum` types, of course, since they are different
+`type`s.)
+
+For example, `trait CanonicalCombiningClass` returns an integer (`u8`) from its `of()` function,
+therefore, we will have:
+
+```rust
+let ch_ccc = CanonicalCombiningClass::of(ch);
+assert!(ch_ccc.ccc_is_not_reordered());
+```
 
 
 ### Unicode Character Database
 
-### General
+From the
 
 | **Property Name** (short name)  | **Property Type** | **UNIC Component** | **UNIC Implementation**            |
 |---------------------------------|-------------------|--------------------|------------------------------------|
@@ -53,8 +81,7 @@ example:
 | Bidi_Class                (bc)  | Enumeration       | `unic-ucd-bidi`    | `enum BidiClass`                   |
 | **Normalization**               |                   |                    |                                    |
 | Canonical_Combining_Class (ccc) | Enumeration       | `unic-ucd-bidi`    | `u8 trait CanonicalCombiningClass` |
-| Decomposition_Type (dt)         | Enumeration       | `unic-ucd-normal`  | Not Implemented                    |
-| Decomposition_Mapping (dm)      | String            | `unic-ucd-normal`  | Not Implemented                    |
+| Decomposition_Type (dt)         | Enumeration       | `unic-ucd-normal`  | `enum DecompositionType`           |
 
 
 ## Named Unicode Algorithms
@@ -65,22 +92,22 @@ standards published by the Unicode Consortium.
 
 The following table shows their implementation status in UNIC.
 
-| **Name**                                       | **Reference** | **UNIC Component**               |
-|------------------------------------------------|---------------|----------------------------------|
-| Canonical Ordering                             | Section 3.11  | `unic-ucd-normal`                |
-| Canonical Composition                          | Section 3.11  | `unic-ucd-normal`                |
-| Normalization                                  | Section 3.11  | `unic-ucd-normal`                |
-| Hangul Syllable Composition                    | Section 3.12  | unic-ucd-normal (Not public yet) |
-| Hangul Syllable Decomposition                  | Section 3.12  | unic-ucd-normal (Not public yet) |
-| Hangul Syllable Name Generation                | Section 3.12  | Not Implemented                  |
-| Default Case Conversion                        | Section 3.13  | Not Implemented                  |
-| Default Case Detection                         | Section 3.13  | Not Implemented                  |
-| Default Caseless Matching                      | Section 3.13  | Not Implemented                  |
-| Bidirectional Algorithm (UBA)                  | UAX \#9       | `unic-bidi`                      |
-| Line Breaking Algorithm                        | UAX \#14      | Not Implemented                  |
-| Character Segmentation                         | UAX \#29      | Not Implemented                  |
-| Word Segmentation                              | UAX \#29      | Not Implemented                  |
-| Sentence Segmentation                          | UAX \#29      | Not Implemented                  |
-| Hangul Syllable Boundary Determination         | UAX \#29      | Not Implemented                  |
-| Standard Compression Scheme for Unicode (SCSU) | UTS \#6       | Not Implemented                  |
-| Unicode Collation Algorithm (UCA)              | UTS \#10      | Not Implemented                  |
+| **Name**                                       | **Reference** | **UNIC Component** |
+|------------------------------------------------|---------------|--------------------|
+| Canonical Ordering                             | Section 3.11  | `unic-ucd-normal`  |
+| Canonical Composition                          | Section 3.11  | `unic-ucd-normal`  |
+| Normalization                                  | Section 3.11  | `unic-ucd-normal`  |
+| Hangul Syllable Composition                    | Section 3.12  | Not Public         |
+| Hangul Syllable Decomposition                  | Section 3.12  | Not Public         |
+| Hangul Syllable Name Generation                | Section 3.12  | Not Implemented    |
+| Default Case Conversion                        | Section 3.13  | Not Implemented    |
+| Default Case Detection                         | Section 3.13  | Not Implemented    |
+| Default Caseless Matching                      | Section 3.13  | Not Implemented    |
+| Bidirectional Algorithm (UBA)                  | UAX \#9       | `unic-bidi`        |
+| Line Breaking Algorithm                        | UAX \#14      | Not Implemented    |
+| Character Segmentation                         | UAX \#29      | Not Implemented    |
+| Word Segmentation                              | UAX \#29      | Not Implemented    |
+| Sentence Segmentation                          | UAX \#29      | Not Implemented    |
+| Hangul Syllable Boundary Determination         | UAX \#29      | Not Implemented    |
+| Standard Compression Scheme for Unicode (SCSU) | UTS \#6       | Not Implemented    |
+| Unicode Collation Algorithm (UCA)              | UTS \#10      | Not Implemented    |

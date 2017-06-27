@@ -10,7 +10,7 @@
 // except according to those terms.
 
 
-//! Accessor for Canonical Combining Class (ccc)
+//! Accessor for Canonical_Combining_Class (ccc) property
 
 // TODO: [API] Support Canonical_Combining_Class_Values, either by creating a separate `enum` type,
 // or converting `CanonicalCombiningClass` into enum and allowing access to numerical value.

@@ -10,8 +10,7 @@
 // except according to those terms.
 
 
-#![deny(unsafe_code)]
-#![forbid(missing_docs)]
+#![deny(unsafe_code, missing_docs)]
 
 //! # UNIC — UCD — Normalization
 //!
@@ -37,12 +36,14 @@ mod composition;
 mod decompose;
 mod gen_cat;
 mod hangul;
+mod decomposition_type;
 
 
 pub use canonical_combining_class::CanonicalCombiningClass;
 pub use composition::{canonical_decomposition, compatibility_decomposition, canonical_composition};
 pub use gen_cat::is_combining_mark;
 pub use decompose::{decompose_canonical, decompose_compatible};
+pub use decomposition_type::DecompositionType;
 
 use std::cmp::Ordering;
 

@@ -79,4 +79,3 @@ where
     // Finally bottom out.
     (*callback)(ch);
 }
-

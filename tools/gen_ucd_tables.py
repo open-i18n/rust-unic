@@ -288,8 +288,9 @@ def get_normal_form_info():
     unicode_data = get_unicode_data()
 
     canonical_combining_class = {}
-    canonical_decomposition = {}
-    compatibility_decomposition = {}
+    canonical_decomposition_mapping = {}
+    compatibility_decomposition_mapping = {}
+    compatibility_decomposition_type = {}
     general_category_mark = []
 
     for cp in unicode_data:
@@ -308,52 +309,62 @@ def get_normal_form_info():
 
         # store decomposition, if given
         if decomp != "":
-            if decomp.startswith('<'):
-                compatibility_decomposition[cp] = [
+            tokens = decomp.split()
+            if tokens[0].startswith('<'):
+                decomp_type = tokens[0][1:-1].title()
+                if decomp_type not in compatibility_decomposition_type:
+                    compatibility_decomposition_type[decomp_type] = []
+                compatibility_decomposition_type[decomp_type].append(cp)
+                compatibility_decomposition_mapping[cp] = [
                     int(x, 16)
-                    for x in decomp.split()[1:]
+                    for x in tokens[1:]
                 ]
             else:
-                canonical_decomposition[cp] = [
+                # decomp_type = 'Canonical'
+                canonical_decomposition_mapping[cp] = [
                     int(x, 16)
-                    for x in decomp.split()
+                    for x in tokens
                 ]
 
     general_category_mark = ranges_from_codepoints(general_category_mark)
     canonical_combining_class = range_value_triplets_from_codepoints(
         canonical_combining_class)
+    compatibility_decomposition_type = range_value_triplets_from_codepoints(
+        compatibility_decomposition_type)
 
     return (
         general_category_mark,
         canonical_combining_class,
-        canonical_decomposition,
-        compatibility_decomposition,
+        canonical_decomposition_mapping,
+        compatibility_decomposition_mapping,
+        compatibility_decomposition_type,
     )
 
 
 @memoize
-def get_canonical_composition_data():
-    (_, _, canonical_decomposition, _) = get_normal_form_info()
+def get_canonical_composition_mapping():
+    (_, _, canonical_decomposition_mapping, _, _) = get_normal_form_info()
 
-    data = {}
+    mapping = {}
     composition_exclusions = get_normal_props()["Full_Composition_Exclusion"]
-    for char in canonical_decomposition.keys():
+    for char in canonical_decomposition_mapping.keys():
         if True in map(lambda (start, end): start <= char <= end, composition_exclusions):
             continue
-        decomp = canonical_decomposition[char]
+        decomp = canonical_decomposition_mapping[char]
         if len(decomp) == 2:
-            if not data.has_key(decomp[0]):
-                data[decomp[0]] = []
-            data[decomp[0]].append((decomp[1], char))
-    return data
+            if not mapping.has_key(decomp[0]):
+                mapping[decomp[0]] = []
+            mapping[decomp[0]].append((decomp[1], char))
+    return mapping
 
 
 def emit_normal_form_tables(dir):
     (
         general_category_mark,
         canonical_combining_class,
-        canonical_decomposition,
-        compatibility_decomposition,
+        canonical_decomposition_mapping,
+        compatibility_decomposition_mapping,
+        compatibility_decomposition_type,
     ) = get_normal_form_info()
 
     with open(join(dir, 'general_category_mark.rsv'), "w") as values_file:
@@ -379,34 +390,46 @@ def emit_normal_form_tables(dir):
             ),
         )
 
-    with open(join(dir, 'canonical_decomposition_lookup.rsv'), "w") as lookup_file, \
-            open(join(dir, 'canonical_decomposition_values.rsv'), "w") as values_file:
-        rustout.emit_lookup_tables(
+    with open(join(dir, 'compatibility_decomposition_type_values.rsv'), "w") as values_file:
+        rustout.emit_table(
             __file__,
-            lookup_file,
             values_file,
-            canonical_decomposition,
+            compatibility_decomposition_type,
+            print_fun=lambda x: "(%s, %s, %s)" % (
+                rustout.char_literal(x[0]),
+                rustout.char_literal(x[1]),
+                x[2],
+            ),
         )
 
-    with open(join(dir, 'compatibility_decomposition_lookup.rsv'), "w") as lookup_file, \
-            open(join(dir, 'compatibility_decomposition_values.rsv'), "w") as values_file:
+    with open(join(dir, 'canonical_decomposition_mapping_lookup.rsv'), "w") as lookup_file, \
+            open(join(dir, 'canonical_decomposition_mapping_values.rsv'), "w") as values_file:
         rustout.emit_lookup_tables(
             __file__,
             lookup_file,
             values_file,
-            compatibility_decomposition,
+            canonical_decomposition_mapping,
         )
 
-    with open(join(dir, 'canonical_composition_lookup.rsv'), "w") as lookup_file, \
-            open(join(dir, 'canonical_composition_values.rsv'), "w") as values_file:
-        canonical_composition_data = get_canonical_composition_data()
+    with open(join(dir, 'compatibility_decomposition_mapping_lookup.rsv'), "w") as lookup_file, \
+            open(join(dir, 'compatibility_decomposition_mapping_values.rsv'), "w") as values_file:
         rustout.emit_lookup_tables(
             __file__,
             lookup_file,
             values_file,
-            canonical_composition_data,
+            compatibility_decomposition_mapping,
+        )
+
+    with open(join(dir, 'canonical_composition_mapping_lookup.rsv'), "w") as lookup_file, \
+            open(join(dir, 'canonical_composition_mapping_values.rsv'), "w") as values_file:
+        canonical_composition_mapping = get_canonical_composition_mapping()
+        rustout.emit_lookup_tables(
+            __file__,
+            lookup_file,
+            values_file,
+            canonical_composition_mapping,
             value_fun=lambda char: sorted(
-                canonical_composition_data[char], lambda x, y: x[0] - y[0]
+                canonical_composition_mapping[char], lambda x, y: x[0] - y[0]
             ),
             value_print_fun=lambda pair: "(%s, %s)" % (
                 rustout.char_literal(pair[0]),
