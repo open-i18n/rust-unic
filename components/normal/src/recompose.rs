@@ -1,6 +1,7 @@
-// Copyright 2012-2015 The Rust Project Developers. See the COPYRIGHT
-// file at the top-level directory of this distribution and at
-// http://rust-lang.org/COPYRIGHT.
+// Copyright 2012-2015 The Rust Project Developers.
+// Copyright 2017 The UNIC Project Developers.
+//
+// See the COPYRIGHT file at the top-level directory of this distribution.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -69,7 +70,7 @@ impl<I: Iterator<Item = char>> Iterator for Recompositions<I> {
                     for ch in self.iter.by_ref() {
                         let ch_ccc = CanonicalCombiningClass::of(ch);
                         if self.composee.is_none() {
-                            if !ch_ccc.is_not_reordered() {
+                            if !ch_ccc.ccc_is_not_reordered() {
                                 return Some(ch);
                             }
                             self.composee = Some(ch);
@@ -85,7 +86,7 @@ impl<I: Iterator<Item = char>> Iterator for Recompositions<I> {
                                         continue;
                                     }
                                     None => {
-                                        if ch_ccc.is_not_reordered() {
+                                        if ch_ccc.ccc_is_not_reordered() {
                                             self.composee = Some(ch);
                                             return Some(k);
                                         }

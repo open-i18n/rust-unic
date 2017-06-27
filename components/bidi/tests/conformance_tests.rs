@@ -119,14 +119,14 @@ fn test_basic_conformance() {
         // TODO: Show a list of failed cases when the number is less than 1K
         panic!(
             "{} test cases failed! ({} passed) {{\n\
-            \n\
-            0: {:?}\n\
-            \n\
-            ...\n\
-            \n\
-            {}: {:?}\n\
-            \n\
-            }}",
+             \n\
+             0: {:?}\n\
+             \n\
+             ...\n\
+             \n\
+             {}: {:?}\n\
+             \n\
+             }}",
             fails.len(),
             passed_num,
             fails[0],
@@ -212,14 +212,14 @@ fn test_character_conformance() {
         // TODO: Show a list of failed cases when the number is less than 1K
         panic!(
             "{} test cases failed! ({} passed) {{\n\
-            \n\
-            0: {:?}\n\
-            \n\
-            ...\n\
-            \n\
-            {}: {:?}\n\
-            \n\
-            }}",
+             \n\
+             0: {:?}\n\
+             \n\
+             ...\n\
+             \n\
+             {}: {:?}\n\
+             \n\
+             }}",
             fails.len(),
             passed_num,
             fails[0],

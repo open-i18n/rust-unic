@@ -1,6 +1,7 @@
-// Copyright 2012-2015 The Rust Project Developers. See the COPYRIGHT
-// file at the top-level directory of this distribution and at
-// http://rust-lang.org/COPYRIGHT.
+// Copyright 2012-2015 The Rust Project Developers.
+// Copyright 2017 The UNIC Project Developers.
+//
+// See the COPYRIGHT file at the top-level directory of this distribution.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
@@ -9,8 +10,7 @@
 // except according to those terms.
 
 
-#![deny(unsafe_code)]
-#![forbid(missing_docs)]
+#![deny(unsafe_code, missing_docs)]
 
 //! # UNIC — UCD — Normalization
 //!
@@ -33,85 +33,25 @@ extern crate unic_ucd_core;
 
 mod canonical_combining_class;
 mod composition;
+mod decompose;
 mod gen_cat;
 mod hangul;
+mod decomposition_type;
+
 
 pub use canonical_combining_class::CanonicalCombiningClass;
 pub use composition::{canonical_decomposition, compatibility_decomposition, canonical_composition};
 pub use gen_cat::is_combining_mark;
+pub use decompose::{decompose_canonical, decompose_compatible};
+pub use decomposition_type::DecompositionType;
 
 use std::cmp::Ordering;
-use std::ops::FnMut;
 
 use unic_ucd_core::UnicodeVersion;
 
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv");
-
-
-/// Compute canonical Unicode decomposition for character.
-/// See [Unicode Standard Annex #15](http://www.unicode.org/reports/tr15/)
-/// for more information.
-pub fn decompose_canonical<F>(c: char, mut i: F)
-where
-    F: FnMut(char),
-{
-    d(c, &mut i, false);
-}
-
-/// Compute canonical or compatible Unicode decomposition for character.
-/// See [Unicode Standard Annex #15](http://www.unicode.org/reports/tr15/)
-/// for more information.
-pub fn decompose_compatible<F>(c: char, mut i: F)
-where
-    F: FnMut(char),
-{
-    d(c, &mut i, true);
-}
-
-// FIXME: This is a workaround, we should use `F` instead of `&mut F`
-fn d<F>(c: char, i: &mut F, k: bool)
-where
-    F: FnMut(char),
-{
-    // 7-bit ASCII never decomposes
-    if c <= '\x7f' {
-        (*i)(c);
-        return;
-    }
-
-    // Perform decomposition for Hangul
-    if (c as u32) >= hangul::S_BASE && (c as u32) < (hangul::S_BASE + hangul::S_COUNT) {
-        hangul::decompose(c, i);
-        return;
-    }
-
-    // First check the canonical decompositions
-    if let Some(canon) = canonical_decomposition(c) {
-        for x in canon {
-            d(*x, i, k);
-        }
-        return;
-    }
-
-    // Bottom out if we're not doing compat.
-    if !k {
-        (*i)(c);
-        return;
-    }
-
-    // Then check the compatibility decompositions
-    if let Some(compat) = compatibility_decomposition(c) {
-        for x in compat {
-            d(*x, i, k);
-        }
-        return;
-    }
-
-    // Finally bottom out.
-    (*i)(c);
-}
 
 /// Compose two characters into a single character, if possible.
 /// See [Unicode Standard Annex #15](http://www.unicode.org/reports/tr15/)
