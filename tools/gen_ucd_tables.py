@@ -309,15 +309,15 @@ def get_normal_form_info():
         # store decomposition, if given
         if decomp != "":
             if decomp.startswith('<'):
-                seq = []
-                for i in decomp.split()[1:]:
-                    seq.append(int(i, 16))
-                compatibility_decomposition[cp] = seq
+                compatibility_decomposition[cp] = [
+                    int(x, 16)
+                    for x in decomp.split()[1:]
+                ]
             else:
-                seq = []
-                for i in decomp.split():
-                    seq.append(int(i, 16))
-                canonical_decomposition[cp] = seq
+                canonical_decomposition[cp] = [
+                    int(x, 16)
+                    for x in decomp.split()
+                ]
 
     general_category_mark = ranges_from_codepoints(general_category_mark)
     canonical_combining_class = range_value_triplets_from_codepoints(
