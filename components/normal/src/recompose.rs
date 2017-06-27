@@ -69,7 +69,7 @@ impl<I: Iterator<Item = char>> Iterator for Recompositions<I> {
                     for ch in self.iter.by_ref() {
                         let ch_ccc = CanonicalCombiningClass::of(ch);
                         if self.composee.is_none() {
-                            if !ch_ccc.is_not_reordered() {
+                            if !ch_ccc.ccc_is_not_reordered() {
                                 return Some(ch);
                             }
                             self.composee = Some(ch);
@@ -85,7 +85,7 @@ impl<I: Iterator<Item = char>> Iterator for Recompositions<I> {
                                         continue;
                                     }
                                     None => {
-                                        if ch_ccc.is_not_reordered() {
+                                        if ch_ccc.ccc_is_not_reordered() {
                                             self.composee = Some(ch);
                                             return Some(k);
                                         }

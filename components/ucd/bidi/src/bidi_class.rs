@@ -191,6 +191,7 @@ mod tests {
 
     #[test]
     fn test_smp() {
+        // Default AL + R
         assert_eq!(BidiClass::of('\u{10800}'), R);
         assert_eq!(BidiClass::of('\u{10FFF}'), R);
         assert_eq!(BidiClass::of('\u{1E800}'), R);
@@ -203,7 +204,6 @@ mod tests {
 
     #[test]
     fn test_unassigned_planes() {
-        // Default AL + R
         assert_eq!(BidiClass::of('\u{30000}'), L);
         assert_eq!(BidiClass::of('\u{40000}'), L);
         assert_eq!(BidiClass::of('\u{50000}'), L);

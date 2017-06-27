@@ -95,7 +95,7 @@ impl<I: Iterator<Item = char>> Iterator for Decompositions<I> {
                 {
                     let callback = |d| {
                         let ccc = CanonicalCombiningClass::of(d);
-                        if ccc.is_not_reordered() && !*sorted {
+                        if ccc.ccc_is_not_reordered() && !*sorted {
                             canonical_sort(buffer);
                             *sorted = true;
                         }
