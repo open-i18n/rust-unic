@@ -13,16 +13,16 @@ and properties. Here’s a summary for working with Unicode when programming in 
     (zero) and `0x10FFFF`, inclusive.
 
 -   **Unicode Scalar Values** are integer values in a subset of *Unicode Code Points*: the
-    *Unicode codespace* excluding high-surrogate and low-surrogate code points, i.e.
-    `U+D800..U+DFFF`.
+    *Unicode codespace* excluding high-surrogate and low-surrogate code points:
+    `U+D800..U+DFFF`, inclusive.
 
--   **Unicode Encoded Characterss** are *Unicode Scalar Values* assigned to a *Unicode Abstract
+-   **Unicode Encoded Characters** are *Unicode Scalar Values* assigned to a *Unicode Abstract
     Characters* by the Unicode Standard. Some *Unicode Abstract Characters* are represented with
     a sequence of **Unicode Encoded Characters**.
 
-Unicode Scalara Values marked as *noncharacters* or *reserved* (a.k.a *unassigned*) are not
-considered a *Unicode Encoded Characters*. Therefore, *Unicode Scalar Values* can have one of
-the following *assignment* statuses:
+Unicode Scalar Values marked as *noncharacters* or *reserved* (a.k.a *unassigned*) are not
+considered *Unicode Encoded Characters*. Therefore, *Unicode Scalar Values* can have one of the
+following *assignment* statuses:
 
 -   **assigned**, code points that are marked to be an *Encoded Character*,
 
@@ -84,6 +84,12 @@ Another reason for the separation of Unicode version of the code (the compiler) 
 that a data processing codebase should not be held back from upgrading its Unicode version
 because of any limitations with upgrading its code to a newer version of the compiler.
 
+And a peculiar case for keeping the Unicode version of the data separate from the code is when
+it gets to *Private-Use Code Points*. These code points (like any other code point) receive
+*default* character properties, which are specified by the Unicode Stanard. However, they *can*
+be assigned non-default property values, as deemed by the application. This is something that
+should never affect how source code is being compiled, or a compiler being deployed, but only
+the data being processed an application with clear boundries for the Private-Use code points.
 
 ## Tehnical Challenges
 
