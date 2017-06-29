@@ -93,7 +93,7 @@ the data being processed an application with clear boundries for the Private-Use
 
 ## Tehnical Challenges
 
-A big technical challenge with having more than library (a language core library and some
+A big technical challenge with having more than one library (a language core library and some
 third-party libraries) for basic character/string functionalities and text processing for
 handling text is the *possiblity* of them getting mixed up. This is where every programmer need
 to pay attention to which library to use in every situation.
