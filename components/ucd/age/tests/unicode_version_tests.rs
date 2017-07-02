@@ -30,10 +30,7 @@ fn test_unicode_version_against_age() {
     let age = Age::from_unicode_version(unic_ucd_age::UNICODE_VERSION);
     assert!(age.is_some());
 
-    let age = age.unwrap();
-    let ver = age.to_unicode_version();
-    assert!(ver.is_some());
-
-    let ver = ver.unwrap();
-    assert_eq!(ver, unic_ucd_age::UNICODE_VERSION);
+    let univer = age.unwrap().to_unicode_version();
+    assert!(univer.is_some());
+    assert_eq!(univer.unwrap(), unic_ucd_age::UNICODE_VERSION);
 }

@@ -16,8 +16,7 @@ extern crate unic;
 
 use unic::bidi::BidiInfo;
 use unic::normal::StrNormalForm;
-use unic::ucd::{Age, CharAge};
-use unic::ucd::{BidiClass, CharBidiClass, StrBidiClass};
+use unic::ucd::{Age, BidiClass, CharAge, CharBidiClass, StrBidiClass};
 use unic::ucd::normal::compose;
 
 #[cfg_attr(rustfmt, rustfmt_skip)]
@@ -26,11 +25,11 @@ fn test_sample() {
 
     // Age
 
-    assert_eq!(Age::of('A'), Age::V1_1);
+    assert_eq!(Age::of('A'), Age::Since{ major: 1, minor: 1 });
     assert_eq!(Age::of('\u{A0000}'), Age::Unassigned);
-    assert_eq!(Age::of('\u{10FFFF}'), Age::V2_0);
+    assert_eq!(Age::of('\u{10FFFF}'), Age::Since{ major: 2, minor: 0 });
 
-    assert_eq!('🦊'.age(), Age::V9_0);
+    assert_eq!('🦊'.age(), Age::Since{ major: 9, minor: 0 });
     assert_eq!('🦊'.age().to_unicode_version().unwrap().major(), 9);
     assert_eq!('🦊'.age().to_unicode_version().unwrap().minor(), 0);
     assert_eq!('🦊'.age().to_unicode_version().unwrap().micro(), 0);

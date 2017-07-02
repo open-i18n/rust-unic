@@ -21,38 +21,13 @@ use unic_ucd_core::UnicodeVersion;
 /// The Age property indicates the first version in which a particular Unicode character was
 /// assigned.
 ///
-/// NOTE: `Age` is a **Catalog** type of property, meaning that it expands with newer version of
-/// Unicode. In fact, this specific `enum` is expected to expand on every major or minor update of
-/// Unicode.
-///
 /// * <http://www.unicode.org/reports/tr44/#Character_Age>
 #[allow(non_camel_case_types, missing_docs)]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum Age {
-    V1_1,
-    V2_0,
-    V2_1,
-    V3_0,
-    V3_1,
-    V3_2,
-    V4_0,
-    V4_1,
-    V5_0,
-    V5_1,
-    V5_2,
-    V6_0,
-    V6_1,
-    V6_2,
-    V6_3,
-    V7_0,
-    V8_0,
-    V9_0,
-    V10_0,
-    // [UNIC_UPDATE_ON_UNICODE_UPDATE] Source: `age_type.rsv`
-    Unassigned,
+    Since { major: u32, minor: u32 },
+    Unassigned, // Unassigned is older (larger) than any age
 }
-
-use Age::*;
 
 pub const AGE_TABLE: &'static [(char, char, Age)] = include!("tables/age_values.rsv");
 
@@ -64,57 +39,21 @@ impl Age {
 
     /// Get `UnicodeVersion` of an `Age` value, or `None`
     pub fn to_unicode_version(self) -> Option<UnicodeVersion> {
-        // TODO: Auto-generate match expression
         match self {
-            Unassigned => None,
-            V1_1 => Some(UnicodeVersion(1, 1, 0)),
-            V2_0 => Some(UnicodeVersion(2, 0, 0)),
-            V2_1 => Some(UnicodeVersion(2, 1, 0)),
-            V3_0 => Some(UnicodeVersion(3, 0, 0)),
-            V3_1 => Some(UnicodeVersion(3, 1, 0)),
-            V3_2 => Some(UnicodeVersion(3, 2, 0)),
-            V4_0 => Some(UnicodeVersion(4, 0, 0)),
-            V4_1 => Some(UnicodeVersion(4, 1, 0)),
-            V5_0 => Some(UnicodeVersion(5, 0, 0)),
-            V5_1 => Some(UnicodeVersion(5, 1, 0)),
-            V5_2 => Some(UnicodeVersion(5, 2, 0)),
-            V6_0 => Some(UnicodeVersion(6, 0, 0)),
-            V6_1 => Some(UnicodeVersion(6, 1, 0)),
-            V6_2 => Some(UnicodeVersion(6, 2, 0)),
-            V6_3 => Some(UnicodeVersion(6, 3, 0)),
-            V7_0 => Some(UnicodeVersion(7, 0, 0)),
-            V8_0 => Some(UnicodeVersion(8, 0, 0)),
-            V9_0 => Some(UnicodeVersion(9, 0, 0)),
-            V10_0 => Some(UnicodeVersion(10, 0, 0)),
-            // [UNIC_UPDATE_ON_UNICODE_UPDATE] Source: `Age`
+            Age::Since { major, minor } => Some(UnicodeVersion(major, minor, 0)),
+            Age::Unassigned => None,
         }
     }
 
     /// Get `Age` value from `UnicodeVersion`
-    pub fn from_unicode_version(version: UnicodeVersion) -> Option<Age> {
-        // TODO: Auto-generate match expression
-        match version {
-            UnicodeVersion(1, 1, 0) => Some(V1_1),
-            UnicodeVersion(2, 0, 0) => Some(V2_0),
-            UnicodeVersion(2, 1, 0) => Some(V2_1),
-            UnicodeVersion(3, 0, 0) => Some(V3_0),
-            UnicodeVersion(3, 1, 0) => Some(V3_1),
-            UnicodeVersion(3, 2, 0) => Some(V3_2),
-            UnicodeVersion(4, 0, 0) => Some(V4_0),
-            UnicodeVersion(4, 1, 0) => Some(V4_1),
-            UnicodeVersion(5, 0, 0) => Some(V5_0),
-            UnicodeVersion(5, 1, 0) => Some(V5_1),
-            UnicodeVersion(5, 2, 0) => Some(V5_2),
-            UnicodeVersion(6, 0, 0) => Some(V6_0),
-            UnicodeVersion(6, 1, 0) => Some(V6_1),
-            UnicodeVersion(6, 2, 0) => Some(V6_2),
-            UnicodeVersion(6, 3, 0) => Some(V6_3),
-            UnicodeVersion(7, 0, 0) => Some(V7_0),
-            UnicodeVersion(8, 0, 0) => Some(V8_0),
-            UnicodeVersion(9, 0, 0) => Some(V9_0),
-            UnicodeVersion(10, 0, 0) => Some(V10_0),
-            // [UNIC_UPDATE_ON_UNICODE_UPDATE] Source: `Age`
-            _ => None,
+    pub fn from_unicode_version(univer: UnicodeVersion) -> Option<Age> {
+        if univer < UnicodeVersion(1, 1, 0) {
+            None
+        } else {
+            Some(Age::Since {
+                major: univer.0,
+                minor: univer.1,
+            })
         }
     }
 }
@@ -134,7 +73,7 @@ fn bsearch_range_value_table(ch: char, r: &'static [(char, char, Age)]) -> Age {
             let (_, _, cat) = r[idx];
             cat
         }
-        Err(_) => Unassigned,
+        Err(_) => Age::Unassigned,
     }
 }
 
@@ -145,75 +84,91 @@ mod tests {
 
     #[test]
     fn test_age() {
-        use Age::*;
-
         // ASCII
-        assert_eq!(Age::of('\u{0000}'), V1_1);
-        assert_eq!(Age::of('\u{0021}'), V1_1);
-        assert_eq!(Age::of('\u{0041}'), V1_1);
-        assert_eq!(Age::of('\u{007f}'), V1_1);
+        assert_eq!(Age::of('\u{0000}'), Age::Since { major: 1, minor: 1 });
+        assert_eq!(Age::of('\u{0021}'), Age::Since { major: 1, minor: 1 });
+        assert_eq!(Age::of('\u{0041}'), Age::Since { major: 1, minor: 1 });
+        assert_eq!(Age::of('\u{007f}'), Age::Since { major: 1, minor: 1 });
 
-        assert_eq!(Age::of('\u{0100}'), V1_1);
-        assert_eq!(Age::of('\u{01f5}'), V1_1);
-        assert_eq!(Age::of('\u{037e}'), V1_1); // start == end
-        assert_eq!(Age::of('\u{200c}'), V1_1);
+        assert_eq!(Age::of('\u{0100}'), Age::Since { major: 1, minor: 1 });
+        assert_eq!(Age::of('\u{01f5}'), Age::Since { major: 1, minor: 1 });
+        assert_eq!(Age::of('\u{037e}'), Age::Since { major: 1, minor: 1 }); // start == end
+        assert_eq!(Age::of('\u{200c}'), Age::Since { major: 1, minor: 1 });
 
-        assert_eq!(Age::of('\u{01f6}'), V3_0);
-        assert_eq!(Age::of('\u{01f7}'), V3_0);
-        assert_eq!(Age::of('\u{01f9}'), V3_0);
+        assert_eq!(Age::of('\u{01f6}'), Age::Since { major: 3, minor: 0 });
+        assert_eq!(Age::of('\u{01f7}'), Age::Since { major: 3, minor: 0 });
+        assert_eq!(Age::of('\u{01f9}'), Age::Since { major: 3, minor: 0 });
 
-        assert_eq!(Age::of('\u{0860}'), V10_0);
-        assert_eq!(Age::of('\u{0866}'), V10_0);
-        assert_eq!(Age::of('\u{086a}'), V10_0);
+        assert_eq!(
+            Age::of('\u{0860}'),
+            Age::Since {
+                major: 10,
+                minor: 0,
+            }
+        );
+        assert_eq!(
+            Age::of('\u{0866}'),
+            Age::Since {
+                major: 10,
+                minor: 0,
+            }
+        );
+        assert_eq!(
+            Age::of('\u{086a}'),
+            Age::Since {
+                major: 10,
+                minor: 0,
+            }
+        );
 
-        assert_eq!(Age::of('\u{fffe}'), V1_1);
-        assert_eq!(Age::of('\u{ffff}'), V1_1);
+        assert_eq!(Age::of('\u{fffe}'), Age::Since { major: 1, minor: 1 });
+        assert_eq!(Age::of('\u{ffff}'), Age::Since { major: 1, minor: 1 });
 
-        assert_eq!(Age::of('\u{10000}'), V4_0);
-        assert_eq!(Age::of('\u{10001}'), V4_0);
+        assert_eq!(Age::of('\u{10000}'), Age::Since { major: 4, minor: 0 });
+        assert_eq!(Age::of('\u{10001}'), Age::Since { major: 4, minor: 0 });
 
-        assert_eq!(Age::of('\u{e0100}'), V4_0);
-        assert_eq!(Age::of('\u{e0101}'), V4_0);
-        assert_eq!(Age::of('\u{e0170}'), V4_0);
-        assert_eq!(Age::of('\u{e01ee}'), V4_0);
-        assert_eq!(Age::of('\u{e01ef}'), V4_0);
+        assert_eq!(Age::of('\u{e0100}'), Age::Since { major: 4, minor: 0 });
+        assert_eq!(Age::of('\u{e0101}'), Age::Since { major: 4, minor: 0 });
+        assert_eq!(Age::of('\u{e0170}'), Age::Since { major: 4, minor: 0 });
+        assert_eq!(Age::of('\u{e01ee}'), Age::Since { major: 4, minor: 0 });
+        assert_eq!(Age::of('\u{e01ef}'), Age::Since { major: 4, minor: 0 });
 
-        assert_eq!(Age::of('\u{10000}'), V4_0);
+        assert_eq!(Age::of('\u{10000}'), Age::Since { major: 4, minor: 0 });
 
-        assert_eq!(Age::of('\u{20000}'), V3_1);
+        assert_eq!(Age::of('\u{20000}'), Age::Since { major: 3, minor: 1 });
 
-        assert_eq!(Age::of('\u{30000}'), Unassigned);
-        assert_eq!(Age::of('\u{40000}'), Unassigned);
-        assert_eq!(Age::of('\u{50000}'), Unassigned);
-        assert_eq!(Age::of('\u{60000}'), Unassigned);
-        assert_eq!(Age::of('\u{70000}'), Unassigned);
-        assert_eq!(Age::of('\u{80000}'), Unassigned);
-        assert_eq!(Age::of('\u{90000}'), Unassigned);
-        assert_eq!(Age::of('\u{a0000}'), Unassigned);
-        assert_eq!(Age::of('\u{b0000}'), Unassigned);
-        assert_eq!(Age::of('\u{c0000}'), Unassigned);
-        assert_eq!(Age::of('\u{d0000}'), Unassigned);
-        assert_eq!(Age::of('\u{e0000}'), Unassigned);
-        assert_eq!(Age::of('\u{efffd}'), Unassigned);
+        assert_eq!(Age::of('\u{30000}'), Age::Unassigned);
+        assert_eq!(Age::of('\u{40000}'), Age::Unassigned);
+        assert_eq!(Age::of('\u{50000}'), Age::Unassigned);
+        assert_eq!(Age::of('\u{60000}'), Age::Unassigned);
+        assert_eq!(Age::of('\u{70000}'), Age::Unassigned);
+        assert_eq!(Age::of('\u{80000}'), Age::Unassigned);
+        assert_eq!(Age::of('\u{90000}'), Age::Unassigned);
+        assert_eq!(Age::of('\u{a0000}'), Age::Unassigned);
+        assert_eq!(Age::of('\u{b0000}'), Age::Unassigned);
+        assert_eq!(Age::of('\u{c0000}'), Age::Unassigned);
+        assert_eq!(Age::of('\u{d0000}'), Age::Unassigned);
+        assert_eq!(Age::of('\u{e0000}'), Age::Unassigned);
+        assert_eq!(Age::of('\u{efffd}'), Age::Unassigned);
 
-        assert_eq!(Age::of('\u{efffe}'), V2_0);
-        assert_eq!(Age::of('\u{effff}'), V2_0);
+        assert_eq!(Age::of('\u{efffe}'), Age::Since { major: 2, minor: 0 });
+        assert_eq!(Age::of('\u{effff}'), Age::Since { major: 2, minor: 0 });
 
         // Priavte-Use Area
-        assert_eq!(Age::of('\u{f0000}'), V2_0);
-        assert_eq!(Age::of('\u{f0001}'), V2_0);
-        assert_eq!(Age::of('\u{ffffe}'), V2_0);
-        assert_eq!(Age::of('\u{fffff}'), V2_0);
-        assert_eq!(Age::of('\u{100000}'), V2_0);
-        assert_eq!(Age::of('\u{100001}'), V2_0);
-        assert_eq!(Age::of('\u{10fffe}'), V2_0);
-        assert_eq!(Age::of('\u{10ffff}'), V2_0);
+        assert_eq!(Age::of('\u{f0000}'), Age::Since { major: 2, minor: 0 });
+        assert_eq!(Age::of('\u{f0001}'), Age::Since { major: 2, minor: 0 });
+        assert_eq!(Age::of('\u{ffffe}'), Age::Since { major: 2, minor: 0 });
+        assert_eq!(Age::of('\u{fffff}'), Age::Since { major: 2, minor: 0 });
+        assert_eq!(Age::of('\u{100000}'), Age::Since { major: 2, minor: 0 });
+        assert_eq!(Age::of('\u{100001}'), Age::Since { major: 2, minor: 0 });
+        assert_eq!(Age::of('\u{10fffe}'), Age::Since { major: 2, minor: 0 });
+        assert_eq!(Age::of('\u{10ffff}'), Age::Since { major: 2, minor: 0 });
     }
 
     #[test]
     fn test_age_to_unicode_version() {
         assert_eq!(
-            Age::V1_1.to_unicode_version(),
+            Age::Since { major: 1, minor: 1 }.to_unicode_version(),
             Some(UnicodeVersion(1, 1, 0))
         );
         assert_eq!(Age::Unassigned.to_unicode_version(), None);
@@ -221,45 +176,101 @@ mod tests {
 
     #[test]
     fn test_age_from_unicode_version() {
+        assert_eq!(Age::from_unicode_version(UnicodeVersion(0, 2, 0)), None);
+        assert_eq!(Age::from_unicode_version(UnicodeVersion(1, 0, 0)), None);
         assert_eq!(
             Age::from_unicode_version(UnicodeVersion(1, 1, 0)),
-            Some(Age::V1_1)
+            Some(Age::Since { major: 1, minor: 1 })
         );
-        assert_eq!(Age::from_unicode_version(UnicodeVersion(1, 0, 0)), None);
+        assert_eq!(
+            Age::from_unicode_version(UnicodeVersion(1, 1, 2)),
+            Some(Age::Since { major: 1, minor: 1 })
+        );
     }
 
     #[test]
     fn test_age_cmp() {
-        use Age::*;
+        assert!(Age::Since { major: 1, minor: 1 } == Age::Since { major: 1, minor: 1 });
+        assert!(Age::Since { major: 1, minor: 1 } < Age::Since { major: 2, minor: 0 });
+        assert!(Age::Since { major: 1, minor: 1 } < Age::Since { major: 3, minor: 0 });
+        assert!(
+            Age::Since { major: 1, minor: 1 } <
+                Age::Since {
+                    major: 10,
+                    minor: 0,
+                }
+        );
+        assert!(Age::Since { major: 1, minor: 1 } < Age::Unassigned);
 
-        assert!(V1_1 == V1_1);
-        assert!(V1_1 < V2_0);
-        assert!(V1_1 < V3_0);
-        assert!(V1_1 < V10_0);
-        assert!(V1_1 < Unassigned);
+        assert!(Age::Since { major: 2, minor: 0 } > Age::Since { major: 1, minor: 1 });
+        assert!(Age::Since { major: 2, minor: 0 } == Age::Since { major: 2, minor: 0 });
+        assert!(Age::Since { major: 2, minor: 0 } < Age::Since { major: 3, minor: 0 });
+        assert!(
+            Age::Since { major: 2, minor: 0 } <
+                Age::Since {
+                    major: 10,
+                    minor: 0,
+                }
+        );
+        assert!(Age::Since { major: 2, minor: 0 } < Age::Unassigned);
 
-        assert!(V2_0 > V1_1);
-        assert!(V2_0 == V2_0);
-        assert!(V2_0 < V3_0);
-        assert!(V2_0 < V10_0);
-        assert!(V2_0 < Unassigned);
+        assert!(Age::Since { major: 3, minor: 0 } > Age::Since { major: 1, minor: 1 });
+        assert!(Age::Since { major: 3, minor: 0 } > Age::Since { major: 2, minor: 0 });
+        assert!(Age::Since { major: 3, minor: 0 } == Age::Since { major: 3, minor: 0 });
+        assert!(
+            Age::Since { major: 3, minor: 0 } <
+                Age::Since {
+                    major: 10,
+                    minor: 0,
+                }
+        );
+        assert!(Age::Since { major: 3, minor: 0 } < Age::Unassigned);
 
-        assert!(V3_0 > V1_1);
-        assert!(V3_0 > V2_0);
-        assert!(V3_0 == V3_0);
-        assert!(V3_0 < V10_0);
-        assert!(V3_0 < Unassigned);
+        assert!(
+            Age::Since {
+                major: 10,
+                minor: 0,
+            } > Age::Since { major: 1, minor: 1 }
+        );
+        assert!(
+            Age::Since {
+                major: 10,
+                minor: 0,
+            } > Age::Since { major: 2, minor: 0 }
+        );
+        assert!(
+            Age::Since {
+                major: 10,
+                minor: 0,
+            } > Age::Since { major: 3, minor: 0 }
+        );
+        assert!(
+            Age::Since {
+                major: 10,
+                minor: 0,
+            } ==
+                Age::Since {
+                    major: 10,
+                    minor: 0,
+                }
+        );
+        assert!(
+            Age::Since {
+                major: 10,
+                minor: 0,
+            } < Age::Unassigned
+        );
 
-        assert!(V10_0 > V1_1);
-        assert!(V10_0 > V2_0);
-        assert!(V10_0 > V3_0);
-        assert!(V10_0 == V10_0);
-        assert!(V10_0 < Unassigned);
-
-        assert!(Unassigned > V1_1);
-        assert!(Unassigned > V2_0);
-        assert!(Unassigned > V3_0);
-        assert!(Unassigned > V10_0);
-        assert!(Unassigned == Unassigned);
+        assert!(Age::Unassigned > Age::Since { major: 1, minor: 1 });
+        assert!(Age::Unassigned > Age::Since { major: 2, minor: 0 });
+        assert!(Age::Unassigned > Age::Since { major: 3, minor: 0 });
+        assert!(
+            Age::Unassigned >
+                Age::Since {
+                    major: 10,
+                    minor: 0,
+                }
+        );
+        assert!(Age::Unassigned == Age::Unassigned);
     }
 }

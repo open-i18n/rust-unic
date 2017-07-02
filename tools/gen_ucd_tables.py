@@ -105,7 +105,7 @@ EXPANDED_CATEGORIES = {
 # == Age ==
 
 @memoize
-def get_age_info():
+def get_age_values():
     age_groups = {}
 
     for line in fileinput.input(data_path("DerivedAge.txt")):
@@ -117,17 +117,18 @@ def get_age_info():
             continue
 
         fields = line.split(';')
+        range, value = fields[0].strip(), fields[1].strip()
 
         # skip surrogate codepoints; they don't occur in Rust strings
-        if fields[0].strip() == 'D800..DFFF':
+        if range == 'D800..DFFF':
             continue
 
-        first, _, last = fields[0].strip().partition('..')
+        first, _, last = range.partition('..')
         if not last:
             last = first
         first, last = int(first, 16), int(last, 16)
 
-        age = 'V%s' % fields[1].strip().replace(".", "_")
+        age = 'Age::Since{ major: %s, minor: %s }' % tuple(value.split('.'))
 
         if age not in age_groups:
             age_groups[age] = []
@@ -138,21 +139,11 @@ def get_age_info():
         age_groups[age] = ranges_from_codepoints(
             codepoints_from_ranges(age_groups[age]))
 
-    return (
-        sorted(age_groups.keys()),
-        range_value_triplets_from_ranges(age_groups),
-    )
+    return range_value_triplets_from_ranges(age_groups)
 
 
 def emit_age_tables(dir):
-    (age_type, age_values) = get_age_info()
-
-    with open(join(dir, 'age_type.rsv'), "w") as type_file:
-        rustout.emit_class(
-            __file__,
-            type_file,
-            age_type,
-        )
+    age_values = get_age_values()
 
     with open(join(dir, 'age_values.rsv'), "w") as values_file:
         rustout.emit_table(
