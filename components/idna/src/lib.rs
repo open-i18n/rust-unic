@@ -10,8 +10,7 @@
 // except according to those terms.
 
 
-#![forbid(unsafe_code)]
-#![deny(missing_docs)]
+#![forbid(unsafe_code, missing_docs)]
 
 //! # UNIC — Unicode IDNA Compatibility Processing
 //!
