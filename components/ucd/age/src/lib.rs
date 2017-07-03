@@ -28,10 +28,10 @@ extern crate unic_ucd_core;
 mod age;
 mod traits;
 
+pub use unic_ucd_core::UnicodeVersion;
+
 pub use age::Age;
 pub use traits::CharAge;
-
-use unic_ucd_core::UnicodeVersion;
 
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data

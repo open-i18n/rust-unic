@@ -135,21 +135,22 @@ extern crate unic;
 
 use unic::bidi::BidiInfo;
 use unic::normal::StrNormalForm;
-use unic::ucd::{Age, BidiClass, CharAge, CharBidiClass, StrBidiClass};
+use unic::ucd::{Age, BidiClass, CharAge, CharBidiClass, StrBidiClass, UnicodeVersion};
 use unic::ucd::normal::compose;
 
 fn main() {
 
     // Age
 
-    assert_eq!(Age::of('A'), Age::Since{ major: 1, minor: 1 });
+    assert_eq!(Age::of('A'), Age::Assigned(UnicodeVersion(1, 1, 0)));
     assert_eq!(Age::of('\u{A0000}'), Age::Unassigned);
-    assert_eq!(Age::of('\u{10FFFF}'), Age::Since{ major: 2, minor: 0 });
+    assert_eq!(Age::of('\u{10FFFF}'), Age::Assigned(UnicodeVersion(2, 0, 0)));
 
-    assert_eq!('🦊'.age(), Age::Since{ major: 9, minor: 0 });
-    assert_eq!('🦊'.age().to_unicode_version().unwrap().major(), 9);
-    assert_eq!('🦊'.age().to_unicode_version().unwrap().minor(), 0);
-    assert_eq!('🦊'.age().to_unicode_version().unwrap().micro(), 0);
+    if let Some(uni_ver) = '🦊'.age().assigned() {
+        assert_eq!(uni_ver.major(), 9);
+        assert_eq!(uni_ver.minor(), 0);
+        assert_eq!(uni_ver.micro(), 0);
+    }
 
     // Bidi
 
