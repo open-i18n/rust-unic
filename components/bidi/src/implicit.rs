@@ -40,11 +40,9 @@ pub fn resolve_weak(sequence: &IsolatingRunSequence, processing_classes: &mut [B
     fn id(x: LevelRun) -> LevelRun {
         x
     }
-    let mut indices = sequence
-        .runs
-        .iter()
-        .cloned()
-        .flat_map(id as fn(LevelRun) -> LevelRun);
+    let mut indices = sequence.runs.iter().cloned().flat_map(
+        id as fn(LevelRun) -> LevelRun,
+    );
 
     while let Some(i) = indices.next() {
         match processing_classes[i] {

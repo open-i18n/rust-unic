@@ -367,9 +367,9 @@ impl<'text> BidiInfo<'text> {
 
                 seq_start = seq_end;
             }
-            max_level
-                .lower(1)
-                .expect("Lowering embedding level below zero");
+            max_level.lower(1).expect(
+                "Lowering embedding level below zero",
+            );
         }
 
         (levels, runs)
