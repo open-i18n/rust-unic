@@ -28,13 +28,14 @@ impl CharAge for char {
 
 #[cfg(test)]
 mod tests {
+    use unic_ucd_core::UnicodeVersion;
+
+    use super::{Age, CharAge};
+
     #[test]
     fn test_char_age() {
-        use super::CharAge;
-        use super::Age;
-
-        assert_eq!('\u{0000}'.age(), Age::V1_1);
-        assert_eq!('\u{0041}'.age(), Age::V1_1);
-        assert_eq!('\u{10ffff}'.age(), Age::V2_0);
+        assert_eq!('\u{0000}'.age(), Age::Assigned(UnicodeVersion(1, 1, 0)));
+        assert_eq!('\u{0041}'.age(), Age::Assigned(UnicodeVersion(1, 1, 0)));
+        assert_eq!('\u{10ffff}'.age(), Age::Assigned(UnicodeVersion(2, 0, 0)));
     }
 }

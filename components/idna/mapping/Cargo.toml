@@ -11,9 +11,5 @@ description = "UNIC - IDNA - IDNA Mapping Table"
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
-[dev-dependencies]
-rustc-test = "0.1"
-rustc-serialize = "0.3"
-
 [dependencies]
 unic-ucd-core = { path = "../../ucd/core/", version = "0.4.0" }

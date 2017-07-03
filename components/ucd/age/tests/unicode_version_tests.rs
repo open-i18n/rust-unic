@@ -20,20 +20,3 @@ fn test_unicode_version_against_ucd_core() {
         unic_ucd_core::UNICODE_VERSION
     );
 }
-
-
-#[test]
-/// Current `UNICODE_VERSION` value must be a valid `Age` value.
-fn test_unicode_version_against_age() {
-    use unic_ucd_age::Age;
-
-    let age = Age::from_unicode_version(unic_ucd_age::UNICODE_VERSION);
-    assert!(age.is_some());
-
-    let age = age.unwrap();
-    let ver = age.to_unicode_version();
-    assert!(ver.is_some());
-
-    let ver = ver.unwrap();
-    assert_eq!(ver, unic_ucd_age::UNICODE_VERSION);
-}

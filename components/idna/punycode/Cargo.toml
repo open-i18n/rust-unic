@@ -17,5 +17,5 @@ name = "tests"
 harness = false
 
 [dev-dependencies]
-rustc-test = "0.1"
+rustc-test = "0.2"
 rustc-serialize = "0.3"

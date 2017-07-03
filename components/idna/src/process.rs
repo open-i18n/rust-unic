@@ -296,10 +296,21 @@ fn processing(domain: &str, flags: Flags, errors: &mut Vec<Error>) -> String {
 
 /// Optional settings for processing and conversion algorithms.
 #[derive(Copy, Clone)]
-#[allow(missing_docs)]
 pub struct Flags {
+    /// *UseSTD3ASCIIRules* flag.
+    ///
+    /// <http://www.unicode.org/reports/tr46/#UseSTD3ASCIIRules>
     pub use_std3_ascii_rules: bool,
+
+    /// *Transitional_Processing* or *Nontransitional Processing*, for transitional handling of
+    /// *Deviation* characters.
+    ///
+    /// <http://www.unicode.org/reports/tr46/#Conformance>
     pub transitional_processing: bool,
+
+    /// *VerifyDnsLength* flag, to verify DNS length restrictions.
+    ///
+    /// <http://www.unicode.org/reports/tr46/#ToASCII>
     pub verify_dns_length: bool,
 }
 
