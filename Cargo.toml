@@ -23,5 +23,6 @@ unic-normal = { path = "components/normal/", version = "0.4.0" }
 
 [features]
 default = []
+unstable = []  # Rust nightly features
 bench_it = ["unic-bidi/bench_it"]
 with_serde = ["unic-bidi/with_serde"]
