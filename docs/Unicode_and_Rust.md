@@ -24,9 +24,9 @@ Unicode Scalar Values marked as *noncharacters* or *reserved* (a.k.a *unassigned
 considered *Unicode Encoded Characters*. Therefore, *Unicode Scalar Values* can have one of the
 following *assignment* statuses:
 
--   **assigned**, code points that are marked to be an *Encoded Character*,
+-   **assigned character**, code points that are marked to be an *Encoded Character*,
 
--   **noncharacter**, a fixed set of 66 code points that can never become an *Encoded
+
     Chatacter*, or
 
 -   **unassigned** or **reserved**, code points that can become an *Encoded Character* in the
@@ -50,7 +50,7 @@ The Rust Programming language has support for Unicode characters in its core wit
 primitive type, which represents a *Unicode Scalar Values*, that is a
 **Unicode-version-agnostic** type.
 
-Since the list of *assigned* characters changes with Unicode versions, *Unicode Encoded
+Since the list of *assigned characters* changes with Unicode versions, *Unicode Encoded
 Characters* are **not** hard-coded in the Rust language, and only made available in internal and
 core libraries for compilation tasks, like when parsing a string in a macro in compile-time, and
 basic input and output handling.

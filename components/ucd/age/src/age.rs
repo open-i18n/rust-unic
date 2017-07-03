@@ -30,10 +30,12 @@ pub use unic_ucd_core::UnicodeVersion;
 /// not equal when `UNICODE_VERSION` has non-zero *micro* value.)
 ///
 /// * <http://www.unicode.org/reports/tr44/#Character_Age>
-#[allow(non_camel_case_types, missing_docs)]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum Age {
+    /// Assigned Unicode Code Point (as character or noncharacter).
     Assigned(UnicodeVersion),
+
+    /// Unassigned Unicode Code Point (can be assigned in future).
     Unassigned, // Unassigned is older (larger) than any age
 }
 
