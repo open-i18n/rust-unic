@@ -756,7 +756,7 @@ mod tests {
 }
 
 
-#[cfg(all(feature = "with_serde", test))]
+#[cfg(all(feature = "serde", test))]
 mod serde_tests {
     use serde_test::{Token, assert_tokens};
     use super::*;
