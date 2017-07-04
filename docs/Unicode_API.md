@@ -5,6 +5,8 @@ This document introduces UNIC's API for Unicode data and algorithm.
 See [Unicode and Rust](Unicode_and_Rust.md) for basic Unicode concepts and how they appear in
 Rust.
 
+See [UNIC API Checklist](API_Checklist.md) for common Rust API guidelines that UNIC tries to
+follow.
 
 ## Unicode Character Properties
 
