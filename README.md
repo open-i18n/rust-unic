@@ -142,14 +142,17 @@ fn main() {
 
     // Age
 
-    assert_eq!(Age::of('A'), Age::Assigned(UnicodeVersion(1, 1, 0)));
+    assert_eq!(Age::of('A'), Age::Assigned(UnicodeVersion { major: 1, minor: 1, micro: 0 }));
     assert_eq!(Age::of('\u{A0000}'), Age::Unassigned);
-    assert_eq!(Age::of('\u{10FFFF}'), Age::Assigned(UnicodeVersion(2, 0, 0)));
+    assert_eq!(
+        Age::of('\u{10FFFF}'),
+        Age::Assigned(UnicodeVersion { major: 2, minor: 0, micro: 0 })
+    );
 
     if let Some(uni_ver) = '🦊'.age().assigned() {
-        assert_eq!(uni_ver.major(), 9);
-        assert_eq!(uni_ver.minor(), 0);
-        assert_eq!(uni_ver.micro(), 0);
+        assert_eq!(uni_ver.major, 9);
+        assert_eq!(uni_ver.minor, 0);
+        assert_eq!(uni_ver.micro, 0);
     }
 
     // Bidi

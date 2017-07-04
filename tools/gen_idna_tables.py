@@ -56,7 +56,7 @@ def emit_unicode_version(dir):
         rustout.emit_value(
             __file__,
             version_file, get_unicode_version(),
-            print_fun=lambda x: "UnicodeVersion(%s, %s, %s)" % x)
+            print_fun=lambda x: "UnicodeVersion { major: %s, minor: %s, micro: %s }" % x)
 
 
 # == Map ==
