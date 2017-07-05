@@ -11,16 +11,25 @@ all with the same version number `x.y.z`.
 
 ## Unicode Versions
 
-Because of how Character Properties are implemented in `unic-ucd` components, upgrading Unicode
-data sources to a newer (major or minor, but not micro) update of Unicode results in an
-API-breaking change, therefore a breaking version update.
+Majority of data and algorithms in UNIC depend on the Unicode Standard, its appendices, and
+related standards. (See also [UNIC Unicode API](Unicode_API.md)) Therefore, the following
+policies are followed with respect to new Unicode versions.
 
-This, also, allows applications to *intentionally* opt-in for Unicode version upgrades, which
-can be very important for some applications, like search indices, as there as Unicode text
-processing algorithms that are not promissed to be stable between Unicode versions. See [Unicode
-Character Encoding Stability Policies](http://unicode.org/policies/stability_policy.html) for
-more details.
+* Micro Unicode updates give UNIC a micro version bump. (There should never be need for API
+    change in Unicode micro updates.)
 
-As of 2017, Unicode is expected to have a major update every year, with no minor updates.
-Therefore, UNIC will have at least one API-breaking version update each year, even if all major
-parts of the API are stable.
+* Minor Unicode updates (which are not expected to happen that often anymore) give UNIC a minor
+    version bump, unless there's API breakage.
+
+* Major Unicode updates (expected to happen once a year, scheduled) give UNIC a minor version
+    bump, unless there's API breakage.
+
+This allows applications to *intentionally* opt-in for Unicode version upgrades, if needed, by
+fixating on UNIC minor versions. This can be useful and important for some applications, like
+search indices, as there as Unicode text processing algorithms that are not promissed to be
+stable between Unicode versions. See [Unicode Character Encoding Stability
+Policies](http://unicode.org/policies/stability_policy.html) for more details.
+
+As of 2017, Unicode is expected to have a major update every year, with no minor updates and
+rare micro updates. UNIC is expected to reach first API freeze, version 1.0.0, before release of
+Unicode 11 in 2018.
