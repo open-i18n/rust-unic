@@ -10,10 +10,13 @@ description = "UNIC - Unicode and Internationalization Crates"
 categories = ["parsing", "rendering", "encoding", "development-tools"]
 readme = "README.md"
 
-[badges]
-travis-ci = { repository = "behnam/rust-unic", branch = "master" }
-
 [workspace]
+
+[features]
+default = []
+unstable = []  # Rust nightly features
+bench_it = ["unic-bidi/bench_it"]
+serde = ["unic-bidi/serde"]
 
 [dependencies]
 unic-ucd = { path = "components/ucd/", version = "0.4.0" }
@@ -21,8 +24,6 @@ unic-bidi = { path = "components/bidi/", version = "0.4.0" }
 unic-idna = { path = "components/idna/", version = "0.4.0" }
 unic-normal = { path = "components/normal/", version = "0.4.0" }
 
-[features]
-default = []
-unstable = []  # Rust nightly features
-bench_it = ["unic-bidi/bench_it"]
-serde = ["unic-bidi/serde"]
+[badges]
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }
+appveyor = { repository = "behnam/rust-unic", branch = "master", service = "github" }
