@@ -26,13 +26,11 @@ script:
   - cargo doc   --verbose --all --no-deps
 
   - cargo test  --verbose --all
-  - cargo test  --verbose --all --features with_serde
+  - cargo test  --verbose --all --features serde
 
-  # Stop here if not running on nightly rust
-  - if [ "$TRAVIS_RUST_VERSION" != "nightly" ] ; then exit ; fi
-
-  - cargo test  --verbose --all --features 'bench_it'
-  - cargo bench --verbose --all --features 'bench_it'
+  - if [ "$TRAVIS_RUST_VERSION" == "nightly" ]; then
+      cargo bench --verbose --all --features 'bench_it';
+    fi
 
 # TODO: - rustdoc --test README.md -L target/debug -L target/debug/deps
 

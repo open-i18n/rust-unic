@@ -21,18 +21,25 @@ use unic_ucd_utils::iter_all_chars;
 fn test_assigned_age_micro_value() {
     for ch in iter_all_chars() {
         if let Some(uni_ver) = Age::of(ch).assigned() {
-            assert_eq!(uni_ver.micro(), 0);
+            assert_eq!(uni_ver.micro, 0);
         }
     }
 }
 
-/// The *earliest* value for this property is `UnicodeVersion(1, 1, 0)`, because of the
-/// massive changes for the merger of the Unicode Stanrda with ISO 10646.
+/// The *earliest* value for this property is `UnicodeVersion { major: 1, minor: 1, micro: 0 }`,
+/// because of the massive changes for the merger of the Unicode Stanrda with ISO 10646.
 #[test]
 fn test_earliest_assigned_age() {
     for ch in iter_all_chars() {
         if let Some(uni_ver) = Age::of(ch).assigned() {
-            assert!(uni_ver >= UnicodeVersion(1, 1, 0));
+            assert!(
+                uni_ver >=
+                    UnicodeVersion {
+                        major: 1,
+                        minor: 1,
+                        micro: 0,
+                    }
+            );
         }
     }
 }

@@ -15,12 +15,10 @@ travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 [features]
 default = []
 bench_it = []
-with_serde = ["serde", "serde_derive"]
 
 [dependencies]
 matches = "0.1"
-serde = {version = ">=0.8, <2.0", optional = true}
-serde_derive = {version = ">=0.8, <2.0", optional = true}
+serde = { version = ">=0.8, <2.0", optional = true, features = ["derive"] }
 unic-ucd-bidi = { path = "../ucd/bidi/", version = "0.4.0" }
 unic-ucd-core = { path = "../ucd/core/", version = "0.4.0" }
 

@@ -30,9 +30,9 @@ fn main() {
     println!("Package Version: {}", PKG_VERSION);
     println!(
         "Unicode Version: {}.{}.{}",
-        unic::ucd::UNICODE_VERSION.0,
-        unic::ucd::UNICODE_VERSION.1,
-        unic::ucd::UNICODE_VERSION.2,
+        unic::ucd::UNICODE_VERSION.major,
+        unic::ucd::UNICODE_VERSION.minor,
+        unic::ucd::UNICODE_VERSION.micro,
     );
     println!("");
 
@@ -41,9 +41,9 @@ fn main() {
     println!("Package Version: {}", PKG_VERSION);
     println!(
         "Unicode Version: {}.{}.{}",
-        unic::bidi::UNICODE_VERSION.0,
-        unic::bidi::UNICODE_VERSION.1,
-        unic::bidi::UNICODE_VERSION.2,
+        unic::bidi::UNICODE_VERSION.major,
+        unic::bidi::UNICODE_VERSION.minor,
+        unic::bidi::UNICODE_VERSION.micro,
     );
     println!("");
 
@@ -52,9 +52,9 @@ fn main() {
     println!("Package Version: {}", PKG_VERSION);
     println!(
         "Unicode Version: {}.{}.{}",
-        unic::idna::UNICODE_VERSION.0,
-        unic::idna::UNICODE_VERSION.1,
-        unic::idna::UNICODE_VERSION.2,
+        unic::idna::UNICODE_VERSION.major,
+        unic::idna::UNICODE_VERSION.minor,
+        unic::idna::UNICODE_VERSION.micro,
     );
     println!("");
 
@@ -63,9 +63,9 @@ fn main() {
     println!("Package Version: {}", PKG_VERSION);
     println!(
         "Unicode Version: {}.{}.{}",
-        unic::normal::UNICODE_VERSION.0,
-        unic::normal::UNICODE_VERSION.1,
-        unic::normal::UNICODE_VERSION.2,
+        unic::normal::UNICODE_VERSION.major,
+        unic::normal::UNICODE_VERSION.minor,
+        unic::normal::UNICODE_VERSION.micro,
     );
     println!("");
 }

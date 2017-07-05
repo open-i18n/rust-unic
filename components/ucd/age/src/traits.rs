@@ -34,8 +34,29 @@ mod tests {
 
     #[test]
     fn test_char_age() {
-        assert_eq!('\u{0000}'.age(), Age::Assigned(UnicodeVersion(1, 1, 0)));
-        assert_eq!('\u{0041}'.age(), Age::Assigned(UnicodeVersion(1, 1, 0)));
-        assert_eq!('\u{10ffff}'.age(), Age::Assigned(UnicodeVersion(2, 0, 0)));
+        assert_eq!(
+            '\u{0000}'.age(),
+            Age::Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            '\u{0041}'.age(),
+            Age::Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            '\u{10ffff}'.age(),
+            Age::Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            })
+        );
     }
 }

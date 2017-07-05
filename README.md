@@ -2,7 +2,8 @@
 
 [![UNIC-logo](docs/images/UNIC-logo.png)](https://github.com/behnam/rust-unic/)
 
-[![Travis](https://img.shields.io/travis/behnam/rust-unic.svg)](https://travis-ci.org/behnam/rust-unic/)
+[![Travis](https://img.shields.io/travis/behnam/rust-unic/master.svg)](https://travis-ci.org/behnam/rust-unic/)
+[![AppVeyor](https://img.shields.io/appveyor/ci/behnam/rust-unic/master.svg)](https://ci.appveyor.com/project/behnam/rust-unic)
 [![Unicode-10.0.0](https://img.shields.io/badge/unicode-10.0.0-red.svg)](http://www.unicode.org/versions/Unicode10.0.0/)
 [![Release](https://img.shields.io/github/release/behnam/rust-unic.svg)](https://github.com/behnam/rust-unic/)
 [![Crates.io](https://img.shields.io/crates/v/unic.svg)](https://crates.io/crates/unic/)
@@ -142,14 +143,17 @@ fn main() {
 
     // Age
 
-    assert_eq!(Age::of('A'), Age::Assigned(UnicodeVersion(1, 1, 0)));
+    assert_eq!(Age::of('A'), Age::Assigned(UnicodeVersion { major: 1, minor: 1, micro: 0 }));
     assert_eq!(Age::of('\u{A0000}'), Age::Unassigned);
-    assert_eq!(Age::of('\u{10FFFF}'), Age::Assigned(UnicodeVersion(2, 0, 0)));
+    assert_eq!(
+        Age::of('\u{10FFFF}'),
+        Age::Assigned(UnicodeVersion { major: 2, minor: 0, micro: 0 })
+    );
 
     if let Some(uni_ver) = '🦊'.age().assigned() {
-        assert_eq!(uni_ver.major(), 9);
-        assert_eq!(uni_ver.minor(), 0);
-        assert_eq!(uni_ver.micro(), 0);
+        assert_eq!(uni_ver.major, 9);
+        assert_eq!(uni_ver.minor, 0);
+        assert_eq!(uni_ver.micro, 0);
     }
 
     // Bidi

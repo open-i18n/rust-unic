@@ -72,11 +72,11 @@ extern crate unic_ucd_bidi;
 #[macro_use]
 extern crate matches;
 
-#[cfg(feature = "with_serde")]
+#[cfg(feature = "serde")]
 #[macro_use]
-extern crate serde_derive;
+extern crate serde;
 
-#[cfg(all(feature = "with_serde", test))]
+#[cfg(all(feature = "serde", test))]
 extern crate serde_test;
 
 pub mod format_chars;

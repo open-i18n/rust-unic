@@ -367,9 +367,9 @@ impl<'text> BidiInfo<'text> {
 
                 seq_start = seq_end;
             }
-            max_level
-                .lower(1)
-                .expect("Lowering embedding level below zero");
+            max_level.lower(1).expect(
+                "Lowering embedding level below zero",
+            );
         }
 
         (levels, runs)
@@ -756,7 +756,7 @@ mod tests {
 }
 
 
-#[cfg(all(feature = "with_serde", test))]
+#[cfg(all(feature = "serde", test))]
 mod serde_tests {
     use serde_test::{Token, assert_tokens};
     use super::*;

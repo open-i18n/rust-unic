@@ -23,8 +23,8 @@ pub use unic_ucd_core::UnicodeVersion;
 ///
 /// Character *assignement* values always have Unicode Micro (Update) Version value of zero (`0`).
 ///
-/// The *earliest* value for this property is `UnicodeVersion(1, 1, 0)`, because of the massive
-/// changes for the merger of the Unicode Stanrda with ISO 10646.
+/// The *earliest* value for this property is `UnicodeVersion { major: 1, minor: 1, micro: 0 }`,
+/// because of the massive changes for the merger of the Unicode Stanrda with ISO 10646.
 ///
 /// The *latest* value for this property is always equal to or less than `UNICODE_VERSION`. (Only
 /// not equal when `UNICODE_VERSION` has non-zero *micro* value.)
@@ -106,39 +106,214 @@ mod tests {
     #[test]
     fn test_age_values() {
         // ASCII
-        assert_eq!(Age::of('\u{0000}'), Assigned(UnicodeVersion(1, 1, 0)));
-        assert_eq!(Age::of('\u{0021}'), Assigned(UnicodeVersion(1, 1, 0)));
-        assert_eq!(Age::of('\u{0041}'), Assigned(UnicodeVersion(1, 1, 0)));
-        assert_eq!(Age::of('\u{007f}'), Assigned(UnicodeVersion(1, 1, 0)));
+        assert_eq!(
+            Age::of('\u{0000}'),
+            Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{0021}'),
+            Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{0041}'),
+            Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{007f}'),
+            Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
+        );
 
-        assert_eq!(Age::of('\u{0100}'), Assigned(UnicodeVersion(1, 1, 0)));
-        assert_eq!(Age::of('\u{01f5}'), Assigned(UnicodeVersion(1, 1, 0)));
-        assert_eq!(Age::of('\u{037e}'), Assigned(UnicodeVersion(1, 1, 0)));
-        assert_eq!(Age::of('\u{200c}'), Assigned(UnicodeVersion(1, 1, 0)));
+        assert_eq!(
+            Age::of('\u{0100}'),
+            Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{01f5}'),
+            Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{037e}'),
+            Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{200c}'),
+            Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
+        );
 
-        assert_eq!(Age::of('\u{01f6}'), Assigned(UnicodeVersion(3, 0, 0)));
-        assert_eq!(Age::of('\u{01f7}'), Assigned(UnicodeVersion(3, 0, 0)));
-        assert_eq!(Age::of('\u{01f9}'), Assigned(UnicodeVersion(3, 0, 0)));
+        assert_eq!(
+            Age::of('\u{01f6}'),
+            Assigned(UnicodeVersion {
+                major: 3,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{01f7}'),
+            Assigned(UnicodeVersion {
+                major: 3,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{01f9}'),
+            Assigned(UnicodeVersion {
+                major: 3,
+                minor: 0,
+                micro: 0,
+            })
+        );
 
-        assert_eq!(Age::of('\u{0860}'), Assigned(UnicodeVersion(10, 0, 0)));
-        assert_eq!(Age::of('\u{0866}'), Assigned(UnicodeVersion(10, 0, 0)));
-        assert_eq!(Age::of('\u{086a}'), Assigned(UnicodeVersion(10, 0, 0)));
+        assert_eq!(
+            Age::of('\u{0860}'),
+            Assigned(UnicodeVersion {
+                major: 10,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{0866}'),
+            Assigned(UnicodeVersion {
+                major: 10,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{086a}'),
+            Assigned(UnicodeVersion {
+                major: 10,
+                minor: 0,
+                micro: 0,
+            })
+        );
 
-        assert_eq!(Age::of('\u{fffe}'), Assigned(UnicodeVersion(1, 1, 0)));
-        assert_eq!(Age::of('\u{ffff}'), Assigned(UnicodeVersion(1, 1, 0)));
+        assert_eq!(
+            Age::of('\u{fffe}'),
+            Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{ffff}'),
+            Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
+        );
 
-        assert_eq!(Age::of('\u{10000}'), Assigned(UnicodeVersion(4, 0, 0)));
-        assert_eq!(Age::of('\u{10001}'), Assigned(UnicodeVersion(4, 0, 0)));
+        assert_eq!(
+            Age::of('\u{10000}'),
+            Assigned(UnicodeVersion {
+                major: 4,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{10001}'),
+            Assigned(UnicodeVersion {
+                major: 4,
+                minor: 0,
+                micro: 0,
+            })
+        );
 
-        assert_eq!(Age::of('\u{e0100}'), Assigned(UnicodeVersion(4, 0, 0)));
-        assert_eq!(Age::of('\u{e0101}'), Assigned(UnicodeVersion(4, 0, 0)));
-        assert_eq!(Age::of('\u{e0170}'), Assigned(UnicodeVersion(4, 0, 0)));
-        assert_eq!(Age::of('\u{e01ee}'), Assigned(UnicodeVersion(4, 0, 0)));
-        assert_eq!(Age::of('\u{e01ef}'), Assigned(UnicodeVersion(4, 0, 0)));
+        assert_eq!(
+            Age::of('\u{e0100}'),
+            Assigned(UnicodeVersion {
+                major: 4,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{e0101}'),
+            Assigned(UnicodeVersion {
+                major: 4,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{e0170}'),
+            Assigned(UnicodeVersion {
+                major: 4,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{e01ee}'),
+            Assigned(UnicodeVersion {
+                major: 4,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{e01ef}'),
+            Assigned(UnicodeVersion {
+                major: 4,
+                minor: 0,
+                micro: 0,
+            })
+        );
 
-        assert_eq!(Age::of('\u{10000}'), Assigned(UnicodeVersion(4, 0, 0)));
+        assert_eq!(
+            Age::of('\u{10000}'),
+            Assigned(UnicodeVersion {
+                major: 4,
+                minor: 0,
+                micro: 0,
+            })
+        );
 
-        assert_eq!(Age::of('\u{20000}'), Assigned(UnicodeVersion(3, 1, 0)));
+        assert_eq!(
+            Age::of('\u{20000}'),
+            Assigned(UnicodeVersion {
+                major: 3,
+                minor: 1,
+                micro: 0,
+            })
+        );
 
         assert_eq!(Age::of('\u{30000}'), Unassigned);
         assert_eq!(Age::of('\u{40000}'), Unassigned);
@@ -154,50 +329,348 @@ mod tests {
         assert_eq!(Age::of('\u{e0000}'), Unassigned);
         assert_eq!(Age::of('\u{efffd}'), Unassigned);
 
-        assert_eq!(Age::of('\u{efffe}'), Assigned(UnicodeVersion(2, 0, 0)));
-        assert_eq!(Age::of('\u{effff}'), Assigned(UnicodeVersion(2, 0, 0)));
+        assert_eq!(
+            Age::of('\u{efffe}'),
+            Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{effff}'),
+            Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            })
+        );
 
         // Priavte-Use Area
-        assert_eq!(Age::of('\u{f0000}'), Assigned(UnicodeVersion(2, 0, 0)));
-        assert_eq!(Age::of('\u{f0001}'), Assigned(UnicodeVersion(2, 0, 0)));
-        assert_eq!(Age::of('\u{ffffe}'), Assigned(UnicodeVersion(2, 0, 0)));
-        assert_eq!(Age::of('\u{fffff}'), Assigned(UnicodeVersion(2, 0, 0)));
-        assert_eq!(Age::of('\u{100000}'), Assigned(UnicodeVersion(2, 0, 0)));
-        assert_eq!(Age::of('\u{100001}'), Assigned(UnicodeVersion(2, 0, 0)));
-        assert_eq!(Age::of('\u{10fffe}'), Assigned(UnicodeVersion(2, 0, 0)));
-        assert_eq!(Age::of('\u{10ffff}'), Assigned(UnicodeVersion(2, 0, 0)));
+        assert_eq!(
+            Age::of('\u{f0000}'),
+            Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{f0001}'),
+            Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{ffffe}'),
+            Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{fffff}'),
+            Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{100000}'),
+            Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{100001}'),
+            Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{10fffe}'),
+            Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            })
+        );
+        assert_eq!(
+            Age::of('\u{10ffff}'),
+            Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            })
+        );
     }
 
     #[test]
     fn test_age_cmp() {
-        assert!(Assigned(UnicodeVersion(1, 1, 0)) == Assigned(UnicodeVersion(1, 1, 0)));
-        assert!(Assigned(UnicodeVersion(1, 1, 0)) < Assigned(UnicodeVersion(2, 0, 0)));
-        assert!(Assigned(UnicodeVersion(1, 1, 0)) < Assigned(UnicodeVersion(3, 0, 0)));
-        assert!(Assigned(UnicodeVersion(1, 1, 0)) < Assigned(UnicodeVersion(10, 0, 0)));
-        assert!(Assigned(UnicodeVersion(1, 1, 0)) < Unassigned);
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            }) ==
+                Assigned(UnicodeVersion {
+                    major: 1,
+                    minor: 1,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            }) <
+                Assigned(UnicodeVersion {
+                    major: 2,
+                    minor: 0,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            }) <
+                Assigned(UnicodeVersion {
+                    major: 3,
+                    minor: 0,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            }) <
+                Assigned(UnicodeVersion {
+                    major: 10,
+                    minor: 0,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            }) < Unassigned
+        );
 
-        assert!(Assigned(UnicodeVersion(2, 0, 0)) > Assigned(UnicodeVersion(1, 1, 0)));
-        assert!(Assigned(UnicodeVersion(2, 0, 0)) == Assigned(UnicodeVersion(2, 0, 0)));
-        assert!(Assigned(UnicodeVersion(2, 0, 0)) < Assigned(UnicodeVersion(3, 0, 0)));
-        assert!(Assigned(UnicodeVersion(2, 0, 0)) < Assigned(UnicodeVersion(10, 0, 0)));
-        assert!(Assigned(UnicodeVersion(2, 0, 0)) < Unassigned);
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            }) >
+                Assigned(UnicodeVersion {
+                    major: 1,
+                    minor: 1,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            }) ==
+                Assigned(UnicodeVersion {
+                    major: 2,
+                    minor: 0,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            }) <
+                Assigned(UnicodeVersion {
+                    major: 3,
+                    minor: 0,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            }) <
+                Assigned(UnicodeVersion {
+                    major: 10,
+                    minor: 0,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            }) < Unassigned
+        );
 
-        assert!(Assigned(UnicodeVersion(3, 0, 0)) > Assigned(UnicodeVersion(1, 1, 0)));
-        assert!(Assigned(UnicodeVersion(3, 0, 0)) > Assigned(UnicodeVersion(2, 0, 0)));
-        assert!(Assigned(UnicodeVersion(3, 0, 0)) == Assigned(UnicodeVersion(3, 0, 0)));
-        assert!(Assigned(UnicodeVersion(3, 0, 0)) < Assigned(UnicodeVersion(10, 0, 0)));
-        assert!(Assigned(UnicodeVersion(3, 0, 0)) < Unassigned);
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 3,
+                minor: 0,
+                micro: 0,
+            }) >
+                Assigned(UnicodeVersion {
+                    major: 1,
+                    minor: 1,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 3,
+                minor: 0,
+                micro: 0,
+            }) >
+                Assigned(UnicodeVersion {
+                    major: 2,
+                    minor: 0,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 3,
+                minor: 0,
+                micro: 0,
+            }) ==
+                Assigned(UnicodeVersion {
+                    major: 3,
+                    minor: 0,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 3,
+                minor: 0,
+                micro: 0,
+            }) <
+                Assigned(UnicodeVersion {
+                    major: 10,
+                    minor: 0,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 3,
+                minor: 0,
+                micro: 0,
+            }) < Unassigned
+        );
 
-        assert!(Assigned(UnicodeVersion(10, 0, 0)) > Assigned(UnicodeVersion(1, 1, 0)));
-        assert!(Assigned(UnicodeVersion(10, 0, 0)) > Assigned(UnicodeVersion(2, 0, 0)));
-        assert!(Assigned(UnicodeVersion(10, 0, 0)) > Assigned(UnicodeVersion(3, 0, 0)));
-        assert!(Assigned(UnicodeVersion(10, 0, 0)) == Assigned(UnicodeVersion(10, 0, 0)));
-        assert!(Assigned(UnicodeVersion(10, 0, 0)) < Unassigned);
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 10,
+                minor: 0,
+                micro: 0,
+            }) >
+                Assigned(UnicodeVersion {
+                    major: 1,
+                    minor: 1,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 10,
+                minor: 0,
+                micro: 0,
+            }) >
+                Assigned(UnicodeVersion {
+                    major: 2,
+                    minor: 0,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 10,
+                minor: 0,
+                micro: 0,
+            }) >
+                Assigned(UnicodeVersion {
+                    major: 3,
+                    minor: 0,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 10,
+                minor: 0,
+                micro: 0,
+            }) ==
+                Assigned(UnicodeVersion {
+                    major: 10,
+                    minor: 0,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Assigned(UnicodeVersion {
+                major: 10,
+                minor: 0,
+                micro: 0,
+            }) < Unassigned
+        );
 
-        assert!(Unassigned > Assigned(UnicodeVersion(1, 1, 0)));
-        assert!(Unassigned > Assigned(UnicodeVersion(2, 0, 0)));
-        assert!(Unassigned > Assigned(UnicodeVersion(3, 0, 0)));
-        assert!(Unassigned > Assigned(UnicodeVersion(10, 0, 0)));
+        assert!(
+            Unassigned >
+                Assigned(UnicodeVersion {
+                    major: 1,
+                    minor: 1,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Unassigned >
+                Assigned(UnicodeVersion {
+                    major: 2,
+                    minor: 0,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Unassigned >
+                Assigned(UnicodeVersion {
+                    major: 3,
+                    minor: 0,
+                    micro: 0,
+                })
+        );
+        assert!(
+            Unassigned >
+                Assigned(UnicodeVersion {
+                    major: 10,
+                    minor: 0,
+                    micro: 0,
+                })
+        );
         assert!(Unassigned == Unassigned);
     }
 }
