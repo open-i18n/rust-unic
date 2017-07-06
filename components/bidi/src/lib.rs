@@ -82,17 +82,17 @@ extern crate serde_test;
 pub mod format_chars;
 pub mod level;
 
+mod bidi_info;
 mod explicit;
 mod implicit;
 mod prepare;
-mod process;
 
 
-pub use unic_ucd_bidi::UNICODE_VERSION;
-pub use unic_ucd_bidi::{BidiClass, BidiClassCategory};
+pub use bidi_info::{ParagraphInfo, BidiInfo};
 pub use level::Level;
 pub use prepare::LevelRun;
-pub use process::{ParagraphInfo, BidiInfo};
+pub use unic_ucd_bidi::UNICODE_VERSION;
+pub use unic_ucd_bidi::{BidiClass, BidiClassCategory};
 
 
 /// UNIC component version.

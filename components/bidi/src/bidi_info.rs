@@ -12,6 +12,7 @@
 
 use std::borrow::Cow;
 use std::cmp::{max, min};
+use std::fmt;
 use std::iter::repeat;
 use std::ops::Range;
 
@@ -29,7 +30,7 @@ use BidiClass::*;
 
 
 /// Bidi information about a single paragraph
-#[derive(Debug, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct ParagraphInfo {
     /// The paragraphs boundaries within the text, as byte indices.
     ///
@@ -45,7 +46,7 @@ pub struct ParagraphInfo {
 /// Initial bidi information of the text
 ///
 /// Contains the paragraphs and `BidiClass`es in a string of text.
-#[derive(PartialEq, Debug)]
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct InitialInfo<'text> {
     /// The text
     pub text: &'text str,
@@ -150,7 +151,7 @@ impl<'text> InitialInfo<'text> {
 /// character is multiple bytes wide, then its class and level will appear multiple times in these
 /// vectors.
 // TODO: Impl `struct StringProperty<T> { values: Vec<T> }` and use instead of Vec<T>
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Eq, PartialEq, Hash)]
 pub struct BidiInfo<'text> {
     /// The text
     pub text: &'text str,
@@ -209,7 +210,7 @@ impl<'text> BidiInfo<'text> {
             }
             implicit::resolve_levels(processing_classes, levels);
 
-            assign_levels_to_removed_chars(para.level, original_classes, levels);
+            Self::assign_levels_to_removed_chars(para.level, original_classes, levels);
         }
 
         BidiInfo {
@@ -217,6 +218,22 @@ impl<'text> BidiInfo<'text> {
             original_classes: original_classes,
             paragraphs: paragraphs,
             levels: levels,
+        }
+    }
+
+    /// Assign levels to characters removed by rule X9.
+    ///
+    /// The levels assigned to these characters are not specified by the algorithm.  This function
+    /// assigns each one the level of the previous character, to avoid breaking level runs.
+    fn assign_levels_to_removed_chars(
+        para_level: Level,
+        classes: &[BidiClass],
+        levels: &mut [Level],
+    ) {
+        for i in 0..levels.len() {
+            if prepare::removed_by_x9(classes[i]) {
+                levels[i] = if i > 0 { levels[i - 1] } else { para_level };
+            }
         }
     }
 
@@ -384,15 +401,15 @@ impl<'text> BidiInfo<'text> {
     }
 }
 
-/// Assign levels to characters removed by rule X9.
-///
-/// The levels assigned to these characters are not specified by the algorithm.  This function
-/// assigns each one the level of the previous character, to avoid breaking level runs.
-fn assign_levels_to_removed_chars(para_level: Level, classes: &[BidiClass], levels: &mut [Level]) {
-    for i in 0..levels.len() {
-        if prepare::removed_by_x9(classes[i]) {
-            levels[i] = if i > 0 { levels[i - 1] } else { para_level };
-        }
+
+impl<'text> fmt::Display for BidiInfo<'text> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            f,
+            "{} paragraphs with a maximum bidirectional level of {}",
+            self.paragraphs.len(),
+            self.levels.iter().max().unwrap_or(&Level::ltr()),
+        )
     }
 }
 
@@ -752,6 +769,19 @@ mod tests {
             vec![&["2", "0", "x", "1"]]
         );
          */
+    }
+
+    #[test]
+    fn test_display() {
+        assert_eq!(
+            format!("{}", BidiInfo::new("", None)),
+            "0 paragraphs with a maximum bidirectional level of 0"
+        );
+
+        assert_eq!(
+            format!("{}", BidiInfo::new("abc\nאבּג", None)),
+            "2 paragraphs with a maximum bidirectional level of 1"
+        );
     }
 }
 
