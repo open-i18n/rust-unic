@@ -10,6 +10,7 @@
 // except according to those terms.
 
 use std::cmp::Ordering;
+use std::fmt;
 
 
 /// Represents the Unicode character
@@ -18,7 +19,7 @@ use std::cmp::Ordering;
 ///
 /// * <http://www.unicode.org/reports/tr9/#Bidirectional_Character_Types>
 /// * <http://www.unicode.org/reports/tr44/#Bidi_Class_Values>
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Eq, PartialEq, Debug, Hash)]
 #[allow(missing_docs)]
 pub enum BidiClass {
     AL,
@@ -81,10 +82,49 @@ impl BidiClass {
         bsearch_range_value_table(ch, BIDI_CLASS_TABLE)
     }
 
+    /// Description of the Bidi Class
+    ///
+    /// <http://www.unicode.org/reports/tr9/#Table_Bidirectional_Character_Types>
+    #[inline]
+    pub fn desc(&self) -> &str {
+        match *self {
+            // Strong
+            L => "Left-to-Right",
+            R => "Right-to-Left",
+            AL => "Right-to-Left Arabic",
+
+            // Weak
+            EN => "European Number",
+            ES => "European Number Separator",
+            ET => "European Number Terminator",
+            AN => "Arabic Number",
+            CS => "Common Number Separator",
+            NSM => "Nonspacing Mark",
+            BN => "Boundary Neutral",
+
+            // Neutral
+            B => "Paragraph Separator",
+            S => "Segment Separator",
+            WS => "Whitespace",
+            ON => "Other Neutrals",
+
+            // Explicit Formatting
+            LRE => "Left-to-Right Embedding",
+            LRO => "Left-to-Right Override",
+            RLE => "Right-to-Left Embedding",
+            RLO => "Right-to-Left Override",
+            PDF => "Pop Directional Format",
+            LRI => "Left-to-Right Isolate",
+            RLI => "Right-to-Left Isolate",
+            FSI => "First Strong Isolate",
+            PDI => "Pop Directional Isolate",
+        }
+    }
+
     /// If the `BidiClass` has strong or explicit Left-to-Right direction.
     #[inline]
-    pub fn category(self) -> BidiClassCategory {
-        match self {
+    pub fn category(&self) -> BidiClassCategory {
+        match *self {
             L | R | AL => Strong,
             EN | ES | ET | AN | CS | NSM | BN => Weak,
             B | S | WS | ON => Neutral,
@@ -94,8 +134,8 @@ impl BidiClass {
 
     /// If the `BidiClass` has strong or explicit Left-to-Right direction.
     #[inline]
-    pub fn is_ltr(self) -> bool {
-        match self {
+    pub fn is_ltr(&self) -> bool {
+        match *self {
             L | LRE | LRO | LRI => true,
             _ => false,
         }
@@ -103,8 +143,8 @@ impl BidiClass {
 
     /// If the `BidiClass` has strong or explicit Right-To-Left direction.
     #[inline]
-    pub fn is_rtl(self) -> bool {
-        match self {
+    pub fn is_rtl(&self) -> bool {
+        match *self {
             AL | R | RLE | RLO | RLI => true,
             _ => false,
         }
@@ -129,9 +169,17 @@ fn bsearch_range_value_table(c: char, r: &'static [(char, char, BidiClass)]) -> 
     }
 }
 
+impl fmt::Display for BidiClass {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.desc())
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use super::BidiClass;
+    use BidiClass::*;
 
     #[test]
     fn test_ascii() {
@@ -212,5 +260,13 @@ mod tests {
         assert_eq!(BidiClass::of('\u{80000}'), L);
         assert_eq!(BidiClass::of('\u{90000}'), L);
         assert_eq!(BidiClass::of('\u{a0000}'), L);
+    }
+
+    #[test]
+    fn test_display() {
+        assert_eq!(format!("{}", BidiClass::L), "Left-to-Right");
+        assert_eq!(format!("{}", BidiClass::R), "Right-to-Left");
+        assert_eq!(format!("{}", BidiClass::AL), "Right-to-Left Arabic");
+        assert_eq!(format!("{}", BidiClass::FSI), "First Strong Isolate");
     }
 }
