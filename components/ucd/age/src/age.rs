@@ -10,6 +10,7 @@
 
 
 use std::cmp::Ordering;
+use std::fmt;
 
 pub use unic_ucd_core::UnicodeVersion;
 
@@ -30,7 +31,7 @@ pub use unic_ucd_core::UnicodeVersion;
 /// not equal when `UNICODE_VERSION` has non-zero *micro* value.)
 ///
 /// * <http://www.unicode.org/reports/tr44/#Character_Age>
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Debug, Hash)]
 pub enum Age {
     /// Assigned Unicode Code Point (as character or noncharacter).
     Assigned(UnicodeVersion),
@@ -98,13 +99,31 @@ fn bsearch_range_value_table(ch: char, r: &'static [(char, char, Age)]) -> Age {
     }
 }
 
+
+impl Default for Age {
+    fn default() -> Self {
+        Age::Unassigned
+    }
+}
+
+
+impl fmt::Display for Age {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            Age::Assigned(uni_ver) => write!(f, "Assigned (Unicode {})", uni_ver),
+            Age::Unassigned => write!(f, "Unassigned"),
+        }
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::{Age, Assigned, Unassigned};
     use unic_ucd_core::UnicodeVersion;
 
     #[test]
-    fn test_age_values() {
+    fn test_values() {
         // ASCII
         assert_eq!(
             Age::of('\u{0000}'),
@@ -414,7 +433,7 @@ mod tests {
     }
 
     #[test]
-    fn test_age_cmp() {
+    fn test_cmp() {
         assert!(
             Assigned(UnicodeVersion {
                 major: 1,
@@ -672,5 +691,22 @@ mod tests {
                 })
         );
         assert!(Unassigned == Unassigned);
+    }
+
+    #[test]
+    fn test_display() {
+        assert_eq!(
+            format!(
+                "{}",
+                Age::Assigned(UnicodeVersion {
+                    major: 1,
+                    minor: 2,
+                    micro: 3,
+                })
+            ),
+            "Assigned (Unicode 1.2.3)"
+        );
+
+        assert_eq!(format!("{}", Age::Unassigned), "Unassigned");
     }
 }
