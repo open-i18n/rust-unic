@@ -28,9 +28,8 @@ script:
   - cargo test  --verbose --all
   - cargo test  --verbose --all --features serde
 
-  - if [ "$TRAVIS_RUST_VERSION" == "nightly" ]; then
-      cargo bench --verbose --all --features 'bench_it';
-    fi
+  - test "$TRAVIS_RUST_VERSION" != "nightly" ||
+    cargo bench --verbose --all --features 'bench_it'
 
 # TODO: - rustdoc --test README.md -L target/debug -L target/debug/deps
 
