@@ -79,8 +79,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
                     BidiClass::L | BidiClass::EN | BidiClass::ES | BidiClass::CS |
                         BidiClass::ET | BidiClass::ON | BidiClass::BN |
                         BidiClass::NSM
-                )
-                {
+                ) {
                     return false;
                 }
             }
@@ -132,8 +131,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
                     BidiClass::R | BidiClass::AL | BidiClass::AN | BidiClass::EN |
                         BidiClass::ES | BidiClass::CS | BidiClass::ET |
                         BidiClass::ON | BidiClass::BN | BidiClass::NSM
-                )
-                {
+                ) {
                     return false;
                 }
             }
@@ -214,8 +212,7 @@ fn validate(label: &str, is_bidi_domain: bool, flags: Flags, errors: &mut Vec<Er
         Mapping::Deviation(_) => flags.transitional_processing,
         Mapping::DisallowedStd3Valid => flags.use_std3_ascii_rules,
         _ => true,
-    })
-    {
+    }) {
         errors.push(Error::ValidityCriteria);
     }
     // V7: ContextJ rules
@@ -258,8 +255,7 @@ fn processing(domain: &str, flags: Flags, errors: &mut Vec<Error>) -> String {
                                 BidiClass::of(c),
                                 BidiClass::R | BidiClass::AL | BidiClass::AN
                             )
-                        })
-                        {
+                        }) {
                             is_bidi_domain = true;
                         }
                     }

@@ -139,9 +139,8 @@ fn unescape(input: &str) -> String {
                             match char::from_u32(((c1 * 16 + c2) * 16 + c3) * 16 + c4) {
                                 Some(c) => output.push(c),
                                 None => {
-                                    output.push_str(
-                                        &format!("\\u{:X}{:X}{:X}{:X}", c1, c2, c3, c4),
-                                    );
+                                    output
+                                        .push_str(&format!("\\u{:X}{:X}{:X}{:X}", c1, c2, c3, c4));
                                 }
                             };
                         }
