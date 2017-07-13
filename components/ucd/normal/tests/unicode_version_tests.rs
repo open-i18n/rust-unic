@@ -29,7 +29,8 @@ use std::collections::HashSet as Set;
 use std::{char, u32};
 
 
-const DT_TEST_DATA: &'static str = include_str!("../../../../data/ucd/test/DecompositionTypeTest.txt");
+const DT_TEST_DATA: &'static str =
+    include_str!("../../../../data/ucd/test/DecompositionTypeTest.txt");
 
 
 #[derive(Debug)]
@@ -55,7 +56,9 @@ fn test_decomposition_type_conformance() {
         }.trim();
 
         // Ignore empty lines
-        if line.is_empty() { continue }
+        if line.is_empty() {
+            continue;
+        }
 
         // State setting lines
         if line.starts_with('@') {
@@ -70,14 +73,14 @@ fn test_decomposition_type_conformance() {
                 if let Some(range_idx) = range_text.find("..") {
                     let low_text = &range_text[0..range_idx];
                     let high_text = &range_text[range_idx + 2..];
-                    let low = u32::from_str_radix(low_text, 16)
-                        .expect("Parse error on base 16 string");
-                    let high = u32::from_str_radix(high_text, 16)
-                        .expect("Parse error on base 16 string");
+                    let low =
+                        u32::from_str_radix(low_text, 16).expect("Parse error on base 16 string");
+                    let high =
+                        u32::from_str_radix(high_text, 16).expect("Parse error on base 16 string");
                     low..(high + 1)
                 } else {
-                    let low = u32::from_str_radix(range_text, 16)
-                        .expect("Parse error on base 16 string");
+                    let low =
+                        u32::from_str_radix(range_text, 16).expect("Parse error on base 16 string");
                     low..(low + 1)
                 }
             };
@@ -124,14 +127,14 @@ fn test_decomposition_type_conformance() {
         // TODO: Show a list of failed cases when the number is less than 1K
         panic!(
             "{} test cases failed! ({} passed) {{\n\
-                 \n\
-                 0: {:?}\n\
-                 \n\
-                 ...\n\
-                 \n\
-                 {}: {:?}\n\
-                 \n\
-                 }}",
+             \n\
+             0: {:?}\n\
+             \n\
+             ...\n\
+             \n\
+             {}: {:?}\n\
+             \n\
+             }}",
             failures.len(),
             passed_num,
             failures[0],
@@ -161,6 +164,6 @@ fn get_dt_from_name(name: &str) -> DT {
         "Super" | "Sup" => DT::Super,
         "Vertical" | "Vert" => DT::Vertical,
         "Wide" => DT::Wide,
-        &_ => panic!("Invalid Decomposition_Type name: {}", name)
+        &_ => panic!("Invalid Decomposition_Type name: {}", name),
     }
 }
