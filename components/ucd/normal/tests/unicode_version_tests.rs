@@ -141,27 +141,26 @@ fn test_decomposition_type_conformance() {
     }
 }
 
-#[ignore(unreachable_patterns)]
 fn get_dt_from_name(name: &str) -> DT {
     match name {
         "Canonical" | "Can" => DT::Canonical,
         "Compat" | "Com" => DT::Compat,
         "Circle" | "Enc" => DT::Circle,
         "Final" | "Fin" => DT::Final,
-        "Font" | "Font" => DT::Font,
+        "Font" => DT::Font,
         "Fraction" | "Fra" => DT::Fraction,
         "Initial" | "Init" => DT::Initial,
         "Isolated" | "Iso" => DT::Isolated,
         "Medial" | "Med" => DT::Medial,
         "Narrow" | "Nar" => DT::Narrow,
         "Nobreak" | "Nb" => DT::Nobreak,
-        "None" | "None" => DT::None,
+        "None" => DT::None,
         "Small" | "Sml" => DT::Small,
         "Square" | "Sqr" => DT::Square,
-        "Sub" | "Sub" => DT::Sub,
+        "Sub" => DT::Sub,
         "Super" | "Sup" => DT::Super,
         "Vertical" | "Vert" => DT::Vertical,
-        "Wide" | "Wide" => DT::Wide,
+        "Wide" => DT::Wide,
         &_ => panic!("Invalid Decomposition_Type name: {}", name)
     }
 }
