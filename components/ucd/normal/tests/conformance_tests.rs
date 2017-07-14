@@ -59,16 +59,13 @@ fn test_decomposition_type_conformance() {
             let fields: Vec<_> = line.split(';').map(str::trim).collect();
             let input_range = {
                 let range_text = fields[0];
-                if let Some(range_idx) = range_text.find("..") {
-                    let low_text = &range_text[0..range_idx];
-                    let high_text = &range_text[range_idx + 2..];
-                    let low = u32::from_str_radix(low_text, 16).unwrap();
-                    let high = u32::from_str_radix(high_text, 16).unwrap();
-                    low..(high + 1)
-                } else {
-                    let low = u32::from_str_radix(range_text, 16).unwrap();
-                    low..(low + 1)
-                }
+                let mut range = range_text.split("..");
+                let low = u32::from_str_radix(range.next().unwrap(), 16).unwrap();
+                let high = range
+                    .next()
+                    .map(|c| u32::from_str_radix(c, 16).unwrap())
+                    .unwrap_or(low);
+                low..(high + 1)
             };
             let exp_dt = Some(get_dt_from_name(fields[1]));
 
