@@ -18,8 +18,11 @@
 //! Core create indicating the version of Unicode Character Database.
 
 
+use std::fmt;
+
+
 /// Type of `UNICODE_VERSION` value:
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Debug, Hash, Default)]
 pub struct UnicodeVersion {
     /// Major version.
     pub major: u16,
@@ -31,10 +34,22 @@ pub struct UnicodeVersion {
     pub micro: u16,
 }
 
-
 /// The [Unicode version](http://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv");
 
+impl UnicodeVersion {
+    /// Human-readable description of the Age property value.
+    #[inline]
+    pub fn display(&self) -> String {
+        format!("{}.{}.{}", self.major, self.minor, self.micro)
+    }
+}
+
+impl fmt::Display for UnicodeVersion {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.display())
+    }
+}
 
 impl<T: Into<u16>> From<(T, T, T)> for UnicodeVersion {
     fn from(t: (T, T, T)) -> UnicodeVersion {
@@ -53,18 +68,32 @@ impl<T: From<u16>> Into<(T, T, T)> for UnicodeVersion {
 }
 
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
-    fn valid_versions() {
+    fn validate_version_values() {
         assert!(UNICODE_VERSION.major > 0);
 
         // Current release schedule of Unicode is to have one Major version update each year, with
         // no Minor updates. We hard-code this internal policy while it stans.
         assert!(UNICODE_VERSION.minor == 0);
+    }
+
+    #[test]
+    fn test_display() {
+        assert_eq!(
+            format!(
+                "Unicode {}",
+                UnicodeVersion {
+                    major: 1,
+                    minor: 2,
+                    micro: 0,
+                }
+            ),
+            "Unicode 1.2.0"
+        );
     }
 
     #[test]

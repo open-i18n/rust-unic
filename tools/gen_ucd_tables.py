@@ -128,7 +128,8 @@ def get_age_values():
             last = first
         first, last = int(first, 16), int(last, 16)
 
-        age = 'Assigned(UnicodeVersion { major: %s, minor: %s, micro: 0 })' % tuple(value.split('.'))
+        age = 'Assigned(UnicodeVersion { major: %s, minor: %s, micro: 0 })' % tuple(
+            value.split('.'))
 
         if age not in age_groups:
             age_groups[age] = []

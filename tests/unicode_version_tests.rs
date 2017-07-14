@@ -9,10 +9,13 @@
 // except according to those terms.
 
 
+#![cfg(feature = "unstable")]
+#![feature(unicode)]
+
+
 extern crate unic;
 
 
-#[cfg(feature = "unstable")]
 #[test]
 fn test_unicode_version_against_rust_core() {
     assert!(std::char::UNICODE_VERSION <= unic::UNICODE_VERSION.into());

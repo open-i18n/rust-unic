@@ -16,6 +16,7 @@
 //! http://www.unicode.org/reports/tr9/#BD2
 
 use std::convert::{From, Into};
+use std::fmt;
 
 use unic_ucd_bidi::BidiClass;
 
@@ -29,7 +30,7 @@ use unic_ucd_bidi::BidiClass;
 /// larger than 125 results in an `Error`.
 ///
 /// http://www.unicode.org/reports/tr9/#BD2
-#[derive(Copy, Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Level(u8);
 
@@ -46,7 +47,7 @@ pub const MAX_EXPLICIT_DEPTH: u8 = MAX_DEPTH;
 pub const MAX_IMPLICIT_DEPTH: u8 = MAX_DEPTH + 1;
 
 /// Errors that can occur on Level creation or mutation
-#[derive(Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash)]
 pub enum Error {
     /// Out-of-range (invalid) embedding level number.
     OutOfRangeNumber,
@@ -200,6 +201,14 @@ impl Level {
     }
 }
 
+
+impl fmt::Display for Level {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
+
 /// If levels has any RTL (odd) level
 ///
 /// This information is usually used to skip re-ordering of text when no RTL level is present
@@ -207,6 +216,7 @@ impl Level {
 pub fn has_rtl(levels: &[Level]) -> bool {
     levels.iter().any(|&lvl| lvl.is_rtl())
 }
+
 
 impl Into<u8> for Level {
     /// Convert to the level number
@@ -239,6 +249,7 @@ impl<'a> PartialEq<String> for Level {
         self == &s.as_str()
     }
 }
+
 
 #[cfg(test)]
 mod tests {
