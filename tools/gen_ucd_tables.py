@@ -28,12 +28,12 @@ import unicode_utils
 from common import path, memoize
 from unicode_utils import is_surrogate
 
-
 OUTPUT_DIRS = {
     'UCD_CORE': path("components/ucd/core/src/tables"),
     'UCD_AGE': path("components/ucd/age/src/tables"),
     'UCD_BIDI': path("components/ucd/bidi/src/tables"),
     'UCD_NORMAL': path("components/ucd/normal/src/tables"),
+    'UCD_CATEGORY': path("components/ucd/category/src/tables"),
     'NORMAL_TESTS': path("components/normal/tests/tables"),
 }
 
@@ -179,23 +179,23 @@ def get_bidi_class_info():
     # http://www.unicode.org/Public/UNIDATA/extracted/DerivedBidiClass.txt
     default_ranges = [
         # default to AL
-        (0x0600, 0x07BF, "AL"),     # Arabic, Syriac, Arabic_Supplement, Thaana
-        (0x08A0, 0x08FF, "AL"),     # Arabic Extended-A
-        (0xFB50, 0xFDCF, "AL"),     # Arabic_Presentation_Forms_A
-        (0xFDF0, 0xFDFF, "AL"),     # Arabic_Presentation_Forms_A
-        (0xFE70, 0xFEFF, "AL"),     # Arabic_Presentation_Forms_B
-        (0x1EE00, 0x1EEFF, "AL"),   # Arabic Mathematical Alphabetic Symbols
+        (0x0600, 0x07BF, "AL"),  # Arabic, Syriac, Arabic_Supplement, Thaana
+        (0x08A0, 0x08FF, "AL"),  # Arabic Extended-A
+        (0xFB50, 0xFDCF, "AL"),  # Arabic_Presentation_Forms_A
+        (0xFDF0, 0xFDFF, "AL"),  # Arabic_Presentation_Forms_A
+        (0xFE70, 0xFEFF, "AL"),  # Arabic_Presentation_Forms_B
+        (0x1EE00, 0x1EEFF, "AL"),  # Arabic Mathematical Alphabetic Symbols
         # default to R
-        (0x0590, 0x05FF, "R"),      # Hebrew
-        (0x07C0, 0x089F, "R"),      # NKo
-        (0xFB1D, 0xFB4F, "R"),      # others
+        (0x0590, 0x05FF, "R"),  # Hebrew
+        (0x07C0, 0x089F, "R"),  # NKo
+        (0xFB1D, 0xFB4F, "R"),  # others
         # Cypriot_Syllabary, Phoenician, Lydian, Meroitic Hieroglyphs, Meroitic
         # Cursive, Kharoshthi, others
         (0x10800, 0x10FFF, "R"),
-        (0x1E800, 0x1EDFF, "R"),    # others
-        (0x1EF00, 0x1EFFF, "R"),    # others
+        (0x1E800, 0x1EDFF, "R"),  # others
+        (0x1EF00, 0x1EFFF, "R"),  # others
         # default to ET
-        (0x20A0, 0x20CF, "ET"),     # Currency Symbols
+        (0x20A0, 0x20CF, "ET"),  # Currency Symbols
     ]
 
     for (start, end, default_class) in default_ranges:
@@ -487,6 +487,80 @@ def emit_normal_tests_tables(dir):
         )
 
 
+# == Category ==
+
+SHORT_CATEGORY_NAME_MAP = {
+    'Lu': "UppercaseLetter",
+    'Ll': "LowercaseLetter",
+    'Lt': "TitlecaseLetter",
+    'Lm': "ModifierLetter",
+    'Lo': "OtherLetter",
+    'Mn': "NonspacingMark",
+    'Mc': "SpacingMark",
+    'Me': "EnclosingMark",
+    'Nd': "DecimalNumber",
+    'Nl': "LetterNumber",
+    'No': "OtherNumber",
+    'Pc': "ConnectorPunctuation",
+    'Pd': "DashPunctuation",
+    'Ps': "OpenPunctuation",
+    'Pe': "ClosePunctuation",
+    'Pi': "InitialPunctuation",
+    'Pf': "FinalPunctuation",
+    'Po': "OtherPunctuation",
+    'Sm': "MathSymbol",
+    'Sc': "CurrencySymbol",
+    'Sk': "ModifierSymbol",
+    'So': "OtherSymbol",
+    'Zs': "SpaceSeparator",
+    'Zl': "LineSeparator",
+    'Zp': "ParagraphSeparator",
+    'Cc': "Control",
+    'Cf': "Format",
+    'Cs': "Surrogate",
+    'Co': "PrivateUse",
+    'Cn': "Unassigned",
+}
+
+
+@memoize
+def get_general_category_mapping():
+    unicode_data = get_unicode_data()
+
+    general_category_mapping = {}
+
+    for cp in unicode_data:
+        [_, name, gen_cat, ccc, bidi_class, decomp, deci, digit, num, mirror,
+         old, iso, upcase, lowcase, titlecase] = unicode_data[cp]
+
+        long_category = SHORT_CATEGORY_NAME_MAP[gen_cat]
+        if long_category not in general_category_mapping:
+            general_category_mapping[long_category] = []
+        general_category_mapping[long_category].append(cp)
+
+    general_category_mapping = range_value_triplets_from_codepoints(general_category_mapping)
+
+    return (
+        general_category_mapping
+    )
+
+
+def emit_general_category_tables(dir):
+    general_category_mapping = get_general_category_mapping()
+
+    with open(join(dir, 'general_category.rsv'), "w") as values_file:
+        rustout.emit_table(
+            __file__,
+            values_file,
+            general_category_mapping,
+            print_fun=lambda x: "(%s, %s, %s)" % (
+                rustout.char_literal(x[0]),
+                rustout.char_literal(x[1]),
+                x[2],
+            ),
+        )
+
+
 # == Misc ==
 
 def range_value_triplets_from_codepoints(groups):
@@ -550,3 +624,7 @@ if __name__ == "__main__":
     emit_unicode_version(OUTPUT_DIRS['UCD_NORMAL'])
     emit_normal_form_tables(OUTPUT_DIRS['UCD_NORMAL'])
     emit_normal_tests_tables(OUTPUT_DIRS['NORMAL_TESTS'])
+
+    # Category
+    emit_unicode_version(OUTPUT_DIRS['UCD_CATEGORY'])
+    emit_general_category_tables(OUTPUT_DIRS['UCD_CATEGORY'])

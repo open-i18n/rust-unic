@@ -23,11 +23,11 @@
 extern crate unic_ucd_core;
 
 
-//use unic_ucd_core::UnicodeVersion;
-//
-//
-///// The [Unicode version](http://www.unicode.org/versions/) of data
-//pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv");
+use unic_ucd_core::UnicodeVersion;
+
+
+/// The [Unicode version](http://www.unicode.org/versions/) of data
+pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv");
 
 /// Represents the Unicode Character
 /// [*General Category*](http://unicode.org/reports/tr44/#General_Category) property.
@@ -204,7 +204,8 @@ impl GeneralCategory {
     ///
     /// Abbreviated: L
     pub fn is_letter(&self) -> bool {
-        [UppercaseLetter, LowercaseLetter, TitlecaseLetter, ModifierLetter, OtherLetter].contains(self)
+        [UppercaseLetter, LowercaseLetter, TitlecaseLetter, ModifierLetter, OtherLetter]
+            .contains(self)
     }
 
     /// Mn | Mc | Me
@@ -225,7 +226,15 @@ impl GeneralCategory {
     ///
     /// Abbreviated: P
     pub fn is_punctuation(&self) -> bool {
-        [ConnectorPunctuation, DashPunctuation, OpenPunctuation, ClosePunctuation, InitialPunctuation, FinalPunctuation, OtherPunctuation].contains(self)
+        [
+            ConnectorPunctuation,
+            DashPunctuation,
+            OpenPunctuation,
+            ClosePunctuation,
+            InitialPunctuation,
+            FinalPunctuation,
+            OtherPunctuation,
+        ].contains(self)
     }
 
     /// Sm | Sc | Sk | So
@@ -249,3 +258,6 @@ impl GeneralCategory {
         [Control, Format, Surrogate, PrivateUse, Unassigned].contains(self)
     }
 }
+
+const CATEGORY_TYPE_TABLE: &'static [(char, char, GeneralCategory)] =
+    include!("tables/general_category.rsv");
