@@ -62,14 +62,11 @@ fn test_decomposition_type_conformance() {
                 if let Some(range_idx) = range_text.find("..") {
                     let low_text = &range_text[0..range_idx];
                     let high_text = &range_text[range_idx + 2..];
-                    let low =
-                        u32::from_str_radix(low_text, 16).expect("Parse error on base 16 string");
-                    let high =
-                        u32::from_str_radix(high_text, 16).expect("Parse error on base 16 string");
+                    let low = u32::from_str_radix(low_text, 16).unwrap();
+                    let high = u32::from_str_radix(high_text, 16).unwrap();
                     low..(high + 1)
                 } else {
-                    let low =
-                        u32::from_str_radix(range_text, 16).expect("Parse error on base 16 string");
+                    let low = u32::from_str_radix(range_text, 16).unwrap();
                     low..(low + 1)
                 }
             };
