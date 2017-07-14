@@ -100,7 +100,10 @@ pub fn compute(
                         // Pop everything up to and including the last Isolate status.
                         match stack.vec.pop() {
                             None |
-                            Some(Status { status: OverrideStatus::Isolate, .. }) => break,
+                            Some(Status {
+                                status: OverrideStatus::Isolate,
+                                ..
+                            }) => break,
                             _ => continue,
                         }
                     }
@@ -175,7 +178,9 @@ struct DirectionalStatusStack {
 
 impl DirectionalStatusStack {
     fn new() -> Self {
-        DirectionalStatusStack { vec: Vec::with_capacity(Level::max_explicit_depth() as usize + 2) }
+        DirectionalStatusStack {
+            vec: Vec::with_capacity(Level::max_explicit_depth() as usize + 2),
+        }
     }
 
     fn push(&mut self, level: Level, status: OverrideStatus) {

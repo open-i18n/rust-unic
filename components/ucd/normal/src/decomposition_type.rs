@@ -25,23 +25,23 @@ use composition::canonical_decomposition;
 #[allow(missing_docs)]
 pub enum DecompositionType {
     Canonical, // abbreviated: Can
-    Compat, // abbreviated: Com
-    Circle, // abbreviated: Enc
-    Final, // abbreviated: Fin
-    Font, // abbreviated: Font
-    Fraction, // abbreviated: Fra
-    Initial, // abbreviated: Init
-    Isolated, // abbreviated: Iso
-    Medial, // abbreviated: Med
-    Narrow, // abbreviated: Nar
-    Nobreak, // abbreviated: Nb
-    None, // abbreviated: None
-    Small, // abbreviated: Sml
-    Square, // abbreviated: Sqr
-    Sub, // abbreviated: Sub
-    Super, // abbreviated: Sup
-    Vertical, // abbreviated: Vert
-    Wide, // abbreviated: Wide
+    Compat,    // abbreviated: Com
+    Circle,    // abbreviated: Enc
+    Final,     // abbreviated: Fin
+    Font,      // abbreviated: Font
+    Fraction,  // abbreviated: Fra
+    Initial,   // abbreviated: Init
+    Isolated,  // abbreviated: Iso
+    Medial,    // abbreviated: Med
+    Narrow,    // abbreviated: Nar
+    Nobreak,   // abbreviated: Nb
+    None,      // abbreviated: None
+    Small,     // abbreviated: Sml
+    Square,    // abbreviated: Sqr
+    Sub,       // abbreviated: Sub
+    Super,     // abbreviated: Sup
+    Vertical,  // abbreviated: Vert
+    Wide,      // abbreviated: Wide
 }
 
 
