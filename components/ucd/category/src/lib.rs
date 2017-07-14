@@ -22,6 +22,7 @@
 
 extern crate unic_ucd_core;
 
+use std::cmp::Ordering;
 
 use unic_ucd_core::UnicodeVersion;
 
@@ -33,7 +34,7 @@ pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv
 /// [*General Category*](http://unicode.org/reports/tr44/#General_Category) property.
 ///
 /// * <http://unicode.org/reports/tr44/#General_Category_Values>
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum GeneralCategory {
     /// An uppercase letter
     ///
@@ -259,5 +260,54 @@ impl GeneralCategory {
     }
 }
 
-const CATEGORY_TYPE_TABLE: &'static [(char, char, GeneralCategory)] =
+const GENERAL_CATEGORY_TABLE: &'static [(char, char, GeneralCategory)] =
     include!("tables/general_category.rsv");
+
+impl GeneralCategory {
+    /// Find the GeneralCategory of a single char.
+    pub fn of(ch: char) -> GeneralCategory {
+        bsearch_range_value_table(ch, GENERAL_CATEGORY_TABLE)
+    }
+}
+
+fn bsearch_range_value_table(
+    c: char,
+    r: &'static [(char, char, GeneralCategory)],
+) -> GeneralCategory {
+    match r.binary_search_by(|&(lo, hi, _)| if lo <= c && c <= hi {
+        Ordering::Equal
+    } else if hi < c {
+        Ordering::Less
+    } else {
+        Ordering::Greater
+    }) {
+        Ok(idx) => {
+            let (_, _, category) = r[idx];
+            category
+        }
+        Err(_) => GeneralCategory::Unassigned,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::GeneralCategory as GC;
+    use std::char;
+
+    #[test]
+    fn test_ascii() {
+        for c in 0..32 {
+            let c = char::from_u32(c).unwrap();
+            assert_eq!(GC::of(c), GC::Control);
+        }
+        assert_eq!(GC::of(' '), GC::SpaceSeparator);
+        assert_eq!(GC::of('!'), GC::OtherPunctuation);
+        assert_eq!(GC::of('"'), GC::OtherPunctuation);
+        assert_eq!(GC::of('#'), GC::OtherPunctuation);
+        assert_eq!(GC::of('$'), GC::CurrencySymbol);
+        assert_eq!(GC::of('%'), GC::OtherPunctuation);
+        assert_eq!(GC::of('&'), GC::OtherPunctuation);
+        assert_eq!(GC::of('\''), GC::OtherPunctuation);
+        // TODO I would like to do the rest of ASCII
+    }
+}
