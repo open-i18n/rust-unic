@@ -82,7 +82,7 @@ impl BidiClass {
         bsearch_range_value_table(ch, BIDI_CLASS_TABLE)
     }
 
-    /// Human-readable description of the Bidi Class property values
+    /// Human-readable description of the Bidi Class property value.
     ///
     /// <http://www.unicode.org/reports/tr9/#Table_Bidirectional_Character_Types>
     #[inline]

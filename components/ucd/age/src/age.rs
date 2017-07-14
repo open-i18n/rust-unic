@@ -78,6 +78,16 @@ impl Age {
             Unassigned => true,
         }
     }
+
+    /// Human-readable description of the Age property value.
+    #[inline]
+    pub fn display(&self) -> String {
+        match *self {
+            Age::Assigned(uni_ver) => format!("Assigned in Unicode {}", uni_ver).to_owned(),
+            Age::Unassigned => "Unassigned".to_owned(),
+        }
+    }
+
 }
 
 // TODO: Generic'ize and move to `unic-ucd-utils`
@@ -109,10 +119,7 @@ impl Default for Age {
 
 impl fmt::Display for Age {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match *self {
-            Age::Assigned(uni_ver) => write!(f, "Assigned (Unicode {})", uni_ver),
-            Age::Unassigned => write!(f, "Unassigned"),
-        }
+        write!(f, "{}", self.display())
     }
 }
 
@@ -704,7 +711,7 @@ mod tests {
                     micro: 3,
                 })
             ),
-            "Assigned (Unicode 1.2.3)"
+            "Assigned in Unicode 1.2.3"
         );
 
         assert_eq!(format!("{}", Age::Unassigned), "Unassigned");
