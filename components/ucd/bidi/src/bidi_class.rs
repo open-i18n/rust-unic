@@ -82,11 +82,11 @@ impl BidiClass {
         bsearch_range_value_table(ch, BIDI_CLASS_TABLE)
     }
 
-    /// Description of the Bidi Class
+    /// Human-readable description of the Bidi Class property values
     ///
     /// <http://www.unicode.org/reports/tr9/#Table_Bidirectional_Character_Types>
     #[inline]
-    pub fn desc(&self) -> &str {
+    pub fn display(&self) -> &str {
         match *self {
             // Strong
             L => "Left-to-Right",
@@ -171,7 +171,7 @@ fn bsearch_range_value_table(c: char, r: &'static [(char, char, BidiClass)]) -> 
 
 impl fmt::Display for BidiClass {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.desc())
+        write!(f, "{}", self.display())
     }
 }
 
