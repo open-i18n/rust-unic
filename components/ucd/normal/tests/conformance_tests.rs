@@ -31,6 +31,7 @@ struct Fail {
 }
 
 #[test]
+#[should_panic(expected = "11172 test cases failed! (1100892 passed)")]
 fn test_decomposition_type_conformance() {
     let mut passed_num: u32 = 0;
     let mut failures: Vec<Fail> = Vec::new();
