@@ -6,11 +6,11 @@ homepage = "https://github.com/behnam/rust-unic/"
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
 keywords = ["text", "unicode"]
-description = "UNIC - Unicode Character Database"
-readme = "README.md"
+description = "UNIC - Unicode Character Database - General Category"
 
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
 [dependencies]
 unic-ucd-core = { path = "../core/", version = "0.4.0" }
+matches = "0.1.6"

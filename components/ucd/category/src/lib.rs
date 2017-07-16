@@ -1,4 +1,3 @@
-// Copyright 2012-2015 The Rust Project Developers.
 // Copyright 2017 The UNIC Project Developers.
 //
 // See the COPYRIGHT file at the top-level directory of this distribution.
@@ -20,6 +19,8 @@
 //!
 //!
 
+#[macro_use]
+extern crate matches;
 extern crate unic_ucd_core;
 
 use std::cmp::Ordering;
@@ -36,227 +37,152 @@ pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv
 /// * <http://unicode.org/reports/tr44/#General_Category_Values>
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum GeneralCategory {
-    /// An uppercase letter
-    ///
-    /// Abbreviated: Lu
+    /// An uppercase letter (Short form: `Lu`)
     UppercaseLetter,
 
-    /// A lowercase letter
-    ///
-    /// Abbreviated: Ll
+    /// A lowercase letter (Short form: `Ll`)
     LowercaseLetter,
 
-    /// A digraphic character, with first part uppercase
-    ///
-    /// Abbreviated: Lt
+    /// A digraphic character, with first part uppercase (Short form: `Lt`)
     TitlecaseLetter,
 
-    /// A modifier letter
-    ///
-    /// Abbreviated: Lm
+    /// A modifier letter (Short form: `Lm`)
     ModifierLetter,
 
-    /// Other letters, including syllables and ideographs
-    ///
-    /// Abbreviated: Lo
+    /// Other letters, including syllables and ideographs (Short form: `Lo`)
     OtherLetter,
 
-    /// A nonspacing combining mark (zero advance width)
-    ///
-    /// Abbreviated: Mn
+    /// A nonspacing combining mark (zero advance width) (Short form: `Mn`)
     NonspacingMark,
 
-    /// A spacing combining mark (positive advance width)
-    ///
-    /// Abbreviated: Mc
+    /// A spacing combining mark (positive advance width) (Short form: `Mc`)
     SpacingMark,
 
-    /// An enclosing combining mark
-    ///
-    /// Abbreviated: Me
+    /// An enclosing combining mark (Short form: `Me`)
     EnclosingMark,
 
-    /// A decimal digit
-    ///
-    /// Abbreviated: Nd
+    /// A decimal digit (Short form: `Nd`)
     DecimalNumber,
 
-    /// A letterlike numeric character
-    ///
-    /// Abbreviated: Nl
+    /// A letterlike numeric character (Short form: `Nl`)
     LetterNumber,
 
-    /// A numeric character of other type
-    ///
-    /// Abbreviated: No
+    /// A numeric character of other type (Short form: `No`)
     OtherNumber,
 
-    /// A connecting punctuation mark, like a tie
-    ///
-    /// Abbreviated: Pc
+    /// A connecting punctuation mark, like a tie (Short form: `Pc`)
     ConnectorPunctuation,
 
-    /// A dash or hyphen punctuation mark
-    ///
-    /// Abbreviated: Pd
+    /// A dash or hyphen punctuation mark (Short form: `Pd`)
     DashPunctuation,
 
-    /// An opening punctuation mark (of a pair)
-    ///
-    /// Abbreviated: Ps
+    /// An opening punctuation mark (of a pair) (Short form: `Ps`)
     OpenPunctuation,
 
-    /// A closing punctuation mark (of a pair)
-    ///
-    /// Abbreviated: Pe
+    /// A closing punctuation mark (of a pair) (Short form: `Pe`)
     ClosePunctuation,
 
-    /// An initial quotation mark
-    ///
-    /// Abbreviated: Pi
+    /// An initial quotation mark (Short form: `Pi`)
     InitialPunctuation,
 
-    /// A final quotation mark
-    ///
-    /// Abbreviated: Pf
+    /// A final quotation mark (Short form: `Pf`)
     FinalPunctuation,
 
-    /// A punctuation mark of other type
-    ///
-    /// Abbreviated: Po
+    /// A punctuation mark of other type (Short form: `Po`)
     OtherPunctuation,
 
-    /// A symbol of mathematical use
-    ///
-    /// Abbreviated: Sm
+    /// A symbol of mathematical use (Short form: `Sm`)
     MathSymbol,
 
-    /// A currency sign
-    ///
-    /// Abbreviated: Sc
+    /// A currency sign (Short form: `Sc`)
     CurrencySymbol,
 
-    /// A non-letterlike modifier symbol
-    ///
-    /// Abbreviated: Sk
+    /// A non-letterlike modifier symbol (Short form: `Sk`)
     ModifierSymbol,
 
-    /// A symbol of other type
-    ///
-    /// Abbreviated: So
+    /// A symbol of other type (Short form: `So`)
     OtherSymbol,
 
-    /// A space character (of various non-zero widths)
-    ///
-    /// Abbreviated: Zs
+    /// A space character (of various non-zero widths) (Short form: `Zs`)
     SpaceSeparator,
 
-    /// U+2028 LINE SEPARATOR only
-    ///
-    /// Abbreviated: Zl
+    /// U+2028 LINE SEPARATOR only (Short form: `Zl`)
     LineSeparator,
 
-    /// U+2029 PARAGRAPH SEPARATOR only
-    ///
-    /// Abbreviated: Zp
+    /// U+2029 PARAGRAPH SEPARATOR only (Short form: `Zp`)
     ParagraphSeparator,
 
-    /// A C0 or C1 control code
-    ///
-    /// Abbreviated: Cc
+    /// A C0 or C1 control code (Short form: `Cc`)
     Control,
 
-    /// A format control character
-    ///
-    /// Abbreviated: Cf
+    /// A format control character (Short form: `Cf`)
     Format,
 
-    /// A surrogate code point
-    ///
-    /// Abbreviated: Cs
+    /// A surrogate code point (Short form: `Cs`)
     Surrogate,
 
-    /// A private-use character
-    ///
-    /// Abbreviated: Co
+    /// A private-use character (Short form: `Co`)
     PrivateUse,
 
-    /// Unassigned
-    ///
-    /// Abbreviated: Cn
+    /// Unassigned (Short form: `Cn`)
     Unassigned,
 }
 
 
 use self::GeneralCategory::*;
 
-// TODO: potentially change these to match pattern matching.
-// Static array contains was easier and clearer to get the first draft up,
-// but is it optimized to the same thing?
 impl GeneralCategory {
-    /// Lu | Ll | Lt
-    ///
-    /// Abbreviated: LC
+    /// `Lu` | `Ll` | `Lt`  (Short form: `LC`)
     pub fn is_cased_letter(&self) -> bool {
-        [UppercaseLetter, LowercaseLetter, TitlecaseLetter].contains(self)
+        matches!(*self, UppercaseLetter | LowercaseLetter | TitlecaseLetter)
     }
 
-    /// Lu | Ll | Lt | Lm | Lo
-    ///
-    /// Abbreviated: L
+    /// `Lu` | `Ll` | `Lt` | `Lm` | `Lo`  (Short form: `L`)
     pub fn is_letter(&self) -> bool {
-        [UppercaseLetter, LowercaseLetter, TitlecaseLetter, ModifierLetter, OtherLetter]
-            .contains(self)
+        matches!(
+            *self,
+            UppercaseLetter | LowercaseLetter | TitlecaseLetter | ModifierLetter | OtherLetter
+        )
     }
 
-    /// Mn | Mc | Me
-    ///
-    /// Abbreviated: M
+    /// `Mn` | `Mc` | `Me`  (Short form: `M`)
     pub fn is_mark(&self) -> bool {
-        [NonspacingMark, SpacingMark, EnclosingMark].contains(self)
+        matches!(*self, NonspacingMark | SpacingMark | EnclosingMark)
     }
 
-    /// Nd | Nl | No
-    ///
-    /// Abbreviated: N
+    /// `Nd` | `Nl` | `No`  (Short form: `N`)
     pub fn is_number(&self) -> bool {
-        [DecimalNumber, LetterNumber, OtherNumber].contains(self)
+        matches!(*self, DecimalNumber | LetterNumber | OtherNumber)
     }
 
-    /// Pc | Pd | Ps | Pe | Pi | Pf | Po
-    ///
-    /// Abbreviated: P
+    /// `Pc` | `Pd` | `Ps` | `Pe` | `Pi` | `Pf` | `Po`  (Short form: `P`)
     pub fn is_punctuation(&self) -> bool {
-        [
-            ConnectorPunctuation,
-            DashPunctuation,
-            OpenPunctuation,
-            ClosePunctuation,
-            InitialPunctuation,
-            FinalPunctuation,
-            OtherPunctuation,
-        ].contains(self)
+        matches!(
+            *self,
+            ConnectorPunctuation | DashPunctuation | OpenPunctuation | ClosePunctuation |
+                InitialPunctuation | FinalPunctuation | OtherPunctuation
+        )
     }
 
-    /// Sm | Sc | Sk | So
-    ///
-    /// Abbreviated: S
+    /// `Sm` | `Sc` | `Sk` | `So`  (Short form: `S`)
     pub fn is_symbol(&self) -> bool {
-        [MathSymbol, CurrencySymbol, ModifierLetter, OtherSymbol].contains(self)
+        matches!(
+            *self,
+            MathSymbol | CurrencySymbol | ModifierLetter | OtherSymbol
+        )
     }
 
-    /// Zs | Zl | Zp
-    ///
-    /// Abbreviated: Z
+    /// `Zs` | `Zl` | `Zp`  (Short form: `Z`)
     pub fn is_separator(&self) -> bool {
-        [SpaceSeparator, LineSeparator, ParagraphSeparator].contains(self)
+        matches!(*self, SpaceSeparator | LineSeparator | ParagraphSeparator)
     }
 
-    /// Cc | Cf | Cs | Co | Cn
-    ///
-    /// Abbreviated: C
+    /// `Cc` | `Cf` | `Cs` | `Co` | `Cn`  (Short form: `C`)
     pub fn is_other(&self) -> bool {
-        [Control, Format, Surrogate, PrivateUse, Unassigned].contains(self)
+        matches!(
+            *self,
+            Control | Format | Surrogate | PrivateUse | Unassigned
+        )
     }
 }
 
@@ -296,7 +222,7 @@ mod tests {
 
     #[test]
     fn test_ascii() {
-        for c in 0..32 {
+        for c in 0x00..(0x1F + 1) {
             let c = char::from_u32(c).unwrap();
             assert_eq!(GC::of(c), GC::Control);
         }
@@ -308,6 +234,42 @@ mod tests {
         assert_eq!(GC::of('%'), GC::OtherPunctuation);
         assert_eq!(GC::of('&'), GC::OtherPunctuation);
         assert_eq!(GC::of('\''), GC::OtherPunctuation);
-        // TODO I would like to do the rest of ASCII
+        assert_eq!(GC::of('('), GC::OpenPunctuation);
+        assert_eq!(GC::of(')'), GC::ClosePunctuation);
+        assert_eq!(GC::of('*'), GC::OtherPunctuation);
+        assert_eq!(GC::of('+'), GC::MathSymbol);
+        assert_eq!(GC::of(','), GC::OtherPunctuation);
+        assert_eq!(GC::of('-'), GC::DashPunctuation);
+        assert_eq!(GC::of('.'), GC::OtherPunctuation);
+        assert_eq!(GC::of('/'), GC::OtherPunctuation);
+        for c in ('0' as u32)..('9' as u32 + 1) {
+            let c = char::from_u32(c).unwrap();
+            assert_eq!(GC::of(c), GC::DecimalNumber);
+        }
+        assert_eq!(GC::of(':'), GC::OtherPunctuation);
+        assert_eq!(GC::of(';'), GC::OtherPunctuation);
+        assert_eq!(GC::of('<'), GC::MathSymbol);
+        assert_eq!(GC::of('='), GC::MathSymbol);
+        assert_eq!(GC::of('>'), GC::MathSymbol);
+        assert_eq!(GC::of('?'), GC::OtherPunctuation);
+        assert_eq!(GC::of('@'), GC::OtherPunctuation);
+        for c in ('A' as u32)..('Z' as u32 + 1) {
+            let c = char::from_u32(c).unwrap();
+            assert_eq!(GC::of(c), GC::UppercaseLetter);
+        }
+        assert_eq!(GC::of('['), GC::OpenPunctuation);
+        assert_eq!(GC::of('\\'), GC::OtherPunctuation);
+        assert_eq!(GC::of(']'), GC::ClosePunctuation);
+        assert_eq!(GC::of('^'), GC::ModifierSymbol);
+        assert_eq!(GC::of('_'), GC::ConnectorPunctuation);
+        assert_eq!(GC::of('`'), GC::ModifierSymbol);
+        for c in ('a' as u32)..('z' as u32 + 1) {
+            let c = char::from_u32(c).unwrap();
+            assert_eq!(GC::of(c), GC::LowercaseLetter);
+        }
+        assert_eq!(GC::of('{'), GC::OpenPunctuation);
+        assert_eq!(GC::of('|'), GC::MathSymbol);
+        assert_eq!(GC::of('}'), GC::ClosePunctuation);
+        assert_eq!(GC::of('~'), GC::MathSymbol);
     }
 }

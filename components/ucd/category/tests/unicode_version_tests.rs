@@ -13,10 +13,10 @@ extern crate unic_ucd_core;
 extern crate unic_ucd_category;
 
 
-//#[test]
-//fn test_version_against_ucd_core() {
-//    assert_eq!(
-//        unic_ucd_normal::UNICODE_VERSION,
-//        unic_ucd_core::UNICODE_VERSION
-//    );
-//}
+#[test]
+fn test_version_against_ucd_core() {
+    assert_eq!(
+        unic_ucd_category::UNICODE_VERSION,
+        unic_ucd_core::UNICODE_VERSION
+    );
+}
