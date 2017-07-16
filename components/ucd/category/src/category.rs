@@ -226,8 +226,8 @@ mod tests {
         assert_eq!(GC::of('￼'), GC::OtherSymbol);
         // 0xFFFD REPLACEMENT CHARACTER
         assert_eq!(GC::of('�'), GC::OtherSymbol);
-        for c in [0xFFEF, 0xFFFE, 0xFFFF].iter() {
-            let c = char::from_u32(*c).unwrap();
+        for &c in [0xFFEF, 0xFFFE, 0xFFFF].iter() {
+            let c = char::from_u32(c).unwrap();
             assert_eq!(GC::of(c), GC::Unassigned);
         }
     }
@@ -242,8 +242,8 @@ mod tests {
             let c = char::from_u32(c).unwrap();
             assert_eq!(GC::of(c), GC::PrivateUse);
         }
-        for c in [0xFFFFE, 0xFFFFF, 0x10FFFE, 0x10FFFF].iter() {
-            let c = char::from_u32(*c).unwrap();
+        for &c in [0xFFFFE, 0xFFFFF, 0x10FFFE, 0x10FFFF].iter() {
+            let c = char::from_u32(c).unwrap();
             assert_eq!(GC::of(c), GC::Unassigned);
         }
     }
