@@ -1,7 +1,5 @@
 use std::cmp::Ordering;
 
-
-
 /// Represents the Unicode Character
 /// [*General Category*](http://unicode.org/reports/tr44/#General_Category) property.
 ///
@@ -100,9 +98,17 @@ pub enum GeneralCategory {
     /// Unassigned (Short form: `Cn`)
     Unassigned,
 }
-
-
 use self::GeneralCategory::*;
+
+const GENERAL_CATEGORY_TABLE: &'static [(char, char, GeneralCategory)] =
+    include!("tables/general_category.rsv");
+
+impl GeneralCategory {
+    /// Find the GeneralCategory of a single char.
+    pub fn of(ch: char) -> GeneralCategory {
+        bsearch_range_value_table(ch, GENERAL_CATEGORY_TABLE)
+    }
+}
 
 impl GeneralCategory {
     /// `Lu` | `Ll` | `Lt`  (Short form: `LC`)
@@ -156,16 +162,6 @@ impl GeneralCategory {
             *self,
             Control | Format | Surrogate | PrivateUse | Unassigned
         )
-    }
-}
-
-const GENERAL_CATEGORY_TABLE: &'static [(char, char, GeneralCategory)] =
-    include!("tables/general_category.rsv");
-
-impl GeneralCategory {
-    /// Find the GeneralCategory of a single char.
-    pub fn of(ch: char) -> GeneralCategory {
-        bsearch_range_value_table(ch, GENERAL_CATEGORY_TABLE)
     }
 }
 
