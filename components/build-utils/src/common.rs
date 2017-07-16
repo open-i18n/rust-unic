@@ -1,5 +1,5 @@
-use std::process::{Command, ExitStatus};
 use std::path::{Path, PathBuf};
+use std::process::Command;
 use std::{fs, io};
 
 pub struct Dir {
