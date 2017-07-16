@@ -11,6 +11,7 @@ categories = ["parsing", "rendering", "encoding", "development-tools"]
 readme = "README.md"
 
 [workspace]
+members = ["gen"]
 
 [features]
 default = []
@@ -23,9 +24,6 @@ unic-ucd = { path = "components/ucd/", version = "0.4.0" }
 unic-bidi = { path = "components/bidi/", version = "0.4.0" }
 unic-idna = { path = "components/idna/", version = "0.4.0" }
 unic-normal = { path = "components/normal/", version = "0.4.0" }
-
-[dev-dependencies]
-unic-build-utils = { path = "components/build-utils", version = "0.0.1" }
 
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
