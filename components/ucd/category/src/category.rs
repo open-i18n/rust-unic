@@ -216,4 +216,35 @@ mod tests {
         assert_eq!(GC::of('}'), GC::ClosePunctuation);
         assert_eq!(GC::of('~'), GC::MathSymbol);
     }
+
+    #[test]
+    fn test_bmp_edge() {
+        // 0xFEFF ZERO WIDTH NO-BREAK SPACE (or) BYTE ORDER MARK
+        let bom = char::from_u32(0xFEFF).unwrap();
+        assert_eq!(GC::of(bom), GC::Format);
+        // 0xFFFC OBJECT REPLACEMENT CHARACTER
+        assert_eq!(GC::of('￼'), GC::OtherSymbol);
+        // 0xFFFD REPLACEMENT CHARACTER
+        assert_eq!(GC::of('�'), GC::OtherSymbol);
+        for c in [0xFFEF, 0xFFFE, 0xFFFF].iter() {
+            let c = char::from_u32(*c).unwrap();
+            assert_eq!(GC::of(c), GC::Unassigned);
+        }
+    }
+
+    #[test]
+    fn test_private_use() {
+        for c in 0xF0000..(0xFFFFD + 1) {
+            let c = char::from_u32(c).unwrap();
+            assert_eq!(GC::of(c), GC::PrivateUse);
+        }
+        for c in 0x100000..(0x10FFFD + 1) {
+            let c = char::from_u32(c).unwrap();
+            assert_eq!(GC::of(c), GC::PrivateUse);
+        }
+        for c in [0xFFFFE, 0xFFFFF, 0x10FFFE, 0x10FFFF].iter() {
+            let c = char::from_u32(*c).unwrap();
+            assert_eq!(GC::of(c), GC::Unassigned);
+        }
+    }
 }
