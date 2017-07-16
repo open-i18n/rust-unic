@@ -14,7 +14,7 @@
 //!
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
 //!
-//! Unicode General Category.
+//! Unicode [General Category](http://unicode.org/reports/tr44/#General_Category).
 //!
 //! > The General_Category property of a code point provides for the most general classification of
 //! that code point. It is usually determined based on the primary characteristic of the assigned
