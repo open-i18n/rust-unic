@@ -28,6 +28,7 @@ import unicode_utils
 from common import path, memoize
 from unicode_utils import is_surrogate
 
+
 OUTPUT_DIRS = {
     'UCD_CORE': path("components/ucd/core/src/tables"),
     'UCD_AGE': path("components/ucd/age/src/tables"),
@@ -179,23 +180,23 @@ def get_bidi_class_info():
     # http://www.unicode.org/Public/UNIDATA/extracted/DerivedBidiClass.txt
     default_ranges = [
         # default to AL
-        (0x0600, 0x07BF, "AL"),  # Arabic, Syriac, Arabic_Supplement, Thaana
-        (0x08A0, 0x08FF, "AL"),  # Arabic Extended-A
-        (0xFB50, 0xFDCF, "AL"),  # Arabic_Presentation_Forms_A
-        (0xFDF0, 0xFDFF, "AL"),  # Arabic_Presentation_Forms_A
-        (0xFE70, 0xFEFF, "AL"),  # Arabic_Presentation_Forms_B
-        (0x1EE00, 0x1EEFF, "AL"),  # Arabic Mathematical Alphabetic Symbols
+        (0x0600, 0x07BF, "AL"),     # Arabic, Syriac, Arabic_Supplement, Thaana
+        (0x08A0, 0x08FF, "AL"),     # Arabic Extended-A
+        (0xFB50, 0xFDCF, "AL"),     # Arabic_Presentation_Forms_A
+        (0xFDF0, 0xFDFF, "AL"),     # Arabic_Presentation_Forms_A
+        (0xFE70, 0xFEFF, "AL"),     # Arabic_Presentation_Forms_B
+        (0x1EE00, 0x1EEFF, "AL"),   # Arabic Mathematical Alphabetic Symbols
         # default to R
-        (0x0590, 0x05FF, "R"),  # Hebrew
-        (0x07C0, 0x089F, "R"),  # NKo
-        (0xFB1D, 0xFB4F, "R"),  # others
+        (0x0590, 0x05FF, "R"),      # Hebrew
+        (0x07C0, 0x089F, "R"),      # NKo
+        (0xFB1D, 0xFB4F, "R"),      # others
         # Cypriot_Syllabary, Phoenician, Lydian, Meroitic Hieroglyphs, Meroitic
         # Cursive, Kharoshthi, others
         (0x10800, 0x10FFF, "R"),
-        (0x1E800, 0x1EDFF, "R"),  # others
-        (0x1EF00, 0x1EFFF, "R"),  # others
+        (0x1E800, 0x1EDFF, "R"),    # others
+        (0x1EF00, 0x1EFFF, "R"),    # others
         # default to ET
-        (0x20A0, 0x20CF, "ET"),  # Currency Symbols
+        (0x20A0, 0x20CF, "ET"),     # Currency Symbols
     ]
 
     for (start, end, default_class) in default_ranges:
@@ -538,7 +539,8 @@ def get_general_category_mapping():
             general_category_mapping[long_category] = []
         general_category_mapping[long_category].append(cp)
 
-    general_category_mapping = range_value_triplets_from_codepoints(general_category_mapping)
+    general_category_mapping = range_value_triplets_from_codepoints(
+        general_category_mapping)
 
     return (
         general_category_mapping
