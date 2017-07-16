@@ -3,7 +3,7 @@ use std::path::{Path, PathBuf};
 use std::{fs, io};
 
 pub struct Dir {
-    root: PathBuf,
+    root: &'static Path,
     ucd_data: PathBuf,
     ucd_test_data: PathBuf,
     idna_data: PathBuf,
@@ -32,7 +32,7 @@ impl Default for Dir {
     fn default() -> Dir {
         let root = Path::new("../../../");
         Dir {
-            root: root.to_owned(),
+            root: root,
             ucd_data: root.join("data/ucd"),
             ucd_test_data: root.join("data/ucd/test"),
             idna_data: root.join("data/idna"),
