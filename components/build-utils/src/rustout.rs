@@ -6,6 +6,7 @@ macro_rules! preamble {
 }
 
 use std::io;
+use std::io::Write;
 use std::fs::File;
 use std::path::Path;
 
@@ -34,13 +35,12 @@ fn capitalize(str: &str) -> String {
     let mut chars = str.chars();
     match chars.next() {
         None => String::new(),
-        Some(c) => c.to_uppercase().collect::<String>() + chars.as_str()
+        Some(c) => c.to_uppercase().collect::<String>() + chars.as_str(),
     }
 }
 
 fn title_case(str: &str) -> String {
-    str
-        .split_whitespace()
+    str.split_whitespace()
         .map(capitalize)
         .fold(String::new(), |acc, ref word| acc + word)
 }
