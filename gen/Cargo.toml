@@ -7,6 +7,8 @@ repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
 keywords = ["text", "unicode", "code generation"]
 description = "UNIC - Unicode Character Database - Table Generation"
+publish = false
+readme = "README.md"
 
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
