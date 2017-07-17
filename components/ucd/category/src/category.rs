@@ -97,6 +97,7 @@ impl GeneralCategory {
     pub fn is_cased_letter(&self) -> bool {
         matches!(*self, UppercaseLetter | LowercaseLetter | TitlecaseLetter)
     }
+
     /// `Lu` | `Ll` | `Lt` | `Lm` | `Lo`  (Short form: `L`)
     pub fn is_letter(&self) -> bool {
         matches!(
@@ -104,14 +105,17 @@ impl GeneralCategory {
             UppercaseLetter | LowercaseLetter | TitlecaseLetter | ModifierLetter | OtherLetter
         )
     }
+
     /// `Mn` | `Mc` | `Me`  (Short form: `M`)
     pub fn is_mark(&self) -> bool {
         matches!(*self, NonspacingMark | SpacingMark | EnclosingMark)
     }
+
     /// `Nd` | `Nl` | `No`  (Short form: `N`)
     pub fn is_number(&self) -> bool {
         matches!(*self, DecimalNumber | LetterNumber | OtherNumber)
     }
+
     /// `Pc` | `Pd` | `Ps` | `Pe` | `Pi` | `Pf` | `Po`  (Short form: `P`)
     pub fn is_punctuation(&self) -> bool {
         matches!(
@@ -120,6 +124,7 @@ impl GeneralCategory {
                 InitialPunctuation | FinalPunctuation | OtherPunctuation
         )
     }
+
     /// `Sm` | `Sc` | `Sk` | `So`  (Short form: `S`)
     pub fn is_symbol(&self) -> bool {
         matches!(
@@ -127,10 +132,12 @@ impl GeneralCategory {
             MathSymbol | CurrencySymbol | ModifierLetter | OtherSymbol
         )
     }
+
     /// `Zs` | `Zl` | `Zp`  (Short form: `Z`)
     pub fn is_separator(&self) -> bool {
         matches!(*self, SpaceSeparator | LineSeparator | ParagraphSeparator)
     }
+
     /// `Cc` | `Cf` | `Cs` | `Co` | `Cn`  (Short form: `C`)
     pub fn is_other(&self) -> bool {
         matches!(
@@ -170,6 +177,7 @@ mod tests {
             let c = char::from_u32(c).unwrap();
             assert_eq!(GC::of(c), GC::Control);
         }
+
         assert_eq!(GC::of(' '), GC::SpaceSeparator);
         assert_eq!(GC::of('!'), GC::OtherPunctuation);
         assert_eq!(GC::of('"'), GC::OtherPunctuation);
@@ -186,10 +194,12 @@ mod tests {
         assert_eq!(GC::of('-'), GC::DashPunctuation);
         assert_eq!(GC::of('.'), GC::OtherPunctuation);
         assert_eq!(GC::of('/'), GC::OtherPunctuation);
+
         for c in ('0' as u32)..('9' as u32 + 1) {
             let c = char::from_u32(c).unwrap();
             assert_eq!(GC::of(c), GC::DecimalNumber);
         }
+
         assert_eq!(GC::of(':'), GC::OtherPunctuation);
         assert_eq!(GC::of(';'), GC::OtherPunctuation);
         assert_eq!(GC::of('<'), GC::MathSymbol);
@@ -197,20 +207,24 @@ mod tests {
         assert_eq!(GC::of('>'), GC::MathSymbol);
         assert_eq!(GC::of('?'), GC::OtherPunctuation);
         assert_eq!(GC::of('@'), GC::OtherPunctuation);
+
         for c in ('A' as u32)..('Z' as u32 + 1) {
             let c = char::from_u32(c).unwrap();
             assert_eq!(GC::of(c), GC::UppercaseLetter);
         }
+
         assert_eq!(GC::of('['), GC::OpenPunctuation);
         assert_eq!(GC::of('\\'), GC::OtherPunctuation);
         assert_eq!(GC::of(']'), GC::ClosePunctuation);
         assert_eq!(GC::of('^'), GC::ModifierSymbol);
         assert_eq!(GC::of('_'), GC::ConnectorPunctuation);
         assert_eq!(GC::of('`'), GC::ModifierSymbol);
+
         for c in ('a' as u32)..('z' as u32 + 1) {
             let c = char::from_u32(c).unwrap();
             assert_eq!(GC::of(c), GC::LowercaseLetter);
         }
+
         assert_eq!(GC::of('{'), GC::OpenPunctuation);
         assert_eq!(GC::of('|'), GC::MathSymbol);
         assert_eq!(GC::of('}'), GC::ClosePunctuation);
@@ -226,6 +240,7 @@ mod tests {
         assert_eq!(GC::of('￼'), GC::OtherSymbol);
         // 0xFFFD REPLACEMENT CHARACTER
         assert_eq!(GC::of('�'), GC::OtherSymbol);
+
         for &c in [0xFFEF, 0xFFFE, 0xFFFF].iter() {
             let c = char::from_u32(c).unwrap();
             assert_eq!(GC::of(c), GC::Unassigned);
@@ -238,10 +253,12 @@ mod tests {
             let c = char::from_u32(c).unwrap();
             assert_eq!(GC::of(c), GC::PrivateUse);
         }
+
         for c in 0x100000..(0x10FFFD + 1) {
             let c = char::from_u32(c).unwrap();
             assert_eq!(GC::of(c), GC::PrivateUse);
         }
+
         for &c in [0xFFFFE, 0xFFFFF, 0x10FFFE, 0x10FFFF].iter() {
             let c = char::from_u32(c).unwrap();
             assert_eq!(GC::of(c), GC::Unassigned);
