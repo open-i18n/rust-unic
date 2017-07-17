@@ -1,4 +1,7 @@
+#[macro_use]
+extern crate lazy_static;
 extern crate getopts;
+
 use getopts::Options;
 use std::process;
 use std::env;
@@ -6,12 +9,11 @@ use std::env;
 mod utils;
 mod ucd;
 
-fn abort_print_usage(opts: Options) -> ! {
+fn print_usage(opts: Options) {
     println!(
         "{}",
-        opts.usage("Usage: cargo run --package=unic-gen -- MOD [options]")
+        opts.usage("Usage: cargo run --package=unic-gen -- [options]")
     );
-    process::exit(1)
 }
 
 fn main() {
@@ -19,6 +21,7 @@ fn main() {
 
     let mut opts = Options::new();
     opts.optflag("h", "help", "print this help menu");
+    opts.optflag("", "update", "re-download ucd data files");
 
     let matches = match opts.parse(&args[1..]) {
         Ok(m) => m,
@@ -26,15 +29,10 @@ fn main() {
     };
 
     if matches.opt_present("h") {
-        abort_print_usage(opts);
-    }
-
-    if matches.free.is_empty() {
-        abort_print_usage(opts);
-    }
-
-    match matches.free[0].as_str() {
-        "ucd" => ucd::gen_tables(),
-        _ => abort_print_usage(opts),
+        print_usage(opts);
+    } else if matches.opt_present("update") {
+        ucd::update();
+    } else {
+        ucd::generate();
     }
 }

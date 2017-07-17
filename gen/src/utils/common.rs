@@ -27,7 +27,12 @@ where
     Ok(())
 }
 
-pub fn fetch(url: &str, destination: &Path) {
+pub fn fetch<S, P>(url: S, destination: P)
+where
+    S: AsRef<str>,
+    P: AsRef<Path>,
+{
+    let (url, destination) = (url.as_ref(), destination.as_ref());
     let curl_exit = Command::new("curl")
         .arg("-o")
         .arg(url)
