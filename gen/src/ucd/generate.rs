@@ -165,6 +165,65 @@ lazy_static! {
     };
 }
 
+// == Miscellaneous == //
+
+fn range_value_from_codepoints<'a, I>(
+    groups: HashMap<&'a str, Vec<u32>>,
+) -> Vec<(u32, u32, &'a str)> {
+    let mut list: Vec<_> = groups
+        .into_iter()
+        .flat_map(|(str, codepoints): (&'a str, _)| {
+            ranges_from_codepoints(codepoints)
+                .into_iter()
+                .map(move |range| (range.0, range.1, str))
+        })
+        .collect();
+    list.sort_by_key(|triple| triple.0);
+    list
+}
+
+fn range_value_from_ranges<'a>(groups: HashMap<&'a str, (u32, u32)>) -> Vec<(u32, u32, &'a str)> {
+    let mut list: Vec<_> = groups
+        .into_iter()
+        .map(|(str, range)| (range.0, range.1, str))
+        .collect();
+    list.sort_by_key(|triple| triple.0);
+    list
+}
+
+fn ranges_from_codepoints(mut codepoints: Vec<u32>) -> Vec<(u32, u32)> {
+    if codepoints.len() == 0 {
+        return Vec::new();
+    }
+    let mut ranges = vec![];
+    codepoints.sort();
+    codepoints.dedup();
+    let mut start = codepoints.pop().unwrap();
+    let mut end = start;
+    for codepoint in codepoints {
+        assert!(codepoint > end);
+        if codepoint == end + 1 {
+            end = codepoint;
+        } else {
+            ranges.push((start, end));
+            start = codepoint;
+            end = codepoint;
+        }
+    }
+    ranges.push((start, end));
+    ranges
+}
+
+fn codepoints_from_ranges<I>(ranges: I) -> Vec<u32>
+where
+    I: IntoIterator<Item = (u32, u32)>,
+{
+    ranges
+        .into_iter()
+        .flat_map(|range| range.0..(range.1 + 1))
+        .collect()
+}
+
 // == MAIN == //
 
 pub fn run() {
