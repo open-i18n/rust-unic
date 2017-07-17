@@ -22,34 +22,66 @@ use std::fmt;
 #[derive(Clone, Copy, Eq, PartialEq, Debug, Hash)]
 #[allow(missing_docs)]
 pub enum BidiClass {
-    AL,
-    AN,
-    B,
-    BN,
-    CS,
-    EN,
-    ES,
-    ET,
-    FSI,
-    L,
-    LRE,
-    LRI,
-    LRO,
-    NSM,
-    ON,
-    PDF,
-    PDI,
-    R,
-    RLE,
-    RLI,
-    RLO,
-    S,
-    WS,
+    ArabicLetter,
+    ArabicNumber,
+    ParagraphSeparator,
+    BoundaryNeutral,
+    CommonSeparator,
+    EuropeanNumber,
+    EuropeanSeparator,
+    EuropeanTerminator,
+    FirstStrongIsolate,
+    LeftToRight,
+    LeftToRightEmbedding,
+    LeftToRightIsolate,
+    LeftToRightOverride,
+    NonspacingMark,
+    OtherNeutral,
+    PopDirectionalFormat,
+    PopDirectionalIsolate,
+    RightToLeft,
+    RightToLeftEmbedding,
+    RightToLeftIsolate,
+    RightToLeftOverride,
+    SegmentSeparator,
+    WhiteSpace,
     // [UNIC_UPDATE_ON_UNICODE_UPDATE] Source: `tables/bidi_class_type.rsv`
 }
 
 
-use self::BidiClass::*;
+/// Abbreviated name aliases for
+/// [*Bidi_Class*](http://www.unicode.org/reports/tr44/#Bidi_Class) property.
+///
+/// <http://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#Bidi_Class>
+pub mod abbr_names {
+    pub use BidiClass::ArabicLetter as AL;
+    pub use BidiClass::ArabicNumber as AN;
+    pub use BidiClass::ParagraphSeparator as B;
+    pub use BidiClass::BoundaryNeutral as BN;
+    pub use BidiClass::CommonSeparator as CS;
+    pub use BidiClass::EuropeanNumber as EN;
+    pub use BidiClass::EuropeanSeparator as ES;
+    pub use BidiClass::EuropeanTerminator as ET;
+    pub use BidiClass::FirstStrongIsolate as FSI;
+    pub use BidiClass::LeftToRight as L;
+    pub use BidiClass::LeftToRightEmbedding as LRE;
+    pub use BidiClass::LeftToRightIsolate as LRI;
+    pub use BidiClass::LeftToRightOverride as LRO;
+    pub use BidiClass::NonspacingMark as NSM;
+    pub use BidiClass::OtherNeutral as ON;
+    pub use BidiClass::PopDirectionalFormat as PDF;
+    pub use BidiClass::PopDirectionalIsolate as PDI;
+    pub use BidiClass::RightToLeft as R;
+    pub use BidiClass::RightToLeftEmbedding as RLE;
+    pub use BidiClass::RightToLeftIsolate as RLI;
+    pub use BidiClass::RightToLeftOverride as RLO;
+    pub use BidiClass::SegmentSeparator as S;
+    pub use BidiClass::WhiteSpace as WS;
+    // [UNIC_UPDATE_ON_UNICODE_UPDATE] Source: `tables/bidi_class_type.rsv`
+}
+
+
+use self::abbr_names::*;
 
 const BIDI_CLASS_TABLE: &'static [(char, char, BidiClass)] =
     include!("tables/bidi_class_values.rsv");
@@ -74,12 +106,41 @@ pub enum BidiClassCategory {
     Neutral,
 }
 
-use self::BidiClassCategory::*;
-
 impl BidiClass {
     /// Find the BidiClass of a single char.
     pub fn of(ch: char) -> BidiClass {
         bsearch_range_value_table(ch, BIDI_CLASS_TABLE)
+    }
+
+    /// Abbreviated name of the Bidi Class property value.
+    ///
+    /// <http://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#Bidi_Class>
+    pub fn abbr_name(&self) -> &str {
+        match *self {
+            BidiClass::ArabicLetter => "AL",
+            BidiClass::ArabicNumber => "AN",
+            BidiClass::ParagraphSeparator => "B",
+            BidiClass::BoundaryNeutral => "BN",
+            BidiClass::CommonSeparator => "CS",
+            BidiClass::EuropeanNumber => "EN",
+            BidiClass::EuropeanSeparator => "ES",
+            BidiClass::EuropeanTerminator => "ET",
+            BidiClass::FirstStrongIsolate => "FSI",
+            BidiClass::LeftToRight => "L",
+            BidiClass::LeftToRightEmbedding => "LRE",
+            BidiClass::LeftToRightIsolate => "LRI",
+            BidiClass::LeftToRightOverride => "LRO",
+            BidiClass::NonspacingMark => "NSM",
+            BidiClass::OtherNeutral => "ON",
+            BidiClass::PopDirectionalFormat => "PDF",
+            BidiClass::PopDirectionalIsolate => "PDI",
+            BidiClass::RightToLeft => "R",
+            BidiClass::RightToLeftEmbedding => "RLE",
+            BidiClass::RightToLeftIsolate => "RLI",
+            BidiClass::RightToLeftOverride => "RLO",
+            BidiClass::SegmentSeparator => "S",
+            BidiClass::WhiteSpace => "WS",
+        }
     }
 
     /// Human-readable description of the Bidi Class property value.
@@ -125,10 +186,12 @@ impl BidiClass {
     #[inline]
     pub fn category(&self) -> BidiClassCategory {
         match *self {
-            L | R | AL => Strong,
-            EN | ES | ET | AN | CS | NSM | BN => Weak,
-            B | S | WS | ON => Neutral,
-            LRE | LRO | RLE | RLO | PDF | LRI | RLI | FSI | PDI => ExplicitFormatting,
+            L | R | AL => BidiClassCategory::Strong,
+            EN | ES | ET | AN | CS | NSM | BN => BidiClassCategory::Weak,
+            B | S | WS | ON => BidiClassCategory::Neutral,
+            LRE | LRO | RLE | RLO | PDF | LRI | RLI | FSI | PDI => {
+                BidiClassCategory::ExplicitFormatting
+            }
         }
     }
 
@@ -179,7 +242,7 @@ impl fmt::Display for BidiClass {
 #[cfg(test)]
 mod tests {
     use super::BidiClass;
-    use BidiClass::*;
+    use super::abbr_names::*;
 
     #[test]
     fn test_ascii() {
@@ -264,9 +327,9 @@ mod tests {
 
     #[test]
     fn test_display() {
-        assert_eq!(format!("{}", BidiClass::L), "Left-to-Right");
-        assert_eq!(format!("{}", BidiClass::R), "Right-to-Left");
-        assert_eq!(format!("{}", BidiClass::AL), "Right-to-Left Arabic");
-        assert_eq!(format!("{}", BidiClass::FSI), "First Strong Isolate");
+        assert_eq!(format!("{}", L), "Left-to-Right");
+        assert_eq!(format!("{}", R), "Right-to-Left");
+        assert_eq!(format!("{}", AL), "Right-to-Left Arabic");
+        assert_eq!(format!("{}", FSI), "First Strong Isolate");
     }
 }
