@@ -125,6 +125,46 @@ lazy_static! {
     };
 }
 
+// == General_Category == //
+
+lazy_static! {
+    // Extracted from TR44 Table 12 <http://www.unicode.org/reports/tr44/#GC_Values_Table>
+    static ref CATEGORY_EXPANSION: HashMap<&'static str, Vec<&'static str>> = {
+        let mut map = HashMap::default();
+        map.insert("Lu", vec!["Lu", "LC", "L"]);
+        map.insert("Ll", vec!["Ll", "LC", "L"]);
+        map.insert("Lt", vec!["Lt", "LC", "L"]);
+        map.insert("Lm", vec!["Lm", "L"]);
+        map.insert("Lo", vec!["Lo", "L"]);
+        map.insert("Mn", vec!["Mn", "M"]);
+        map.insert("Mc", vec!["Mc", "M"]);
+        map.insert("Me", vec!["Me", "M"]);
+        map.insert("Nd", vec!["Nd", "N"]);
+        map.insert("Nl", vec!["Nl", "N"]);
+        map.insert("No", vec!["No", "N"]);
+        map.insert("Pc", vec!["Pc", "P"]);
+        map.insert("Pd", vec!["Pd", "P"]);
+        map.insert("Ps", vec!["Ps", "P"]);
+        map.insert("Pe", vec!["Pe", "P"]);
+        map.insert("Pi", vec!["Pi", "P"]);
+        map.insert("Pf", vec!["Pf", "P"]);
+        map.insert("Po", vec!["Po", "P"]);
+        map.insert("Sm", vec!["Sm", "S"]);
+        map.insert("Sc", vec!["Sc", "S"]);
+        map.insert("Sk", vec!["Sk", "S"]);
+        map.insert("So", vec!["So", "S"]);
+        map.insert("Zs", vec!["Zs", "Z"]);
+        map.insert("Zl", vec!["Zl", "Z"]);
+        map.insert("Zp", vec!["Zp", "Z"]);
+        map.insert("Cc", vec!["Cc", "C"]);
+        map.insert("Cf", vec!["Cf", "C"]);
+        map.insert("Cs", vec!["Cs", "C"]);
+        map.insert("Co", vec!["Co", "C"]);
+        map.insert("Cn", vec!["Cn", "C"]);
+        map
+    };
+}
+
 // == MAIN == //
 
 pub fn run() {
