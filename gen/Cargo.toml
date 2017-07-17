@@ -16,3 +16,4 @@ travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 [dependencies]
 getopts = "0.2"
 lazy_static = "0.2"
+regex = "0.2"

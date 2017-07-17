@@ -1,9 +1,9 @@
 #[macro_use]
 extern crate lazy_static;
 extern crate getopts;
+extern crate regex;
 
 use getopts::Options;
-use std::process;
 use std::env;
 
 mod utils;
