@@ -13,11 +13,12 @@
 //!
 //! <http://www.unicode.org/reports/tr9/#Explicit_Levels_and_Directions>
 
+
 use unic_ucd_bidi::BidiClass;
+use unic_ucd_bidi::bidi_class::abbr_names::*;
 
 use super::level::Level;
 
-use BidiClass::*;
 
 /// Compute explicit embedding levels for one paragraph of text (X1-X8).
 ///

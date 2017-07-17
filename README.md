@@ -173,11 +173,11 @@ fn main() {
     assert!(text.has_rtl());
     assert!(text.has_ltr());
 
-    assert_eq!(text.chars().nth(0).unwrap().bidi_class(), BidiClass::R);
+    assert_eq!(text.chars().nth(0).unwrap().bidi_class(), BidiClass::RightToLeft);
     assert!(!text.chars().nth(0).unwrap().is_ltr());
     assert!(text.chars().nth(0).unwrap().is_rtl());
 
-    assert_eq!(text.chars().nth(3).unwrap().bidi_class(), BidiClass::L);
+    assert_eq!(text.chars().nth(3).unwrap().bidi_class(), BidiClass::LeftToRight);
     assert!(text.chars().nth(3).unwrap().is_ltr());
     assert!(!text.chars().nth(3).unwrap().is_rtl());
 

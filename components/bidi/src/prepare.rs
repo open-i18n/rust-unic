@@ -17,10 +17,10 @@ use std::cmp::max;
 use std::ops::Range;
 
 use unic_ucd_bidi::BidiClass;
+use unic_ucd_bidi::bidi_class::abbr_names::*;
 
 use super::level::Level;
 
-use BidiClass::*;
 
 /// A maximal substring of characters with the same embedding level.
 ///

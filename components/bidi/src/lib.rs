@@ -88,11 +88,12 @@ mod implicit;
 mod prepare;
 
 
+pub use unic_ucd_bidi::UNICODE_VERSION;
+pub use unic_ucd_bidi::{BidiClass, bidi_class, BidiClassCategory};
+
 pub use bidi_info::{ParagraphInfo, BidiInfo};
 pub use level::Level;
 pub use prepare::LevelRun;
-pub use unic_ucd_bidi::UNICODE_VERSION;
-pub use unic_ucd_bidi::{BidiClass, BidiClassCategory};
 
 
 /// UNIC component version.

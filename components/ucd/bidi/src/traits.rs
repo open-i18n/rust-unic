@@ -78,22 +78,22 @@ impl StrBidiClass for str {
 mod tests {
     #[test]
     fn test_bidi_char() {
-        use super::{CharBidiClass, BidiClass, BidiClassCategory};
+        use super::{BidiClass, BidiClassCategory, CharBidiClass};
 
         let ch = '\u{0041}'; // U+0041 LATIN CAPITAL LETTER A "A"
-        assert_eq!(ch.bidi_class(), BidiClass::L);
+        assert_eq!(ch.bidi_class(), BidiClass::LeftToRight);
         assert_eq!(ch.bidi_class().category(), BidiClassCategory::Strong);
         assert!(ch.is_ltr());
         assert!(!ch.is_rtl());
 
         let ch = '\u{05D0}'; // U+05D0 HEBREW LETTER ALEF "א"
-        assert_eq!(ch.bidi_class(), BidiClass::R);
+        assert_eq!(ch.bidi_class(), BidiClass::RightToLeft);
         assert_eq!(ch.bidi_class().category(), BidiClassCategory::Strong);
         assert!(!ch.is_ltr());
         assert!(ch.is_rtl());
 
         let ch = '\u{0627}'; // U+0627 ARABIC LETTER ALEF "ا"
-        assert_eq!(ch.bidi_class(), BidiClass::AL);
+        assert_eq!(ch.bidi_class(), BidiClass::ArabicLetter);
         assert_eq!(ch.bidi_class().category(), BidiClassCategory::Strong);
         assert!(!ch.is_ltr());
         assert!(ch.is_rtl());

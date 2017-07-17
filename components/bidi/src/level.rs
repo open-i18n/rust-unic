@@ -15,10 +15,12 @@
 //!
 //! http://www.unicode.org/reports/tr9/#BD2
 
+
 use std::convert::{From, Into};
 use std::fmt;
 
 use unic_ucd_bidi::BidiClass;
+
 
 /// Embedding Level
 ///
@@ -189,9 +191,9 @@ impl Level {
     #[inline]
     pub fn bidi_class(&self) -> BidiClass {
         if self.is_rtl() {
-            BidiClass::R
+            BidiClass::RightToLeft
         } else {
-            BidiClass::L
+            BidiClass::LeftToRight
         }
     }
 

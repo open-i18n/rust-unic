@@ -22,7 +22,9 @@
 extern crate unic_ucd_core;
 
 
-mod bidi_class;
+/// Unicode *Bidi_Class* Character Property.
+pub mod bidi_class;
+
 mod traits;
 
 pub use bidi_class::{BidiClass, BidiClassCategory};

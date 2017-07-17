@@ -16,17 +16,18 @@ use std::fmt;
 use std::iter::repeat;
 use std::ops::Range;
 
+use unic_ucd_bidi::BidiClass;
+use unic_ucd_bidi::bidi_class::abbr_names::*;
+
 use explicit;
 use implicit;
 use level;
 use prepare;
 use format_chars;
 
-use unic_ucd_bidi::BidiClass;
 use level::{Level, LTR_LEVEL, RTL_LEVEL};
 use prepare::LevelRun;
 
-use BidiClass::*;
 
 
 /// Bidi information about a single paragraph

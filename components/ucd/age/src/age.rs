@@ -87,7 +87,6 @@ impl Age {
             Age::Unassigned => "Unassigned".to_owned(),
         }
     }
-
 }
 
 // TODO: Generic'ize and move to `unic-ucd-utils`
