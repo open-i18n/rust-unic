@@ -10,17 +10,21 @@ const DATA_FILES: &'static [&'static str] = &[
     "UnicodeData.txt",
 ];
 
-const TEST_DATA_FILES: &'static [&'static str] =
-    &["BidiCharacterTest.txt", "BidiTest.txt", "NormalizationTest.txt"];
+const TEST_DATA_FILES: &'static [&'static str] = &[
+    "BidiCharacterTest.txt",
+    "BidiTest.txt",
+    "DecompositionTypeTest.txt",
+    "NormalizationTest.txt",
+];
 
 pub fn run() {
     common::cleanup_data(ucd_data_dir()).unwrap();
     common::cleanup_data(ucd_test_data_dir()).unwrap();
 
     for name in DATA_FILES {
-        common::fetch(String::from(UCD_URL) + name, ucd_data_dir());
+        common::fetch(String::from(UCD_URL) + name, ucd_data_dir().join(name));
     }
     for name in TEST_DATA_FILES {
-        common::fetch(String::from(UCD_URL) + name, ucd_test_data_dir());
+        common::fetch(String::from(UCD_URL) + name, ucd_test_data_dir().join(name));
     }
 }

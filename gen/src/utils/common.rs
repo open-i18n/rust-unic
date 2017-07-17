@@ -6,7 +6,9 @@ pub fn cleanup_data<P>(path: P) -> io::Result<()>
 where
     P: AsRef<Path>,
 {
-    fs::remove_dir_all(&path)?;
+    if path.as_ref().exists() {
+        fs::remove_dir_all(&path)?;
+    }
     fs::create_dir(&path)?;
     Ok(())
 }
@@ -35,16 +37,20 @@ where
     P: AsRef<Path>,
 {
     let (url, destination) = (url.as_ref(), destination.as_ref());
-    let curl_exit = Command::new("curl")
-        .arg("-o")
+    let curl_response = Command::new("curl")
         .arg(url)
-        .arg(destination.to_str().unwrap())
-        .spawn()
-        .expect("Failed to launch curl")
-        .wait()
-        .expect("Failed to await curl");
-    if !curl_exit.success() {
-        panic!("curl failed with exit code {} for url {}", curl_exit, url)
+        .output()
+        .expect("Failed to run curl");
+    if curl_response.status.success() {
+        let mut text = curl_response.stdout;
+        let mut file = fs::File::create(destination).unwrap();
+        io::copy(&mut &text[..], &mut file).unwrap();
+    } else {
+        panic!(
+            "curl failed on url {} with response: {:?}",
+            url,
+            curl_response
+        );
     }
 }
 
