@@ -51,7 +51,7 @@ fn emit_unicode_version(dir: &Path) {
 // == MAIN == //
 
 pub fn run() {
-    for &dir in &[*CORE_TABLES, *AGE_TABLES, *BIDI_TABLES, *NORMAL_TABLES] {
+    for &dir in &[*CORE_TABLES, *AGE_TABLES, *BIDI_TABLES, *NORMAL_TABLES, *NORMAL_TEST_TABLES] {
         common::cleanup_rsv(dir).unwrap();
     }
 

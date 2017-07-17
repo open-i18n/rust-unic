@@ -15,11 +15,13 @@ pub fn cleanup_rsv<P>(path: P) -> io::Result<()>
 where
     P: AsRef<Path>,
 {
-    for entry in fs::read_dir(path)? {
-        let path = entry?.path();
-        if let Some(ext) = path.extension() {
-            if ext.to_string_lossy() == "rsv" {
-                fs::remove_file(&path)?;
+    if path.as_ref().exists() {
+        for entry in fs::read_dir(path)? {
+            let path = entry?.path();
+            if let Some(ext) = path.extension() {
+                if ext.to_string_lossy() == "rsv" {
+                    fs::remove_file(&path)?;
+                }
             }
         }
     }
