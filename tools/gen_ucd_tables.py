@@ -34,6 +34,7 @@ OUTPUT_DIRS = {
     'UCD_AGE': path("components/ucd/age/src/tables"),
     'UCD_BIDI': path("components/ucd/bidi/src/tables"),
     'UCD_NORMAL': path("components/ucd/normal/src/tables"),
+    'UCD_CATEGORY': path("components/ucd/category/src/tables"),
     'NORMAL_TESTS': path("components/normal/tests/tables"),
 }
 
@@ -487,6 +488,81 @@ def emit_normal_tests_tables(dir):
         )
 
 
+# == Category ==
+
+SHORT_CATEGORY_NAME_MAP = {
+    'Lu': "UppercaseLetter",
+    'Ll': "LowercaseLetter",
+    'Lt': "TitlecaseLetter",
+    'Lm': "ModifierLetter",
+    'Lo': "OtherLetter",
+    'Mn': "NonspacingMark",
+    'Mc': "SpacingMark",
+    'Me': "EnclosingMark",
+    'Nd': "DecimalNumber",
+    'Nl': "LetterNumber",
+    'No': "OtherNumber",
+    'Pc': "ConnectorPunctuation",
+    'Pd': "DashPunctuation",
+    'Ps': "OpenPunctuation",
+    'Pe': "ClosePunctuation",
+    'Pi': "InitialPunctuation",
+    'Pf': "FinalPunctuation",
+    'Po': "OtherPunctuation",
+    'Sm': "MathSymbol",
+    'Sc': "CurrencySymbol",
+    'Sk': "ModifierSymbol",
+    'So': "OtherSymbol",
+    'Zs': "SpaceSeparator",
+    'Zl': "LineSeparator",
+    'Zp': "ParagraphSeparator",
+    'Cc': "Control",
+    'Cf': "Format",
+    'Cs': "Surrogate",
+    'Co': "PrivateUse",
+    'Cn': "Unassigned",
+}
+
+
+@memoize
+def get_general_category_mapping():
+    unicode_data = get_unicode_data()
+
+    general_category_mapping = {}
+
+    for cp in unicode_data:
+        [_, name, gen_cat, ccc, bidi_class, decomp, deci, digit, num, mirror,
+         old, iso, upcase, lowcase, titlecase] = unicode_data[cp]
+
+        long_category = SHORT_CATEGORY_NAME_MAP[gen_cat]
+        if long_category not in general_category_mapping:
+            general_category_mapping[long_category] = []
+        general_category_mapping[long_category].append(cp)
+
+    general_category_mapping = range_value_triplets_from_codepoints(
+        general_category_mapping)
+
+    return (
+        general_category_mapping
+    )
+
+
+def emit_general_category_tables(dir):
+    general_category_mapping = get_general_category_mapping()
+
+    with open(join(dir, 'general_category.rsv'), "w") as values_file:
+        rustout.emit_table(
+            __file__,
+            values_file,
+            general_category_mapping,
+            print_fun=lambda x: "(%s, %s, %s)" % (
+                rustout.char_literal(x[0]),
+                rustout.char_literal(x[1]),
+                x[2],
+            ),
+        )
+
+
 # == Misc ==
 
 def range_value_triplets_from_codepoints(groups):
@@ -550,3 +626,7 @@ if __name__ == "__main__":
     emit_unicode_version(OUTPUT_DIRS['UCD_NORMAL'])
     emit_normal_form_tables(OUTPUT_DIRS['UCD_NORMAL'])
     emit_normal_tests_tables(OUTPUT_DIRS['NORMAL_TESTS'])
+
+    # Category
+    emit_unicode_version(OUTPUT_DIRS['UCD_CATEGORY'])
+    emit_general_category_tables(OUTPUT_DIRS['UCD_CATEGORY'])

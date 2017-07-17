@@ -18,3 +18,4 @@ unic-ucd-bidi = { path = "bidi/", version = "0.4.0" }
 unic-ucd-core = { path = "core/", version = "0.4.0" }
 unic-ucd-normal = { path = "normal/", version = "0.4.0" }
 unic-ucd-utils = { path = "utils/", version = "0.4.0" }
+unic-ucd-category = { path = "category/", version = "0.4.0" }
