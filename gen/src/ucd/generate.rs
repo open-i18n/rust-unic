@@ -167,22 +167,25 @@ lazy_static! {
 
 // == Miscellaneous == //
 
-fn range_value_from_codepoints<'a, I>(
-    groups: HashMap<&'a str, Vec<u32>>,
-) -> Vec<(u32, u32, &'a str)> {
+fn range_value_from_codepoints(
+    groups: HashMap<String, Vec<u32>>,
+) -> Vec<(u32, u32, String)> {
     let mut list: Vec<_> = groups
         .into_iter()
-        .flat_map(|(str, codepoints): (&'a str, _)| {
+        .flat_map(|(str, codepoints)| {
             ranges_from_codepoints(codepoints)
                 .into_iter()
-                .map(move |range| (range.0, range.1, str))
+                .map(move |range| (range.0, range.1, str.to_string()))
         })
         .collect();
     list.sort_by_key(|triple| triple.0);
     list
 }
 
-fn range_value_from_ranges<'a>(groups: HashMap<&'a str, (u32, u32)>) -> Vec<(u32, u32, &'a str)> {
+fn range_value_from_ranges<T>(groups: HashMap<T, (u32, u32)>) -> Vec<(u32, u32, T)>
+where
+    T: Eq + ::std::hash::Hash,
+{
     let mut list: Vec<_> = groups
         .into_iter()
         .map(|(str, range)| (range.0, range.1, str))
