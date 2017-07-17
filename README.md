@@ -8,6 +8,7 @@
 [![Release](https://img.shields.io/github/release/behnam/rust-unic.svg)](https://github.com/behnam/rust-unic/)
 [![Crates.io](https://img.shields.io/crates/v/unic.svg)](https://crates.io/crates/unic/)
 [![Documentation](https://docs.rs/unic/badge.svg)](https://docs.rs/unic/)
+[![Gitter](https://img.shields.io/gitter/room/behnam/rust-unic.svg)](https://gitter.im/behnam/rust-unic)
 
 <https://github.com/behnam/rust-unic>
 
