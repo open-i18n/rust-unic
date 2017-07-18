@@ -227,7 +227,7 @@ lazy_static! {
 }
 
 fn emit_age_tables(dir: &Path) {
-    let mut file = File::create(dir.join("unicode_version.rsv")).unwrap();
+    let mut file = File::create(dir.join("age_values.rsv")).unwrap();
     rustout::emit_value_range_bsearch_table(SCRIPT, &mut file, (*AGE_VALUES).iter()).unwrap();
 }
 
