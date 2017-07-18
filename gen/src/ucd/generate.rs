@@ -165,11 +165,75 @@ lazy_static! {
     };
 }
 
+// == Age ==
+
+lazy_static! {
+    static ref AGE_VALUES: Vec<(u32, u32, String)> = {
+        let mut age_groups: HashMap<String, Vec<(u32, u32)>> = HashMap::default();
+        let file = File::open(ucd_data_dir().join("DerivedAge.txt")).unwrap();
+        for line in BufReader::new(file).lines() {
+            let line = line.unwrap();
+
+            // Remove comments
+            let line = line.split('#').next().unwrap().trim();
+
+            // Skip empty lines
+            if line.len() == 0 {
+                continue;
+            }
+
+            // Parse data
+            let ((first, last), (major, micro)) = {
+                let mut it = line.split(';');
+                (
+                    {
+                        let mut it = it.next().unwrap().trim().split("..");
+                        let first = it.next().unwrap();
+                        let last = it.next().unwrap_or(first);
+                        (
+                            u32::from_str_radix(first, 16).unwrap(),
+                            u32::from_str_radix(last, 16).unwrap(),
+                        )
+                    },
+                    {
+                        let mut it = it.next().unwrap().trim().split('.');
+                        (it.next().unwrap(), it.next().unwrap())
+                    },
+                )
+            };
+
+            // Skip surrogate codepoints
+            if (first, last) == (0xD800, 0xDFFF) {
+                continue;
+            }
+
+            let age = format!(
+                "Assigned(UnicodeVersion {{ major: {}, minor: {}, micro: 0 }})",
+                major, micro,
+            );
+
+            age_groups.entry(age).or_insert_with(|| vec![]).push((first, last));
+        }
+
+        // Consolidate ranges
+        for group in age_groups.values_mut() {
+            *group = ranges_from_codepoints(
+                codepoints_from_ranges(group.clone()),
+            )
+        }
+
+        range_value_from_ranges(age_groups)
+    };
+}
+
+fn emit_age_tables(dir: &Path) {
+    let mut file = File::create(dir.join("unicode_version.rsv")).unwrap();
+    rustout::emit_value_range_bsearch_table(SCRIPT, &mut file, (*AGE_VALUES).iter()).unwrap();
+}
+
 // == Miscellaneous == //
 
-fn range_value_from_codepoints(
-    groups: HashMap<String, Vec<u32>>,
-) -> Vec<(u32, u32, String)> {
+fn range_value_from_codepoints(groups: HashMap<String, Vec<u32>>) -> Vec<(u32, u32, String)> {
     let mut list: Vec<_> = groups
         .into_iter()
         .flat_map(|(str, codepoints)| {
@@ -182,13 +246,14 @@ fn range_value_from_codepoints(
     list
 }
 
-fn range_value_from_ranges<T>(groups: HashMap<T, (u32, u32)>) -> Vec<(u32, u32, T)>
-where
-    T: Eq + ::std::hash::Hash,
-{
+fn range_value_from_ranges(groups: HashMap<String, Vec<(u32, u32)>>) -> Vec<(u32, u32, String)> {
     let mut list: Vec<_> = groups
         .into_iter()
-        .map(|(str, range)| (range.0, range.1, str))
+        .flat_map(|(str, ranges)| {
+            ranges
+                .into_iter()
+                .map(move |range| (range.0, range.1, str.to_string()))
+        })
         .collect();
     list.sort_by_key(|triple| triple.0);
     list
@@ -201,7 +266,7 @@ fn ranges_from_codepoints(mut codepoints: Vec<u32>) -> Vec<(u32, u32)> {
     let mut ranges = vec![];
     codepoints.sort();
     codepoints.dedup();
-    let mut start = codepoints.pop().unwrap();
+    let mut start = codepoints.remove(0);
     let mut end = start;
     for codepoint in codepoints {
         assert!(codepoint > end);
@@ -236,4 +301,8 @@ pub fn run() {
 
     // Core
     emit_unicode_version(*CORE_TABLES);
+
+    // Age
+    emit_unicode_version(*AGE_TABLES);
+    emit_age_tables(*AGE_TABLES);
 }

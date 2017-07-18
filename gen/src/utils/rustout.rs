@@ -5,8 +5,8 @@ use std::io::Write;
 use std::fs::File;
 use std::fmt::Display;
 
-fn escape_char(codepoint: char) -> String {
-    format!("\\u{{{:X}}}", codepoint as u32)
+fn escape_char(codepoint: u32) -> String {
+    format!("\\u{{{:X}}}", codepoint)
 }
 
 pub fn emit_preamble(script: &str, output: &mut File) -> io::Result<()> {
@@ -41,7 +41,7 @@ where
         .map(|string| {
             string
                 .into_iter()
-                .map(|char| escape_char(char))
+                .map(|char| escape_char(char as u32))
                 .fold(String::new(), |acc, ref str| acc + str)
         })
         .fold(String::new(), |acc, ref str| acc + "\n" + str);
@@ -82,26 +82,31 @@ where
     writeln!(output, "]")
 }
 
-pub fn emit_range_bsearch_table<I>(script: &str, output: &mut File, data: I) -> io::Result<()>
+pub fn emit_range_bsearch_table<'a, I>(script: &str, output: &mut File, data: I) -> io::Result<()>
 where
-    I: IntoIterator<Item = (u32, u32)>,
+    I: IntoIterator<Item = &'a (u32, u32)>,
 {
     emit_table(script, output, data, |datum| {
-        format!("(0x{:X},0x{:X})", datum.0, datum.1)
+        format!("'{}', '{}')", escape_char(datum.0), escape_char(datum.1))
     })
 }
 
-pub fn emit_value_range_bsearch_table<I, D>(
+pub fn emit_value_range_bsearch_table<'a, I, D>(
     script: &str,
     output: &mut File,
     data: I,
 ) -> io::Result<()>
 where
-    I: IntoIterator<Item = (u32, u32, D)>,
-    D: Display,
+    I: IntoIterator<Item = &'a (u32, u32, D)>,
+    D: Display + 'a,
 {
     emit_table(script, output, data, |datum| {
-        format!("(0x{:X},0x{:X},\"{}\")", datum.0, datum.1, datum.2)
+        format!(
+            "('{}', '{}', {})",
+            escape_char(datum.0),
+            escape_char(datum.1),
+            datum.2
+        )
     })
 }
 
