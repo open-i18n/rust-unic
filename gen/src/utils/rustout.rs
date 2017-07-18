@@ -6,7 +6,7 @@ use std::fs::File;
 use std::fmt::Display;
 
 fn escape_char(codepoint: u32) -> String {
-    format!("\\u{{{:X}}}", codepoint)
+    format!("\\u{{{:x}}}", codepoint)
 }
 
 pub fn emit_preamble(script: &str, output: &mut File) -> io::Result<()> {
