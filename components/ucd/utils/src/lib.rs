@@ -22,6 +22,7 @@
 //! * [**Unicode Code Point**](http://unicode.org/glossary/#code_point)
 //! * [**Unicode Scalar Value**](http://unicode.org/glossary/#unicode_scalar_value)
 
+mod macros;
 
 use std::char::from_u32;
 use std::ops::Range;
