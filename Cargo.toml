@@ -11,9 +11,11 @@ categories = ["parsing", "rendering", "encoding", "development-tools"]
 readme = "README.md"
 
 exclude = [
-    "data/**/*.txt",
-    "tools/**/*.py",
-    ".cargo/*.sh",
+    "data/**",
+    "tools/**",
+    ".cargo/**",
+    # Only ignore conformance tests;
+    # Those are the ones that rely on data files
     "tests/*conformance*.rs",
 ]
 
