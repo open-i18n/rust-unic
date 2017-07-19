@@ -10,74 +10,162 @@
 // except according to those terms.
 
 use std::cmp::Ordering;
-use std::fmt;
 
 
-/// Represents the Unicode character
-/// [*Bidi_Class*](http://www.unicode.org/reports/tr44/#Bidi_Class) property, also known as the
-/// *bidirectional character type*.
-///
-/// * <http://www.unicode.org/reports/tr9/#Bidirectional_Character_Types>
-/// * <http://www.unicode.org/reports/tr44/#Bidi_Class_Values>
-#[derive(Clone, Copy, Eq, PartialEq, Debug, Hash)]
-#[allow(missing_docs)]
-pub enum BidiClass {
-    ArabicLetter,
-    ArabicNumber,
-    ParagraphSeparator,
-    BoundaryNeutral,
-    CommonSeparator,
-    EuropeanNumber,
-    EuropeanSeparator,
-    EuropeanTerminator,
-    FirstStrongIsolate,
-    LeftToRight,
-    LeftToRightEmbedding,
-    LeftToRightIsolate,
-    LeftToRightOverride,
-    NonspacingMark,
-    OtherNeutral,
-    PopDirectionalFormat,
-    PopDirectionalIsolate,
-    RightToLeft,
-    RightToLeftEmbedding,
-    RightToLeftIsolate,
-    RightToLeftOverride,
-    SegmentSeparator,
-    WhiteSpace,
-    // [UNIC_UPDATE_ON_UNICODE_UPDATE] Source: `tables/bidi_class_type.rsv`
-}
+char_property! {
+    // TODO: Once 1.20 comes, add the rest of the enum variants' docs
+    /// Represents the Unicode character
+    /// [*Bidi_Class*](http://www.unicode.org/reports/tr44/#Bidi_Class) property, also known as the
+    /// *bidirectional character type*.
+    ///
+    /// * <http://www.unicode.org/reports/tr9/#Bidirectional_Character_Types>
+    /// * <http://www.unicode.org/reports/tr44/#Bidi_Class_Values>
+    pub enum BidiClass {
+        // == Strong == //
 
+        /// Any strong left-to-right character
+        // ///
+        // /// ***General Scope***
+        // ///
+        // /// LRM, most alphabetic, syllabic, Han ideographs,
+        // /// non-European or non-Arabic digits, ...
+        LeftToRight: L "Left-to-Right",
 
-/// Abbreviated name aliases for
-/// [*Bidi_Class*](http://www.unicode.org/reports/tr44/#Bidi_Class) property.
-///
-/// <http://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#Bidi_Class>
-pub mod abbr_names {
-    pub use BidiClass::ArabicLetter as AL;
-    pub use BidiClass::ArabicNumber as AN;
-    pub use BidiClass::ParagraphSeparator as B;
-    pub use BidiClass::BoundaryNeutral as BN;
-    pub use BidiClass::CommonSeparator as CS;
-    pub use BidiClass::EuropeanNumber as EN;
-    pub use BidiClass::EuropeanSeparator as ES;
-    pub use BidiClass::EuropeanTerminator as ET;
-    pub use BidiClass::FirstStrongIsolate as FSI;
-    pub use BidiClass::LeftToRight as L;
-    pub use BidiClass::LeftToRightEmbedding as LRE;
-    pub use BidiClass::LeftToRightIsolate as LRI;
-    pub use BidiClass::LeftToRightOverride as LRO;
-    pub use BidiClass::NonspacingMark as NSM;
-    pub use BidiClass::OtherNeutral as ON;
-    pub use BidiClass::PopDirectionalFormat as PDF;
-    pub use BidiClass::PopDirectionalIsolate as PDI;
-    pub use BidiClass::RightToLeft as R;
-    pub use BidiClass::RightToLeftEmbedding as RLE;
-    pub use BidiClass::RightToLeftIsolate as RLI;
-    pub use BidiClass::RightToLeftOverride as RLO;
-    pub use BidiClass::SegmentSeparator as S;
-    pub use BidiClass::WhiteSpace as WS;
-    // [UNIC_UPDATE_ON_UNICODE_UPDATE] Source: `tables/bidi_class_type.rsv`
+        /// Any strong right-to-left (non-Arabic-type) character
+        // ///
+        // /// ***General Scope***
+        // ///
+        // /// RLM, Hebrew alphabet, and related punctuation
+        RightToLeft: R "Right-to-Left",
+
+        /// Any strong right-to-left (Arabic-type) character
+        // ///
+        // /// ***General Scope***
+        // ///
+        // /// ALM, Arabic, Thaana, and Syriac alphabets,
+        // /// most punctuation specific to those scripts, ...
+        ArabicLetter: AL "Right-to-Left Arabic",
+
+        // == Weak == //
+
+        /// Any ASCII digit or Eastern Arabic-Indic digit
+        // ///
+        // /// ***General Scope***
+        // ///
+        // /// European digits, Eastern Arabic-Indic digits, ...
+        EuropeanNumber: EN "European Number",
+
+        /// Plus and minus signs
+        // ///
+        // /// ***General Scope***
+        // ///
+        // /// PLUS SIGN, MINUS SIGN
+        EuropeanSeparator: ES "European Number Separator",
+
+        /// A terminator in a numeric format context, includes currency signs
+        // ///
+        // /// ***General Scope***
+        // ///
+        // /// DEGREE SIGN, currency symbols, ...
+        EuropeanTerminator: ET "European Number Terminator",
+
+        /// Any Arabic-Indic digit
+        // ///
+        // /// ***General Scope***
+        // ///
+        // /// Arabic-Indic digits, Arabic decimal and thousands separators, ...
+        ArabicNumber: AN "Arabic Number",
+
+        /// Commas, colons, and slashes
+        // ///
+        // /// ***General Scope***
+        // ///
+        // /// COLON, COMMA, FULL STOP, NO_BREAK SPACE, ...
+        CommonSeparator: CS "Common Number Separator",
+
+        /// Any nonspacing mark
+        // ///
+        // /// ***General Scope***
+        // ///
+        // /// Characters with the General_Category values:
+        // /// Mn (Nonspacing_Mark) and Me (Enclosing_Mark)
+        NonspacingMark: NSM "Nonspacing Mark",
+
+        /// Most format characters, control codes, or noncharacters
+        // ///
+        // /// ***General Scope***
+        // ///
+        // /// Default ignorables, non-characters, and control characters,
+        // /// other than those explicitly given other types.
+        BoundaryNeutral: BN "Boundary Neutral",
+
+        // == Neutral == //
+
+        /// Various newline characters
+        // ///
+        // /// ***General Scope***
+        // ///
+        // /// PARAGRAPH SEPARATOR, appropriate Newline Functions,
+        // /// higher-level protocol paragraph determination
+        ParagraphSeparator: B "Paragraph Separator",
+
+        /// Various segment-related control codes
+        // ///
+        // /// ***General Scope***
+        // ///
+        // /// *Tab*
+        SegmentSeparator: S "Segment Separator",
+
+        /// Spaces
+        // ///
+        // /// ***General Scope***
+        // ///
+        // /// SPACE, FIGURE SPACE, LIN SEPARATOR, FORM FEED,
+        // /// General Punctuation spaces, ...
+        WhiteSpace: WS "Whitespace",
+
+        /// Most other symbols and punctuation marks
+        // ///
+        // /// ***General Scope***
+        // ///
+        // /// All other characters, including OBJECT REPLACEMENT CHARACTER
+        OtherNeutral: ON "Other Neutrals",
+
+        // == Explicit Formatting == //
+
+        /// U+202A: The LR embedding control
+        LeftToRightEmbedding: LRE "Left-to-Right Embedding",
+
+        /// U+202D: The LR override control
+        LeftToRightOverride: LRO "Left-to-Right Override",
+
+        /// U+202B: The RL embedding control
+        RightToLeftEmbedding: RLE "Right-to-Left Embedding",
+
+        /// U+202E: The RL override control
+        RightToLeftOverride: RLO "Right-to-Left Override",
+
+        /// U+202C: Terminates an embedding or override control
+        PopDirectionalFormat: PDF "Pop Directional Format",
+
+        /// U+2066: The LR isolate control
+        LeftToRightIsolate: LRI "Left-to-Right Isolate",
+
+        /// U+2067: The RL isolate control
+        RightToLeftIsolate: RLI "Left-to-Right Isolate",
+
+        /// U+2068: The first string isolate control
+        FirstStrongIsolate: FSI "First Strong Isolate",
+
+        /// U+2069: Terminates an isolate control
+        PopDirectionalIsolate: PDI "Pop Directional Isolate",
+    };
+
+    /// Abbreviated name aliases for
+    /// [*Bidi_Class*](http://www.unicode.org/reports/tr44/#Bidi_Class) property.
+    ///
+    /// <http://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#Bidi_Class>
+    pub mod abbr_names;
 }
 
 
@@ -110,76 +198,6 @@ impl BidiClass {
     /// Find the BidiClass of a single char.
     pub fn of(ch: char) -> BidiClass {
         bsearch_range_value_table(ch, BIDI_CLASS_TABLE)
-    }
-
-    /// Abbreviated name of the Bidi Class property value.
-    ///
-    /// <http://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#Bidi_Class>
-    pub fn abbr_name(&self) -> &str {
-        match *self {
-            BidiClass::ArabicLetter => "AL",
-            BidiClass::ArabicNumber => "AN",
-            BidiClass::ParagraphSeparator => "B",
-            BidiClass::BoundaryNeutral => "BN",
-            BidiClass::CommonSeparator => "CS",
-            BidiClass::EuropeanNumber => "EN",
-            BidiClass::EuropeanSeparator => "ES",
-            BidiClass::EuropeanTerminator => "ET",
-            BidiClass::FirstStrongIsolate => "FSI",
-            BidiClass::LeftToRight => "L",
-            BidiClass::LeftToRightEmbedding => "LRE",
-            BidiClass::LeftToRightIsolate => "LRI",
-            BidiClass::LeftToRightOverride => "LRO",
-            BidiClass::NonspacingMark => "NSM",
-            BidiClass::OtherNeutral => "ON",
-            BidiClass::PopDirectionalFormat => "PDF",
-            BidiClass::PopDirectionalIsolate => "PDI",
-            BidiClass::RightToLeft => "R",
-            BidiClass::RightToLeftEmbedding => "RLE",
-            BidiClass::RightToLeftIsolate => "RLI",
-            BidiClass::RightToLeftOverride => "RLO",
-            BidiClass::SegmentSeparator => "S",
-            BidiClass::WhiteSpace => "WS",
-        }
-    }
-
-    /// Human-readable description of the Bidi Class property value.
-    ///
-    /// <http://www.unicode.org/reports/tr9/#Table_Bidirectional_Character_Types>
-    #[inline]
-    pub fn display(&self) -> &str {
-        match *self {
-            // Strong
-            L => "Left-to-Right",
-            R => "Right-to-Left",
-            AL => "Right-to-Left Arabic",
-
-            // Weak
-            EN => "European Number",
-            ES => "European Number Separator",
-            ET => "European Number Terminator",
-            AN => "Arabic Number",
-            CS => "Common Number Separator",
-            NSM => "Nonspacing Mark",
-            BN => "Boundary Neutral",
-
-            // Neutral
-            B => "Paragraph Separator",
-            S => "Segment Separator",
-            WS => "Whitespace",
-            ON => "Other Neutrals",
-
-            // Explicit Formatting
-            LRE => "Left-to-Right Embedding",
-            LRO => "Left-to-Right Override",
-            RLE => "Right-to-Left Embedding",
-            RLO => "Right-to-Left Override",
-            PDF => "Pop Directional Format",
-            LRI => "Left-to-Right Isolate",
-            RLI => "Right-to-Left Isolate",
-            FSI => "First Strong Isolate",
-            PDI => "Pop Directional Isolate",
-        }
     }
 
     /// If the `BidiClass` has strong or explicit Left-to-Right direction.
@@ -229,12 +247,6 @@ fn bsearch_range_value_table(c: char, r: &'static [(char, char, BidiClass)]) -> 
         // UCD/extracted/DerivedBidiClass.txt: "All code points not explicitly listed
         // for Bidi_Class have the value Left_To_Right (L)."
         Err(_) => L,
-    }
-}
-
-impl fmt::Display for BidiClass {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.display())
     }
 }
 
