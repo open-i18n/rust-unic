@@ -10,6 +10,15 @@ description = "UNIC - Unicode and Internationalization Crates"
 categories = ["parsing", "rendering", "encoding", "development-tools"]
 readme = "README.md"
 
+exclude = [
+    "data/**",
+    "tools/**",
+    ".cargo/**",
+    # Only ignore conformance tests;
+    # Those are the ones that rely on data files
+    "tests/*conformance*.rs",
+]
+
 [workspace]
 
 [features]
