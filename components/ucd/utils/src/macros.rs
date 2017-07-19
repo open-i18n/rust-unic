@@ -122,29 +122,29 @@ mod tests {
 
     #[test]
     fn abbr_name() {
-        assert_eq!(CustomDisplayProperty::Variant1.abbr_name(), "V1");
-        assert_eq!(CustomDisplayProperty::Variant2.abbr_name(), "V2");
-        assert_eq!(CustomDisplayProperty::Variant3.abbr_name(), "V3");
+        assert_eq!(Property::Variant1.abbr_name(), "V1");
+        assert_eq!(Property::Variant2.abbr_name(), "V2");
+        assert_eq!(Property::Variant3.abbr_name(), "V3");
     }
 
     #[test]
     fn long_name() {
-        assert_eq!(CustomDisplayProperty::Variant1.name(), "Variant_1");
-        assert_eq!(CustomDisplayProperty::Variant2.name(), "Variant 2");
-        assert_eq!(CustomDisplayProperty::Variant3.name(), "Variant-3");
+        assert_eq!(Property::Variant1.name(), "Variant_1");
+        assert_eq!(Property::Variant2.name(), "Variant 2");
+        assert_eq!(Property::Variant3.name(), "Variant-3");
     }
 
     #[test]
     fn abbr_mod() {
-        assert_eq!(CustomDisplayProperty::Variant1, cd_abbr::V1);
-        assert_eq!(CustomDisplayProperty::Variant2, cd_abbr::V2);
-        assert_eq!(CustomDisplayProperty::Variant3, cd_abbr::V3);
+        assert_eq!(Property::Variant1, cd_abbr::V1);
+        assert_eq!(Property::Variant2, cd_abbr::V2);
+        assert_eq!(Property::Variant3, cd_abbr::V3);
     }
 
     #[test]
     fn display() {
-        assert_eq!(format!("{}", CustomDisplayProperty::Variant1), CustomDisplayProperty::Variant1.name());
-        assert_eq!(format!("{}", CustomDisplayProperty::Variant2), CustomDisplayProperty::Variant2.name());
-        assert_eq!(format!("{}", CustomDisplayProperty::Variant3), CustomDisplayProperty::Variant3.name());
+        assert_eq!(format!("{}", Property::Variant1), Property::Variant1.name());
+        assert_eq!(format!("{}", Property::Variant2), Property::Variant2.name());
+        assert_eq!(format!("{}", Property::Variant3), Property::Variant3.name());
     }
 }
