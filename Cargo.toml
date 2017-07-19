@@ -10,6 +10,13 @@ description = "UNIC - Unicode and Internationalization Crates"
 categories = ["parsing", "rendering", "encoding", "development-tools"]
 readme = "README.md"
 
+exclude = [
+    "data/**/*.txt",
+    "tools/**/*.py",
+    ".cargo/*.sh",
+    "tests/*conformance*.rs",
+]
+
 [workspace]
 
 [features]
