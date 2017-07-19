@@ -11,6 +11,7 @@ use utils::{common, rustout};
 
 use regex::Regex;
 
+/// file!() but with UNIX path separators, even on Windows
 const SCRIPT: &'static str = "gen/src/ucd/generate.rs";
 
 lazy_static! {
