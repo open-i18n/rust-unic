@@ -27,7 +27,7 @@
 ///
 // TODO: Formalize this with a trait?
 /*
-trait UnicodeCharacterProperty : Clone + Copy + Debug + Display + PartialEq + Eq {
+trait UnicodeCharacterProperty : Clone + Copy + Debug + Display + PartialEq + Eq + Hash {
     /// Abbreviated name of this property
     fn abbr_name(&self) -> &'static str;
     /// Long name of this property
@@ -42,8 +42,8 @@ trait UnicodeCharacterProperty : Clone + Copy + Debug + Display + PartialEq + Eq
 //
 /// `PropertyName::abbr_name(&self) -> &'static str` and
 /// `PropertyName::long_name(&self) -> &'static str` are provided by this macro, as well as
-/// `#[derive(Clone, Copy, Debug, PartialEq, Eq)]`. The order of variants is unchanged, meaning
-/// `#[derive(PartialOrd, Ord)]` can be used on the enum declaration if it makes sense.
+/// `#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]`. The order of variants is unchanged,
+/// meaning `#[derive(PartialOrd, Ord)]` can be used on the enum declaration if it makes sense.
 ///
 /// The module `module_name` is populated with `pub use` aliases for the variants in the abbr form.
 /// This module will likely be removed in favor of [`Associated Consts`][rust-lang/rust#42809] once
@@ -98,7 +98,7 @@ macro_rules! char_property {
     =>
     {
         $(#[$_name])*
-        #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+        #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
         pub enum $name {
             $(
                 $(#[$_variant])*
