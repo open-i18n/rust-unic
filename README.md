@@ -2,13 +2,14 @@
 
 [![UNIC-logo](docs/images/UNIC-logo.png)](https://github.com/behnam/rust-unic/)
 
-[![Travis](https://img.shields.io/travis/behnam/rust-unic/master.svg)](https://travis-ci.org/behnam/rust-unic/)
-[![AppVeyor](https://img.shields.io/appveyor/ci/behnam/rust-unic/master.svg)](https://ci.appveyor.com/project/behnam/rust-unic)
+[![Travis](https://img.shields.io/travis/behnam/rust-unic/master.svg?label=Linux%20build)](https://travis-ci.org/behnam/rust-unic/)
+[![AppVeyor](https://img.shields.io/appveyor/ci/behnam/rust-unic/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/behnam/rust-unic)
 [![Unicode-10.0.0](https://img.shields.io/badge/unicode-10.0.0-red.svg)](http://www.unicode.org/versions/Unicode10.0.0/)
 [![Release](https://img.shields.io/github/release/behnam/rust-unic.svg)](https://github.com/behnam/rust-unic/)
 [![Crates.io](https://img.shields.io/crates/v/unic.svg)](https://crates.io/crates/unic/)
 [![Documentation](https://docs.rs/unic/badge.svg)](https://docs.rs/unic/)
 [![Gitter](https://img.shields.io/gitter/room/behnam/rust-unic.svg)](https://gitter.im/behnam/rust-unic)
+[![IRC](https://img.shields.io/badge/chat-on%20irc-brightgreen.svg)](https://chat.mibbit.com/?server=irc.mozilla.org&channel=%23unic)
 
 <https://github.com/behnam/rust-unic>
 
