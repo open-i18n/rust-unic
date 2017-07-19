@@ -40,6 +40,9 @@
 #[macro_use]
 extern crate matches;
 extern crate unic_ucd_core;
+#[no_link]
+#[macro_use]
+extern crate unic_ucd_utils;
 
 mod category;
 
