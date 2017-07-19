@@ -39,6 +39,7 @@ lazy_static! {
 }
 
 fn emit_unicode_version(dir: &Path) {
+    // TODO: Crashes when src/tables/ doesn't exist!
     let mut file = File::create(dir.join("unicode_version.rsv")).unwrap();
     rustout::emit_value(SCRIPT, &mut file, &UNICODE_VERSION, |triple| {
         format!(
@@ -228,7 +229,59 @@ lazy_static! {
 
 fn emit_age_tables(dir: &Path) {
     let mut file = File::create(dir.join("age_values.rsv")).unwrap();
-    rustout::emit_value_range_bsearch_table(SCRIPT, &mut file, (*AGE_VALUES).iter()).unwrap();
+    rustout::emit_value_range_bsearch_table(SCRIPT, &mut file, AGE_VALUES.iter()).unwrap();
+}
+
+// == Bidi == //
+
+lazy_static! {
+    // TODO: bidi_class_groups: HashMap<&str, Vec<32>>
+    // Requires changing range_value_from_codepoints to take HashMap<AsRef<str>, Vec<u32>>
+    static ref BIDI_CLASS_VALUES: Vec<(u32, u32, String)> = {
+        let mut bidi_class_groups: HashMap<String, Vec<u32>> = HashMap::default();
+
+        for &UnicodeDataEntry { codepoint, ref bidi_class, .. } in UNICODE_DATA.values() {
+            bidi_class_groups.entry(bidi_class.clone()).or_insert_with(|| vec![]).push(codepoint);
+        }
+
+        // Default Bidi_Class from unassigned codepoints
+        // <http://www.unicode.org/Public/UNIDATA/extracted/DerivedBidiClass.txt>
+        let default_ranges = &[
+            // default to AL
+            (0x0600, 0x07BF, "AL"),
+            (0x08A0, 0x08FF, "AL"),
+            (0xFB50, 0xFDCF, "AL"),
+            (0xFDF0, 0xFDFF, "AL"),
+            (0xFE70, 0xFEFF, "AL"),
+            (0x1EE00, 0x1EEFF, "AL"),
+            // default to R
+            (0x0590, 0x05FF, "R"),
+            (0x07C0, 0x089F, "R"),
+            (0xFB1D, 0xFB4F, "R"),
+            (0x10800, 0x10FFF, "R"),
+            (0x1E800, 0x1EDFF, "R"),
+            (0x1EF00, 0x1EFFF, "R"),
+            // default to ET
+            (0x20A0, 0x20CF, "ET"),
+        ];
+
+        for &(start, end, default) in default_ranges {
+            for codepoint in start..(end+1) {
+                if !UNICODE_DATA.contains_key(&codepoint) {
+                    bidi_class_groups.get_mut(default).unwrap().push(codepoint);
+                }
+            }
+        }
+
+        range_value_from_codepoints(bidi_class_groups)
+    };
+}
+
+fn emit_bidi_class_tables(dir: &Path) {
+    let mut file = File::create(dir.join("bidi_class_values.rsv")).unwrap();
+    rustout::emit_value_range_bsearch_table(
+        SCRIPT, &mut file, BIDI_CLASS_VALUES.iter()
+    ).unwrap()
 }
 
 // == Miscellaneous == //
@@ -305,4 +358,8 @@ pub fn run() {
     // Age
     emit_unicode_version(*AGE_TABLES);
     emit_age_tables(*AGE_TABLES);
+
+    // Bidi
+    emit_unicode_version(*BIDI_TABLES);
+    emit_bidi_class_tables(*BIDI_TABLES);
 }
