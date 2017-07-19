@@ -29,6 +29,17 @@ properties, to Unicode algorithms for processing text, and more advanced
 Other standards and best practices, like IETF RFCs, are also implemented, as
 needed by Unicode/CLDR components, or common demand.
 
+## Project Status
+
+At the moment, in mid-2017, UNIC is under heavy development: the API is updated
+frequently on `master` branch, and there will be API breakage between each `0.x`
+release. Please see [open issues](https://github.com/behnam/rust-unic/issues)
+for changes planed.
+
+We expect to have the `1.0` version released in late-2017/early-2018 and
+maintain a stable API afterwards, with possibly one or two API udpates per year
+for the first couple of years.
+
 ## Design Goals
 
 1.  Primary goal of UNIC is to provide reliable functionality by way of
