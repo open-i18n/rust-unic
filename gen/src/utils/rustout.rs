@@ -109,8 +109,3 @@ where
         )
     })
 }
-
-/// TODO
-pub fn emit_lookup_tables() -> ! {
-    unimplemented!()
-}
