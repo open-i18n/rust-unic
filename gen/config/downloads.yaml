@@ -23,3 +23,12 @@
 -
   url: "http://www.unicode.org/Public/{}/ucd/NormalizationTest.txt"
   dest: data/ucd/test/NormalizationTest.txt
+-
+  url: "http://www.unicode.org/Public/idna/{}/IdnaMappingTable.txt"
+  dest: data/idna/IdnaMappingTable.txt
+-
+  url: "http://www.unicode.org/Public/idna/{}/ReadMe.txt"
+  dest: data/idna/ReadMe.txt
+-
+  url: "http://www.unicode.org/Public/idna/{}/IdnaTest.txt"
+  dest: data/idna/test/IdnaTest.txt

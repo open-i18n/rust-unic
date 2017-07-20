@@ -1,7 +1,7 @@
 use std::error::Error;
 use std::fs::{self, File};
 use std::io::Write;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use futures::{Future, Stream};
 use futures::future::join_all;
@@ -12,6 +12,12 @@ use tokio_core::reactor::Core;
 pub struct DownloadPath {
     pub url: String,
     pub dest: PathBuf,
+}
+
+impl DownloadPath {
+    pub fn dest(&self) -> &Path {
+        &self.dest
+    }
 }
 
 pub fn download_all<'a, I>(paths: I) -> Result<(), Box<Error>>
@@ -37,7 +43,7 @@ where
                         .expect("Failed to create file")
                 })
             })
-            .unwrap_or_else(|e| panic!(e.to_string()))
+            .unwrap()
     });
 
     core.run(join_all(jobs))?;
