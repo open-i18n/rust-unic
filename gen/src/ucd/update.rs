@@ -13,8 +13,11 @@ const DATA_FILES: &'static [&'static str] = &[
 const TEST_DATA_FILES: &'static [&'static str] = &[
     "BidiCharacterTest.txt",
     "BidiTest.txt",
-    "DecompositionTypeTest.txt",
     "NormalizationTest.txt",
+];
+
+const EXTRACTED_TEST_DATA_FILES: &'static [&'static str] = &[
+    "DerivedDecompositionType.txt",
 ];
 
 pub fn run() {
@@ -26,5 +29,8 @@ pub fn run() {
     }
     for name in TEST_DATA_FILES {
         common::fetch(String::from(UCD_URL) + name, ucd_test_data_dir().join(name));
+    }
+    for name in EXTRACTED_TEST_DATA_FILES {
+        common::fetch(String::from(UCD_URL) + "extracted/" + name, ucd_test_data_dir().join(name));
     }
 }
