@@ -1,22 +1,22 @@
 use std::error::Error;
 use std::fs::{self, File};
 use std::io::Write;
-use std::path::Path;
+use std::path::PathBuf;
 
 use futures::{Future, Stream};
 use futures::future::join_all;
 use hyper::{Client, Uri};
 use tokio_core::reactor::Core;
 
-#[derive(Debug, PartialEq, Eq, Hash)]
-pub struct DownloadPath<'a> {
+#[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub struct DownloadPath {
     pub url: String,
-    pub dest: &'a Path,
+    pub dest: PathBuf,
 }
 
 pub fn download_all<'a, I>(paths: I) -> Result<(), Box<Error>>
 where
-    I: Iterator<Item = DownloadPath<'a>>,
+    I: Iterator<Item = DownloadPath>,
 {
     let mut core = Core::new()?;
     let client = Client::new(&core.handle());

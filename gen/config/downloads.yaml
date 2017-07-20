@@ -1,0 +1,25 @@
+---
+-
+  url: "http://www.unicode.org/Public/{}/ucd/DerivedAge.txt"
+  dest: data/ucd/DerivedAge.txt
+-
+  url: "http://www.unicode.org/Public/{}/ucd/DerivedNormalizationProps.txt"
+  dest: data/ucd/DerivedNormalizationProps.txt
+-
+  url: "http://www.unicode.org/Public/{}/ucd/ReadMe.txt"
+  dest: data/ucd/ReadMe.txt
+-
+  url: "http://www.unicode.org/Public/{}/ucd/UnicodeData.txt"
+  dest: data/ucd/UnicodeData.txt
+-
+  url: "http://www.unicode.org/Public/{}/ucd/BidiCharacterTest.txt"
+  dest: data/ucd/test/BidiCharacterTest.txt
+-
+  url: "http://www.unicode.org/Public/{}/ucd/BidiTest.txt"
+  dest: data/ucd/test/BidiTest.txt
+-
+  url: "http://www.unicode.org/Public/{}/ucd/extracted/DerivedDecompositionType.txt"
+  dest: data/ucd/test/DecompositionTypeTest.txt
+-
+  url: "http://www.unicode.org/Public/{}/ucd/NormalizationTest.txt"
+  dest: data/ucd/test/NormalizationTest.txt

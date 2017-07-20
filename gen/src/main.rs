@@ -1,9 +1,13 @@
-extern crate futures;
 extern crate getopts;
+
+extern crate futures;
 extern crate hyper;
-#[macro_use]
-extern crate lazy_static;
 extern crate tokio_core;
+
+#[macro_use]
+extern crate serde_derive;
+extern crate serde;
+extern crate serde_yaml;
 
 mod download;
 
@@ -42,6 +46,7 @@ fn main() {
         println!("Downloading Unicode resources version {}...", version);
         download::download(version.as_str())
             .expect("Failed to download Unicode resources");
+        println!("Finished.");
     });
 
     let crates = expand_sub_crates(matches.opt_strs("crate"));
@@ -52,6 +57,9 @@ fn main() {
         }
         return;
     }
+
+    println!();
+    println!("Generating sources for {} crates...", crates.len());
 
     for subcrate in crates {
         println!("Generating sources for crate {}...", subcrate);
