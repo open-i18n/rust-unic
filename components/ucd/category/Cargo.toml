@@ -14,5 +14,6 @@ exclude = [ "tests/*conformance*.rs" ]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
 [dependencies]
-unic-ucd-core = { path = "../core/", version = "0.4.0" }
 matches = "0.1.6"
+unic-ucd-core = { path = "../core/", version = "0.4.0" }
+unic-ucd-utils = { path = "../utils/", version = "0.4.0" }

@@ -19,6 +19,9 @@
 //!
 //! Accessor for `Bidi_Class` property from Unicode Character Database (UCD)
 
+#[macro_use]
+#[no_link]
+extern crate unic_ucd_utils;
 extern crate unic_ucd_core;
 
 
