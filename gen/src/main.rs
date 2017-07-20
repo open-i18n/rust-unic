@@ -10,6 +10,7 @@ extern crate serde;
 extern crate serde_yaml;
 
 mod download;
+mod generate;
 
 use std::collections::HashMap;
 use std::env;
@@ -18,6 +19,7 @@ use std::io::BufReader;
 use std::path::Path;
 
 use download::download;
+use generate::generate;
 
 use getopts::Options;
 
@@ -66,9 +68,7 @@ fn main() {
     println!("Generating sources for {} crates...", crates.len());
     for subcrate in crates {
         println!("Generating sources for crate {}...", subcrate);
-        match subcrate {
-            _ => println!("No sources to generate for crate {}.", subcrate),
-        }
+        generate(&subcrate);
     }
     println!("Finished.");
 }
