@@ -31,11 +31,6 @@ for component in $COMPONENTS; do
     - cargo test   --verbose --manifest-path "components/$component/Cargo.toml"
 done
 
-# Publish all components (ignore failures, because of the version being released already)
-for component in $COMPONENTS; do
-    - cargo publish --verbose --manifest-path "components/$component/Cargo.toml" || true
-done
-
-# Then package root
-- cargo update  --verbose
-- cargo publish --verbose
+# Test root
+- cargo update --verbose
+- cargo test   --verbose

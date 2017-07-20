@@ -26,6 +26,7 @@ COMPONENTS="
     ucd/utils
     ucd/age
     ucd/bidi
+    ucd/category
     ucd/normal
     ucd
     bidi

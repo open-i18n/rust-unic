@@ -19,7 +19,8 @@ notifications:
     on_success: never
 
 env:
-  - RUST_BACKTRACE=full
+  global:
+    - RUST_BACKTRACE=full
 
 script:
   - cargo build --verbose --all
