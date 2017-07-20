@@ -18,6 +18,7 @@ lazy_static! {
     static ref CORE_TABLES: &'static Path = Path::new("components/ucd/core/src/tables");
     static ref AGE_TABLES: &'static Path = Path::new("components/ucd/age/src/tables");
     static ref BIDI_TABLES: &'static Path = Path::new("components/ucd/bidi/src/tables");
+    static ref CATEGORY_TABLES: &'static Path = Path::new("components/ucd/category/src/tables");
     static ref NORMAL_TABLES: &'static Path = Path::new("components/ucd/normal/src/tables");
     static ref NORMAL_TEST_TABLES: &'static Path = Path::new("components/normal/test/tables");
 }
@@ -280,9 +281,30 @@ lazy_static! {
 
 fn emit_bidi_class_tables(dir: &Path) {
     let mut file = File::create(dir.join("bidi_class_values.rsv")).unwrap();
-    rustout::emit_value_range_bsearch_table(
-        SCRIPT, &mut file, BIDI_CLASS_VALUES.iter()
-    ).unwrap()
+    rustout::emit_value_range_bsearch_table(SCRIPT, &mut file, BIDI_CLASS_VALUES.iter()).unwrap()
+}
+
+// == Category == //
+
+lazy_static! {
+    static ref GENERAL_CATEGORY_MAPPING: Vec<(u32, u32, String)> = {
+        let mut general_category_mapping = HashMap::default();
+
+        for &UnicodeDataEntry { codepoint, ref general_category, .. } in UNICODE_DATA.values() {
+            general_category_mapping
+                .entry(general_category.clone())
+                .or_insert_with(|| vec![])
+                .push(codepoint)
+        }
+
+        range_value_from_codepoints(general_category_mapping)
+    };
+}
+
+fn emit_general_category_tables(dir: &Path) {
+    let mut file = File::create(dir.join("general_category.rsv")).unwrap();
+    rustout::emit_value_range_bsearch_table(SCRIPT, &mut file, GENERAL_CATEGORY_MAPPING.iter())
+        .unwrap();
 }
 
 // == Miscellaneous == //
@@ -363,4 +385,8 @@ pub fn run() {
     // Bidi
     emit_unicode_version(*BIDI_TABLES);
     emit_bidi_class_tables(*BIDI_TABLES);
+
+    // Category
+    emit_unicode_version(*CATEGORY_TABLES);
+    emit_general_category_tables(*CATEGORY_TABLES);
 }
