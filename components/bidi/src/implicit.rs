@@ -14,11 +14,11 @@
 use std::cmp::max;
 
 use unic_ucd_bidi::BidiClass;
+use unic_ucd_bidi::bidi_class::abbr_names::*;
 
 use super::prepare::{IsolatingRunSequence, LevelRun, not_removed_by_x9, removed_by_x9};
 use super::level::Level;
 
-use BidiClass::*;
 
 /// 3.3.4 Resolving Weak Types
 ///

@@ -2,12 +2,14 @@
 
 [![UNIC-logo](docs/images/UNIC-logo.png)](https://github.com/behnam/rust-unic/)
 
-[![Travis](https://img.shields.io/travis/behnam/rust-unic/master.svg)](https://travis-ci.org/behnam/rust-unic/)
-[![AppVeyor](https://img.shields.io/appveyor/ci/behnam/rust-unic/master.svg)](https://ci.appveyor.com/project/behnam/rust-unic)
+[![Travis](https://img.shields.io/travis/behnam/rust-unic/master.svg?label=Linux%20build)](https://travis-ci.org/behnam/rust-unic/)
+[![AppVeyor](https://img.shields.io/appveyor/ci/behnam/rust-unic/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/behnam/rust-unic)
 [![Unicode-10.0.0](https://img.shields.io/badge/unicode-10.0.0-red.svg)](http://www.unicode.org/versions/Unicode10.0.0/)
 [![Release](https://img.shields.io/github/release/behnam/rust-unic.svg)](https://github.com/behnam/rust-unic/)
 [![Crates.io](https://img.shields.io/crates/v/unic.svg)](https://crates.io/crates/unic/)
 [![Documentation](https://docs.rs/unic/badge.svg)](https://docs.rs/unic/)
+[![Gitter](https://img.shields.io/gitter/room/behnam/rust-unic.svg)](https://gitter.im/behnam/rust-unic)
+[![IRC](https://img.shields.io/badge/chat-on%20irc-brightgreen.svg)](https://chat.mibbit.com/?server=irc.mozilla.org&channel=%23unic)
 
 <https://github.com/behnam/rust-unic>
 
@@ -27,6 +29,17 @@ properties, to Unicode algorithms for processing text, and more advanced
 
 Other standards and best practices, like IETF RFCs, are also implemented, as
 needed by Unicode/CLDR components, or common demand.
+
+## Project Status
+
+At the moment, in mid-2017, UNIC is under heavy development: the API is updated
+frequently on `master` branch, and there will be API breakage between each `0.x`
+release. Please see [open issues](https://github.com/behnam/rust-unic/issues)
+for changes planed.
+
+We expect to have the `1.0` version released in late-2017/early-2018 and
+maintain a stable API afterwards, with possibly one or two API udpates per year
+for the first couple of years.
 
 ## Design Goals
 
@@ -172,11 +185,11 @@ fn main() {
     assert!(text.has_rtl());
     assert!(text.has_ltr());
 
-    assert_eq!(text.chars().nth(0).unwrap().bidi_class(), BidiClass::R);
+    assert_eq!(text.chars().nth(0).unwrap().bidi_class(), BidiClass::RightToLeft);
     assert!(!text.chars().nth(0).unwrap().is_ltr());
     assert!(text.chars().nth(0).unwrap().is_rtl());
 
-    assert_eq!(text.chars().nth(3).unwrap().bidi_class(), BidiClass::L);
+    assert_eq!(text.chars().nth(3).unwrap().bidi_class(), BidiClass::LeftToRight);
     assert!(text.chars().nth(3).unwrap().is_ltr());
     assert!(!text.chars().nth(3).unwrap().is_rtl());
 

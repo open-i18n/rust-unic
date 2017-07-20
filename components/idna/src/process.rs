@@ -13,7 +13,7 @@
 use std::ascii::AsciiExt;
 
 use unic_normal::StrNormalForm;
-use unic_ucd_bidi::BidiClass;
+use unic_ucd_bidi::{BidiClass, bidi_class};
 use unic_ucd_normal::is_combining_mark;
 
 use mapping::Mapping;
@@ -57,6 +57,8 @@ fn map_char(codepoint: char, flags: Flags, output: &mut String, errors: &mut Vec
 
 // http://tools.ietf.org/html/rfc5893#section-2
 fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
+    use self::bidi_class::abbr_names::*;
+
     // Rule 0: Bidi Rules apply to Bidi Domain Names: a name with at least one RTL label.  A label
     // is RTL if it contains at least one character of bidi class R, AL or AN.
     if !is_bidi_domain {
@@ -71,15 +73,10 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
 
     match first_char_class {
         // LTR label
-        BidiClass::L => {
+        L => {
             // Rule 5
             while let Some(c) = chars.next() {
-                if !matches!(
-                    BidiClass::of(c),
-                    BidiClass::L | BidiClass::EN | BidiClass::ES | BidiClass::CS |
-                        BidiClass::ET | BidiClass::ON | BidiClass::BN |
-                        BidiClass::NSM
-                ) {
+                if !matches!(BidiClass::of(c), L | EN | ES | CS | ET | ON | BN | NSM) {
                     return false;
                 }
             }
@@ -90,7 +87,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
             let mut last_non_nsm = rev_chars.next();
             loop {
                 match last_non_nsm {
-                    Some(c) if BidiClass::of(c) == BidiClass::NSM => {
+                    Some(c) if BidiClass::of(c) == NSM => {
                         last_non_nsm = rev_chars.next();
                         continue;
                     }
@@ -100,8 +97,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
                 }
             }
             match last_non_nsm {
-                Some(c)
-                    if BidiClass::of(c) == BidiClass::L || BidiClass::of(c) == BidiClass::EN => {}
+                Some(c) if BidiClass::of(c) == L || BidiClass::of(c) == EN => {}
                 Some(_) => {
                     return false;
                 }
@@ -111,7 +107,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
         }
 
         // RTL label
-        BidiClass::R | BidiClass::AL => {
+        R | AL => {
             let mut found_en = false;
             let mut found_an = false;
 
@@ -119,19 +115,14 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
             while let Some(c) = chars.next() {
                 let char_class = BidiClass::of(c);
 
-                if char_class == BidiClass::EN {
+                if char_class == EN {
                     found_en = true;
                 }
-                if char_class == BidiClass::AN {
+                if char_class == AN {
                     found_an = true;
                 }
 
-                if !matches!(
-                    char_class,
-                    BidiClass::R | BidiClass::AL | BidiClass::AN | BidiClass::EN |
-                        BidiClass::ES | BidiClass::CS | BidiClass::ET |
-                        BidiClass::ON | BidiClass::BN | BidiClass::NSM
-                ) {
+                if !matches!(char_class, R | AL | AN | EN | ES | CS | ET | ON | BN | NSM) {
                     return false;
                 }
             }
@@ -141,7 +132,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
             loop {
                 // must end in L or EN followed by 0 or more NSM
                 match last {
-                    Some(c) if BidiClass::of(c) == BidiClass::NSM => {
+                    Some(c) if BidiClass::of(c) == NSM => {
                         last = rev_chars.next();
                         continue;
                     }
@@ -151,11 +142,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
                 }
             }
             match last {
-                Some(c)
-                    if matches!(
-                        BidiClass::of(c),
-                        BidiClass::R | BidiClass::AL | BidiClass::EN | BidiClass::AN
-                    ) => {}
+                Some(c) if matches!(BidiClass::of(c), R | AL | EN | AN) => {}
                 _ => {
                     return false;
                 }
@@ -229,6 +216,8 @@ fn validate(label: &str, is_bidi_domain: bool, flags: Flags, errors: &mut Vec<Er
 
 // http://www.unicode.org/reports/tr46/#Processing
 fn processing(domain: &str, flags: Flags, errors: &mut Vec<Error>) -> String {
+    use self::bidi_class::abbr_names::*;
+
     let mut mapped = String::new();
     for c in domain.chars() {
         map_char(c, flags, &mut mapped, errors)
@@ -238,24 +227,19 @@ fn processing(domain: &str, flags: Flags, errors: &mut Vec<Error>) -> String {
     // Find out if it's a Bidi Domain Name
     //
     // First, check for literal bidi chars
-    let mut is_bidi_domain = domain.chars().any(|c| {
-        matches!(
-            BidiClass::of(c),
-            BidiClass::R | BidiClass::AL | BidiClass::AN
-        )
-    });
+    let mut is_bidi_domain = domain
+        .chars()
+        .any(|c| matches!(BidiClass::of(c), R | AL | AN));
     if !is_bidi_domain {
         // Then check for punycode-encoded bidi chars
         for label in normalized.split('.') {
             if label.starts_with(PUNYCODE_PREFIX) {
                 match punycode::decode_to_string(&label[PUNYCODE_PREFIX.len()..]) {
                     Some(decoded_label) => {
-                        if decoded_label.chars().any(|c| {
-                            matches!(
-                                BidiClass::of(c),
-                                BidiClass::R | BidiClass::AL | BidiClass::AN
-                            )
-                        }) {
+                        if decoded_label
+                            .chars()
+                            .any(|c| matches!(BidiClass::of(c), R | AL | AN))
+                        {
                             is_bidi_domain = true;
                         }
                     }
