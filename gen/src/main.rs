@@ -11,8 +11,13 @@ extern crate serde_yaml;
 
 mod download;
 
-use std::env;
 use std::collections::HashMap;
+use std::env;
+use std::fs::File;
+use std::io::BufReader;
+use std::path::Path;
+
+use download::download;
 
 use getopts::Options;
 
@@ -45,8 +50,7 @@ fn main() {
 
     matches.opt_str("u").map(|version| {
         println!("Downloading Unicode resources version {}...", version);
-        download::download(version.as_str())
-            .expect("Failed to download Unicode resources");
+        download(version.as_str()).expect("Failed to download Unicode resources");
         println!("Finished.");
     });
 
@@ -60,28 +64,31 @@ fn main() {
     }
 
     println!("Generating sources for {} crates...", crates.len());
-
     for subcrate in crates {
         println!("Generating sources for crate {}...", subcrate);
         match subcrate {
             _ => println!("No sources to generate for crate {}.", subcrate),
         }
     }
+    println!("Finished.");
 }
 
-const CRATES: &'static str = include_str!("../config/crates.yaml");
+const CRATES: &'static str = "gen/config/crates.yaml";
 
 fn expand_sub_crates<I>(list: I) -> Vec<String>
 where
     I: Iterator<Item = String>,
 {
+    let file = File::open(Path::new(CRATES)).expect("Failed to open crates.yaml");
+
     let crate_mapping: HashMap<String, Vec<String>> =
-        serde_yaml::from_str(CRATES)
+        serde_yaml::from_reader(BufReader::new(file))
             .expect("Failed to parse crates.yaml");
 
     list.into_iter()
         .flat_map(|name| {
-            crate_mapping.get(&name)
+            crate_mapping
+                .get(&name)
                 .map(|crates| {
                     let mut subcrates = expand_sub_crates(crates.iter().cloned());
                     subcrates.push(name.clone());

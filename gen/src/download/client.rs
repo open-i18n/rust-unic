@@ -28,7 +28,8 @@ where
     let client = Client::new(&core.handle());
 
     let jobs = paths.map(move |path| {
-        path.url.parse::<Uri>()
+        path.url
+            .parse::<Uri>()
             .map(|uri| {
                 client.get(uri).and_then(move |res| {
                     fs::create_dir_all(path.dest.parent().unwrap())
