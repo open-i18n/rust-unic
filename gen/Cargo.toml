@@ -12,4 +12,8 @@ publish = false
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
 [dependencies]
+futures = "0.1"
 getopts = "0.2"
+hyper = "0.11"
+lazy_static = "0.2"
+tokio-core = "0.1"

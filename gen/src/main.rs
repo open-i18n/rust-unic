@@ -1,5 +1,11 @@
+extern crate futures;
 extern crate getopts;
+extern crate hyper;
+#[macro_use]
+extern crate lazy_static;
+extern crate tokio_core;
 
+mod download;
 
 use std::env;
 
@@ -25,7 +31,7 @@ fn main() {
     );
 
     let matches = opts.parse(env::args().skip(1))
-        .unwrap_or_else(|e| panic!(e));
+        .unwrap_or_else(|e| panic!(e.to_string()));
 
     if matches.opt_present("h") {
         print_usage(&opts);
@@ -34,13 +40,16 @@ fn main() {
 
     matches.opt_str("u").map(|version| {
         println!("Downloading Unicode resources version {}...", version);
-        println!("(TODO)");
+        download::download(version.as_str())
+            .expect("Failed to download Unicode resources");
     });
 
     let crates = expand_sub_crates(matches.opt_strs("crate"));
 
     if crates.is_empty() {
-        print_usage(&opts);
+        if !matches.opt_present("u") {
+            print_usage(&opts);
+        }
         return;
     }
 
