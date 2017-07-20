@@ -10,7 +10,8 @@ description = "UNIC - Unicode Normalization Forms"
 categories = ["parsing", "rendering", "encoding", "development-tools"]
 readme = "README.md"
 
-exclude = [ "tests/*conformance*.rs" ]
+# No tests/benches that depends on /data/
+exclude = ["tests/conformance_tests.rs"]
 
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }

@@ -9,6 +9,9 @@ keywords = ["text", "unicode"]
 description = "UNIC - Implementation of Punycode (RFC 3492) algorithm"
 readme = "README.md"
 
+# No tests/benches that depends on /data/
+exclude = ["tests/punycode_tests.rs"]
+
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 

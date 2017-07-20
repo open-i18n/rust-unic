@@ -8,6 +8,9 @@ license = "MIT/Apache-2.0"
 keywords = ["text", "unicode"]
 description = "UNIC - IDNA - IDNA Mapping Table"
 
+# No tests/benches that depends on /data/
+exclude = []
+
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 

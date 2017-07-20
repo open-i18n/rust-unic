@@ -8,7 +8,8 @@ license = "MIT/Apache-2.0"
 keywords = ["text", "unicode"]
 description = "UNIC - Unicode Character Database - Normalization Properties"
 
-exclude = [ "tests/*conformance*.rs" ]
+# No tests/benches that depends on /data/
+exclude = ["tests/conformance_tests.rs"]
 
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }

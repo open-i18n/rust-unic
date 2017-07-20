@@ -1,5 +1,2 @@
 [workspace]
-members = [ "unic/" ]
-
-[dependencies]
-unic = { path = "unic", version = "0.4.0" }
+members = ["unic/"]
