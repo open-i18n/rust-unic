@@ -30,11 +30,7 @@ from unicode_utils import is_surrogate
 
 
 OUTPUT_DIRS = {
-    'UCD_CORE': path("components/ucd/core/src/tables"),
-    'UCD_AGE': path("components/ucd/age/src/tables"),
-    'UCD_BIDI': path("components/ucd/bidi/src/tables"),
     'UCD_NORMAL': path("components/ucd/normal/src/tables"),
-    'UCD_CATEGORY': path("components/ucd/category/src/tables"),
     'NORMAL_TESTS': path("components/normal/tests/tables"),
 }
 
@@ -101,136 +97,6 @@ EXPANDED_CATEGORIES = {
     'Zs': ['Z'], 'Zl': ['Z'], 'Zp': ['Z'],
     'Cc': ['C'], 'Cf': ['C'], 'Cs': ['C'], 'Co': ['C'], 'Cn': ['C'],
 }
-
-
-# == Age ==
-
-@memoize
-def get_age_values():
-    age_groups = {}
-
-    for line in fileinput.input(data_path("DerivedAge.txt")):
-        # remove comments
-        line, _, _ = line.partition('#')
-
-        # skip empty lines
-        if len(line.strip()) == 0:
-            continue
-
-        fields = line.split(';')
-        range, value = fields[0].strip(), fields[1].strip()
-
-        # skip surrogate codepoints; they don't occur in Rust strings
-        if range == 'D800..DFFF':
-            continue
-
-        first, _, last = range.partition('..')
-        if not last:
-            last = first
-        first, last = int(first, 16), int(last, 16)
-
-        age = 'Assigned(UnicodeVersion { major: %s, minor: %s, micro: 0 })' % tuple(
-            value.split('.'))
-
-        if age not in age_groups:
-            age_groups[age] = []
-        age_groups[age].append((first, last))
-
-    # optimize if possible
-    for age in age_groups:
-        age_groups[age] = ranges_from_codepoints(
-            codepoints_from_ranges(age_groups[age]))
-
-    return range_value_triplets_from_ranges(age_groups)
-
-
-def emit_age_tables(dir):
-    age_values = get_age_values()
-
-    with open(join(dir, 'age_values.rsv'), "w") as values_file:
-        rustout.emit_table(
-            __file__,
-            values_file,
-            age_values,
-            print_fun=lambda x: "(%s, %s, %s)" % (
-                rustout.char_literal(x[0]),
-                rustout.char_literal(x[1]),
-                x[2],
-            ),
-        )
-
-
-# == Bidi ==
-
-@memoize
-def get_bidi_class_info():
-    unicode_data = get_unicode_data()
-
-    # Mapping of codepoint to Bidi_Class property:
-    bidi_class_groups = {}
-    for cp in unicode_data:
-        [_, name, gen_cat, ccc, bidi_class, decomp, deci, digit, num, mirror,
-         old, iso, upcase, lowcase, titlecase] = unicode_data[cp]
-
-        if bidi_class not in bidi_class_groups:
-            bidi_class_groups[bidi_class] = []
-        bidi_class_groups[bidi_class].append(cp)
-
-    # Default Bidi_Class for unassigned codepoints.
-    # http://www.unicode.org/Public/UNIDATA/extracted/DerivedBidiClass.txt
-    default_ranges = [
-        # default to AL
-        (0x0600, 0x07BF, "AL"),     # Arabic, Syriac, Arabic_Supplement, Thaana
-        (0x08A0, 0x08FF, "AL"),     # Arabic Extended-A
-        (0xFB50, 0xFDCF, "AL"),     # Arabic_Presentation_Forms_A
-        (0xFDF0, 0xFDFF, "AL"),     # Arabic_Presentation_Forms_A
-        (0xFE70, 0xFEFF, "AL"),     # Arabic_Presentation_Forms_B
-        (0x1EE00, 0x1EEFF, "AL"),   # Arabic Mathematical Alphabetic Symbols
-        # default to R
-        (0x0590, 0x05FF, "R"),      # Hebrew
-        (0x07C0, 0x089F, "R"),      # NKo
-        (0xFB1D, 0xFB4F, "R"),      # others
-        # Cypriot_Syllabary, Phoenician, Lydian, Meroitic Hieroglyphs, Meroitic
-        # Cursive, Kharoshthi, others
-        (0x10800, 0x10FFF, "R"),
-        (0x1E800, 0x1EDFF, "R"),    # others
-        (0x1EF00, 0x1EFFF, "R"),    # others
-        # default to ET
-        (0x20A0, 0x20CF, "ET"),     # Currency Symbols
-    ]
-
-    for (start, end, default_class) in default_ranges:
-        for cp in range(start, end + 1):
-            if not cp in unicode_data:
-                bidi_class_groups[default_class].append(cp)
-
-    return (
-        sorted(bidi_class_groups.keys()),
-        range_value_triplets_from_codepoints(bidi_class_groups),
-    )
-
-
-def emit_bidi_class_tables(dir):
-    (bidi_class_type, bidi_class_values) = get_bidi_class_info()
-
-    with open(join(dir, 'bidi_class_type.rsv'), "w") as type_file:
-        rustout.emit_class(
-            __file__,
-            type_file,
-            bidi_class_type,
-        )
-
-    with open(join(dir, 'bidi_class_values.rsv'), "w") as values_file:
-        rustout.emit_table(
-            __file__,
-            values_file,
-            bidi_class_values,
-            print_fun=lambda x: "(%s, %s, %s)" % (
-                rustout.char_literal(x[0]),
-                rustout.char_literal(x[1]),
-                x[2],
-            ),
-        )
 
 
 # == Normal ==
@@ -488,81 +354,6 @@ def emit_normal_tests_tables(dir):
         )
 
 
-# == Category ==
-
-SHORT_CATEGORY_NAME_MAP = {
-    'Lu': "UppercaseLetter",
-    'Ll': "LowercaseLetter",
-    'Lt': "TitlecaseLetter",
-    'Lm': "ModifierLetter",
-    'Lo': "OtherLetter",
-    'Mn': "NonspacingMark",
-    'Mc': "SpacingMark",
-    'Me': "EnclosingMark",
-    'Nd': "DecimalNumber",
-    'Nl': "LetterNumber",
-    'No': "OtherNumber",
-    'Pc': "ConnectorPunctuation",
-    'Pd': "DashPunctuation",
-    'Ps': "OpenPunctuation",
-    'Pe': "ClosePunctuation",
-    'Pi': "InitialPunctuation",
-    'Pf': "FinalPunctuation",
-    'Po': "OtherPunctuation",
-    'Sm': "MathSymbol",
-    'Sc': "CurrencySymbol",
-    'Sk': "ModifierSymbol",
-    'So': "OtherSymbol",
-    'Zs': "SpaceSeparator",
-    'Zl': "LineSeparator",
-    'Zp': "ParagraphSeparator",
-    'Cc': "Control",
-    'Cf': "Format",
-    'Cs': "Surrogate",
-    'Co': "PrivateUse",
-    'Cn': "Unassigned",
-}
-
-
-@memoize
-def get_general_category_mapping():
-    unicode_data = get_unicode_data()
-
-    general_category_mapping = {}
-
-    for cp in unicode_data:
-        [_, name, gen_cat, ccc, bidi_class, decomp, deci, digit, num, mirror,
-         old, iso, upcase, lowcase, titlecase] = unicode_data[cp]
-
-        long_category = SHORT_CATEGORY_NAME_MAP[gen_cat]
-        if long_category not in general_category_mapping:
-            general_category_mapping[long_category] = []
-        general_category_mapping[long_category].append(cp)
-
-    general_category_mapping = range_value_triplets_from_codepoints(
-        general_category_mapping)
-
-    return (
-        general_category_mapping
-    )
-
-
-def emit_general_category_tables(dir):
-    general_category_mapping = get_general_category_mapping()
-
-    with open(join(dir, 'general_category.rsv'), "w") as values_file:
-        rustout.emit_table(
-            __file__,
-            values_file,
-            general_category_mapping,
-            print_fun=lambda x: "(%s, %s, %s)" % (
-                rustout.char_literal(x[0]),
-                rustout.char_literal(x[1]),
-                x[2],
-            ),
-        )
-
-
 # == Misc ==
 
 def range_value_triplets_from_codepoints(groups):
@@ -611,22 +402,7 @@ def codepoints_from_ranges(ranges):
 if __name__ == "__main__":
     common.cleanup_output_dirs(OUTPUT_DIRS.values())
 
-    # Core
-    emit_unicode_version(OUTPUT_DIRS['UCD_CORE'])
-
-    # Age
-    emit_unicode_version(OUTPUT_DIRS['UCD_AGE'])
-    emit_age_tables(OUTPUT_DIRS['UCD_AGE'])
-
-    # Bidi
-    emit_unicode_version(OUTPUT_DIRS['UCD_BIDI'])
-    emit_bidi_class_tables(OUTPUT_DIRS['UCD_BIDI'])
-
     # Normal
     emit_unicode_version(OUTPUT_DIRS['UCD_NORMAL'])
     emit_normal_form_tables(OUTPUT_DIRS['UCD_NORMAL'])
     emit_normal_tests_tables(OUTPUT_DIRS['NORMAL_TESTS'])
-
-    # Category
-    emit_unicode_version(OUTPUT_DIRS['UCD_CATEGORY'])
-    emit_general_category_tables(OUTPUT_DIRS['UCD_CATEGORY'])

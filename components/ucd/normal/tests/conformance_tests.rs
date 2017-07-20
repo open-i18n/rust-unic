@@ -19,7 +19,7 @@ use std::{char, u32};
 
 
 const DT_TEST_DATA: &'static str =
-    include_str!("../../../../data/ucd/test/DecompositionTypeTest.txt");
+    include_str!("../../../../data/ucd/test/DerivedDecompositionType.txt");
 
 
 #[derive(Debug)]
