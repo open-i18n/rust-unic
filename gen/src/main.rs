@@ -9,7 +9,7 @@ use std::env;
 mod utils;
 mod ucd;
 
-fn print_usage(opts: Options) {
+fn print_usage(opts: &Options) {
     println!(
         "{}",
         opts.usage("Usage: cargo run --package=unic-gen -- [options]")
@@ -29,7 +29,7 @@ fn main() {
     };
 
     if matches.opt_present("h") {
-        print_usage(opts);
+        print_usage(&opts);
     } else if matches.opt_present("update") {
         ucd::update();
     } else {

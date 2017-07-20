@@ -42,7 +42,7 @@ where
         .output()
         .expect("Failed to run curl");
     if curl_response.status.success() {
-        let mut text = curl_response.stdout;
+        let text = curl_response.stdout;
         let mut file = fs::File::create(destination).unwrap();
         io::copy(&mut &text[..], &mut file).unwrap();
     } else {

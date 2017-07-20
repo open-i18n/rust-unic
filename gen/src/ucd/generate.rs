@@ -107,7 +107,7 @@ lazy_static! {
             if data.len() != 15 { continue }
             let mut data = UnicodeDataEntry::from(data);
             // skip surrogates
-            if let Some(_) = char::from_u32(data.codepoint) {
+            if char::from_u32(data.codepoint).is_some() {
                 if let Some(start) = range_start {
                     data.name = String::from("");
                     let end = data.codepoint+1;
@@ -181,7 +181,7 @@ lazy_static! {
             let line = line.split('#').next().unwrap().trim();
 
             // Skip empty lines
-            if line.len() == 0 {
+            if line.is_empty() {
                 continue;
             }
 
@@ -336,7 +336,7 @@ fn range_value_from_ranges(groups: HashMap<String, Vec<(u32, u32)>>) -> Vec<(u32
 }
 
 fn ranges_from_codepoints(mut codepoints: Vec<u32>) -> Vec<(u32, u32)> {
-    if codepoints.len() == 0 {
+    if codepoints.is_empty() {
         return Vec::new();
     }
     let mut ranges = vec![];

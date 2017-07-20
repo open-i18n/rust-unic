@@ -59,7 +59,7 @@ where
     F: Fn(T) -> D,
     D: Display,
 {
-    for value in values.into_iter() {
+    for value in values {
         writeln!(output, "{}{},", INDENT, formatter(value))?;
     }
     Ok(())
