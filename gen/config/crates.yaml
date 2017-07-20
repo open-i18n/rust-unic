@@ -1,0 +1,16 @@
+---
+unic:
+  - "unic-bidi"
+  - "unic-idna"
+  - "unic-normal"
+  - "unic-ucd"
+unic-idna:
+  - "unic-idna-mapping"
+  - "unic-idna-punycode"
+unic-ucd:
+  - "unic-ucd-age"
+  - "unic-ucd-bidi"
+  - "unic-ucd-category"
+  - "unic-ucd-core"
+  - "unic-ucd-normal"
+  - "unic-ucd-utils"

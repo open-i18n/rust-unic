@@ -12,6 +12,7 @@ extern crate serde_yaml;
 mod download;
 
 use std::env;
+use std::collections::HashMap;
 
 use getopts::Options;
 
@@ -49,7 +50,7 @@ fn main() {
         println!("Finished.");
     });
 
-    let crates = expand_sub_crates(matches.opt_strs("crate"));
+    let crates = expand_sub_crates(matches.opt_strs("crate").into_iter());
 
     if crates.is_empty() {
         if !matches.opt_present("u") {
@@ -58,7 +59,6 @@ fn main() {
         return;
     }
 
-    println!();
     println!("Generating sources for {} crates...", crates.len());
 
     for subcrate in crates {
@@ -69,35 +69,25 @@ fn main() {
     }
 }
 
-fn expand_sub_crates<I, S>(list: I) -> Vec<&'static str>
+const CRATES: &'static str = include_str!("../config/crates.yaml");
+
+fn expand_sub_crates<I>(list: I) -> Vec<String>
 where
-    I: IntoIterator<Item = S>,
-    S: AsRef<str>,
+    I: Iterator<Item = String>,
 {
+    let crate_mapping: HashMap<String, Vec<String>> =
+        serde_yaml::from_str(CRATES)
+            .expect("Failed to parse crates.yaml");
+
     list.into_iter()
-        .flat_map(|name| match name.as_ref() {
-            "NONE" => vec![],
-            "unic" => {
-                let mut crates =
-                    expand_sub_crates(vec!["unic-bidi", "unic-idna", "unic-normal", "unic-ucd"]);
-                crates.push("unic");
-                crates
-            }
-            "unic-bidi" => vec!["unic-bidi"],
-            "unic-idna" => vec!["unic-idna", "unic-idna-mapping", "unic-idna-punycode"],
-            "unic-normal" => vec!["unic-normal"],
-            "unic-ucd" => {
-                vec![
-                    "unic-ucd",
-                    "unic-ucd-age",
-                    "unic-ucd-bidi",
-                    "unic-ucd-category",
-                    "unic-ucd-core",
-                    "unic-ucd-normal",
-                    "unic-ucd-utils",
-                ]
-            }
-            _ => panic!("Unknown crate name {}", name.as_ref()),
+        .flat_map(|name| {
+            crate_mapping.get(&name)
+                .map(|crates| {
+                    let mut subcrates = expand_sub_crates(crates.iter().cloned());
+                    subcrates.push(name.clone());
+                    subcrates
+                })
+                .unwrap_or_else(|| vec![name])
         })
         .collect()
 }
