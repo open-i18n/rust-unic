@@ -9,6 +9,7 @@ install:
 build: false
 
 environment:
+  global:
     RUST_BACKTRACE: full
 
 test_script:
