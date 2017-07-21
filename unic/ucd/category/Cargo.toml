@@ -1,20 +1,19 @@
 [package]
-name = "unic-ucd-normal"
+name = "unic-ucd-category"
 version = "0.4.0"
 authors = ["The UNIC Project Developers"]
 homepage = "https://github.com/behnam/rust-unic/"
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
 keywords = ["text", "unicode"]
-description = "UNIC - Unicode Character Database - Normalization Properties"
+description = "UNIC - Unicode Character Database - General Category"
 
-exclude = [ "tests/*conformance*.rs" ]
+# No tests/benches that depends on /data/
+exclude = []
 
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
 [dependencies]
 unic-ucd-core = { path = "../core/", version = "0.4.0" }
-
-[dev-dependencies]
-unic-ucd-utils = { path = "../utils/", version = "0.4.0" }
+matches = "0.1.6"

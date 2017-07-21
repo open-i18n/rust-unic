@@ -9,7 +9,11 @@ keywords = ["text", "unicode", "rtl", "layout", "bidi"]
 description = "UNIC - Unicode Bidirectional Algorithm"
 readme = "README.md"
 
-exclude = [ "tests/*conformance*.rs" ]
+# No tests/benches that depends on /data/
+exclude = [
+    "tests/conformance_tests.rs",
+    "benches/bidi_udhr_benches.rs",
+]
 
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }

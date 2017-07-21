@@ -1,21 +1,15 @@
 [package]
-name = "unic-idna-punycode"
+name = "unic-ucd-utils"
 version = "0.4.0"
 authors = ["The UNIC Project Developers"]
 homepage = "https://github.com/behnam/rust-unic/"
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
 keywords = ["text", "unicode"]
-description = "UNIC - Implementation of Punycode (RFC 3492) algorithm"
-readme = "README.md"
+description = "UNIC - Utilities for working with Unicode Code Points"
+
+# No tests/benches that depends on /data/
+exclude = []
 
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
-
-[[test]]
-name = "tests"
-harness = false
-
-[dev-dependencies]
-rustc-test = "0.2"
-rustc-serialize = "0.3"

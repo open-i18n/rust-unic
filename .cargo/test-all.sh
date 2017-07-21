@@ -27,8 +27,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Test all components
 for component in $COMPONENTS; do
-    - cargo update --verbose --manifest-path "components/$component/Cargo.toml"
-    - cargo test   --verbose --manifest-path "components/$component/Cargo.toml"
+    - cargo update --verbose --manifest-path "$component/Cargo.toml"
+    - cargo test   --verbose --manifest-path "$component/Cargo.toml"
 done
 
 # Test root

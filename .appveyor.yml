@@ -12,6 +12,11 @@ environment:
   global:
     RUST_BACKTRACE: full
 
+    # Temporary fix.
+    # See <https://github.com/rust-lang-nursery/rand/commit/bb78689>
+    RUSTUP_USE_HYPER: 1
+    CARGO_HTTP_CHECK_REVOKE: false
+
 test_script:
   - cargo build --verbose --all
   - cargo doc   --verbose --all --no-deps

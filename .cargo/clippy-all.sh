@@ -29,7 +29,7 @@ ROOT="$DIR/.."
 - cargo clean --verbose
 
 for component in $COMPONENTS; do
-    - cd "$ROOT/components/$component"
+    - cd "$ROOT/$component"
     - cargo clippy --verbose
     - cd "$ROOT"
 done

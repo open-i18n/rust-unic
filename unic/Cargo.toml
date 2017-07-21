@@ -1,0 +1,30 @@
+[package]
+name = "unic"
+version = "0.4.0"
+authors = ["The UNIC Project Developers"]
+homepage = "https://github.com/behnam/rust-unic/"
+repository = "https://github.com/behnam/rust-unic/"
+license = "MIT/Apache-2.0"
+keywords = ["text", "unicode"]
+description = "UNIC - Unicode and Internationalization Crates"
+categories = ["parsing", "rendering", "encoding", "development-tools"]
+readme = "README.md"
+
+# No tests/benches that depends on /data/
+exclude = []
+
+[features]
+default = []
+unstable = []  # Rust nightly features
+bench_it = ["unic-bidi/bench_it"]
+serde = ["unic-bidi/serde"]
+
+[dependencies]
+unic-ucd = { path = "ucd/", version = "0.4.0" }
+unic-bidi = { path = "bidi/", version = "0.4.0" }
+unic-idna = { path = "idna/", version = "0.4.0" }
+unic-normal = { path = "normal/", version = "0.4.0" }
+
+[badges]
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }
+appveyor = { repository = "behnam/rust-unic", branch = "master", service = "github" }
