@@ -40,8 +40,7 @@ pub fn download(version: &str) -> Result<(), Box<Error>> {
     let file = File::open(Path::new(DOWNLOADS)).expect("Failed to open downloads.yaml");
 
     let download_paths: Vec<DownloadPath> =
-        serde_yaml::from_reader(BufReader::new(file))
-            .expect("Failed to parse downloads.yaml");
+        serde_yaml::from_reader(BufReader::new(file)).expect("Failed to parse downloads.yaml");
 
     println!("Cleaning data directory...");
     for path in download_paths.iter().map(DownloadPath::dest) {

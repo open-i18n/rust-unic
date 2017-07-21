@@ -19,7 +19,7 @@ pub fn generate(package: &str) -> io::Result<()> {
             }
             fs::create_dir_all(&path)?;
             ucd::core::generate(path)?;
-        },
+        }
         _ => println!("No files to generate for crate {}.", package),
     }
     Ok(())

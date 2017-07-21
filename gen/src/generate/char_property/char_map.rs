@@ -36,8 +36,7 @@ pub trait CharMap<T: Eq> {
     fn to_bsearch_table<F, D>(&self, display_fn: F) -> String
     where
         F: Fn(&T) -> D,
-        D: fmt::Display,
-    ;
+        D: fmt::Display;
 
     /// A simple default for when the associated value aready impls `fmt::Display`.
     ///
@@ -54,9 +53,9 @@ pub trait CharMap<T: Eq> {
 
 impl<T: Eq> CharMap<T> for BTreeMap<char, T> {
     fn to_bsearch_table<F, D>(&self, display_fn: F) -> String
-        where
-            F: Fn(&T) -> D,
-            D: fmt::Display,
+    where
+        F: Fn(&T) -> D,
+        D: fmt::Display,
     {
         let mut entries = self.iter();
         let mut out = String::from(PREAMBLE);
@@ -92,14 +91,12 @@ fn append_triple<T>(str: &mut String, a: char, b: char, c: T)
 where
     T: fmt::Display,
 {
-    str.push_str(
-        &format!(
-            "    ('{}', '{}', {}),\n",
-            a.escape_unicode(),
-            b.escape_unicode(),
-            c,
-        )
-    )
+    str.push_str(&format!(
+        "    ('{}', '{}', {}),\n",
+        a.escape_unicode(),
+        b.escape_unicode(),
+        c,
+    ))
 }
 
 #[cfg(test)]

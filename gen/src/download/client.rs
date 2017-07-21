@@ -50,10 +50,8 @@ where
                         .expect("Failed to create directory");
                     File::create(path.dest)
                         .map(move |mut file| {
-                            res.body().for_each(move |chunk| {
-                                file.write_all(&chunk)
-                                    .map_err(From::from)
-                            })
+                            res.body()
+                                .for_each(move |chunk| file.write_all(&chunk).map_err(From::from))
                         })
                         .expect("Failed to create file")
                 })

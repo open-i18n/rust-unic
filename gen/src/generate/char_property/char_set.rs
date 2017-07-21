@@ -11,8 +11,7 @@ use generate::PREAMBLE;
 ///
 /// The strings created by the format functions are designed to be used as "`.rsv`" (Rust Value)
 /// generated source files and imported with the `include!` macro.
-pub trait CharSet
-{
+pub trait CharSet {
     /// A simple deduplicated binary search array slice.
     ///
     /// Output format:
@@ -67,13 +66,11 @@ impl CharSet for BTreeSet<char> {
 }
 
 fn append_duple(str: &mut String, a: char, b: char) {
-    str.push_str(
-        &format!(
-            "    ('{}', '{}'),\n",
-            a.escape_unicode(),
-            b.escape_unicode(),
-        )
-    )
+    str.push_str(&format!(
+        "    ('{}', '{}'),\n",
+        a.escape_unicode(),
+        b.escape_unicode(),
+    ))
 }
 
 #[cfg(test)]

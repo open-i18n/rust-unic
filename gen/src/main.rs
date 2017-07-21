@@ -106,8 +106,7 @@ where
     let file = File::open(Path::new(CRATES)).expect("Failed to open crates.yaml");
 
     let crate_mapping: HashMap<String, Vec<String>> =
-        serde_yaml::from_reader(BufReader::new(file))
-            .expect("Failed to parse crates.yaml");
+        serde_yaml::from_reader(BufReader::new(file)).expect("Failed to parse crates.yaml");
 
     list.into_iter()
         .flat_map(|name| {
