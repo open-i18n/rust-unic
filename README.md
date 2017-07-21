@@ -61,9 +61,9 @@ for the first couple of years.
 
 ## Components and their Organization
 
-UNIC *Components* have a tree organization, starting from the
-[`components`](components/) directory, containing the *major components*. Each
-major component, in turn, may host one or more *minor components*.
+UNIC *Components* have a hierarchical organization, starting from the
+[`unic`](unic) root, containing the *major components*. Each major component, in
+turn, may host one or more *minor components*.
 
 API of major components are designed for the end-users of the libraries, and
 are expected to be extensively documented and accompanies with code examples.
@@ -74,27 +74,27 @@ performing, and possibly providing multiple ways of accessing the data.
 
 ### The UNIC Super-Crate
 
-The [`unic`](https://crates.io/crates/unic) super-crate (this crate) is a
-collection of all UNIC (major) components, providing an easy way of access to
-all functionalities, when all or many are needed, instead of importing
-components one-by-one. This crate ensures all components imported are
-compatible in algorithms and consistent data-wise.
+The [`unic`](https://crates.io/crates/unic) super-crate is a collection of all
+UNIC (major) components, providing an easy way of access to all functionalities,
+when all or many are needed, instead of importing components one-by-one. This
+crate ensures all components imported are compatible in algorithms and
+consistent data-wise.
 
 Main code examples and cross-component integration tests are implemented under
 this crate.
 
 ### Major Components
 
--   [`unic::ucd`](components/ucd): Unicode Character Database.
+-   [`unic::ucd`](unic/ucd): Unicode Character Database.
     [![Crates.io](https://img.shields.io/crates/v/unic-ucd.svg)](https://crates.io/crates/unic-ucd/)
 
--   [`unic::bidi`](components/bidi): Unicode Bidirectional Algorithm (USA\#9).
+-   [`unic::bidi`](unic/bidi): Unicode Bidirectional Algorithm (USA\#9).
     [![Crates.io](https://img.shields.io/crates/v/unic-bidi.svg)](https://crates.io/crates/unic-bidi/)
 
--   [`unic::normal`](components/normal): Unicode Normalization Forms (USA\#15).
+-   [`unic::normal`](unic/normal): Unicode Normalization Forms (USA\#15).
     [![Crates.io](https://img.shields.io/crates/v/unic-normal.svg)](https://crates.io/crates/unic-normal/)
 
--   [`unic::idna`](components/idna): Unicode IDNA Compatibility Processing
+-   [`unic::idna`](unic/idna): Unicode IDNA Compatibility Processing
     (UTS\#46).
     [![Crates.io](https://img.shields.io/crates/v/unic-idna.svg)](https://crates.io/crates/unic-idna/)
 
