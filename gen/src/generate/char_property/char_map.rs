@@ -3,7 +3,7 @@
 use std::collections::BTreeMap;
 use std::fmt;
 
-use super::PREAMBLE;
+use generate::PREAMBLE;
 
 /// A mapping from character codepoints to properties.
 ///

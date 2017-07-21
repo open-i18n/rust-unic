@@ -2,7 +2,7 @@
 
 use std::collections::BTreeSet;
 
-use super::PREAMBLE;
+use generate::PREAMBLE;
 
 /// A set of character codepoints.
 ///

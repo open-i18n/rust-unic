@@ -9,6 +9,11 @@ extern crate serde_derive;
 extern crate serde;
 extern crate serde_yaml;
 
+#[macro_use]
+extern crate lazy_static;
+
+extern crate regex;
+
 mod download;
 mod generate;
 
@@ -68,7 +73,7 @@ fn main() {
     println!("Generating sources for {} crates...", crates.len());
     for subcrate in crates {
         println!("Generating sources for crate {}...", subcrate);
-        generate(&subcrate);
+        generate(&subcrate).expect("Failed to generate sources");
     }
     println!("Finished.");
 }
