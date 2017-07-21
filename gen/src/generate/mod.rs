@@ -1,4 +1,4 @@
-mod char_map;
+mod char_property;
 
 /// Generate the sources for a UNIC subcrate
 ///
