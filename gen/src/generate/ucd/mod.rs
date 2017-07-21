@@ -2,9 +2,10 @@ pub mod core;
 
 use std::char;
 use std::cmp::Ordering;
-use std::path::Path;
 use std::fs::File;
 use std::io::{self, Read, Write};
+use std::path::Path;
+use std::str::FromStr;
 
 use generate::PREAMBLE;
 
@@ -199,8 +200,10 @@ pub struct UnicodeDataEntry {
     // by unsafe-hacking a u32::MAX char, and not losing any application space.
 }
 
-impl UnicodeDataEntry {
-    fn from(str: &str) -> Option<Self> {
+impl FromStr for UnicodeDataEntry {
+    type Err = ();
+
+    fn from_str(str: &str) -> Result<Self, Self::Err> {
         let regex = Regex::new(
             "\
              ^([[:xdigit:]]{4,6});\
@@ -216,78 +219,81 @@ impl UnicodeDataEntry {
              ([[:xdigit:]]*)$\
              ",
         ).unwrap();
-        regex.captures(str).map(|matches| {
-            UnicodeDataEntry {
-                codepoint: u32::from_str_radix(matches.get(1).unwrap().as_str(), 16).unwrap(),
-                name: matches.get(2).unwrap().as_str().to_owned(),
-                general_category: matches.get(3).unwrap().as_str().to_owned(),
-                canonical_combining_class: matches.get(4).unwrap().as_str().parse().unwrap(),
-                bidi_class: matches.get(5).unwrap().as_str().to_owned(),
-                decomposition: {
-                    let str = matches.get(6).unwrap().as_str();
-                    if str.is_empty() {
-                        None
-                    } else {
-                        Some(str.to_owned())
-                    }
-                },
-                decimal_numeric_value: {
-                    let str = matches.get(7).unwrap().as_str();
-                    if str.is_empty() {
-                        None
-                    } else {
-                        Some(str.parse().unwrap())
-                    }
-                },
-                digit_numeric_value: {
-                    let str = matches.get(8).unwrap().as_str();
-                    if str.is_empty() {
-                        None
-                    } else {
-                        Some(str.parse().unwrap())
-                    }
-                },
-                numeric_numeric_value: {
-                    let str = matches.get(9).unwrap().as_str();
-                    if str.is_empty() {
-                        None
-                    } else {
-                        Some(str.to_owned())
-                    }
-                },
-                bidi_mirrored: matches.get(10).unwrap().as_str() == "Y",
-                unicode_1_name: {
-                    let str = matches.get(11).unwrap().as_str();
-                    if str.is_empty() {
-                        None
-                    } else {
-                        Some(str.to_owned())
-                    }
-                },
-                // `Err` value: Syntax("Empty regex groups (e.g., '()') are not allowed.")
-                iso_comment: (),
-                simple_uppercase_mapping: u32::from_str_radix(
-                    matches.get(12).unwrap().as_str(),
-                    16,
-                ).ok()
-                    .and_then(char::from_u32),
-                simple_lowercase_mapping: u32::from_str_radix(
-                    matches.get(13).unwrap().as_str(),
-                    16,
-                ).ok()
-                    .and_then(char::from_u32),
-                simple_titlecase_mapping: u32::from_str_radix(
-                    matches.get(14).unwrap().as_str(),
-                    16,
-                ).ok()
-                    .and_then(char::from_u32)
-                    .or_else(|| {
-                        u32::from_str_radix(matches.get(12).unwrap().as_str(), 16)
-                            .ok()
-                            .and_then(char::from_u32)
-                    }),
-            }
-        })
+        regex
+            .captures(str)
+            .map(|matches| {
+                UnicodeDataEntry {
+                    codepoint: u32::from_str_radix(matches.get(1).unwrap().as_str(), 16).unwrap(),
+                    name: matches.get(2).unwrap().as_str().to_owned(),
+                    general_category: matches.get(3).unwrap().as_str().to_owned(),
+                    canonical_combining_class: matches.get(4).unwrap().as_str().parse().unwrap(),
+                    bidi_class: matches.get(5).unwrap().as_str().to_owned(),
+                    decomposition: {
+                        let str = matches.get(6).unwrap().as_str();
+                        if str.is_empty() {
+                            None
+                        } else {
+                            Some(str.to_owned())
+                        }
+                    },
+                    decimal_numeric_value: {
+                        let str = matches.get(7).unwrap().as_str();
+                        if str.is_empty() {
+                            None
+                        } else {
+                            Some(str.parse().unwrap())
+                        }
+                    },
+                    digit_numeric_value: {
+                        let str = matches.get(8).unwrap().as_str();
+                        if str.is_empty() {
+                            None
+                        } else {
+                            Some(str.parse().unwrap())
+                        }
+                    },
+                    numeric_numeric_value: {
+                        let str = matches.get(9).unwrap().as_str();
+                        if str.is_empty() {
+                            None
+                        } else {
+                            Some(str.to_owned())
+                        }
+                    },
+                    bidi_mirrored: matches.get(10).unwrap().as_str() == "Y",
+                    unicode_1_name: {
+                        let str = matches.get(11).unwrap().as_str();
+                        if str.is_empty() {
+                            None
+                        } else {
+                            Some(str.to_owned())
+                        }
+                    },
+                    // `Err` value: Syntax("Empty regex groups (e.g., '()') are not allowed.")
+                    iso_comment: (),
+                    simple_uppercase_mapping: u32::from_str_radix(
+                        matches.get(12).unwrap().as_str(),
+                        16,
+                    ).ok()
+                        .and_then(char::from_u32),
+                    simple_lowercase_mapping: u32::from_str_radix(
+                        matches.get(13).unwrap().as_str(),
+                        16,
+                    ).ok()
+                        .and_then(char::from_u32),
+                    simple_titlecase_mapping: u32::from_str_radix(
+                        matches.get(14).unwrap().as_str(),
+                        16,
+                    ).ok()
+                        .and_then(char::from_u32)
+                        .or_else(|| {
+                            u32::from_str_radix(matches.get(12).unwrap().as_str(), 16)
+                                .ok()
+                                .and_then(char::from_u32)
+                        }),
+                }
+            })
+            .ok_or(())
     }
 }
 
