@@ -262,11 +262,11 @@ impl UnicodeDataEntry {
                     16,
                 ).ok()
                     .and_then(char::from_u32)
-                    .or(
+                    .or_else(|| {
                         u32::from_str_radix(matches.get(12).unwrap().as_str(), 16)
                             .ok()
-                            .and_then(char::from_u32),
-                    ),
+                            .and_then(char::from_u32)
+                    }),
             }
         })
     }

@@ -34,7 +34,7 @@ impl DownloadPath {
 /// # Errors
 ///
 /// If a error occurs while downloading or writing the files
-pub fn download_all<'a, I>(paths: I) -> Result<(), Box<Error>>
+pub fn download_all<I>(paths: I) -> Result<(), Box<Error>>
 where
     I: Iterator<Item = DownloadPath>,
 {

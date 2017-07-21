@@ -54,7 +54,7 @@ impl CharSet for BTreeSet<char> {
                 low = char;
                 high = char;
             } else {
-                assert!((*char as u32) == (*high as u32 + 1));
+                assert_eq!(*char as u32, *high as u32 + 1);
                 high = char;
             }
         }

@@ -71,23 +71,23 @@ impl<T: Eq> CharMap<T> for BTreeMap<char, T> {
 
         for (char, property) in entries {
             if property != value || (*char as u32) > (*high as u32 + 1) {
-                append_triple(&mut out, *low, *high, display_fn(value));
+                append_triple(&mut out, *low, *high, &display_fn(value));
                 low = char;
                 high = char;
                 value = property;
             } else {
-                assert!((*char as u32) == (*high as u32 + 1));
+                assert_eq!(*char as u32, *high as u32 + 1);
                 high = char;
             }
         }
 
-        append_triple(&mut out, *low, *high, display_fn(value));
+        append_triple(&mut out, *low, *high, &display_fn(value));
         out.push_str("]");
         out
     }
 }
 
-fn append_triple<T>(str: &mut String, a: char, b: char, c: T)
+fn append_triple<T>(str: &mut String, a: char, b: char, c: &T)
 where
     T: fmt::Display,
 {
