@@ -8,9 +8,12 @@ use futures::future::join_all;
 use hyper::{Client, Uri};
 use tokio_core::reactor::Core;
 
+/// A mapping between a server resource and a local location.
 #[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct DownloadPath {
+    /// A `http://` string indicating the location of the resource
     pub url: String,
+    /// The path to the location where the file should be saved
     pub dest: PathBuf,
 }
 
@@ -20,6 +23,17 @@ impl DownloadPath {
     }
 }
 
+/// Concurrently download all files as indicated by the iterator of `DownloadPath`s.
+///
+/// Returns once all jobs are finished.
+///
+/// # Panics
+///
+/// If a file that is supposed to be written cannot be created and opened
+///
+/// # Errors
+///
+/// If a error occurs while downloading or writing the files
 pub fn download_all<'a, I>(paths: I) -> Result<(), Box<Error>>
 where
     I: Iterator<Item = DownloadPath>,
@@ -44,7 +58,7 @@ where
                         .expect("Failed to create file")
                 })
             })
-            .unwrap()
+            .expect("Invalid URI")
     });
 
     core.run(join_all(jobs))?;

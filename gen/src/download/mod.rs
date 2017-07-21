@@ -9,8 +9,33 @@ use self::client::DownloadPath;
 
 use serde_yaml;
 
+/// Path to mapping of files to download (YAML).
+///
+/// Format:
+///
+/// ```yaml
+/// ---
+/// -
+///   url: "http://unicode.com/Public/{}/File.txt"
+///   dest: data/File.txt
+/// -
+///   url: "http://unicode.com/Public/{}/DerivedFile.txt"
+///   dest: data/FileTest.txt
+/// ```
 const DOWNLOADS: &'static str = "gen/config/downloads.yaml";
 
+/// Downloads all files (indicated by `config/downloads.yaml`) for the indicated version.
+///
+/// Downloading the correct version is done via a naive string replacement from `{}` to the
+/// provided version string. Files are then saved in the indicated target location.
+///
+/// # Panics
+///
+/// Panics if the config file is missing or badly formatted, or if it fails to open a file.
+///
+/// # Errors
+///
+/// Returns a boxed error when something goes wrong during download or a write error occurs.
 pub fn download(version: &str) -> Result<(), Box<Error>> {
     let file = File::open(Path::new(DOWNLOADS)).expect("Failed to open downloads.yaml");
 

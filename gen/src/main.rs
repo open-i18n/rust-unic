@@ -73,8 +73,27 @@ fn main() {
     println!("Finished.");
 }
 
+/// Path to crate disassembly mapping (YAML).
+///
+/// Format:
+///
+/// ```yaml
+/// ---
+/// crate:
+///   - "crate-subcrate1"
+///   - "crate-subcrate2"
+/// crate-subcrate1:
+///   - "crate-subcrate1-subcrate"
+/// ```
 const CRATES: &'static str = "gen/config/crates.yaml";
 
+/// Take a crate name in the UNIC hierarchy and expand it into all subcrates.
+///
+/// Reads `config/crates.yaml` for the crate disassembly process.
+///
+/// Technically, a crate only needs to be in that mapping if it needs to have sources built.
+/// For consistency, all crates that need generated sources or not should be passed into the
+/// generation module, which will ignore crates it doesn't need to do anything for.
 fn expand_sub_crates<I>(list: I) -> Vec<String>
 where
     I: Iterator<Item = String>,
@@ -99,8 +118,10 @@ where
         .collect()
 }
 
+/// Command line execution format before this binary's arguments
 const TO_INVOKE: &'static str = "cargo run --release --package=unic-gen --";
 
+/// Print the usage of this tool to STDOUT
 fn print_usage(opts: &Options) {
     print!("{}", opts.usage(&opts.short_usage(TO_INVOKE)));
 }
