@@ -178,6 +178,25 @@ pub struct UnicodeDataEntry {
     /// **Note**: If this field is null, then the `Simple_Titlecase_Mapping`
     /// is the same as the `Simple_Uppercase_Mapping` for this character.
     pub simple_titlecase_mapping: Option<char>,
+
+    // Implementation note:
+    // This struct is currently 184 bytes wide.
+    // If the Option<char> are changed to char, it is only 168 bytes.
+    // At 0x110000 elements, that's the difference between 196 and 179 MiB.
+    // That's a 17 MiB difference.
+    //
+    // We can get that back pretty much "for free" by storing a u32
+    // instead of a Option<char> and treating u32::MAX as None.
+    //
+    // That's what the [Optional](https://crates.io/crates/optional) crate does.
+    //
+    // The two u8 -> Option<u8> don't cost extra space, likely due to alignment.
+    // For consistency, they should probably also be changed since their valid range
+    // is only 0..9.
+    //
+    // It would also be trivial to provide this functionality locally.
+    // That would also give the benefit of allowing us to make a Noned-char,
+    // by unsafe-hacking a u32::MAX char, and not losing any application space.
 }
 
 impl UnicodeDataEntry {
