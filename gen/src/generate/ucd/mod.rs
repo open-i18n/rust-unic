@@ -99,14 +99,23 @@ pub struct UnicodeDataEntry {
     /// [UAX9]: http://unicode.org/reports/tr41/tr41-21.html#UAX9
     pub bidi_class: String,
 
-    /// (5) This field contains both values [`Decomposition_Type` and `Decomposition_Mapping`],
-    /// with the type in angle brackets.
+    /// (5) This is one half of the field containing both the values
+    /// [`Decomposition_Type` and `Decomposition_Mapping`], with the type in angle brackets.
     /// The decomposition mappings exactly match the decomposition mappings
     /// published with the character names in the Unicode Standard.
     /// For more information, see [Character Decomposition Mappings].
     ///
     /// [Character Decomposition Mappings]: http://unicode.org/reports/tr44/#Character_Decomposition_Mappings
-    pub decomposition: Option<String>,
+    pub decomposition_type: Option<String>,
+
+    /// (5) This is one half of the field containing both the values
+    /// [`Decomposition_Type` and `Decomposition_Mapping`], with the type in angle brackets.
+    /// The decomposition mappings exactly match the decomposition mappings
+    /// published with the character names in the Unicode Standard.
+    /// For more information, see [Character Decomposition Mappings].
+    ///
+    /// [Character Decomposition Mappings]: http://unicode.org/reports/tr44/#Character_Decomposition_Mappings
+    pub decomposition_mapping: Option<Box<[char]>>,
 
     /// (6) If the character has the property value `Numeric_Type=Decimal`,
     /// then the `Numeric_Value` of that digit is represented with an integer value
@@ -181,8 +190,8 @@ pub struct UnicodeDataEntry {
     pub simple_titlecase_mapping: Option<char>,
 
     // Implementation note:
-    // This struct is currently 184 bytes wide.
-    // If the Option<char> are changed to char, it is only 168 bytes.
+    // This struct is currently 200 bytes wide.
+    // If the Option<char> are changed to char, it is only 184 bytes.
     // At 0x110000 elements, that's the difference between 196 and 179 MiB.
     // That's a 17 MiB difference.
     //
@@ -208,21 +217,24 @@ impl FromStr for UnicodeDataEntry {
         lazy_static! {
             static ref REGEX: Regex = Regex::new(
                 r"(?xm)^
-                  ([[:xdigit:]]{4,6}) ;# codepoint
-                  ([^;]+)             ;# name
-                  ([^;]+)             ;# general_category
-                  ([[:digit:]]+)      ;# canonical_combining_class
-                  ([^;]+)             ;# bidi_class
-                  ([^;]+)?            ;# decomposition (option)
-                  ([[:digit:]])?      ;# decimal_numeric_type (option)
-                  ([[:digit:]])?      ;# digit_numeric_type (option)
-                  ([^;]+)?            ;# numeric_numeric_type (option)
-                  ([YN])              ;# bidi_mirrored
-                  ([^;]+)?            ;# unicode_1_name (option)
-                                      ;# iso_comment (deprecated)
-                  ([[:xdigit:]]{4,6})?;# simple_uppercase_mapping (option)
-                  ([[:xdigit:]]{4,6})?;# simple_lowercase_mapping (option)
-                  ([[:xdigit:]]{4,6})? # simple_titlecase_mapping (option)
+                  ([[:xdigit:]]{4,6});                           # codepoint
+                  ([^;]+);                                       # name
+                  ([^;]+);                                       # general_category
+                  ([[:digit:]]+);                                # canonical_combining_class
+                  ([^;]+);                                       # bidi_class
+                  (?:
+                    (?:<([^>]*)>\x20)?                           # decomposition_type (option)
+                    ((?:[[:xdigit:]]{4,6}\x20)*[[:xdigit:]]{4,6})# decomposition_mapping (option)
+                  )?;
+                  ([[:digit:]])?;                                # decimal_numeric_type (option)
+                  ([[:digit:]])?;                                # digit_numeric_type (option)
+                  ([^;]+)?;                                      # numeric_numeric_type (option)
+                  ([YN]);                                        # bidi_mirrored
+                  ([^;]+)?;                                      # unicode_1_name (option)
+                  ;                                              # iso_comment (void)
+                  ([[:xdigit:]]{4,6})?;                          # simple_uppercase_mapping (option)
+                  ([[:xdigit:]]{4,6})?;                          # simple_lowercase_mapping (option)
+                  ([[:xdigit:]]{4,6})?                           # simple_titlecase_mapping (option)
                 $",
             ).unwrap();
         }
@@ -236,37 +248,47 @@ impl FromStr for UnicodeDataEntry {
                     general_category: matches[3].to_owned(),
                     canonical_combining_class: matches[4].parse().unwrap(),
                     bidi_class: matches[5].to_owned(),
-                    decomposition: matches
+                    decomposition_type: matches
                         .get(6)
                         .map(|m| m.as_str().to_owned()),
-                    decimal_numeric_value: matches
+                    decomposition_mapping: matches
                         .get(7)
-                        .map(|m| m.as_str().parse().unwrap()),
-                    digit_numeric_value: matches
+                        .map(|m| m
+                            .as_str()
+                            .split(' ')
+                            .map(|s| u32::from_str_radix(s, 16).unwrap())
+                            .map(|codepoint| char::from_u32(codepoint).unwrap())
+                            .collect::<Vec<_>>()
+                            .into_boxed_slice()
+                        ),
+                    decimal_numeric_value: matches
                         .get(8)
                         .map(|m| m.as_str().parse().unwrap()),
-                    numeric_numeric_value: matches
+                    digit_numeric_value: matches
                         .get(9)
+                        .map(|m| m.as_str().parse().unwrap()),
+                    numeric_numeric_value: matches
+                        .get(10)
                         .map(|m| m.as_str().to_owned()),
-                    bidi_mirrored: &matches[10] == "Y",
+                    bidi_mirrored: &matches[11] == "Y",
                     unicode_1_name: matches
-                        .get(11)
+                        .get(12)
                         .map(|m| m.as_str().to_owned()),
                     iso_comment: (),
                     simple_uppercase_mapping: matches
-                        .get(12)
-                        .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
-                        .map(|codepoint| char::from_u32(codepoint).unwrap()),
-                    simple_lowercase_mapping: matches
                         .get(13)
                         .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
                         .map(|codepoint| char::from_u32(codepoint).unwrap()),
-                    simple_titlecase_mapping: matches
+                    simple_lowercase_mapping: matches
                         .get(14)
+                        .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
+                        .map(|codepoint| char::from_u32(codepoint).unwrap()),
+                    simple_titlecase_mapping: matches
+                        .get(15)
                         .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
                         .map(|codepoint| char::from_u32(codepoint).unwrap())
                         .or_else(|| matches
-                            .get(12)
+                            .get(16)
                             .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
                             .map(|codepoint| char::from_u32(codepoint).unwrap())
                         ),
@@ -360,7 +382,8 @@ mod test {
                 general_category: "Ll".to_owned(),
                 canonical_combining_class: 0,
                 bidi_class: "L".to_owned(),
-                decomposition: Some("1F31 0301".to_owned()),
+                decomposition_type: None,
+                decomposition_mapping: Some(vec!['\u{1F31}', '\u{0301}'].into_boxed_slice()),
                 decimal_numeric_value: None,
                 digit_numeric_value: None,
                 numeric_numeric_value: None,
@@ -380,7 +403,8 @@ mod test {
                 general_category: "Lo".to_owned(),
                 canonical_combining_class: 0,
                 bidi_class: "L".to_owned(),
-                decomposition: None,
+                decomposition_type: None,
+                decomposition_mapping: None,
                 decimal_numeric_value: None,
                 digit_numeric_value: None,
                 numeric_numeric_value: None,
@@ -400,7 +424,8 @@ mod test {
                 general_category: "Ll".to_owned(),
                 canonical_combining_class: 0,
                 bidi_class: "L".to_owned(),
-                decomposition: None,
+                decomposition_type: None,
+                decomposition_mapping: None,
                 decimal_numeric_value: None,
                 digit_numeric_value: None,
                 numeric_numeric_value: None,
@@ -420,7 +445,8 @@ mod test {
                 general_category: "Lo".to_owned(),
                 canonical_combining_class: 0,
                 bidi_class: "L".to_owned(),
-                decomposition: None,
+                decomposition_type: None,
+                decomposition_mapping: None,
                 decimal_numeric_value: None,
                 digit_numeric_value: None,
                 numeric_numeric_value: None,
@@ -440,7 +466,8 @@ mod test {
                 general_category: "Lo".to_owned(),
                 canonical_combining_class: 0,
                 bidi_class: "L".to_owned(),
-                decomposition: None,
+                decomposition_type: None,
+                decomposition_mapping: None,
                 decimal_numeric_value: None,
                 digit_numeric_value: None,
                 numeric_numeric_value: None,
