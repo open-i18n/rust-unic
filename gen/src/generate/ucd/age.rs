@@ -2,6 +2,7 @@ use std::char;
 use std::fs::File;
 use std::io::{self, Read, Write};
 use std::path::Path;
+use std::str::FromStr;
 
 use generate::PREAMBLE;
 use generate::char_property::char_map::*;
@@ -18,24 +19,27 @@ impl AgeData {
         writeln!(file, "{}\n{}", PREAMBLE, map.to_bsearch_table_default())?;
         Ok(())
     }
+}
 
-    fn read<R: Read>(mut reader: R) -> io::Result<AgeData> {
-        let regex = Regex::new(
-            r"(?xm)^                     # every line
-              ([[:xdigit:]]{4,6})        # range start
-              (?:..([[:xdigit:]]{4,6}))? # range end (option)
-              [[:blank:]]*;[[:blank:]]*  # separator
-              ([[:digit:]]+)             # major version
-              \.([[:digit:]]+)           # minor version
-              (?:\.([[:digit:]]+))?      # micro version (option)
-            ",
-        ).unwrap();
-        let mut buffer = String::new();
-        reader.read_to_string(&mut buffer)?;
-        let captures = regex.captures_iter(&buffer);
+impl FromStr for AgeData {
+    type Err = ();
+
+    fn from_str(str: &str) -> Result<Self, Self::Err> {
+        lazy_static! {
+            static ref REGEX: Regex = Regex::new(
+                r"(?xm)^                     # every line
+                  ([[:xdigit:]]{4,6})        # range start
+                  (?:..([[:xdigit:]]{4,6}))? # range end (option)
+                  [[:blank:]]*;[[:blank:]]*  # separator
+                  ([[:digit:]]+)             # major version
+                  \.([[:digit:]]+)           # minor version
+                  (?:\.([[:digit:]]+))?      # micro version (option)
+                ",
+            ).unwrap();
+        }
 
         let mut age_data = BTreeMap::default();
-        for capture in captures {
+        for capture in REGEX.captures_iter(str) {
             let start = u32::from_str_radix(&capture[1], 16).unwrap();
             let end = capture
                 .get(2)
@@ -67,8 +71,10 @@ impl AgeData {
 
 pub fn generate<P: AsRef<Path>>(dir: P) -> io::Result<()> {
     super::UNICODE_VERSION.emit(&dir)?;
-    let derived_age = File::open(Path::new("data/ucd/DerivedAge.txt"))?;
-    let age_data = AgeData::read(derived_age)?;
+    let mut derived_age = File::open(Path::new("data/ucd/DerivedAge.txt"))?;
+    let mut buffer = String::new();
+    derived_age.read_to_string(&mut buffer)?;
+    let age_data = buffer.parse::<AgeData>().unwrap();
     age_data.emit(dir)?;
     Ok(())
 }
