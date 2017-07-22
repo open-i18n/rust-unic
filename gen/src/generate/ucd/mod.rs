@@ -1,12 +1,14 @@
 // Remove the too-long line messages
 #![cfg_attr(rustfmt, rustfmt_skip)]
 
+// FIXME: This file got really big for a mod.rs
+
 pub mod core;
 
 use std::char;
 use std::cmp::Ordering;
 use std::fs::File;
-use std::io::{self, Read, Write};
+use std::io::{self, BufRead, BufReader, Read, Write};
 use std::path::Path;
 use std::str::FromStr;
 
@@ -283,8 +285,9 @@ impl FromStr for UnicodeDataEntry {
                         u32::from_str_radix(matches.get(14).unwrap().as_str(), 16)
                             .ok().and_then(char::from_u32)
                             .or_else(|| {
+                                // defaults to simple_uppercase_mapping
                                 u32::from_str_radix(matches.get(12).unwrap().as_str(), 16)
-                                .ok().and_then(char::from_u32)
+                                    .ok().and_then(char::from_u32)
                             }),
                 }
             })
@@ -306,18 +309,65 @@ impl Ord for UnicodeDataEntry {
     }
 }
 
+lazy_static! {
+    pub static ref UNICODE_DATA: Box<[UnicodeDataEntry]> = {
+        let mut unicode_data = Vec::with_capacity(0x110000);
+        let mut range_start: Option<u32> = None;
+        let file = File::open(Path::new("data/ucd/UnicodeData.txt"))
+            .expect("Failed to open UCD UnicodeData. Did you run -u?");
+
+        for line in BufReader::new(file).lines() {
+            let line = line.expect("Invalid string in UnicodeData. Did it get corrupted?");
+            let entry = UnicodeDataEntry::from_str(&line)
+                .expect("Error parsing UnicodeData");
+
+            if char::from_u32(entry.codepoint).is_none() {
+                continue;
+            }
+
+            if entry.name.ends_with(", First>") {
+                range_start = Some(entry.codepoint);
+                let mut data = entry;
+                let comma_idx = data.name.find(',').unwrap();
+                let angle_idx = data.name.find('>').unwrap();
+                data.name.drain(comma_idx..angle_idx);
+                unicode_data.push(data);
+            } else if let Some(start) = range_start {
+                assert!(entry.name.ends_with(", Last>"));
+                range_start = None;
+                let end = entry.codepoint;
+                let mut data = entry;
+                let comma_idx = data.name.find(',').unwrap();
+                let angle_idx = data.name.find('>').unwrap();
+                data.name.drain(comma_idx..angle_idx);
+                for i in start..end {
+                    data.codepoint = i;
+                    unicode_data.push(data.clone());
+                }
+                data.codepoint = end;
+                unicode_data.push(data);
+            } else {
+                unicode_data.push(entry);
+            }
+        }
+
+        unicode_data.into_boxed_slice()
+    };
+}
+
 #[cfg(test)]
 mod test {
-    use super::UnicodeDataEntry;
+    use std::str::FromStr;
+    use super::{UNICODE_DATA, UnicodeDataEntry};
 
     #[test]
     /// These are 5 randomly selected test cases (sorted for convenience)
     fn unicode_data_entry_parse() {
         assert_eq!(
-            UnicodeDataEntry::from(
+            UnicodeDataEntry::from_str(
                 "1F35;GREEK SMALL LETTER IOTA WITH DASIA AND OXIA;Ll;0;L;1F31 0301;;;;N;;;1F3D;;1F3D"
             ),
-            Some(UnicodeDataEntry {
+            Ok(UnicodeDataEntry {
                 codepoint: 0x1F35,
                 name: "GREEK SMALL LETTER IOTA WITH DASIA AND OXIA".to_owned(),
                 general_category: "Ll".to_owned(),
@@ -336,8 +386,8 @@ mod test {
             })
         );
         assert_eq!(
-            UnicodeDataEntry::from("A86D;PHAGS-PA LETTER ALTERNATE YA;Lo;0;L;;;;;N;;;;;"),
-            Some(UnicodeDataEntry {
+            UnicodeDataEntry::from_str("A86D;PHAGS-PA LETTER ALTERNATE YA;Lo;0;L;;;;;N;;;;;"),
+            Ok(UnicodeDataEntry {
                 codepoint: 0xA86D,
                 name: "PHAGS-PA LETTER ALTERNATE YA".to_owned(),
                 general_category: "Lo".to_owned(),
@@ -356,8 +406,8 @@ mod test {
             })
         );
         assert_eq!(
-            UnicodeDataEntry::from("2D01;GEORGIAN SMALL LETTER BAN;Ll;0;L;;;;;N;;;10A1;;10A1"),
-            Some(UnicodeDataEntry {
+            UnicodeDataEntry::from_str("2D01;GEORGIAN SMALL LETTER BAN;Ll;0;L;;;;;N;;;10A1;;10A1"),
+            Ok(UnicodeDataEntry {
                 codepoint: 0x2D01,
                 name: "GEORGIAN SMALL LETTER BAN".to_owned(),
                 general_category: "Ll".to_owned(),
@@ -376,8 +426,8 @@ mod test {
             })
         );
         assert_eq!(
-            UnicodeDataEntry::from("13060;EGYPTIAN HIEROGLYPH C004;Lo;0;L;;;;;N;;;;;"),
-            Some(UnicodeDataEntry {
+            UnicodeDataEntry::from_str("13060;EGYPTIAN HIEROGLYPH C004;Lo;0;L;;;;;N;;;;;"),
+            Ok(UnicodeDataEntry {
                 codepoint: 0x13060,
                 name: "EGYPTIAN HIEROGLYPH C004".to_owned(),
                 general_category: "Lo".to_owned(),
@@ -396,8 +446,8 @@ mod test {
             })
         );
         assert_eq!(
-            UnicodeDataEntry::from("1B042;HENTAIGANA LETTER SA-7;Lo;0;L;;;;;N;;;;;"),
-            Some(UnicodeDataEntry {
+            UnicodeDataEntry::from_str("1B042;HENTAIGANA LETTER SA-7;Lo;0;L;;;;;N;;;;;"),
+            Ok(UnicodeDataEntry {
                 codepoint: 0x1B042,
                 name: "HENTAIGANA LETTER SA-7".to_owned(),
                 general_category: "Lo".to_owned(),
