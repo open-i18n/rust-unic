@@ -25,9 +25,9 @@ impl AgeData {
               ([[:xdigit:]]{4,6})        # range start
               (?:..([[:xdigit:]]{4,6}))? # range end (option)
               [[:blank:]]*;[[:blank:]]*  # separator
-              ([[:digit:]])              # major version
-              \.([[:digit:]])            # minor version
-              (?:\.([[:digit:]]))?       # micro version (option)
+              ([[:digit:]]+)             # major version
+              \.([[:digit:]]+)           # minor version
+              (?:\.([[:digit:]]+))?      # micro version (option)
             ",
         ).unwrap();
         let mut buffer = String::new();
