@@ -4,6 +4,7 @@
 // FIXME: This file got really big for a mod.rs
 
 pub mod core;
+pub mod age;
 
 use std::char;
 use std::cmp::Ordering;

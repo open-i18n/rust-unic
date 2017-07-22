@@ -1,4 +1,4 @@
-use std::collections::BTreeMap;
+pub use std::collections::BTreeMap;
 use std::fmt;
 
 /// A mapping from character codepoints to properties.

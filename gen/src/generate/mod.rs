@@ -20,6 +20,13 @@ pub fn generate(package: &str) -> io::Result<()> {
             fs::create_dir_all(&path)?;
             ucd::core::generate(path)?;
         }
+        "unic-ucd-age" => {
+            if path.exists() {
+                fs::remove_dir_all(&path)?;
+            }
+            fs::create_dir_all(&path)?;
+            ucd::age::generate(path)?;
+        }
         _ => println!("No files to generate for crate {}.", package),
     }
     Ok(())

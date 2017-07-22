@@ -1,4 +1,4 @@
-use std::collections::BTreeSet;
+pub use std::collections::BTreeSet;
 
 /// A set of character codepoints.
 ///
