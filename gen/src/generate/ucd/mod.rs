@@ -311,7 +311,13 @@ impl Ord for UnicodeDataEntry {
 
 lazy_static! {
     pub static ref UNICODE_DATA: Box<[UnicodeDataEntry]> = {
-        let mut unicode_data = Vec::with_capacity(0x110000);
+        /// impl note:
+        /// 0x44000 (278528) is one quarter of the possible Unicode values (0x110000).
+        /// As of Unicode 10, 274235 (0x42F3B) code points are assigned (excluding surrogates).
+        /// I (@CAD97) picked one quarter of the full range because doubling capacity as needed
+        /// will never go out of the required range and this is a much smaller required allocation
+        /// for the near future for the next 4000 characters assigned.
+        let mut unicode_data = Vec::with_capacity(0x44000);
         let mut range_start: Option<u32> = None;
         let file = File::open(Path::new("data/ucd/UnicodeData.txt"))
             .expect("Failed to open UCD UnicodeData. Did you run -u?");
@@ -358,7 +364,7 @@ lazy_static! {
 #[cfg(test)]
 mod test {
     use std::str::FromStr;
-    use super::{UNICODE_DATA, UnicodeDataEntry};
+    use super::UnicodeDataEntry;
 
     #[test]
     /// These are 5 randomly selected test cases (sorted for convenience)
