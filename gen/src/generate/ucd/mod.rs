@@ -48,7 +48,7 @@ impl UNICODE_VERSION {
     }
 }
 
-/// Data from
+/// Data line from UnicodeData.txt
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct UnicodeDataEntry {
     pub codepoint: u32,
