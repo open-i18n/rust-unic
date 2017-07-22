@@ -1,3 +1,6 @@
+// Remove the too-long line messages
+#![cfg_attr(rustfmt, rustfmt_skip)]
+
 pub mod core;
 
 use std::char;
@@ -175,9 +178,6 @@ pub struct UnicodeDataEntry {
     pub simple_lowercase_mapping: Option<char>,
 
     /// (14) Simple titlecase mapping (single character result).
-    ///
-    /// **Note**: If this field is null, then the `Simple_Titlecase_Mapping`
-    /// is the same as the `Simple_Uppercase_Mapping` for this character.
     pub simple_titlecase_mapping: Option<char>,
 
     // Implementation note:
@@ -271,26 +271,19 @@ impl FromStr for UnicodeDataEntry {
                     },
                     // `Err` value: Syntax("Empty regex groups (e.g., '()') are not allowed.")
                     iso_comment: (),
-                    simple_uppercase_mapping: u32::from_str_radix(
-                        matches.get(12).unwrap().as_str(),
-                        16,
-                    ).ok()
-                        .and_then(char::from_u32),
-                    simple_lowercase_mapping: u32::from_str_radix(
-                        matches.get(13).unwrap().as_str(),
-                        16,
-                    ).ok()
-                        .and_then(char::from_u32),
-                    simple_titlecase_mapping: u32::from_str_radix(
-                        matches.get(14).unwrap().as_str(),
-                        16,
-                    ).ok()
-                        .and_then(char::from_u32)
-                        .or_else(|| {
-                            u32::from_str_radix(matches.get(12).unwrap().as_str(), 16)
-                                .ok()
-                                .and_then(char::from_u32)
-                        }),
+                    simple_uppercase_mapping:
+                        u32::from_str_radix(matches.get(12).unwrap().as_str(), 16)
+                            .ok().and_then(char::from_u32),
+                    simple_lowercase_mapping:
+                        u32::from_str_radix(matches.get(13).unwrap().as_str(), 16)
+                            .ok().and_then(char::from_u32),
+                    simple_titlecase_mapping:
+                        u32::from_str_radix(matches.get(14).unwrap().as_str(), 16)
+                            .ok().and_then(char::from_u32)
+                            .or_else(|| {
+                                u32::from_str_radix(matches.get(12).unwrap().as_str(), 16)
+                                .ok().and_then(char::from_u32)
+                            }),
                 }
             })
             .ok_or(())

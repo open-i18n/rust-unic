@@ -34,6 +34,8 @@ impl DownloadPath {
 /// # Errors
 ///
 /// If a error occurs while downloading or writing the files
+#[cfg_attr(rustfmt, rustfmt_skip)]
+// rustfmt takes unbearably long for this fn on my machine
 pub fn download_all<I>(paths: I) -> Result<(), Box<Error>>
 where
     I: Iterator<Item = DownloadPath>,
