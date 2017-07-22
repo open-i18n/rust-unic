@@ -200,26 +200,28 @@ pub struct UnicodeDataEntry {
     // by unsafe-hacking a u32::MAX char, and not losing any application space.
 }
 
+lazy_static! {
+    static ref UNICODE_DATA_ENTRY_REGEX: Regex = Regex::new("\
+        ^([[:xdigit:]]{4,6});\
+         ([^;]+);([^;]+);\
+         ([[:digit:]]+);\
+         ([^;]+);([^;]*);\
+         ([[:digit:]]?);\
+         ([[:digit:]]?);\
+         ([^;]*);([YN]);\
+         ([^;]*);;\
+         ([[:xdigit:]]*);\
+         ([[:xdigit:]]*);\
+         ([[:xdigit:]]*)$\
+    ").unwrap();
+}
+
+#[cfg_attr(rustfmt, rustfmt_skip)]
 impl FromStr for UnicodeDataEntry {
     type Err = ();
 
     fn from_str(str: &str) -> Result<Self, Self::Err> {
-        let regex = Regex::new(
-            "\
-             ^([[:xdigit:]]{4,6});\
-             ([^;]+);([^;]+);\
-             ([[:digit:]]+);\
-             ([^;]+);([^;]*);\
-             ([[:digit:]]?);\
-             ([[:digit:]]?);\
-             ([^;]*);([YN]);\
-             ([^;]*);;\
-             ([[:xdigit:]]*);\
-             ([[:xdigit:]]*);\
-             ([[:xdigit:]]*)$\
-             ",
-        ).unwrap();
-        regex
+        UNICODE_DATA_ENTRY_REGEX
             .captures(str)
             .map(|matches| {
                 UnicodeDataEntry {
