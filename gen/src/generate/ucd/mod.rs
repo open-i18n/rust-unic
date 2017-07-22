@@ -1,6 +1,3 @@
-// Remove the too-long line messages
-#![cfg_attr(rustfmt, rustfmt_skip)]
-
 // FIXME: This file got really big for a mod.rs
 
 pub mod core;
@@ -203,93 +200,76 @@ pub struct UnicodeDataEntry {
     // by unsafe-hacking a u32::MAX char, and not losing any application space.
 }
 
-lazy_static! {
-    static ref UNICODE_DATA_ENTRY_REGEX: Regex = Regex::new("\
-        ^([[:xdigit:]]{4,6});\
-         ([^;]+);([^;]+);\
-         ([[:digit:]]+);\
-         ([^;]+);([^;]*);\
-         ([[:digit:]]?);\
-         ([[:digit:]]?);\
-         ([^;]*);([YN]);\
-         ([^;]*);;\
-         ([[:xdigit:]]*);\
-         ([[:xdigit:]]*);\
-         ([[:xdigit:]]*)$\
-    ").unwrap();
-}
-
 #[cfg_attr(rustfmt, rustfmt_skip)]
 impl FromStr for UnicodeDataEntry {
     type Err = ();
 
     fn from_str(str: &str) -> Result<Self, Self::Err> {
-        UNICODE_DATA_ENTRY_REGEX
+        lazy_static! {
+            static ref REGEX: Regex = Regex::new(
+                r"(?xm)^
+                  ([[:xdigit:]]{4,6}) ;# codepoint
+                  ([^;]+)             ;# name
+                  ([^;]+)             ;# general_category
+                  ([[:digit:]]+)      ;# canonical_combining_class
+                  ([^;]+)             ;# bidi_class
+                  ([^;]+)?            ;# decomposition (option)
+                  ([[:digit:]])?      ;# decimal_numeric_type (option)
+                  ([[:digit:]])?      ;# digit_numeric_type (option)
+                  ([^;]+)?            ;# numeric_numeric_type (option)
+                  ([YN])              ;# bidi_mirrored
+                  ([^;]+)?            ;# unicode_1_name (option)
+                                      ;# iso_comment (deprecated)
+                  ([[:xdigit:]]{4,6})?;# simple_uppercase_mapping (option)
+                  ([[:xdigit:]]{4,6})?;# simple_lowercase_mapping (option)
+                  ([[:xdigit:]]{4,6})? # simple_titlecase_mapping (option)
+                $",
+            ).unwrap();
+        }
+
+        REGEX
             .captures(str)
             .map(|matches| {
                 UnicodeDataEntry {
-                    codepoint: u32::from_str_radix(matches.get(1).unwrap().as_str(), 16).unwrap(),
-                    name: matches.get(2).unwrap().as_str().to_owned(),
-                    general_category: matches.get(3).unwrap().as_str().to_owned(),
-                    canonical_combining_class: matches.get(4).unwrap().as_str().parse().unwrap(),
-                    bidi_class: matches.get(5).unwrap().as_str().to_owned(),
-                    decomposition: {
-                        let str = matches.get(6).unwrap().as_str();
-                        if str.is_empty() {
-                            None
-                        } else {
-                            Some(str.to_owned())
-                        }
-                    },
-                    decimal_numeric_value: {
-                        let str = matches.get(7).unwrap().as_str();
-                        if str.is_empty() {
-                            None
-                        } else {
-                            Some(str.parse().unwrap())
-                        }
-                    },
-                    digit_numeric_value: {
-                        let str = matches.get(8).unwrap().as_str();
-                        if str.is_empty() {
-                            None
-                        } else {
-                            Some(str.parse().unwrap())
-                        }
-                    },
-                    numeric_numeric_value: {
-                        let str = matches.get(9).unwrap().as_str();
-                        if str.is_empty() {
-                            None
-                        } else {
-                            Some(str.to_owned())
-                        }
-                    },
-                    bidi_mirrored: matches.get(10).unwrap().as_str() == "Y",
-                    unicode_1_name: {
-                        let str = matches.get(11).unwrap().as_str();
-                        if str.is_empty() {
-                            None
-                        } else {
-                            Some(str.to_owned())
-                        }
-                    },
-                    // `Err` value: Syntax("Empty regex groups (e.g., '()') are not allowed.")
+                    codepoint: u32::from_str_radix(&matches[1], 16).unwrap(),
+                    name: matches[2].to_owned(),
+                    general_category: matches[3].to_owned(),
+                    canonical_combining_class: matches[4].parse().unwrap(),
+                    bidi_class: matches[5].to_owned(),
+                    decomposition: matches
+                        .get(6)
+                        .map(|m| m.as_str().to_owned()),
+                    decimal_numeric_value: matches
+                        .get(7)
+                        .map(|m| m.as_str().parse().unwrap()),
+                    digit_numeric_value: matches
+                        .get(8)
+                        .map(|m| m.as_str().parse().unwrap()),
+                    numeric_numeric_value: matches
+                        .get(9)
+                        .map(|m| m.as_str().to_owned()),
+                    bidi_mirrored: &matches[10] == "Y",
+                    unicode_1_name: matches
+                        .get(11)
+                        .map(|m| m.as_str().to_owned()),
                     iso_comment: (),
-                    simple_uppercase_mapping:
-                        u32::from_str_radix(matches.get(12).unwrap().as_str(), 16)
-                            .ok().and_then(char::from_u32),
-                    simple_lowercase_mapping:
-                        u32::from_str_radix(matches.get(13).unwrap().as_str(), 16)
-                            .ok().and_then(char::from_u32),
-                    simple_titlecase_mapping:
-                        u32::from_str_radix(matches.get(14).unwrap().as_str(), 16)
-                            .ok().and_then(char::from_u32)
-                            .or_else(|| {
-                                // defaults to simple_uppercase_mapping
-                                u32::from_str_radix(matches.get(12).unwrap().as_str(), 16)
-                                    .ok().and_then(char::from_u32)
-                            }),
+                    simple_uppercase_mapping: matches
+                        .get(12)
+                        .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
+                        .map(|codepoint| char::from_u32(codepoint).unwrap()),
+                    simple_lowercase_mapping: matches
+                        .get(13)
+                        .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
+                        .map(|codepoint| char::from_u32(codepoint).unwrap()),
+                    simple_titlecase_mapping: matches
+                        .get(14)
+                        .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
+                        .map(|codepoint| char::from_u32(codepoint).unwrap())
+                        .or_else(|| matches
+                            .get(12)
+                            .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
+                            .map(|codepoint| char::from_u32(codepoint).unwrap())
+                        ),
                 }
             })
             .ok_or(())

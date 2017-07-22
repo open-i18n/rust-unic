@@ -21,13 +21,13 @@ impl AgeData {
 
     fn read<R: Read>(mut reader: R) -> io::Result<AgeData> {
         let regex = Regex::new(
-            r"(?xm)                    # every line
-            ^([[:xdigit:]]{4,6})       # range start
-            (?:..([[:xdigit:]]{4,6}))? # range end (option)
-            [[:blank:]]*;[[:blank:]]*  # separator
-            ([[:digit:]])              # major version
-            \.([[:digit:]])            # minor version
-            (?:\.([[:digit:]]))?       # micro version (option)
+            r"(?xm)^                     # every line
+              ([[:xdigit:]]{4,6})        # range start
+              (?:..([[:xdigit:]]{4,6}))? # range end (option)
+              [[:blank:]]*;[[:blank:]]*  # separator
+              ([[:digit:]])              # major version
+              \.([[:digit:]])            # minor version
+              (?:\.([[:digit:]]))?       # micro version (option)
             ",
         ).unwrap();
         let mut buffer = String::new();
