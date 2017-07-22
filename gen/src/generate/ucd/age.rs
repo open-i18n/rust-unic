@@ -51,7 +51,7 @@ impl AgeData {
                     age_data.insert(
                         char,
                         format!(
-                            "UnicodeVersion {{ major: {}, minor: {}, micro: {} }})",
+                            "UnicodeVersion {{ major: {}, minor: {}, micro: {} }}",
                             major,
                             minor,
                             micro,
