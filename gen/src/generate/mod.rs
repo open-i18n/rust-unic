@@ -31,12 +31,12 @@ where
         }
 
         let path = tables_path(krate);
+        if path.exists() {
+            fs::remove_dir_all(&path)?;
+        }
+        fs::create_dir_all(&path)?;
         match krate {
             "unic-ucd-age" => {
-                if path.exists() {
-                    fs::remove_dir_all(&path)?;
-                }
-                fs::create_dir_all(&path)?;
                 ucd::age::generate(
                     path,
                     ucd_version.as_ref().unwrap(),
@@ -44,10 +44,6 @@ where
                 )?;
             }
             "unic-ucd-bidi" => {
-                if path.exists() {
-                    fs::remove_dir_all(&path)?;
-                }
-                fs::create_dir_all(&path)?;
                 ucd::bidi::generate(
                     path,
                     ucd_version.as_ref().unwrap(),
@@ -55,10 +51,6 @@ where
                 )?;
             }
             "unic-ucd-core" => {
-                if path.exists() {
-                    fs::remove_dir_all(&path)?;
-                }
-                fs::create_dir_all(&path)?;
                 ucd::core::generate(
                     path,
                     ucd_version.as_ref().unwrap(),
@@ -66,10 +58,6 @@ where
                 )?;
             }
             "unic-ucd-category" => {
-                if path.exists() {
-                    fs::remove_dir_all(&path)?;
-                }
-                fs::create_dir_all(&path)?;
                 ucd::category::generate(
                     path,
                     ucd_version.as_ref().unwrap(),
