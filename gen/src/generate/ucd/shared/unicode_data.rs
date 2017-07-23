@@ -1,7 +1,8 @@
 use std::char;
 use std::fs::File;
-use std::io::{BufRead, BufReader};
+use std::io::{self, Read};
 use std::path::Path;
+use std::slice::Iter;
 use std::str::FromStr;
 
 use regex::Regex;
@@ -9,7 +10,7 @@ use regex::Regex;
 /// Data line from UnicodeData.txt
 #[derive(Clone, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct UnicodeDataEntry {
-    pub codepoint: u32,
+    pub character: char,
 
     /// (1) When a string value not enclosed in &lt;angle brackets> occurs in this field,
     /// it specifies the character's Name property value,
@@ -164,8 +165,16 @@ pub struct UnicodeDataEntry {
     // by unsafe-hacking a u32::MAX char, and not losing any application space.
 }
 
-#[cfg_attr(rustfmt, rustfmt_skip)]
-impl FromStr for UnicodeDataEntry {
+pub struct UnicodeData(Box<[UnicodeDataEntry]>);
+
+impl UnicodeData {
+    pub fn iter(&self) -> Iter<UnicodeDataEntry> {
+        let UnicodeData(ref slice) = *self;
+        slice.iter()
+    }
+}
+
+impl FromStr for UnicodeData {
     type Err = ();
 
     fn from_str(str: &str) -> Result<Self, Self::Err> {
@@ -194,120 +203,94 @@ impl FromStr for UnicodeDataEntry {
             ).unwrap();
         }
 
-        REGEX
-            .captures(str)
-            .map(|matches| {
-                UnicodeDataEntry {
-                    codepoint: u32::from_str_radix(&matches[1], 16).unwrap(),
-                    name: matches[2].to_owned(),
-                    general_category: matches[3].to_owned(),
-                    canonical_combining_class: matches[4].parse().unwrap(),
-                    bidi_class: matches[5].to_owned(),
-                    decomposition_type: matches
-                        .get(6)
-                        .map(|m| m.as_str().to_owned()),
-                    decomposition_mapping: matches
-                        .get(7)
-                        .map(|m| m
-                            .as_str()
-                            .split(' ')
-                            .map(|s| u32::from_str_radix(s, 16).unwrap())
-                            .map(|codepoint| char::from_u32(codepoint).unwrap())
-                            .collect::<Vec<_>>()
-                            .into_boxed_slice()
-                        ),
-                    decimal_numeric_value: matches
-                        .get(8)
-                        .map(|m| m.as_str().parse().unwrap()),
-                    digit_numeric_value: matches
-                        .get(9)
-                        .map(|m| m.as_str().parse().unwrap()),
-                    numeric_numeric_value: matches
-                        .get(10)
-                        .map(|m| m.as_str().to_owned()),
-                    bidi_mirrored: &matches[11] == "Y",
-                    unicode_1_name: matches
-                        .get(12)
-                        .map(|m| m.as_str().to_owned()),
-                    iso_comment: (),
-                    simple_uppercase_mapping: matches
-                        .get(13)
-                        .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
-                        .map(|codepoint| char::from_u32(codepoint).unwrap()),
-                    simple_lowercase_mapping: matches
-                        .get(14)
-                        .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
-                        .map(|codepoint| char::from_u32(codepoint).unwrap()),
-                    simple_titlecase_mapping: matches
-                        .get(15)
-                        .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
-                        .map(|codepoint| char::from_u32(codepoint).unwrap())
-                        .or_else(|| matches
-                            .get(13)
-                            .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
-                            .map(|codepoint| char::from_u32(codepoint).unwrap())
-                        ),
-                }
-            })
-            .ok_or(())
-    }
-}
-
-lazy_static! {
-    pub static ref UNICODE_DATA: Box<[UnicodeDataEntry]> = {
         /// impl note:
         /// 0x44000 (278528) is one quarter of the possible Unicode values (0x110000).
         /// As of Unicode 10, 274235 (0x42F3B) code points are assigned (excluding surrogates).
         /// I (@CAD97) picked one quarter of the full range because doubling capacity as needed
         /// will never go out of the required range and this is a much smaller required allocation
         /// for the near future -- for the next 4000 characters assigned.
-        let mut unicode_data = Vec::with_capacity(0x44000);
-        let mut range_start: Option<u32> = None;
-        let file = File::open(Path::new("data/ucd/UnicodeData.txt"))
-            .expect("Failed to open UCD UnicodeData. Did you run -u?");
+        let mut entries = Vec::with_capacity(0x44000);
+        let mut start = None;
 
-        for line in BufReader::new(file).lines() {
-            let line = line.expect("Invalid string in UnicodeData. Did it get corrupted?");
-            let entry = UnicodeDataEntry::from_str(&line)
-                .expect("Error parsing UnicodeData");
+        for capture in REGEX.captures_iter(str) {
+            if let Some(character) = char::from_u32(u32::from_str_radix(&capture[1], 16).unwrap()) {
+                let mut entry = UnicodeDataEntry {
+                    character,
+                    name: capture[2].to_owned(),
+                    general_category: capture[3].to_owned(),
+                    canonical_combining_class: capture[4].parse().unwrap(),
+                    bidi_class: capture[5].to_owned(),
+                    decomposition_type: capture.get(6).map(|m| m.as_str().to_owned()),
+                    decomposition_mapping: capture.get(7).map(|m| {
+                        m.as_str()
+                            .split(' ')
+                            .map(|s| u32::from_str_radix(s, 16).unwrap())
+                            .map(|codepoint| char::from_u32(codepoint).unwrap())
+                            .collect::<Vec<_>>()
+                            .into()
+                    }),
+                    decimal_numeric_value: capture.get(8).map(|m| m.as_str().parse().unwrap()),
+                    digit_numeric_value: capture.get(9).map(|m| m.as_str().parse().unwrap()),
+                    numeric_numeric_value: capture.get(10).map(|m| m.as_str().to_owned()),
+                    bidi_mirrored: &capture[11] == "Y",
+                    unicode_1_name: capture.get(12).map(|m| m.as_str().to_owned()),
+                    iso_comment: (),
+                    simple_uppercase_mapping: capture
+                        .get(13)
+                        .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
+                        .map(|codepoint| char::from_u32(codepoint).unwrap()),
+                    simple_lowercase_mapping: capture
+                        .get(14)
+                        .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
+                        .map(|codepoint| char::from_u32(codepoint).unwrap()),
+                    simple_titlecase_mapping: capture
+                        .get(15)
+                        .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
+                        .map(|codepoint| char::from_u32(codepoint).unwrap()),
+                };
 
-            if char::from_u32(entry.codepoint).is_none() {
-                continue;
-            }
+                entry.simple_titlecase_mapping = entry
+                    .simple_titlecase_mapping
+                    .or(entry.simple_uppercase_mapping);
 
-            if entry.name.ends_with(", First>") {
-                range_start = Some(entry.codepoint);
-                let mut data = entry;
-                let comma_idx = data.name.find(',').unwrap();
-                let angle_idx = data.name.find('>').unwrap();
-                data.name.drain(comma_idx..angle_idx);
-                unicode_data.push(data);
-            } else if let Some(start) = range_start {
-                assert!(entry.name.ends_with(", Last>"));
-                range_start = None;
-                let end = entry.codepoint;
-                let mut data = entry;
-                let comma_idx = data.name.find(',').unwrap();
-                let angle_idx = data.name.find('>').unwrap();
-                data.name.drain(comma_idx..angle_idx);
-                for i in start..end {
-                    data.codepoint = i;
-                    unicode_data.push(data.clone());
+                if entry.name.ends_with(", First>") {
+                    start = Some(entry.character);
+                    let comma_idx = entry.name.find(',').unwrap();
+                    let angle_idx = entry.name.find('>').unwrap();
+                    entry.name.drain(comma_idx..angle_idx);
+                } else if entry.name.ends_with(", Last>") {
+                    let start = start.unwrap();
+                    let end = entry.character;
+                    assert!(start < end);
+                    let comma_idx = entry.name.find(',').unwrap();
+                    let angle_idx = entry.name.find('>').unwrap();
+                    entry.name.drain(comma_idx..angle_idx);
+                    for codepoint in (start as u32)..(end as u32) {
+                        if let Some(character) = char::from_u32(codepoint) {
+                            entry.character = character;
+                            entries.push(entry.clone());
+                        }
+                    }
+                    entry.character = end;
                 }
-                data.codepoint = end;
-                unicode_data.push(data);
-            } else {
-                unicode_data.push(entry);
+                entries.push(entry);
             }
         }
 
-        unicode_data.into_boxed_slice()
-    };
+        Ok(UnicodeData(entries.into()))
+    }
+}
+
+pub fn read_unicode_data() -> io::Result<UnicodeData> {
+    let mut file = File::open(Path::new("data/ucd/UnicodeData.txt"))?;
+    let mut buffer = String::new();
+    file.read_to_string(&mut buffer)?;
+    Ok(buffer.parse().unwrap())
 }
 
 #[cfg(test)]
 mod test {
-    use super::UnicodeDataEntry;
+    use super::{UnicodeData, UnicodeDataEntry};
 
     #[test]
     /// These are 5 randomly selected test cases (sorted for convenience)
@@ -315,108 +298,130 @@ mod test {
         assert_eq!(
             "1F35;GREEK SMALL LETTER IOTA WITH DASIA AND OXIA;Ll;0;L;1F31 0301;;;;N;;;1F3D;;1F3D"
                 .parse(),
-            Ok(UnicodeDataEntry {
-                codepoint: 0x1F35,
-                name: "GREEK SMALL LETTER IOTA WITH DASIA AND OXIA".to_owned(),
-                general_category: "Ll".to_owned(),
-                canonical_combining_class: 0,
-                bidi_class: "L".to_owned(),
-                decomposition_type: None,
-                decomposition_mapping: Some(vec!['\u{1F31}', '\u{0301}'].into_boxed_slice()),
-                decimal_numeric_value: None,
-                digit_numeric_value: None,
-                numeric_numeric_value: None,
-                bidi_mirrored: false,
-                unicode_1_name: None,
-                iso_comment: (),
-                simple_uppercase_mapping: Some('\u{1F3D}'),
-                simple_lowercase_mapping: None,
-                simple_titlecase_mapping: Some('\u{1F3D}'),
-            })
+            Ok(UnicodeData(
+                vec![
+                    UnicodeDataEntry {
+                        character: 0x1F35,
+                        name: "GREEK SMALL LETTER IOTA WITH DASIA AND OXIA".to_owned(),
+                        general_category: "Ll".to_owned(),
+                        canonical_combining_class: 0,
+                        bidi_class: "L".to_owned(),
+                        decomposition_type: None,
+                        decomposition_mapping: Some(
+                            vec!['\u{1F31}', '\u{0301}'].into_boxed_slice(),
+                        ),
+                        decimal_numeric_value: None,
+                        digit_numeric_value: None,
+                        numeric_numeric_value: None,
+                        bidi_mirrored: false,
+                        unicode_1_name: None,
+                        iso_comment: (),
+                        simple_uppercase_mapping: Some('\u{1F3D}'),
+                        simple_lowercase_mapping: None,
+                        simple_titlecase_mapping: Some('\u{1F3D}'),
+                    },
+                ].into()
+            ))
         );
         assert_eq!(
             "A86D;PHAGS-PA LETTER ALTERNATE YA;Lo;0;L;;;;;N;;;;;".parse(),
-            Ok(UnicodeDataEntry {
-                codepoint: 0xA86D,
-                name: "PHAGS-PA LETTER ALTERNATE YA".to_owned(),
-                general_category: "Lo".to_owned(),
-                canonical_combining_class: 0,
-                bidi_class: "L".to_owned(),
-                decomposition_type: None,
-                decomposition_mapping: None,
-                decimal_numeric_value: None,
-                digit_numeric_value: None,
-                numeric_numeric_value: None,
-                bidi_mirrored: false,
-                unicode_1_name: None,
-                iso_comment: (),
-                simple_uppercase_mapping: None,
-                simple_lowercase_mapping: None,
-                simple_titlecase_mapping: None,
-            })
+            Ok(UnicodeData(
+                vec![
+                    UnicodeDataEntry {
+                        character: 0xA86D,
+                        name: "PHAGS-PA LETTER ALTERNATE YA".to_owned(),
+                        general_category: "Lo".to_owned(),
+                        canonical_combining_class: 0,
+                        bidi_class: "L".to_owned(),
+                        decomposition_type: None,
+                        decomposition_mapping: None,
+                        decimal_numeric_value: None,
+                        digit_numeric_value: None,
+                        numeric_numeric_value: None,
+                        bidi_mirrored: false,
+                        unicode_1_name: None,
+                        iso_comment: (),
+                        simple_uppercase_mapping: None,
+                        simple_lowercase_mapping: None,
+                        simple_titlecase_mapping: None,
+                    },
+                ].into()
+            ))
         );
         assert_eq!(
             "2D01;GEORGIAN SMALL LETTER BAN;Ll;0;L;;;;;N;;;10A1;;10A1".parse(),
-            Ok(UnicodeDataEntry {
-                codepoint: 0x2D01,
-                name: "GEORGIAN SMALL LETTER BAN".to_owned(),
-                general_category: "Ll".to_owned(),
-                canonical_combining_class: 0,
-                bidi_class: "L".to_owned(),
-                decomposition_type: None,
-                decomposition_mapping: None,
-                decimal_numeric_value: None,
-                digit_numeric_value: None,
-                numeric_numeric_value: None,
-                bidi_mirrored: false,
-                unicode_1_name: None,
-                iso_comment: (),
-                simple_uppercase_mapping: Some('\u{10A1}'),
-                simple_lowercase_mapping: None,
-                simple_titlecase_mapping: Some('\u{10A1}'),
-            })
+            Ok(UnicodeData(
+                vec![
+                    UnicodeDataEntry {
+                        character: 0x2D01,
+                        name: "GEORGIAN SMALL LETTER BAN".to_owned(),
+                        general_category: "Ll".to_owned(),
+                        canonical_combining_class: 0,
+                        bidi_class: "L".to_owned(),
+                        decomposition_type: None,
+                        decomposition_mapping: None,
+                        decimal_numeric_value: None,
+                        digit_numeric_value: None,
+                        numeric_numeric_value: None,
+                        bidi_mirrored: false,
+                        unicode_1_name: None,
+                        iso_comment: (),
+                        simple_uppercase_mapping: Some('\u{10A1}'),
+                        simple_lowercase_mapping: None,
+                        simple_titlecase_mapping: Some('\u{10A1}'),
+                    },
+                ].into()
+            ))
         );
         assert_eq!(
             "13060;EGYPTIAN HIEROGLYPH C004;Lo;0;L;;;;;N;;;;;".parse(),
-            Ok(UnicodeDataEntry {
-                codepoint: 0x13060,
-                name: "EGYPTIAN HIEROGLYPH C004".to_owned(),
-                general_category: "Lo".to_owned(),
-                canonical_combining_class: 0,
-                bidi_class: "L".to_owned(),
-                decomposition_type: None,
-                decomposition_mapping: None,
-                decimal_numeric_value: None,
-                digit_numeric_value: None,
-                numeric_numeric_value: None,
-                bidi_mirrored: false,
-                unicode_1_name: None,
-                iso_comment: (),
-                simple_uppercase_mapping: None,
-                simple_lowercase_mapping: None,
-                simple_titlecase_mapping: None,
-            })
+            Ok(UnicodeData(
+                vec![
+                    UnicodeDataEntry {
+                        character: 0x13060,
+                        name: "EGYPTIAN HIEROGLYPH C004".to_owned(),
+                        general_category: "Lo".to_owned(),
+                        canonical_combining_class: 0,
+                        bidi_class: "L".to_owned(),
+                        decomposition_type: None,
+                        decomposition_mapping: None,
+                        decimal_numeric_value: None,
+                        digit_numeric_value: None,
+                        numeric_numeric_value: None,
+                        bidi_mirrored: false,
+                        unicode_1_name: None,
+                        iso_comment: (),
+                        simple_uppercase_mapping: None,
+                        simple_lowercase_mapping: None,
+                        simple_titlecase_mapping: None,
+                    },
+                ].into()
+            ))
         );
         assert_eq!(
             "1B042;HENTAIGANA LETTER SA-7;Lo;0;L;;;;;N;;;;;".parse(),
-            Ok(UnicodeDataEntry {
-                codepoint: 0x1B042,
-                name: "HENTAIGANA LETTER SA-7".to_owned(),
-                general_category: "Lo".to_owned(),
-                canonical_combining_class: 0,
-                bidi_class: "L".to_owned(),
-                decomposition_type: None,
-                decomposition_mapping: None,
-                decimal_numeric_value: None,
-                digit_numeric_value: None,
-                numeric_numeric_value: None,
-                bidi_mirrored: false,
-                unicode_1_name: None,
-                iso_comment: (),
-                simple_uppercase_mapping: None,
-                simple_lowercase_mapping: None,
-                simple_titlecase_mapping: None,
-            })
+            Ok(UnicodeData(
+                vec![
+                    UnicodeDataEntry {
+                        character: 0x1B042,
+                        name: "HENTAIGANA LETTER SA-7".to_owned(),
+                        general_category: "Lo".to_owned(),
+                        canonical_combining_class: 0,
+                        bidi_class: "L".to_owned(),
+                        decomposition_type: None,
+                        decomposition_mapping: None,
+                        decimal_numeric_value: None,
+                        digit_numeric_value: None,
+                        numeric_numeric_value: None,
+                        bidi_mirrored: false,
+                        unicode_1_name: None,
+                        iso_comment: (),
+                        simple_uppercase_mapping: None,
+                        simple_lowercase_mapping: None,
+                        simple_titlecase_mapping: None,
+                    },
+                ].into()
+            ))
         );
     }
 }

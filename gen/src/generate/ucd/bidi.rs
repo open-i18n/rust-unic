@@ -44,14 +44,13 @@ where
         ];
         let mut map = BTreeMap::<char, &str>::new();
 
-        for &UnicodeDataEntry { codepoint, ref bidi_class, .. } in it {
-            if let Some(c) = char::from_u32(codepoint) {
-                map.insert(c, bidi_class);
-            }
+        #[cfg_attr(rustfmt, rustfmt_skip)]
+        for &UnicodeDataEntry { character, ref bidi_class, .. } in it {
+            map.insert(character, bidi_class);
         }
 
         for &(start, end, default) in defaults {
-            for codepoint in start..(end+1) {
+            for codepoint in start..(end + 1) {
                 if let Some(c) = char::from_u32(codepoint) {
                     map.entry(c).or_insert(default);
                 }
@@ -64,7 +63,8 @@ where
 
 pub fn generate<P: AsRef<Path>>(dir: P) -> io::Result<()> {
     super::UNICODE_VERSION.emit(&dir)?;
-    let bidi_data = BidiData::from(super::UNICODE_DATA.iter());
+    let unicode_data = super::read_unicode_data()?;
+    let bidi_data = BidiData::from(unicode_data.iter());
     bidi_data.emit(dir)?;
     Ok(())
 }
