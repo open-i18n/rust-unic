@@ -63,8 +63,10 @@ where
 
 pub fn generate<P: AsRef<Path>>(dir: P) -> io::Result<()> {
     super::read_unicode_version()?.emit(&dir)?;
+    println!("> unicode_version");
     let unicode_data = super::read_unicode_data()?;
     let bidi_data = BidiData::from(unicode_data.iter());
     bidi_data.emit(dir)?;
+    println!("> bidi_class_values");
     Ok(())
 }
