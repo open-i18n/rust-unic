@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::{self, Write};
 use std::path::Path;
 
-use super::UnicodeDataEntry;
+use super::{UnicodeData, UnicodeDataEntry, UnicodeVersion};
 
 use generate::PREAMBLE;
 use generate::char_property::char_map::*;
@@ -61,12 +61,15 @@ where
     }
 }
 
-pub fn generate<P: AsRef<Path>>(dir: P) -> io::Result<()> {
-    super::read_unicode_version()?.emit(&dir)?;
-    println!("> unicode_version");
-    let unicode_data = super::read_unicode_data()?;
-    let bidi_data = BidiData::from(unicode_data.iter());
+pub fn generate<P: AsRef<Path>>(
+    dir: P,
+    version: &UnicodeVersion,
+    data: &UnicodeData,
+) -> io::Result<()> {
+    version.emit(&dir)?;
+    println!("> unic::ucd::bidi::tables::unicode_version");
+    let bidi_data = BidiData::from(data.iter());
     bidi_data.emit(dir)?;
-    println!("> bidi_class_values");
+    println!("> unic::ucd::bidi::tables::bidi_class_values");
     Ok(())
 }

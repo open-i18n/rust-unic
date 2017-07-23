@@ -24,7 +24,7 @@ use std::io::BufReader;
 use std::path::Path;
 
 use download::download;
-use generate::generate;
+use generate::generate_all;
 
 use getopts::Options;
 
@@ -71,10 +71,7 @@ fn main() {
     }
 
     println!("Generating sources for {} crates...", crates.len());
-    for subcrate in crates {
-        println!("Generating sources for crate {}...", subcrate);
-        generate(&subcrate).expect("Failed to generate sources");
-    }
+    generate_all(crates).expect("Failed to generate sources");
     println!("Finished.");
 }
 

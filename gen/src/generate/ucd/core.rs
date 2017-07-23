@@ -1,8 +1,14 @@
 use std::io;
 use std::path::Path;
 
-pub fn generate<P: AsRef<Path>>(path: P) -> io::Result<()> {
-    super::read_unicode_version()?.emit(path)?;
-    println!("> unicode_version");
+use super::{UnicodeData, UnicodeVersion};
+
+pub fn generate<P: AsRef<Path>>(
+    path: P,
+    version: &UnicodeVersion,
+    _: &UnicodeData,
+) -> io::Result<()> {
+    version.emit(path)?;
+    println!("> unic::ucd::core::tables::unicode_version");
     Ok(())
 }

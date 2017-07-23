@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::{self, Write};
 use std::path::Path;
 
-use super::UnicodeDataEntry;
+use super::{UnicodeData, UnicodeDataEntry, UnicodeVersion};
 
 use generate::PREAMBLE;
 use generate::char_property::char_map::*;
@@ -36,12 +36,15 @@ where
     }
 }
 
-pub fn generate<P: AsRef<Path>>(dir: P) -> io::Result<()> {
-    super::read_unicode_version()?.emit(&dir)?;
-    println!("> unicode_version");
-    let unicode_data = super::read_unicode_data()?;
-    let category_data = CategoryData::from(unicode_data.iter());
+pub fn generate<P: AsRef<Path>>(
+    dir: P,
+    version: &UnicodeVersion,
+    data: &UnicodeData,
+) -> io::Result<()> {
+    version.emit(&dir)?;
+    println!("> unic::ucd::category::tables::unicode_version");
+    let category_data = CategoryData::from(data.iter());
     category_data.emit(dir)?;
-    println!("> general_category");
+    println!("> unic::ucd::category::tables::general_category");
     Ok(())
 }

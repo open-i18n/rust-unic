@@ -4,6 +4,8 @@ use std::io::{self, Read, Write};
 use std::path::Path;
 use std::str::FromStr;
 
+use super::{UnicodeData, UnicodeVersion};
+
 use generate::PREAMBLE;
 use generate::char_property::char_map::*;
 
@@ -69,14 +71,18 @@ impl FromStr for AgeData {
     }
 }
 
-pub fn generate<P: AsRef<Path>>(dir: P) -> io::Result<()> {
-    super::read_unicode_version()?.emit(&dir)?;
-    println!("> unicode_version");
+pub fn generate<P: AsRef<Path>>(
+    dir: P,
+    version: &UnicodeVersion,
+    _: &UnicodeData,
+) -> io::Result<()> {
+    version.emit(&dir)?;
+    println!("> unic::ucd::age::tables::unicode_version");
     let mut derived_age = File::open(Path::new("data/ucd/DerivedAge.txt"))?;
     let mut buffer = String::new();
     derived_age.read_to_string(&mut buffer)?;
     let age_data = buffer.parse::<AgeData>().unwrap();
     age_data.emit(dir)?;
-    println!("> age_values");
+    println!("> unic::ucd::age::tables::age_values");
     Ok(())
 }
