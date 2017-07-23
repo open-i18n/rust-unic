@@ -2,6 +2,6 @@ use std::io;
 use std::path::Path;
 
 pub fn generate<P: AsRef<Path>>(path: P) -> io::Result<()> {
-    super::UNICODE_VERSION.emit(path)?;
+    super::read_unicode_version()?.emit(path)?;
     Ok(())
 }

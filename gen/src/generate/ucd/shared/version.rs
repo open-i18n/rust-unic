@@ -1,31 +1,15 @@
 use std::fs::File;
 use std::io::{self, Read, Write};
 use std::path::Path;
+use std::str::FromStr;
 
 use generate::PREAMBLE;
 
 use regex::Regex;
 
-lazy_static! {
-    /// Version of the local UCD files
-    pub static ref UNICODE_VERSION: (u16, u16, u16) = {
-        let mut readme = File::open(Path::new("data/ucd/ReadMe.txt"))
-            .expect("Failed to open UCD ReadMe. Did you run -u?");
-        let mut buffer = String::new();
-        readme.read_to_string(&mut buffer)
-            .expect("Failed to read UCD ReadMe. Did you run -u?");
-        let pattern = Regex::new(r"for Version (\d+).(\d+).(\d+)").unwrap();
-        let captures = pattern.captures(&buffer)
-            .expect("Regex didn't match UCD ReadMe. Did it download correctly?");
-        (
-            captures[1].parse().unwrap(),
-            captures[2].parse().unwrap(),
-            captures[3].parse().unwrap(),
-        )
-    };
-}
+pub struct UnicodeVersion(u16, u16, u16);
 
-impl UNICODE_VERSION {
+impl UnicodeVersion {
     /// Emit `unicode_version.rsv` into a directory.
     pub fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
         let mut file = File::create(dir.as_ref().join("unicode_version.rsv"))?;
@@ -39,4 +23,31 @@ impl UNICODE_VERSION {
         )?;
         Ok(())
     }
+}
+
+impl FromStr for UnicodeVersion {
+    type Err = ();
+
+    fn from_str(str: &str) -> Result<Self, Self::Err> {
+        lazy_static! {
+            static ref REGEX: Regex = Regex::new(r"for Version (\d+).(\d+).(\d+)").unwrap();
+        }
+        REGEX
+            .captures(str)
+            .map(|m| {
+                UnicodeVersion(
+                    m[1].parse().unwrap(),
+                    m[2].parse().unwrap(),
+                    m[3].parse().unwrap(),
+                )
+            })
+            .ok_or(())
+    }
+}
+
+pub fn read_unicode_version() -> io::Result<UnicodeVersion> {
+    let mut file = File::open(Path::new("data/ucd/ReadMe.txt"))?;
+    let mut buffer = String::new();
+    file.read_to_string(&mut buffer)?;
+    Ok(buffer.parse().unwrap())
 }
