@@ -165,6 +165,7 @@ pub struct UnicodeDataEntry {
     // by unsafe-hacking a u32::MAX char, and not losing any application space.
 }
 
+#[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct UnicodeData(Box<[UnicodeDataEntry]>);
 
 impl UnicodeData {
@@ -296,12 +297,16 @@ mod test {
     /// These are 5 randomly selected test cases (sorted for convenience)
     fn unicode_data_entry_parse() {
         assert_eq!(
-            "1F35;GREEK SMALL LETTER IOTA WITH DASIA AND OXIA;Ll;0;L;1F31 0301;;;;N;;;1F3D;;1F3D"
-                .parse(),
+            "1F35;GREEK SMALL LETTER IOTA WITH DASIA AND OXIA;Ll;0;L;1F31 0301;;;;N;;;1F3D;;1F3D\n\
+             A86D;PHAGS-PA LETTER ALTERNATE YA;Lo;0;L;;;;;N;;;;;\n\
+             2D01;GEORGIAN SMALL LETTER BAN;Ll;0;L;;;;;N;;;10A1;;10A1\n\
+             13060;EGYPTIAN HIEROGLYPH C004;Lo;0;L;;;;;N;;;;;\n\
+             1B042;HENTAIGANA LETTER SA-7;Lo;0;L;;;;;N;;;;;\n\
+            ".parse(),
             Ok(UnicodeData(
                 vec![
                     UnicodeDataEntry {
-                        character: 0x1F35,
+                        character: '\u{1F35}',
                         name: "GREEK SMALL LETTER IOTA WITH DASIA AND OXIA".to_owned(),
                         general_category: "Ll".to_owned(),
                         canonical_combining_class: 0,
@@ -320,15 +325,8 @@ mod test {
                         simple_lowercase_mapping: None,
                         simple_titlecase_mapping: Some('\u{1F3D}'),
                     },
-                ].into()
-            ))
-        );
-        assert_eq!(
-            "A86D;PHAGS-PA LETTER ALTERNATE YA;Lo;0;L;;;;;N;;;;;".parse(),
-            Ok(UnicodeData(
-                vec![
                     UnicodeDataEntry {
-                        character: 0xA86D,
+                        character: '\u{A86D}',
                         name: "PHAGS-PA LETTER ALTERNATE YA".to_owned(),
                         general_category: "Lo".to_owned(),
                         canonical_combining_class: 0,
@@ -345,15 +343,8 @@ mod test {
                         simple_lowercase_mapping: None,
                         simple_titlecase_mapping: None,
                     },
-                ].into()
-            ))
-        );
-        assert_eq!(
-            "2D01;GEORGIAN SMALL LETTER BAN;Ll;0;L;;;;;N;;;10A1;;10A1".parse(),
-            Ok(UnicodeData(
-                vec![
                     UnicodeDataEntry {
-                        character: 0x2D01,
+                        character: '\u{2D01}',
                         name: "GEORGIAN SMALL LETTER BAN".to_owned(),
                         general_category: "Ll".to_owned(),
                         canonical_combining_class: 0,
@@ -370,15 +361,8 @@ mod test {
                         simple_lowercase_mapping: None,
                         simple_titlecase_mapping: Some('\u{10A1}'),
                     },
-                ].into()
-            ))
-        );
-        assert_eq!(
-            "13060;EGYPTIAN HIEROGLYPH C004;Lo;0;L;;;;;N;;;;;".parse(),
-            Ok(UnicodeData(
-                vec![
                     UnicodeDataEntry {
-                        character: 0x13060,
+                        character: '\u{13060}',
                         name: "EGYPTIAN HIEROGLYPH C004".to_owned(),
                         general_category: "Lo".to_owned(),
                         canonical_combining_class: 0,
@@ -395,15 +379,8 @@ mod test {
                         simple_lowercase_mapping: None,
                         simple_titlecase_mapping: None,
                     },
-                ].into()
-            ))
-        );
-        assert_eq!(
-            "1B042;HENTAIGANA LETTER SA-7;Lo;0;L;;;;;N;;;;;".parse(),
-            Ok(UnicodeData(
-                vec![
                     UnicodeDataEntry {
-                        character: 0x1B042,
+                        character: '\u{1B042}',
                         name: "HENTAIGANA LETTER SA-7".to_owned(),
                         general_category: "Lo".to_owned(),
                         canonical_combining_class: 0,
