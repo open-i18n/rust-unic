@@ -13,11 +13,12 @@
 
 
 extern crate unic_ucd;
+extern crate unic_utils;
 
 
 use unic_ucd::bidi::BidiClass;
 use unic_ucd::normal::is_combining_mark;
-use unic_ucd::utils::iter_all_chars;
+use unic_utils::iter_all_chars;
 
 
 /// `Bidi_Class=NSM := General_Category in { Mn (Nonspacing_Mark), Me (Enclosing_Mark) }`
