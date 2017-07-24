@@ -1,4 +1,5 @@
 use std::char;
+use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::{self, Read, Write};
 use std::path::Path;
@@ -7,7 +8,7 @@ use std::str::FromStr;
 use super::{UnicodeData, UnicodeVersion};
 
 use generate::PREAMBLE;
-use generate::char_property::char_map::*;
+use generate::char_property::CharMap;
 
 use regex::Regex;
 
@@ -18,7 +19,7 @@ impl AgeData {
     fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
         let AgeData(ref map) = *self;
         let mut file = File::create(dir.as_ref().join("age_values.rsv"))?;
-        writeln!(file, "{}\n{}", PREAMBLE, map.to_bsearch_table_default())?;
+        writeln!(file, "{}\n{}", PREAMBLE, map.to_bsearch_map_default())?;
         Ok(())
     }
 }

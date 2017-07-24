@@ -1,4 +1,5 @@
 use std::char;
+use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::{self, Write};
 use std::path::Path;
@@ -6,7 +7,7 @@ use std::path::Path;
 use super::{UnicodeData, UnicodeDataEntry, UnicodeVersion};
 
 use generate::PREAMBLE;
-use generate::char_property::char_map::*;
+use generate::char_property::CharMap;
 
 #[derive(Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 struct CategoryData<'a>(BTreeMap<char, &'a str>);
@@ -15,7 +16,7 @@ impl<'a> CategoryData<'a> {
     fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
         let CategoryData(ref map) = *self;
         let mut file = File::create(dir.as_ref().join("general_category.rsv"))?;
-        writeln!(file, "{}\n{}", PREAMBLE, map.to_bsearch_table_default())?;
+        writeln!(file, "{}\n{}", PREAMBLE, map.to_bsearch_map_default())?;
         Ok(())
     }
 }
