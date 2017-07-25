@@ -50,6 +50,13 @@ where
                     unicode_data.as_ref().unwrap(),
                 )?;
             }
+            "unic-ucd-category" => {
+                ucd::category::generate(
+                    path,
+                    ucd_version.as_ref().unwrap(),
+                    unicode_data.as_ref().unwrap(),
+                )?;
+            }
             "unic-ucd-core" => {
                 ucd::core::generate(
                     path,
@@ -57,8 +64,8 @@ where
                     unicode_data.as_ref().unwrap(),
                 )?;
             }
-            "unic-ucd-category" => {
-                ucd::category::generate(
+            "unic-ucd-normal" => {
+                ucd::normal::generate(
                     path,
                     ucd_version.as_ref().unwrap(),
                     unicode_data.as_ref().unwrap(),

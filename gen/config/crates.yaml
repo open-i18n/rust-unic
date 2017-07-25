@@ -11,7 +11,7 @@ unic-idna:
 unic-ucd:
   - "unic-ucd-age"
   - "unic-ucd-bidi"
-  - "unic-ucd-category"
   - "unic-ucd-core"
-# - "unic-ucd-normal"
+  - "unic-ucd-category"
+  - "unic-ucd-normal"
   - "unic-ucd-utils"
