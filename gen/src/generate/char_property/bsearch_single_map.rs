@@ -22,9 +22,9 @@ use std::fmt::Display;
 pub trait ToSingleBSearchMap<T> {
     /// Convert this mapping to a `String`.
     fn to_single_bsearch_map<F, D>(&self, display_fn: F) -> String
-        where
-            F: Fn(&T) -> D,
-            D: Display;
+    where
+        F: Fn(&T) -> D,
+        D: Display;
 
     /// A simple default for when the associated value already impls `fmt::Display`.
     ///

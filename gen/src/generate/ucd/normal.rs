@@ -42,9 +42,13 @@ struct CanonicalCombiningClassData(BTreeMap<char, u8>);
 impl CanonicalCombiningClassData {
     fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
         let mut file = File::create(dir.as_ref().join("canonical_combining_class_values.rsv"))?;
-        writeln!(file, "{}\n{}", PREAMBLE, self.0.to_range_bsearch_map(|val| {
-            format!("CanonicalCombiningClass({})", val)
-        }))
+        writeln!(
+            file,
+            "{}\n{}",
+            PREAMBLE,
+            self.0
+                .to_range_bsearch_map(|val| { format!("CanonicalCombiningClass({})", val) })
+        )
     }
 }
 
@@ -99,7 +103,8 @@ where
             ref decomposition_type,
             ref decomposition_mapping,
             ..
-        } in it {
+        } in it
+        {
             if decomposition_type.is_none() {
                 if let &Some(ref mapping) = decomposition_mapping {
                     map.insert(character, mapping.as_ref());
@@ -145,7 +150,8 @@ where
             ref decomposition_type,
             ref decomposition_mapping,
             ..
-        } in it {
+        } in it
+        {
             if let &Some(ref typ) = decomposition_type {
                 if let &Some(ref mapping) = decomposition_mapping {
                     map.insert(character, (typ.as_str(), mapping.as_ref()));
@@ -161,8 +167,7 @@ pub fn generate<P: AsRef<Path>>(
     dir: P,
     version: &UnicodeVersion,
     data: &UnicodeData,
-) -> io::Result<()>
-{
+) -> io::Result<()> {
     println!("> unic::ucd::normal::tables::unicode_version");
     version.emit(&dir)?;
     println!("> unic::ucd::normal::tables::general_category_mark.rsv");
@@ -172,6 +177,7 @@ pub fn generate<P: AsRef<Path>>(
     println!("> unic::ucd::normal::tables::canonical_decomposition_mapping.rsv");
     CanonicalDecompositionData::from(data.iter()).emit(&dir)?;
     println!("> unic::ucd::normal::tables::compatibility_decomposition_mapping.rsv");
-    CompatibilityDecompositionData::from(data.iter()).emit(&dir)?;
+    CompatibilityDecompositionData::from(data.iter())
+        .emit(&dir)?;
     Ok(())
 }
