@@ -67,10 +67,9 @@ pub fn generate<P: AsRef<Path>>(
     version: &UnicodeVersion,
     data: &UnicodeData,
 ) -> io::Result<()> {
-    version.emit(&dir)?;
     println!("> unic::ucd::bidi::tables::unicode_version");
-    let bidi_data = BidiData::from(data.iter());
-    bidi_data.emit(dir)?;
+    version.emit(&dir)?;
     println!("> unic::ucd::bidi::tables::bidi_class_values");
+    BidiData::from(data.iter()).emit(dir)?;
     Ok(())
 }

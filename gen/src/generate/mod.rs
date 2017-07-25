@@ -21,10 +21,12 @@ where
         let krate = krate.as_ref();
         if krate.starts_with("unic-ucd") {
             if ucd_version.is_none() {
+                println!(">>> Loading UCD Version");
                 let version = ucd::read_unicode_version()?;
                 ucd_version = Some(version);
             }
             if unicode_data.is_none() {
+                println!(">>> Loading UCD UnicodeData");
                 let data = ucd::read_unicode_data()?;
                 unicode_data = Some(data);
             }

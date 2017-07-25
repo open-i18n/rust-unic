@@ -42,10 +42,9 @@ pub fn generate<P: AsRef<Path>>(
     version: &UnicodeVersion,
     data: &UnicodeData,
 ) -> io::Result<()> {
-    version.emit(&dir)?;
     println!("> unic::ucd::category::tables::unicode_version");
-    let category_data = CategoryData::from(data.iter());
-    category_data.emit(dir)?;
+    version.emit(&dir)?;
     println!("> unic::ucd::category::tables::general_category");
+    CategoryData::from(data.iter()).emit(dir)?;
     Ok(())
 }

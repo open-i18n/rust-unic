@@ -77,13 +77,13 @@ pub fn generate<P: AsRef<Path>>(
     version: &UnicodeVersion,
     _: &UnicodeData,
 ) -> io::Result<()> {
-    version.emit(&dir)?;
     println!("> unic::ucd::age::tables::unicode_version");
+    version.emit(&dir)?;
+    println!(">>> Loading UCD DerivedAge");
     let mut derived_age = File::open(Path::new("data/ucd/DerivedAge.txt"))?;
     let mut buffer = String::new();
     derived_age.read_to_string(&mut buffer)?;
-    let age_data = buffer.parse::<AgeData>().unwrap();
-    age_data.emit(dir)?;
     println!("> unic::ucd::age::tables::age_values");
+    buffer.parse::<AgeData>().unwrap().emit(dir)?;
     Ok(())
 }

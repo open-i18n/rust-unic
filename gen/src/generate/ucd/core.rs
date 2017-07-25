@@ -8,7 +8,7 @@ pub fn generate<P: AsRef<Path>>(
     version: &UnicodeVersion,
     _: &UnicodeData,
 ) -> io::Result<()> {
-    version.emit(path)?;
     println!("> unic::ucd::core::tables::unicode_version");
+    version.emit(path)?;
     Ok(())
 }

@@ -163,15 +163,15 @@ pub fn generate<P: AsRef<Path>>(
     data: &UnicodeData,
 ) -> io::Result<()>
 {
-    version.emit(&dir)?;
     println!("> unic::ucd::normal::tables::unicode_version");
+    version.emit(&dir)?;
+    println!("> unic::ucd::normal::tables::general_category_mark.rsv");
     GeneralCategoryMarkData::from(data.iter()).emit(&dir)?;
-    println!(": unic::ucd::normal::tables::general_category_mark.rsv");
-    CanonicalCombiningClassData::from(data.iter()).emit(&dir)?;
     println!("> unic::ucd::normal::tables::canonical_combining_class_values.rsv");
-    CanonicalDecompositionData::from(data.iter()).emit(&dir)?;
+    CanonicalCombiningClassData::from(data.iter()).emit(&dir)?;
     println!("> unic::ucd::normal::tables::canonical_decomposition_mapping.rsv");
-    CompatibilityDecompositionData::from(data.iter()).emit(&dir)?;
+    CanonicalDecompositionData::from(data.iter()).emit(&dir)?;
     println!("> unic::ucd::normal::tables::compatibility_decomposition_mapping.rsv");
+    CompatibilityDecompositionData::from(data.iter()).emit(&dir)?;
     Ok(())
 }
