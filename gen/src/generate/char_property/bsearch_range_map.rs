@@ -102,7 +102,7 @@ mod test {
         map.insert('x', "High");
         map.insert('z', "High");
         assert_eq!(
-            map.to_bsearch_map_default(),
+            map.to_range_bsearch_map_default(),
             "\
 &[
     ('\\u{61}', '\\u{63}', Low),
