@@ -1,0 +1,3 @@
+&[
+    ('\u{0}', '\u{2c}', DisallowedStd3Valid(&[])),
+]
