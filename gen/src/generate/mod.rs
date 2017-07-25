@@ -1,5 +1,6 @@
 mod char_property;
 
+mod idna;
 mod ucd;
 
 use std::fs;
@@ -20,6 +21,7 @@ pub fn generate_all(mut crates: Vec<String>) -> io::Result<()> {
         fs::create_dir_all(path)?;
     }
 
+    idna::generate_all(crates.iter().filter(|x| x.starts_with("unic-idna")))?;
     ucd::generate_all(crates.iter().filter(|x| x.starts_with("unic-ucd")))?;
 
     Ok(())

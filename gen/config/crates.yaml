@@ -6,7 +6,7 @@ unic:
   - "unic-normal"
   - "unic-ucd"
 unic-idna:
-# - "unic-idna-mapping"
+  - "unic-idna-mapping"
   - "unic-idna-punycode"
 unic-ucd:
   - "unic-ucd-age"

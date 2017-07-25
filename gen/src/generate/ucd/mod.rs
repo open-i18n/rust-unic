@@ -1,10 +1,10 @@
 mod shared;
 
-pub mod age;
-pub mod bidi;
-pub mod category;
-pub mod core;
-pub mod normal;
+mod age;
+mod bidi;
+mod category;
+mod core;
+mod normal;
 
 use std::io;
 
