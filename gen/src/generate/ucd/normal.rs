@@ -106,7 +106,7 @@ where
         } in it
         {
             if decomposition_type.is_none() {
-                if let &Some(ref mapping) = decomposition_mapping {
+                if let Some(ref mapping) = *decomposition_mapping {
                     map.insert(character, mapping.as_ref());
                 }
             }
@@ -151,8 +151,8 @@ where
             ..
         } in it
         {
-            if let &Some(ref typ) = decomposition_type {
-                if let &Some(ref mapping) = decomposition_mapping {
+            if let Some(ref typ) = *decomposition_type {
+                if let Some(ref mapping) = *decomposition_mapping {
                     map.insert(character, (typ.as_str(), mapping.as_ref()));
                 }
             }
