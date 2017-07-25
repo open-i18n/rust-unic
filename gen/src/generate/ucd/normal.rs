@@ -5,7 +5,7 @@ use std::fs::File;
 use std::io::{self, Write};
 use std::path::Path;
 
-use super::{UnicodeData, UnicodeVersion};
+use super::{UnicodeData, UnicodeDataEntry, UnicodeVersion};
 
 use generate::PREAMBLE;
 use generate::char_property::{ToBSearchSet, ToRangeBSearchMap, ToSingleBSearchMap};
@@ -16,6 +16,24 @@ impl GeneralCategoryMarkData {
     fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
         let mut file = File::create(dir.as_ref().join("general_category_mark.rsv"))?;
         writeln!(file, "{}\n{}", PREAMBLE, self.0.to_bsearch_set())
+    }
+}
+
+impl<'a, I> From<I> for GeneralCategoryMarkData
+where
+    I: Iterator<Item = &'a UnicodeDataEntry>,
+{
+    fn from(it: I) -> Self {
+        let mut set = BTreeSet::new();
+
+        #[cfg_attr(rustfmt, rustfmt_skip)]
+        for &UnicodeDataEntry { character, ref general_category, .. } in it {
+            if matches!(general_category.as_str(), "Mn" | "Mc" | "Me") {
+                set.insert(character);
+            }
+        }
+
+        GeneralCategoryMarkData(set)
     }
 }
 
@@ -30,9 +48,27 @@ impl CanonicalCombiningClassData {
     }
 }
 
-struct CanonicalDecompositionData(BTreeMap<char, Box<[char]>>);
+impl<'a, I> From<I> for CanonicalCombiningClassData
+where
+    I: Iterator<Item = &'a UnicodeDataEntry>,
+{
+    fn from(it: I) -> Self {
+        let mut map = BTreeMap::default();
 
-impl CanonicalDecompositionData {
+        #[cfg_attr(rustfmt, rustfmt_skip)]
+        for &UnicodeDataEntry { character, ref canonical_combining_class, .. } in it {
+            if *canonical_combining_class != 0 {
+                map.insert(character, *canonical_combining_class);
+            }
+        }
+
+        CanonicalCombiningClassData(map)
+    }
+}
+
+struct CanonicalDecompositionData<'a>(BTreeMap<char, &'a [char]>);
+
+impl<'a> CanonicalDecompositionData<'a> {
     fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
         let mut file = File::create(dir.as_ref().join("canonical_decomposition_mapping.rsv"))?;
         writeln!(
@@ -51,7 +87,31 @@ impl CanonicalDecompositionData {
     }
 }
 
-struct CompatibilityDecompositionData<'a>(BTreeMap<char, (&'a str, Box<[char]>)>);
+impl<'a, I> From<I> for CanonicalDecompositionData<'a>
+where
+    I: Iterator<Item = &'a UnicodeDataEntry>,
+{
+    fn from(it: I) -> Self {
+        let mut map = BTreeMap::default();
+
+        for &UnicodeDataEntry {
+            character,
+            ref decomposition_type,
+            ref decomposition_mapping,
+            ..
+        } in it {
+            if decomposition_type.is_none() {
+                if let &Some(ref mapping) = decomposition_mapping {
+                    map.insert(character, mapping.as_ref());
+                }
+            }
+        }
+
+        CanonicalDecompositionData(map)
+    }
+}
+
+struct CompatibilityDecompositionData<'a>(BTreeMap<char, (&'a str, &'a [char])>);
 
 impl<'a> CompatibilityDecompositionData<'a> {
     fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
@@ -73,7 +133,30 @@ impl<'a> CompatibilityDecompositionData<'a> {
     }
 }
 
-#[allow(unreachable_code)]
+impl<'a, I> From<I> for CompatibilityDecompositionData<'a>
+where
+    I: Iterator<Item = &'a UnicodeDataEntry>,
+{
+    fn from(it: I) -> Self {
+        let mut map = BTreeMap::default();
+
+        for &UnicodeDataEntry {
+            character,
+            ref decomposition_type,
+            ref decomposition_mapping,
+            ..
+        } in it {
+            if let &Some(ref typ) = decomposition_type {
+                if let &Some(ref mapping) = decomposition_mapping {
+                    map.insert(character, (typ.as_str(), mapping.as_ref()));
+                }
+            }
+        }
+
+        CompatibilityDecompositionData(map)
+    }
+}
+
 pub fn generate<P: AsRef<Path>>(
     dir: P,
     version: &UnicodeVersion,
@@ -82,17 +165,13 @@ pub fn generate<P: AsRef<Path>>(
 {
     version.emit(&dir)?;
     println!("> unic::ucd::normal::tables::unicode_version");
-    let general_category_mark_data: GeneralCategoryMarkData = unimplemented!();
-    general_category_mark_data.emit(&dir)?;
+    GeneralCategoryMarkData::from(data.iter()).emit(&dir)?;
     println!(": unic::ucd::normal::tables::general_category_mark.rsv");
-    let canonical_combining_class_data: CanonicalCombiningClassData = unimplemented!();
-    canonical_combining_class_data.emit(&dir)?;
+    CanonicalCombiningClassData::from(data.iter()).emit(&dir)?;
     println!("> unic::ucd::normal::tables::canonical_combining_class_values.rsv");
-    let canonical_decomposition_data: CanonicalDecompositionData = unimplemented!();
-    canonical_decomposition_data.emit(&dir)?;
+    CanonicalDecompositionData::from(data.iter()).emit(&dir)?;
     println!("> unic::ucd::normal::tables::canonical_decomposition_mapping.rsv");
-    let compatibility_decomposition_data: CompatibilityDecompositionData = unimplemented!();
-    compatibility_decomposition_data.emit(&dir)?;
+    CompatibilityDecompositionData::from(data.iter()).emit(&dir)?;
     println!("> unic::ucd::normal::tables::compatibility_decomposition_mapping.rsv");
     Ok(())
 }

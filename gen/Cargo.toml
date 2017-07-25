@@ -29,4 +29,5 @@ serde_yaml = "0.7"
 lazy_static = "0.2"
 
 # Parsing
+matches = "0.1"
 regex = "0.2"
