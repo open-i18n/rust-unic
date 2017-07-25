@@ -16,6 +16,7 @@ where
 
     for krate in crates {
         let path = super::tables_path(krate.as_ref());
+        #[cfg_attr(feature = "cargo-clippy", allow(single_match))]
         match krate.as_ref() {
             "unic-idna-mapping" => {
                 mapping::generate(path, &idna_version)?;

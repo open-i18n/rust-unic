@@ -50,7 +50,7 @@ impl IdnaMapping {
                     "deviation" => "Deviation",
                     "disallowed" => "Disallowed",
                     "disallowed_STD3_valid" => "DisallowedStd3Valid",
-                    "disallowed_STD3_mapped" => "DisallowedStd3Valid",
+                    "disallowed_STD3_mapped" => "DisallowedStd3Mapped",
                     _ => unreachable!(),
                 },
             )?;
