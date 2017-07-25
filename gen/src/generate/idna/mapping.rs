@@ -121,7 +121,7 @@ impl FromStr for IdnaMapping {
             }
         }
 
-        Ok(IdnaMapping(entries.into()))
+        Ok(IdnaMapping(entries.into_boxed_slice()))
     }
 }
 

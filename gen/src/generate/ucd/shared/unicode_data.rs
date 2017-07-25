@@ -228,7 +228,7 @@ impl FromStr for UnicodeData {
                             .map(|s| u32::from_str_radix(s, 16).unwrap())
                             .map(|codepoint| char::from_u32(codepoint).unwrap())
                             .collect::<Vec<_>>()
-                            .into()
+                            .into_boxed_slice()
                     }),
                     decimal_numeric_value: capture.get(8).map(|m| m.as_str().parse().unwrap()),
                     digit_numeric_value: capture.get(9).map(|m| m.as_str().parse().unwrap()),
@@ -278,7 +278,7 @@ impl FromStr for UnicodeData {
             }
         }
 
-        Ok(UnicodeData(entries.into()))
+        Ok(UnicodeData(entries.into_boxed_slice()))
     }
 }
 
