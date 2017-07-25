@@ -126,8 +126,7 @@ impl<'a> CompatibilityDecompositionData<'a> {
             "{}\n{}",
             PREAMBLE,
             self.0.to_single_bsearch_map(|val| {
-                let mut s = String::from("(\"");
-                write!(s, "(\"{}\",&[", val.0).unwrap();
+                let mut s = format!("(\"{}\", &[", val.0);
                 for char in val.1.iter() {
                     write!(s, "'{}',", char.escape_unicode()).unwrap();
                 }
