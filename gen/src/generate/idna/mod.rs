@@ -18,10 +18,7 @@ where
         let path = super::tables_path(krate.as_ref());
         match krate.as_ref() {
             "unic-idna-mapping" => {
-                mapping::generate(
-                    path,
-                    &idna_version,
-                )?;
+                mapping::generate(path, &idna_version)?;
             }
             _ => (),
         }

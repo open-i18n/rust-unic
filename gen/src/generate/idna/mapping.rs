@@ -113,19 +113,15 @@ impl FromStr for IdnaMapping {
                         .map(|u| char::from_u32(u).unwrap())
                         .unwrap_or(low),
                     status: capture[3].to_owned(),
-                    mapping: capture
-                        .get(4)
-                        .map(|m| m
-                            .as_str()
+                    mapping: capture.get(4).map(|m| {
+                        m.as_str()
                             .split(' ')
                             .map(|s| u32::from_str_radix(s, 16).unwrap())
                             .map(|u| char::from_u32(u).unwrap())
                             .collect::<Vec<_>>()
                             .into_boxed_slice()
-                        ),
-                    idna_2008_status: capture
-                        .get(5)
-                        .map(|m| m.as_str().to_owned()),
+                    }),
+                    idna_2008_status: capture.get(5).map(|m| m.as_str().to_owned()),
                 })
             }
         }
@@ -141,11 +137,7 @@ fn read_idna_data() -> io::Result<IdnaMapping> {
     Ok(buffer.parse().unwrap())
 }
 
-pub fn generate<P: AsRef<Path>>(
-    dir: P,
-    version: &UnicodeVersion,
-) -> io::Result<()>
-{
+pub fn generate<P: AsRef<Path>>(dir: P, version: &UnicodeVersion) -> io::Result<()> {
     println!("> unic::ucd::idna::mapping::unicode_version.rsv");
     version.emit(&dir)?;
     println!(">>> Loading idna IdnaMappingTable");

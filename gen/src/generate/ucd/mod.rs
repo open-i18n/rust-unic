@@ -25,39 +25,19 @@ where
         let path = super::tables_path(krate.as_ref());
         match krate.as_ref() {
             "unic-ucd-age" => {
-                age::generate(
-                    path,
-                    &ucd_version,
-                    &unicode_data,
-                )?;
+                age::generate(path, &ucd_version, &unicode_data)?;
             }
             "unic-ucd-bidi" => {
-                bidi::generate(
-                    path,
-                    &ucd_version,
-                    &unicode_data,
-                )?;
+                bidi::generate(path, &ucd_version, &unicode_data)?;
             }
             "unic-ucd-category" => {
-                category::generate(
-                    path,
-                    &ucd_version,
-                    &unicode_data,
-                )?;
+                category::generate(path, &ucd_version, &unicode_data)?;
             }
             "unic-ucd-core" => {
-                core::generate(
-                    path,
-                    &ucd_version,
-                    &unicode_data,
-                )?;
+                core::generate(path, &ucd_version, &unicode_data)?;
             }
             "unic-ucd-normal" => {
-                normal::generate(
-                    path,
-                    &ucd_version,
-                    &unicode_data,
-                )?;
+                normal::generate(path, &ucd_version, &unicode_data)?;
             }
             _ => (),
         }
