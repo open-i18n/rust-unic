@@ -398,7 +398,7 @@ mod test {
                         simple_lowercase_mapping: None,
                         simple_titlecase_mapping: None,
                     },
-                ].into()
+                ].into_boxed_slice()
             ))
         );
     }
