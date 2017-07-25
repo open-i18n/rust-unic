@@ -1,15 +1,18 @@
 [package]
-name = "unic-ucd-utils"
+name = "unic-utils"
 version = "0.4.0"
 authors = ["The UNIC Project Developers"]
 homepage = "https://github.com/behnam/rust-unic/"
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
 keywords = ["text", "unicode"]
-description = "UNIC - Utilities for working with Unicode Code Points"
+description = "UNIC - Utilities"
 
 # No tests/benches that depends on /data/
 exclude = []
 
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
+
+[dependencies]
+unic-utils-codepoints = { path = "codepoints/", version = "0.4.0" }

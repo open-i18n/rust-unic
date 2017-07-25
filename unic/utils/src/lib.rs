@@ -11,23 +11,9 @@
 
 #![forbid(unsafe_code, missing_docs)]
 
-//! # UNIC — Unicode Character Database
+//! # UNIC — Utilities
 //!
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
-//!
-//! This UNIC component provides access to character properties as defined in the [Unicode
-//! Standard Annex #44 - Unicode Character Database](http://unicode.org/reports/tr44/).
-
-
-pub extern crate unic_ucd_core as core;
-pub extern crate unic_ucd_age as age;
-pub extern crate unic_ucd_bidi as bidi;
-pub extern crate unic_ucd_normal as normal;
-pub extern crate unic_ucd_category as category;
-
-
-/// The [Unicode version](http://www.unicode.org/versions/) of data
-pub use core::UNICODE_VERSION;
 
 
 /// UNIC component version.
@@ -40,7 +26,7 @@ pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
 pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
 
 
-pub use age::{Age, CharAge};
-pub use bidi::{BidiClass, CharBidiClass, StrBidiClass};
-pub use core::UnicodeVersion;
-pub use normal::CanonicalCombiningClass;
+pub extern crate unic_utils_codepoints as codepoints;
+
+
+pub use codepoints::iter_all_chars;

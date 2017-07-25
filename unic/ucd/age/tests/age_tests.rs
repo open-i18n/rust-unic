@@ -11,10 +11,10 @@
 
 extern crate unic_ucd_age;
 extern crate unic_ucd_core;
-extern crate unic_ucd_utils;
+extern crate unic_utils_codepoints;
 
 use unic_ucd_age::{Age, UnicodeVersion, UNICODE_VERSION};
-use unic_ucd_utils::iter_all_chars;
+use unic_utils_codepoints::iter_all_chars;
 
 /// Character *assignement* values always have Unicode Micro (Update) Version value of zero (`0`).
 #[test]
