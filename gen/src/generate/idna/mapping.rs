@@ -54,17 +54,12 @@ impl IdnaMapping {
                     _ => unreachable!(),
                 },
             )?;
-            if matches!(
-                line.status.as_str(),
-                "mapped" | "deviation" | "disallowed_STD3_valid" | "disallowed_ST3_mapped"
-            ) {
-                write!(file, "(&[")?;
-                if let Some(ref chars) = line.mapping {
-                    for char in chars.iter() {
-                        write!(file, "'{}',", char.escape_unicode())?;
-                    }
+            if let Some(ref chars) = line.mapping {
+            write!(file, "(&[")?;
+                for char in chars.iter() {
+                    write!(file, "'{}',", char.escape_unicode())?;
                 }
-                write!(file, "])")?;
+            write!(file, "])")?;
             }
             writeln!(file, "),")?;
         }
@@ -103,7 +98,7 @@ impl FromStr for IdnaMapping {
         /// 8393 is the number of data lines in the Unicode version 10.0.0 IdnaMappingTable.txt
         let mut entries = Vec::with_capacity(8393);
 
-        for capture in REGEX.captures(str) {
+        for capture in REGEX.captures_iter(str) {
             if let Some(low) = char::from_u32(u32::from_str_radix(&capture[1], 16).unwrap()) {
                 entries.push(IdnaDataLine {
                     low,
