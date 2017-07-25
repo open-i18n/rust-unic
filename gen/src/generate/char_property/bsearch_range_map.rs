@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 use std::fmt::Display;
 
-/// A simple deduplicated binary search array slice.
+/// A simple run-collapsing binary search array slice.
 ///
 /// Output format:
 ///
@@ -21,9 +21,9 @@ use std::fmt::Display;
 /// It is guaranteed that the `'high'` of one range will always be less than the `'low'` of
 /// the next range (such that the array slice is fit for a binary search). The ranges
 /// represented by `'low'` and `'high'` are inclusive on both ends.
-pub trait ToBSearchMap<T: Eq> {
+pub trait ToRangeBSearchMap<T: Eq> {
     /// Convert this `BSearchTable` to a `String`.
-    fn to_bsearch_map<F, D>(&self, display_fn: F) -> String
+    fn to_range_bsearch_map<F, D>(&self, display_fn: F) -> String
     where
         F: Fn(&T) -> D,
         D: Display;
@@ -32,17 +32,17 @@ pub trait ToBSearchMap<T: Eq> {
     ///
     /// Intended to be used when the associated value is a string representing the desired
     /// Rust expression output.
-    fn to_bsearch_map_default(&self) -> String
+    fn to_range_bsearch_map_default(&self) -> String
     where
         for<'a> &'a T: Display,
     {
         // FIXME: This format call shouldn't be needed
-        self.to_bsearch_map(|t| format!("{}", t))
+        self.to_range_bsearch_map(|t| format!("{}", t))
     }
 }
 
-impl<T: Eq> ToBSearchMap<T> for BTreeMap<char, T> {
-    fn to_bsearch_map<F, D>(&self, display_fn: F) -> String
+impl<T: Eq> ToRangeBSearchMap<T> for BTreeMap<char, T> {
+    fn to_range_bsearch_map<F, D>(&self, display_fn: F) -> String
     where
         F: Fn(&T) -> D,
         D: Display,
@@ -88,10 +88,10 @@ impl<T: Eq> ToBSearchMap<T> for BTreeMap<char, T> {
 #[cfg(test)]
 mod test {
     use std::collections::BTreeMap;
-    use super::ToBSearchMap;
+    use super::ToRangeBSearchMap;
 
     #[test]
-    fn simple_bsearch_map() {
+    fn simple_range_bsearch_map() {
         let mut map: BTreeMap<char, &'static str> = Default::default();
         map.insert('a', "Low");
         map.insert('b', "Low");

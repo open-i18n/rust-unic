@@ -16,7 +16,7 @@ impl<'a> BidiData<'a> {
     fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
         let BidiData(ref map) = *self;
         let mut file = File::create(dir.as_ref().join("bidi_class_values.rsv"))?;
-        writeln!(file, "{}\n{}", PREAMBLE, map.to_bsearch_map_default())?;
+        writeln!(file, "{}\n{}", PREAMBLE, map.to_range_bsearch_map_default())?;
         Ok(())
     }
 }

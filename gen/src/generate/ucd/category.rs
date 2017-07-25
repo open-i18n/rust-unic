@@ -16,7 +16,7 @@ impl<'a> CategoryData<'a> {
     fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
         let CategoryData(ref map) = *self;
         let mut file = File::create(dir.as_ref().join("general_category.rsv"))?;
-        writeln!(file, "{}\n{}", PREAMBLE, map.to_bsearch_map_default())?;
+        writeln!(file, "{}\n{}", PREAMBLE, map.to_range_bsearch_map_default())?;
         Ok(())
     }
 }
