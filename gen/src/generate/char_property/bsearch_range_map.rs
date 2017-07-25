@@ -18,11 +18,11 @@ use std::fmt::Display;
 /// - `'high'` is a `char::escape_unicode` literal for the highest character in the range
 /// - `Value` is the result of running `display_fn` over the associated value
 ///
-/// It is guaranteed that the `'high'` of one range will always be less than the `'low'` of
+/// It is guaranteed that the `'high'` of one range will always be ordered before the `'low'` of
 /// the next range (such that the array slice is fit for a binary search). The ranges
 /// represented by `'low'` and `'high'` are inclusive on both ends.
 pub trait ToRangeBSearchMap<T: Eq> {
-    /// Convert this `BSearchTable` to a `String`.
+    /// Convert this mapping to a `String`.
     fn to_range_bsearch_map<F, D>(&self, display_fn: F) -> String
     where
         F: Fn(&T) -> D,
@@ -30,8 +30,7 @@ pub trait ToRangeBSearchMap<T: Eq> {
 
     /// A simple default for when the associated value already impls `fmt::Display`.
     ///
-    /// Intended to be used when the associated value is a string representing the desired
-    /// Rust expression output.
+    /// Intended to be used when the associated value is a string representing the desired output.
     fn to_range_bsearch_map_default(&self) -> String
     where
         for<'a> &'a T: Display,

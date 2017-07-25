@@ -8,7 +8,7 @@ use std::str::FromStr;
 use super::{UnicodeData, UnicodeVersion};
 
 use generate::PREAMBLE;
-use generate::char_property::CharMap;
+use generate::char_property::ToRangeBSearchMap;
 
 use regex::Regex;
 

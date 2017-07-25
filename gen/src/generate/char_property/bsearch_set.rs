@@ -1,6 +1,6 @@
 use std::collections::BTreeSet;
 
-/// A simple deduplicated binary search array slice.
+/// A simple range-collapsing binary search array slice.
 ///
 /// Output format:
 ///
@@ -16,10 +16,11 @@ use std::collections::BTreeSet;
 /// - `'low'` is a `char::escape_unicode` literal for the lowest character in the range
 /// - `'high'` is a `char::escape_unicode` literal for the highest character in the range
 ///
-/// It is guaranteed that the `'high'` of one range will always be less than the `'low'` of
+/// It is guaranteed that the `'high'` of one range will always be ordered before the `'low'` of
 /// the next range (such that the array slice is fit for a binary search). The ranges
 /// represented by `'low'` and `'high'` are inclusive on both ends.
 pub trait ToBSearchSet {
+    /// Convert this set to a `String`
     fn to_bsearch_set(&self) -> String;
 }
 

@@ -7,7 +7,7 @@ use std::path::Path;
 use super::{UnicodeData, UnicodeDataEntry, UnicodeVersion};
 
 use generate::PREAMBLE;
-use generate::char_property::CharMap;
+use generate::char_property::ToRangeBSearchMap;
 
 #[derive(Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 struct CategoryData<'a>(BTreeMap<char, &'a str>);
