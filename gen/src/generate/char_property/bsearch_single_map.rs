@@ -19,7 +19,7 @@ use std::fmt::Display;
 ///
 /// It is guaranteed that the `'char'` of one entry will always be ordered before the `'char'` of
 /// the next range (such that the array slice is fit for a binary search).
-pub trait ToSingleBSearchMap<T: Eq> {
+pub trait ToSingleBSearchMap<T> {
     /// Convert this mapping to a `String`.
     fn to_single_bsearch_map<F, D>(&self, display_fn: F) -> String
         where
@@ -38,7 +38,7 @@ pub trait ToSingleBSearchMap<T: Eq> {
     }
 }
 
-impl<T: Eq> ToSingleBSearchMap<T> for BTreeMap<char, T> {
+impl<T> ToSingleBSearchMap<T> for BTreeMap<char, T> {
     fn to_single_bsearch_map<F, D>(&self, display_fn: F) -> String
     where
         F: Fn(&T) -> D,
