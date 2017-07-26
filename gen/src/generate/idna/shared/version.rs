@@ -51,5 +51,9 @@ pub fn read_unicode_version() -> io::Result<UnicodeVersion> {
     let mut file = File::open(Path::new("data/idna/ReadMe.txt"))?;
     let mut buffer = String::new();
     file.read_to_string(&mut buffer)?;
-    Ok(buffer.parse().unwrap())
+    Ok(
+        buffer
+            .parse()
+            .expect("Failed to parse Idna ReadMe (for version)"),
+    )
 }

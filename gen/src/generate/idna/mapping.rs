@@ -128,7 +128,7 @@ fn read_idna_data() -> io::Result<IdnaMapping> {
     let mut file = File::open(Path::new("data/idna/IdnaMappingTable.txt"))?;
     let mut buffer = String::new();
     file.read_to_string(&mut buffer)?;
-    Ok(buffer.parse().unwrap())
+    Ok(buffer.parse().expect("Failed to parse IdnaMappingTable"))
 }
 
 pub fn generate<P: AsRef<Path>>(dir: P, version: &UnicodeVersion) -> io::Result<()> {

@@ -286,7 +286,7 @@ pub fn read_unicode_data() -> io::Result<UnicodeData> {
     let mut file = File::open(Path::new("data/ucd/UnicodeData.txt"))?;
     let mut buffer = String::new();
     file.read_to_string(&mut buffer)?;
-    Ok(buffer.parse().unwrap())
+    Ok(buffer.parse().expect("Failed to parse UnicodeData"))
 }
 
 #[cfg(test)]
