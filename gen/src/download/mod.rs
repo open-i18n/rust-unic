@@ -53,7 +53,8 @@ const DOWNLOADS: &'static str = "gen/config/config.toml";
 pub fn download(components: &[&str]) -> Result<(), Box<Error>> {
     let mut file = File::open(Path::new(DOWNLOADS)).expect("Failed to open config.toml");
     let mut buffer = String::new();
-    file.read_to_string(&mut buffer).expect("Failed to read config.toml");
+    file.read_to_string(&mut buffer)
+        .expect("Failed to read config.toml");
 
     let config: Config = toml::from_str(&buffer).expect("Failed to parse downloads.yaml");
 

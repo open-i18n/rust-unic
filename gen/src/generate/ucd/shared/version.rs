@@ -49,5 +49,9 @@ pub fn read_unicode_version() -> io::Result<UnicodeVersion> {
     let mut file = File::open(Path::new("data/ucd/ReadMe.txt"))?;
     let mut buffer = String::new();
     file.read_to_string(&mut buffer)?;
-    Ok(buffer.parse().expect("Failed to parse UCD ReadMe (for version)"))
+    Ok(
+        buffer
+            .parse()
+            .expect("Failed to parse UCD ReadMe (for version)"),
+    )
 }

@@ -7,7 +7,7 @@ use std::path::Path;
 
 pub use self::shared::version::UnicodeVersion;
 
-pub fn generate()-> io::Result<()> {
+pub fn generate() -> io::Result<()> {
     println!(">>> Loading idna Version");
     let idna_version = shared::version::read_unicode_version()?;
 
