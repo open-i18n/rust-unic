@@ -1,5 +1,3 @@
-// TODO: Unify this with generate::ucd::shared::version
-
 use std::fs::File;
 use std::io::{self, Read, Write};
 use std::path::Path;
