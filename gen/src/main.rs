@@ -62,9 +62,15 @@ fn main() {
     }
 
     if !download && !generate {
-        eprintln!("{}\n", matches.usage());
-        eprintln!("Either the --download or --generate flag must be present.");
-        eprintln!("For more information try --help");
+        use std::io::Write;
+        let stderr = std::io::stderr();
+        let mut err = stderr.lock();
+        writeln!(err, "{}\n", matches.usage()).unwrap();
+        writeln!(
+            err,
+            "Either the --download or --generate flag must be present."
+        ).unwrap();
+        writeln!(err, "For more information try --help").unwrap();
         std::process::exit(1);
     }
 }
