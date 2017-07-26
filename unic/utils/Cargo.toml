@@ -13,6 +13,3 @@ exclude = []
 
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
-
-[dependencies]
-unic-utils-codepoints = { path = "codepoints/", version = "0.4.0" }

@@ -10,10 +10,10 @@
 
 
 extern crate unic_ucd_normal;
-extern crate unic_utils_codepoints;
+extern crate unic_utils;
 
 use unic_ucd_normal::DecompositionType as DT;
-use unic_utils_codepoints::iter_all_chars;
+use unic_utils::iter_all_chars;
 use std::collections::HashSet as Set;
 use std::{char, u32};
 
