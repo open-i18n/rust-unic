@@ -5,7 +5,7 @@ authors = ["The UNIC Project Developers"]
 homepage = "https://github.com/behnam/rust-unic/"
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
-description = "UNIC - Unicode Character Database - Table Generation"
+description = "UNIC - Table Generation"
 publish = false
 
 [badges]
