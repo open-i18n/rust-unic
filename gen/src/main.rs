@@ -20,6 +20,9 @@ extern crate regex;
 mod download;
 mod generate;
 
+/// Validate component target names passed in
+#[cfg_attr(rustfmt, allow(needless_pass_by_value))]
+// This signature is enforced by clap
 fn validate_component_name(name: String) -> Result<(), String> {
     if matches!(name.as_str(), "idna" | "ucd") {
         Ok(())

@@ -37,6 +37,7 @@ where
     }
 }
 
+/// Generate tables for the ucd-category crate
 pub fn generate<P: AsRef<Path>>(
     dir: P,
     version: &UnicodeVersion,

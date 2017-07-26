@@ -162,6 +162,7 @@ where
     }
 }
 
+/// Generate tables for the ucd-normal crate
 pub fn generate<P: AsRef<Path>>(
     dir: P,
     version: &UnicodeVersion,

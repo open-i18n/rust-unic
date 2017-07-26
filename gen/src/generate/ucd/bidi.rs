@@ -62,6 +62,7 @@ where
     }
 }
 
+/// Generate tables for the ucd-bidi crate
 pub fn generate<P: AsRef<Path>>(
     dir: P,
     version: &UnicodeVersion,

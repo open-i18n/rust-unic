@@ -7,6 +7,7 @@ use std::path::Path;
 
 pub use self::shared::version::UnicodeVersion;
 
+/// Generate all tables for the Idna component
 pub fn generate() -> io::Result<()> {
     println!(">>> Loading idna Version");
     let idna_version = shared::version::read_unicode_version()?;

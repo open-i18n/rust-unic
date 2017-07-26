@@ -3,6 +3,7 @@ use std::path::Path;
 
 use super::{UnicodeData, UnicodeVersion};
 
+/// Generate tables for the ucd-core crate
 pub fn generate<P: AsRef<Path>>(
     path: P,
     version: &UnicodeVersion,

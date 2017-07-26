@@ -72,6 +72,7 @@ impl FromStr for AgeData {
     }
 }
 
+/// Generate tables for the ucd-age crate
 pub fn generate<P: AsRef<Path>>(
     dir: P,
     version: &UnicodeVersion,

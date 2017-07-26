@@ -12,6 +12,7 @@ use std::path::Path;
 pub use self::shared::unicode_data::{UnicodeData, UnicodeDataEntry};
 pub use self::shared::version::UnicodeVersion;
 
+/// Generate all tables for the UCD component
 pub fn generate() -> io::Result<()> {
     println!(">>> Loading UCD Version");
     let ucd_version = shared::version::read_unicode_version()?;

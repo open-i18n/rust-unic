@@ -131,6 +131,7 @@ fn read_idna_data() -> io::Result<IdnaMapping> {
     Ok(buffer.parse().expect("Failed to parse IdnaMappingTable"))
 }
 
+/// Generate tables for the idna-mapping crate
 pub fn generate<P: AsRef<Path>>(dir: P, version: &UnicodeVersion) -> io::Result<()> {
     println!("> unic::ucd::idna::mapping::unicode_version.rsv");
     version.emit(&dir)?;
