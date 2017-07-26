@@ -20,22 +20,27 @@ pub fn generate() -> io::Result<()> {
     let unicode_data = shared::unicode_data::read_unicode_data()?;
 
     let path = Path::new("unic/ucd/age/src/tables");
+    fs::remove_dir_all(path)?;
     fs::create_dir_all(path)?;
     age::generate(path, &ucd_version, &unicode_data)?;
 
     let path = Path::new("unic/ucd/bidi/src/tables");
+    fs::remove_dir_all(path)?;
     fs::create_dir_all(path)?;
     bidi::generate(path, &ucd_version, &unicode_data)?;
 
     let path = Path::new("unic/ucd/category/src/tables");
+    fs::remove_dir_all(path)?;
     fs::create_dir_all(path)?;
     category::generate(path, &ucd_version, &unicode_data)?;
 
     let path = Path::new("unic/ucd/core/src/tables");
+    fs::remove_dir_all(path)?;
     fs::create_dir_all(path)?;
     core::generate(path, &ucd_version, &unicode_data)?;
 
     let path = Path::new("unic/ucd/normal/src/tables");
+    fs::remove_dir_all(path)?;
     fs::create_dir_all(path)?;
     normal::generate(path, &ucd_version, &unicode_data)?;
 
