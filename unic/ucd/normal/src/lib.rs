@@ -29,6 +29,8 @@
 //! ```
 
 extern crate unic_ucd_core;
+#[cfg(feature = "unic-ucd-category")]
+extern crate unic_ucd_category;
 
 
 mod canonical_combining_class;

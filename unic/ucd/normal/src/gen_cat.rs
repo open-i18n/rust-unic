@@ -10,17 +10,28 @@
 // except according to those terms.
 
 
+#[cfg(not(feature = "unic-ucd-category"))]
 use std::cmp::Ordering;
-
+#[cfg(feature = "unic-ucd-category")]
+use unic_ucd_category::GeneralCategory;
 
 // General_Category = Mark
+#[cfg(not(feature = "unic-ucd-category"))]
 const GENERAL_CATEGORY_MARK: &'static [(char, char)] = include!("tables/general_category_mark.rsv");
 
 /// Return whether the given character is a combining mark (`General_Category=Mark`)
+#[cfg(not(feature = "unic-ucd-category"))]
 pub fn is_combining_mark(c: char) -> bool {
     bsearch_range_table(c, GENERAL_CATEGORY_MARK)
 }
 
+/// Return whether the given character is a combining mark (`General_Category=Mark`)
+#[cfg(feature = "unic-ucd-category")]
+pub fn is_combining_mark(c: char) -> bool {
+    GeneralCategory::of(c).is_mark()
+}
+
+#[cfg(not(feature = "unic-ucd-category"))]
 fn bsearch_range_table(c: char, r: &'static [(char, char)]) -> bool {
     r.binary_search_by(|&(lo, hi)| if lo <= c && c <= hi {
         Ordering::Equal

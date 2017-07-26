@@ -11,11 +11,15 @@ description = "UNIC - Unicode Character Database - Normalization Properties"
 # No tests/benches that depends on /data/
 exclude = ["tests/conformance_tests.rs"]
 
+[features]
+default = []
+
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
 [dependencies]
 unic-ucd-core = { path = "../core/", version = "0.4.0" }
+unic-ucd-category = { path = "../category/", version = "0.4.0", optional = true }
 
 [dev-dependencies]
 unic-utils = { path = "../../utils", version = "0.4.0" }
