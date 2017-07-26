@@ -136,7 +136,7 @@ pub fn generate<P: AsRef<Path>>(dir: P, version: &UnicodeVersion) -> io::Result<
     version.emit(&dir)?;
     println!(">>> Loading idna IdnaMappingTable");
     let idna_data = read_idna_data()?;
-    println!("> unic::ucd::idna::maping::idna_mapping.rsv");
+    println!("> unic::ucd::idna::mapping::idna_mapping.rsv");
     idna_data.emit(&dir)?;
     Ok(())
 }
