@@ -13,7 +13,7 @@ travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
 [dependencies]
 # Command line argument parsing
-getopts = "0.2"
+clap = "2.25"
 
 # Download Unicode files from the web
 futures = "0.1"
@@ -23,7 +23,7 @@ tokio-core = "0.1"
 # Config parsing
 serde = "1.0"
 serde_derive = "1.0"
-serde_yaml = "0.7"
+toml = "0.4"
 
 # Memoization
 lazy_static = "0.2"

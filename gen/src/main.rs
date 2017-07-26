@@ -1,4 +1,5 @@
-extern crate getopts;
+#[macro_use]
+extern crate clap;
 
 extern crate futures;
 extern crate hyper;
@@ -7,7 +8,7 @@ extern crate tokio_core;
 #[macro_use]
 extern crate serde_derive;
 extern crate serde;
-extern crate serde_yaml;
+extern crate toml;
 
 #[macro_use]
 extern crate lazy_static;
@@ -19,112 +20,51 @@ extern crate regex;
 mod download;
 mod generate;
 
-use std::collections::HashMap;
-use std::env;
-use std::fs::File;
-use std::io::BufReader;
-use std::path::Path;
-
-use download::download;
-use generate::generate_all;
-
-use getopts::Options;
+fn validate_component_name(name: String) -> Result<(), String> {
+    if matches!(name.as_str(), "idna" | "ucd") {
+        Ok(())
+    } else {
+        Err(format!(
+            "Valid components are `idna` and `ucd`, you put `{}`",
+            name
+        ))
+    }
+}
 
 fn main() {
-    let mut opts = Options::new();
+    let matches = clap_app!(unic_gen =>
+        (author: "The UNIC Project Developers")
+        (about: "Download data files and generate data tables for UNIC crates")
+        (@arg components: * ...
+            {validate_component_name} "Components to download data and generate tables for")
+        (@arg download: -d --download "Download the data files")
+        (@arg generate: -g --generate "Generate the data tables")
+    ).get_matches();
 
-    opts.optflag("h", "help", "Print this help menu.");
-    opts.optopt(
-        "u",
-        "unicode-version",
-        "The version of the unicode standard to download.  \
-         If omitted, the local cache will be used.",
-        "VERSION",
-    );
-    opts.optmulti(
-        "",
-        "crate",
-        "A crate to generate tables for.  \
-         This propogates through the tree: if you specify only `unic`, all crates will be built.",
-        "CRATE",
-    );
+    let components: Vec<_> = matches
+        .values_of("components")
+        .expect("Required argument missing")
+        .collect();
+    let download = matches.is_present("download");
+    let generate = matches.is_present("generate");
 
-    let matches = opts.parse(env::args().skip(1))
-        .unwrap_or_else(|e| panic!(e.to_string()));
-
-    if matches.opt_present("h") {
-        print_usage(&opts);
-        return;
+    if download {
+        download::download(&components).expect("Failed to download data");
     }
 
-    matches.opt_str("u").map(|version| {
-        println!("Downloading Unicode resources version {}...", version);
-        download(version.as_str()).expect("Failed to download Unicode resources");
-        println!("Finished.");
-    });
-
-    let crates = expand_sub_crates(matches.opt_strs("crate").into_iter());
-
-    if crates.is_empty() {
-        if !matches.opt_present("u") {
-            print_usage(&opts);
+    if generate {
+        if components.contains(&"idna") {
+            generate::idna::generate().expect("Failed to generate Idna tables");
         }
-        return;
+        if components.contains(&"ucd") {
+            generate::ucd::generate().expect("Failed to generate UCD tables");
+        }
     }
 
-    println!("Generating sources for {} crates...", crates.len());
-    generate_all(crates).expect("Failed to generate sources");
-    println!("Finished.");
-}
-
-/// Path to crate disassembly mapping (YAML).
-///
-/// Format:
-///
-/// ```yaml
-/// ---
-/// crate:
-///   - "crate-subcrate1"
-///   - "crate-subcrate2"
-/// crate-subcrate1:
-///   - "crate-subcrate1-subcrate"
-/// ```
-const CRATES: &'static str = "gen/config/crates.yaml";
-
-/// Take a crate name in the UNIC hierarchy and expand it into all subcrates.
-///
-/// Reads `config/crates.yaml` for the crate disassembly process.
-///
-/// Technically, a crate only needs to be in that mapping if it needs to have sources built.
-/// For consistency, all crates that need generated sources or not should be passed into the
-/// generation module, which will ignore crates it doesn't need to do anything for.
-fn expand_sub_crates<I>(list: I) -> Vec<String>
-where
-    I: Iterator<Item = String>,
-{
-    let file = File::open(Path::new(CRATES)).expect("Failed to open crates.yaml");
-
-    let crate_mapping: HashMap<String, Vec<String>> =
-        serde_yaml::from_reader(BufReader::new(file)).expect("Failed to parse crates.yaml");
-
-    list.into_iter()
-        .flat_map(|name| {
-            crate_mapping
-                .get(&name)
-                .map(|crates| {
-                    let mut subcrates = expand_sub_crates(crates.iter().cloned());
-                    subcrates.push(name.clone());
-                    subcrates
-                })
-                .unwrap_or_else(|| vec![name])
-        })
-        .collect()
-}
-
-/// Command line execution format before this binary's arguments
-const TO_INVOKE: &'static str = "cargo run --release --package=unic-gen --";
-
-/// Print the usage of this tool to STDOUT
-fn print_usage(opts: &Options) {
-    print!("{}", opts.usage(&opts.short_usage(TO_INVOKE)));
+    if !download && !generate {
+        eprintln!("{}\n", matches.usage());
+        eprintln!("Either the --download or --generate flag must be present.");
+        eprintln!("For more information try --help");
+        std::process::exit(1);
+    }
 }

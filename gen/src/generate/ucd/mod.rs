@@ -6,42 +6,37 @@ mod category;
 mod core;
 mod normal;
 
-use std::io;
+use std::{fs, io};
+use std::path::Path;
 
 pub use self::shared::unicode_data::{UnicodeData, UnicodeDataEntry};
 pub use self::shared::version::UnicodeVersion;
 
-pub fn generate_all<I, S>(crates: I) -> io::Result<()>
-where
-    I: Iterator<Item = S>,
-    S: AsRef<str>,
-{
+pub fn generate() -> io::Result<()> {
     println!(">>> Loading UCD Version");
     let ucd_version = shared::version::read_unicode_version()?;
     println!(">>> Loading UCD UnicodeData");
     let unicode_data = shared::unicode_data::read_unicode_data()?;
 
-    for krate in crates {
-        let path = super::tables_path(krate.as_ref());
-        match krate.as_ref() {
-            "unic-ucd-age" => {
-                age::generate(path, &ucd_version, &unicode_data)?;
-            }
-            "unic-ucd-bidi" => {
-                bidi::generate(path, &ucd_version, &unicode_data)?;
-            }
-            "unic-ucd-category" => {
-                category::generate(path, &ucd_version, &unicode_data)?;
-            }
-            "unic-ucd-core" => {
-                core::generate(path, &ucd_version, &unicode_data)?;
-            }
-            "unic-ucd-normal" => {
-                normal::generate(path, &ucd_version, &unicode_data)?;
-            }
-            _ => (),
-        }
-    }
+    let path = Path::new("unic/ucd/age/src/tables");
+    fs::create_dir_all(path)?;
+    age::generate(path, &ucd_version, &unicode_data)?;
+
+    let path = Path::new("unic/ucd/bidi/src/tables");
+    fs::create_dir_all(path)?;
+    bidi::generate(path, &ucd_version, &unicode_data)?;
+
+    let path = Path::new("unic/ucd/category/src/tables");
+    fs::create_dir_all(path)?;
+    category::generate(path, &ucd_version, &unicode_data)?;
+
+    let path = Path::new("unic/ucd/core/src/tables");
+    fs::create_dir_all(path)?;
+    core::generate(path, &ucd_version, &unicode_data)?;
+
+    let path = Path::new("unic/ucd/normal/src/tables");
+    fs::create_dir_all(path)?;
+    normal::generate(path, &ucd_version, &unicode_data)?;
 
     Ok(())
 }
