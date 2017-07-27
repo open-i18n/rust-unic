@@ -31,7 +31,7 @@
 extern crate unic_ucd_core;
 
 
-mod canonical_combining_class;
+pub mod canonical_combining_class;
 mod composition;
 mod decompose;
 mod gen_cat;

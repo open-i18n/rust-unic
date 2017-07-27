@@ -12,11 +12,6 @@
 
 //! Accessor for Canonical_Combining_Class (ccc) property
 
-// TODO: [API] Support Canonical_Combining_Class_Values, either by creating a separate `enum` type,
-// or converting `CanonicalCombiningClass` into enum and allowing access to numerical value.
-// <http://unicode.org/reports/tr44/#Canonical_Combining_Class_Values>
-
-// TODO: Use associate type `u8`
 
 use std::cmp::Ordering;
 
@@ -24,32 +19,91 @@ use std::cmp::Ordering;
 /// Represents *Canonical_Combining_Class* property of a Unicode character.
 ///
 /// * <http://unicode.org/reports/tr44/#Canonical_Combining_Class>
-pub trait CanonicalCombiningClass {
-    /// If the *ccc* has value `Not_Reordered` (`0`).
-    fn ccc_is_not_reordered(&self) -> bool;
+#[derive(Copy, Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub struct CanonicalCombiningClass(u8);
+
+
+// TODO: Once we fully adopt 1.20 change these to associated consts on CanonicalCombiningClass
+/// Canonical Combining Classes by their name
+#[allow(non_upper_case_globals)]
+pub mod values {
+    use super::CanonicalCombiningClass as CCC;
+
+    /// Spacing and enclosing marks; also many vowel and consonant signs, even if nonspacing
+    pub const NotReordered: CCC = CCC(0);
+    /// Marks which overlay a base letter or symbol
+    pub const Overlay: CCC = CCC(1);
+    /// Diacritic nukta marks in Brahmi-derived scripts
+    pub const Nukta: CCC = CCC(7);
+    /// Hiragana/Katakana voicing marks
+    pub const KanaVoicing: CCC = CCC(8);
+    /// Viramas
+    pub const Virama: CCC = CCC(9);
+    /// Marks attached at the bottom left
+    pub const AttatchedBelowLeft: CCC = CCC(200);
+    /// Marks attached directly below
+    pub const AttachedBelow: CCC = CCC(202);
+    /// Marks attached at the bottom right
+    pub const AttachedBelowRight: CCC = CCC(204);
+    /// Marks attached to the left
+    pub const AttachedLeft: CCC = CCC(208);
+    /// Marks attached to the right
+    pub const AttachedRight: CCC = CCC(210);
+    /// Marks attached at the top left
+    pub const AttachedAboveLeft: CCC = CCC(212);
+    /// Marks attached directly above
+    pub const AttatchedAbove: CCC = CCC(214);
+    /// Marks attached at the top right
+    pub const AttatchedAboveRight: CCC = CCC(216);
+    /// Distinct marks at the bottom left
+    pub const BelowLeft: CCC = CCC(218);
+    /// Distinct marks directly below
+    pub const Below: CCC = CCC(220);
+    /// Distinct marks at the bottom right
+    pub const BelowRight: CCC = CCC(222);
+    /// Distinct marks to the left
+    pub const Left: CCC = CCC(224);
+    /// Distinct marks to the right
+    pub const Right: CCC = CCC(226);
+    /// Distinct marks at the top left
+    pub const AboveLeft: CCC = CCC(228);
+    /// Distinct marks directly above
+    pub const Above: CCC = CCC(230);
+    /// Distinct marks at the top right
+    pub const AboveRight: CCC = CCC(232);
+    /// Distinct marks subtending two bases
+    pub const DoubleBelow: CCC = CCC(233);
+    /// Distinct marks extending above two bases
+    pub const DoubleAbove: CCC = CCC(234);
+    /// Greek iota subscript only
+    pub const IotaSubscript: CCC = CCC(240);
 }
 
 
-const CANONICAL_COMBINING_CLASS_VALUES: &'static [(char, char, u8)] =
+const CANONICAL_COMBINING_CLASS_VALUES: &'static [(char, char, CanonicalCombiningClass)] =
     include!("tables/canonical_combining_class_values.rsv");
 
 
 impl CanonicalCombiningClass {
     /// Lookup Canonical Combining Class of the character
-    pub fn of(ch: char) -> u8 {
+    pub fn of(ch: char) -> CanonicalCombiningClass {
         bsearch_range_value_table(ch, CANONICAL_COMBINING_CLASS_VALUES)
     }
 }
 
 
-impl CanonicalCombiningClass for u8 {
-    fn ccc_is_not_reordered(&self) -> bool {
-        *self == 0
+impl CanonicalCombiningClass {
+    /// If the *ccc* has value `Not_Reordered` (`0`).
+    pub fn is_not_reordered(&self) -> bool {
+        self.0 == 0
     }
 }
 
 
-fn bsearch_range_value_table(c: char, r: &'static [(char, char, u8)]) -> u8 {
+fn bsearch_range_value_table(
+    c: char,
+    r: &'static [(char, char, CanonicalCombiningClass)],
+) -> CanonicalCombiningClass {
     match r.binary_search_by(|&(lo, hi, _)| if lo <= c && c <= hi {
         Ordering::Equal
     } else if hi < c {
@@ -61,114 +115,115 @@ fn bsearch_range_value_table(c: char, r: &'static [(char, char, u8)]) -> u8 {
             let (_, _, result) = r[idx];
             result
         }
-        Err(_) => 0,
+        Err(_) => CanonicalCombiningClass(0),
     }
 }
 
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use super::CanonicalCombiningClass as CCC;
+    use super::values as ccc;
 
     #[test]
     fn test_ascii() {
-        assert_eq!(CanonicalCombiningClass::of('\u{0000}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{0040}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{0041}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{0062}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{007F}'), 0);
+        assert_eq!(CCC::of('\u{0000}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{0040}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{0041}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{0062}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{007F}'), ccc::NotReordered);
     }
 
     #[test]
     fn test_bmp() {
         // Combining Diacritical Marks
-        assert_eq!(CanonicalCombiningClass::of('\u{0300}'), 230);
-        assert_eq!(CanonicalCombiningClass::of('\u{0314}'), 230);
-        assert_eq!(CanonicalCombiningClass::of('\u{0315}'), 232);
-        assert_eq!(CanonicalCombiningClass::of('\u{0316}'), 220);
-        assert_eq!(CanonicalCombiningClass::of('\u{0319}'), 220);
+        assert_eq!(CCC::of('\u{0300}'), ccc::Above);
+        assert_eq!(CCC::of('\u{0314}'), ccc::Above);
+        assert_eq!(CCC::of('\u{0315}'), ccc::AboveRight);
+        assert_eq!(CCC::of('\u{0316}'), ccc::Below);
+        assert_eq!(CCC::of('\u{0319}'), ccc::Below);
 
         // Hebrew
-        assert_eq!(CanonicalCombiningClass::of('\u{0590}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{05D0}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{05D1}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{05FF}'), 0);
+        assert_eq!(CCC::of('\u{0590}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{05D0}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{05D1}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{05FF}'), ccc::NotReordered);
 
         // Arabic
-        assert_eq!(CanonicalCombiningClass::of('\u{0600}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{0627}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{064B}'), 27);
-        assert_eq!(CanonicalCombiningClass::of('\u{064C}'), 28);
-        assert_eq!(CanonicalCombiningClass::of('\u{064D}'), 29);
-        assert_eq!(CanonicalCombiningClass::of('\u{064E}'), 30);
-        assert_eq!(CanonicalCombiningClass::of('\u{064F}'), 31);
-        assert_eq!(CanonicalCombiningClass::of('\u{0650}'), 32);
-        assert_eq!(CanonicalCombiningClass::of('\u{0651}'), 33);
-        assert_eq!(CanonicalCombiningClass::of('\u{0652}'), 34);
+        assert_eq!(CCC::of('\u{0600}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{0627}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{064B}'), CCC(27));
+        assert_eq!(CCC::of('\u{064C}'), CCC(28));
+        assert_eq!(CCC::of('\u{064D}'), CCC(29));
+        assert_eq!(CCC::of('\u{064E}'), CCC(30));
+        assert_eq!(CCC::of('\u{064F}'), CCC(31));
+        assert_eq!(CCC::of('\u{0650}'), CCC(32));
+        assert_eq!(CCC::of('\u{0651}'), CCC(33));
+        assert_eq!(CCC::of('\u{0652}'), CCC(34));
 
-        assert_eq!(CanonicalCombiningClass::of('\u{07BF}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{07C0}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{085F}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{0860}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{0870}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{089F}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{08A0}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{089F}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{08FF}'), 230);
+        assert_eq!(CCC::of('\u{07BF}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{07C0}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{085F}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{0860}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{0870}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{089F}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{08A0}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{089F}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{08FF}'), ccc::Above);
 
         //  Currency Symbols
-        assert_eq!(CanonicalCombiningClass::of('\u{20A0}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{20CF}'), 0);
+        assert_eq!(CCC::of('\u{20A0}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{20CF}'), ccc::NotReordered);
 
         // Arabic Presentation Forms
-        assert_eq!(CanonicalCombiningClass::of('\u{FB1D}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{FB4F}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{FB50}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{FDCF}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{FDF0}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{FDFF}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{FE70}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{FEFE}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{FEFF}'), 0);
+        assert_eq!(CCC::of('\u{FB1D}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{FB4F}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{FB50}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{FDCF}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{FDF0}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{FDFF}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{FE70}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{FEFE}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{FEFF}'), ccc::NotReordered);
 
         // noncharacters
-        assert_eq!(CanonicalCombiningClass::of('\u{FDD0}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{FDD1}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{FDEE}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{FDEF}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{FFFE}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{FFFF}'), 0);
+        assert_eq!(CCC::of('\u{FDD0}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{FDD1}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{FDEE}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{FDEF}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{FFFE}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{FFFF}'), ccc::NotReordered);
     }
 
     #[test]
     fn test_smp() {
-        assert_eq!(CanonicalCombiningClass::of('\u{10000}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{101fc}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{101fd}'), 220);
-        assert_eq!(CanonicalCombiningClass::of('\u{101fe}'), 0);
+        assert_eq!(CCC::of('\u{10000}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{101fc}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{101fd}'), ccc::Below);
+        assert_eq!(CCC::of('\u{101fe}'), ccc::NotReordered);
 
-        assert_eq!(CanonicalCombiningClass::of('\u{1e000}'), 230);
+        assert_eq!(CCC::of('\u{1e000}'), ccc::Above);
 
-        assert_eq!(CanonicalCombiningClass::of('\u{1e949}'), 230);
-        assert_eq!(CanonicalCombiningClass::of('\u{1e94a}'), 7);
-        assert_eq!(CanonicalCombiningClass::of('\u{1e94b}'), 0);
+        assert_eq!(CCC::of('\u{1e949}'), ccc::Above);
+        assert_eq!(CCC::of('\u{1e94a}'), CCC(7));
+        assert_eq!(CCC::of('\u{1e94b}'), ccc::NotReordered);
 
-        assert_eq!(CanonicalCombiningClass::of('\u{1efff}'), 0);
+        assert_eq!(CCC::of('\u{1efff}'), ccc::NotReordered);
 
         // noncharacters
-        assert_eq!(CanonicalCombiningClass::of('\u{1fffe}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{1ffff}'), 0);
+        assert_eq!(CCC::of('\u{1fffe}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{1ffff}'), ccc::NotReordered);
     }
 
     #[test]
     fn test_unassigned_planes() {
-        assert_eq!(CanonicalCombiningClass::of('\u{30000}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{40000}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{50000}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{60000}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{70000}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{80000}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{90000}'), 0);
-        assert_eq!(CanonicalCombiningClass::of('\u{a0000}'), 0);
+        assert_eq!(CCC::of('\u{30000}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{40000}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{50000}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{60000}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{70000}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{80000}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{90000}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{a0000}'), ccc::NotReordered);
     }
 }
