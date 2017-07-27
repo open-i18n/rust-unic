@@ -9,38 +9,41 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #[cfg(not(feature = "unic-ucd-category"))]
-use std::cmp::Ordering;
+mod mark {
+    use std::cmp::Ordering;
+
+    const GENERAL_CATEGORY_MARK: &'static [(char, char)] =
+        include!("tables/general_category_mark.rsv");
+
+    /// Return whether the given character is a combining mark (`General_Category=Mark`)
+    pub fn is_combining_mark(c: char) -> bool {
+        bsearch_range_table(c, GENERAL_CATEGORY_MARK)
+    }
+
+    fn bsearch_range_table(c: char, r: &'static [(char, char)]) -> bool {
+        r.binary_search_by(|&(lo, hi)| if lo <= c && c <= hi {
+            Ordering::Equal
+        } else if hi < c {
+            Ordering::Less
+        } else {
+            Ordering::Greater
+        }).is_ok()
+    }
+}
+
 #[cfg(feature = "unic-ucd-category")]
-use unic_ucd_category::GeneralCategory;
+mod mark {
+    extern crate unic_ucd_category;
+    use self::unic_ucd_category::GeneralCategory;
 
-// General_Category = Mark
-#[cfg(not(feature = "unic-ucd-category"))]
-const GENERAL_CATEGORY_MARK: &'static [(char, char)] = include!("tables/general_category_mark.rsv");
-
-/// Return whether the given character is a combining mark (`General_Category=Mark`)
-#[cfg(not(feature = "unic-ucd-category"))]
-pub fn is_combining_mark(c: char) -> bool {
-    bsearch_range_table(c, GENERAL_CATEGORY_MARK)
+    /// Return whether the given character is a combining mark (`General_Category=Mark`)
+    pub fn is_combining_mark(c: char) -> bool {
+        GeneralCategory::of(c).is_mark()
+    }
 }
 
-/// Return whether the given character is a combining mark (`General_Category=Mark`)
-#[cfg(feature = "unic-ucd-category")]
-pub fn is_combining_mark(c: char) -> bool {
-    GeneralCategory::of(c).is_mark()
-}
-
-#[cfg(not(feature = "unic-ucd-category"))]
-fn bsearch_range_table(c: char, r: &'static [(char, char)]) -> bool {
-    r.binary_search_by(|&(lo, hi)| if lo <= c && c <= hi {
-        Ordering::Equal
-    } else if hi < c {
-        Ordering::Less
-    } else {
-        Ordering::Greater
-    }).is_ok()
-}
+pub use self::mark::is_combining_mark;
 
 #[cfg(test)]
 mod tests {
