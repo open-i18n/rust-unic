@@ -129,10 +129,7 @@ impl GeneralCategory {
 
     /// `Lu` | `Ll` | `Lt` | `Lm` | `Lo`  (Short form: `L`)
     pub fn is_letter(&self) -> bool {
-        matches!(
-            *self,
-            Lu | Ll | Lt | Lm | Lo
-        )
+        matches!(*self, Lu | Ll | Lt | Lm | Lo)
     }
 
     /// `Mn` | `Mc` | `Me`  (Short form: `M`)
@@ -147,19 +144,12 @@ impl GeneralCategory {
 
     /// `Pc` | `Pd` | `Ps` | `Pe` | `Pi` | `Pf` | `Po`  (Short form: `P`)
     pub fn is_punctuation(&self) -> bool {
-        matches!(
-            *self,
-            Pc | Pd | Ps | Pe |
-                Pi | Pf | Po
-        )
+        matches!(*self, Pc | Pd | Ps | Pe | Pi | Pf | Po)
     }
 
     /// `Sm` | `Sc` | `Sk` | `So`  (Short form: `S`)
     pub fn is_symbol(&self) -> bool {
-        matches!(
-            *self,
-            Sm | Sc | Sk | So
-        )
+        matches!(*self, Sm | Sc | Sk | So)
     }
 
     /// `Zs` | `Zl` | `Zp`  (Short form: `Z`)
@@ -169,10 +159,7 @@ impl GeneralCategory {
 
     /// `Cc` | `Cf` | `Cs` | `Co` | `Cn`  (Short form: `C`)
     pub fn is_other(&self) -> bool {
-        matches!(
-            *self,
-            Cc | Cf | Cs | Co | Cn
-        )
+        matches!(*self, Cc | Cf | Cs | Co | Cn)
     }
 }
 
