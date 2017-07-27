@@ -1,6 +1,5 @@
 use std::char;
 use std::collections::{BTreeMap, BTreeSet};
-use std::fmt::Write as WriteFmt;
 use std::fs::File;
 use std::io::{self, Write};
 use std::path::Path;
@@ -47,7 +46,7 @@ impl CanonicalCombiningClassData {
             "{}\n{}",
             PREAMBLE,
             self.0
-                .to_range_bsearch_map(|val| { format!("CanonicalCombiningClass({})", val) })
+                .to_range_bsearch_map(|val, f| { write!(f, "CanonicalCombiningClass({})", val) })
         )
     }
 }
@@ -79,13 +78,12 @@ impl<'a> CanonicalDecompositionData<'a> {
             file,
             "{}\n{}",
             PREAMBLE,
-            self.0.to_single_bsearch_map(|val| {
-                let mut s = String::from("&[");
+            self.0.to_single_bsearch_map(|val, f| {
+                write!(f, "&[")?;
                 for char in val.iter() {
-                    write!(s, "'{}',", char.escape_unicode()).unwrap();
+                    write!(f, "'{}',", char.escape_unicode())?;
                 }
-                s.push(']');
-                s
+                write!(f, "]")
             }),
         )
     }
@@ -125,13 +123,12 @@ impl<'a> CompatibilityDecompositionData<'a> {
             file,
             "{}\n{}",
             PREAMBLE,
-            self.0.to_single_bsearch_map(|val| {
-                let mut s = format!("(\"{}\", &[", val.0);
+            self.0.to_single_bsearch_map(|val, f| {
+                write!(f, "(\"{}\", &[", val.0)?;
                 for char in val.1.iter() {
-                    write!(s, "'{}',", char.escape_unicode()).unwrap();
+                    write!(f, "'{}',", char.escape_unicode()).unwrap();
                 }
-                s.push_str("])");
-                s
+                write!(f, "])")
             }),
         )
     }

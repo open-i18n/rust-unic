@@ -1,5 +1,6 @@
 use std::char;
 use std::collections::BTreeMap;
+use std::fmt::Display;
 use std::fs::File;
 use std::io::{self, Write};
 use std::path::Path;
@@ -16,7 +17,12 @@ impl<'a> BidiData<'a> {
     fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
         let BidiData(ref map) = *self;
         let mut file = File::create(dir.as_ref().join("bidi_class_values.rsv"))?;
-        writeln!(file, "{}\n{}", PREAMBLE, map.to_range_bsearch_map_default())?;
+        writeln!(
+            file,
+            "{}\n{}",
+            PREAMBLE,
+            map.to_range_bsearch_map(Display::fmt)
+        )?;
         Ok(())
     }
 }

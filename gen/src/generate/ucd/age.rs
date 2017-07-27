@@ -1,5 +1,6 @@
 use std::char;
 use std::collections::BTreeMap;
+use std::fmt::Display;
 use std::fs::File;
 use std::io::{self, Read, Write};
 use std::path::Path;
@@ -19,7 +20,12 @@ impl AgeData {
     fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
         let AgeData(ref map) = *self;
         let mut file = File::create(dir.as_ref().join("age_values.rsv"))?;
-        writeln!(file, "{}\n{}", PREAMBLE, map.to_range_bsearch_map_default())?;
+        writeln!(
+            file,
+            "{}\n{}",
+            PREAMBLE,
+            map.to_range_bsearch_map(Display::fmt)
+        )?;
         Ok(())
     }
 }

@@ -1,5 +1,7 @@
 use std::collections::BTreeMap;
-use std::fmt::Display;
+use std::fmt;
+
+use super::DisplayWrapper;
 
 /// A simple run-collapsing binary search array slice.
 ///
@@ -23,28 +25,15 @@ use std::fmt::Display;
 /// represented by `'low'` and `'high'` are inclusive on both ends.
 pub trait ToRangeBSearchMap<T: Eq> {
     /// Convert this mapping to a `String`.
-    fn to_range_bsearch_map<F, D>(&self, display_fn: F) -> String
+    fn to_range_bsearch_map<F>(&self, display_fn: F) -> String
     where
-        F: Fn(&T) -> D,
-        D: Display;
-
-    /// A simple default for when the associated value already impls `fmt::Display`.
-    ///
-    /// Intended to be used when the associated value is a string representing the desired output.
-    fn to_range_bsearch_map_default(&self) -> String
-    where
-        for<'a> &'a T: Display,
-    {
-        // FIXME: This format call shouldn't be needed
-        self.to_range_bsearch_map(|t| format!("{}", t))
-    }
+        F: Fn(&T, &mut fmt::Formatter) -> fmt::Result;
 }
 
 impl<T: Eq> ToRangeBSearchMap<T> for BTreeMap<char, T> {
-    fn to_range_bsearch_map<F, D>(&self, display_fn: F) -> String
+    fn to_range_bsearch_map<F>(&self, display_fn: F) -> String
     where
-        F: Fn(&T) -> D,
-        D: Display,
+        F: Fn(&T, &mut fmt::Formatter) -> fmt::Result,
     {
         let mut entries = self.iter();
 
@@ -62,7 +51,7 @@ impl<T: Eq> ToRangeBSearchMap<T> for BTreeMap<char, T> {
                 "    ('{}', '{}', {}),\n",
                 a.escape_unicode(),
                 b.escape_unicode(),
-                display_fn(c),
+                DisplayWrapper(c, &display_fn),
             ));
         };
 
@@ -87,6 +76,7 @@ impl<T: Eq> ToRangeBSearchMap<T> for BTreeMap<char, T> {
 #[cfg(test)]
 mod test {
     use std::collections::BTreeMap;
+    use std::fmt::Display;
     use super::ToRangeBSearchMap;
 
     #[test]
@@ -102,7 +92,7 @@ mod test {
         map.insert('x', "High");
         map.insert('z', "High");
         assert_eq!(
-            map.to_range_bsearch_map_default(),
+            map.to_range_bsearch_map(Display::fmt),
             "\
 &[
     ('\\u{61}', '\\u{63}', Low),

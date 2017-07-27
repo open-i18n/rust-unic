@@ -1,5 +1,7 @@
 use std::collections::BTreeMap;
-use std::fmt::Display;
+use std::fmt;
+
+use super::DisplayWrapper;
 
 /// A simple binary search array slice.
 ///
@@ -21,28 +23,15 @@ use std::fmt::Display;
 /// the next range (such that the array slice is fit for a binary search).
 pub trait ToSingleBSearchMap<T> {
     /// Convert this mapping to a `String`.
-    fn to_single_bsearch_map<F, D>(&self, display_fn: F) -> String
+    fn to_single_bsearch_map<F>(&self, display_fn: F) -> String
     where
-        F: Fn(&T) -> D,
-        D: Display;
-
-    /// A simple default for when the associated value already impls `fmt::Display`.
-    ///
-    /// Intended to be used when the associated value is a string representing the desired output.
-    fn to_single_bsearch_map_default(&self) -> String
-    where
-        for<'a> &'a T: Display,
-    {
-        // FIXME: This format call shouldn't be needed
-        self.to_single_bsearch_map(|t| format!("{}", t))
-    }
+        F: Fn(&T, &mut fmt::Formatter) -> fmt::Result;
 }
 
 impl<T> ToSingleBSearchMap<T> for BTreeMap<char, T> {
-    fn to_single_bsearch_map<F, D>(&self, display_fn: F) -> String
+    fn to_single_bsearch_map<F>(&self, display_fn: F) -> String
     where
-        F: Fn(&T) -> D,
-        D: Display,
+        F: Fn(&T, &mut fmt::Formatter) -> fmt::Result,
     {
         let entries = self.iter();
         let mut out = String::from("&[\n");
@@ -51,7 +40,7 @@ impl<T> ToSingleBSearchMap<T> for BTreeMap<char, T> {
             out.push_str(&format!(
                 "    ('{}', {}),\n",
                 char.escape_unicode(),
-                display_fn(property),
+                DisplayWrapper(property, &display_fn),
             ));
         }
 
@@ -63,6 +52,7 @@ impl<T> ToSingleBSearchMap<T> for BTreeMap<char, T> {
 #[cfg(test)]
 mod test {
     use std::collections::BTreeMap;
+    use std::fmt::Display;
     use super::ToSingleBSearchMap;
 
     #[test]
@@ -75,7 +65,7 @@ mod test {
         map.insert('y', "Y");
         map.insert('x', "X");
         assert_eq!(
-            map.to_single_bsearch_map_default(),
+            map.to_single_bsearch_map(Display::fmt),
             "\
 &[
     ('\\u{61}', A),
