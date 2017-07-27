@@ -80,7 +80,36 @@ pub enum GeneralCategory {
     Unassigned,
 }
 
-use self::GeneralCategory::*;
+use GeneralCategory::UppercaseLetter as Lu;
+use GeneralCategory::LowercaseLetter as Ll;
+use GeneralCategory::TitlecaseLetter as Lt;
+use GeneralCategory::ModifierLetter as Lm;
+use GeneralCategory::OtherLetter as Lo;
+use GeneralCategory::NonspacingMark as Mn;
+use GeneralCategory::SpacingMark as Mc;
+use GeneralCategory::EnclosingMark as Me;
+use GeneralCategory::DecimalNumber as Nd;
+use GeneralCategory::LetterNumber as Nl;
+use GeneralCategory::OtherNumber as No;
+use GeneralCategory::ConnectorPunctuation as Pc;
+use GeneralCategory::DashPunctuation as Pd;
+use GeneralCategory::OpenPunctuation as Ps;
+use GeneralCategory::ClosePunctuation as Pe;
+use GeneralCategory::InitialPunctuation as Pi;
+use GeneralCategory::FinalPunctuation as Pf;
+use GeneralCategory::OtherPunctuation as Po;
+use GeneralCategory::MathSymbol as Sm;
+use GeneralCategory::CurrencySymbol as Sc;
+use GeneralCategory::ModifierSymbol as Sk;
+use GeneralCategory::OtherSymbol as So;
+use GeneralCategory::SpaceSeparator as Zs;
+use GeneralCategory::LineSeparator as Zl;
+use GeneralCategory::ParagraphSeparator as Zp;
+use GeneralCategory::Control as Cc;
+use GeneralCategory::Format as Cf;
+use GeneralCategory::Surrogate as Cs;
+use GeneralCategory::PrivateUse as Co;
+use GeneralCategory::Unassigned as Cn;
 
 const GENERAL_CATEGORY_TABLE: &'static [(char, char, GeneralCategory)] =
     include!("tables/general_category.rsv");
@@ -95,33 +124,33 @@ impl GeneralCategory {
 impl GeneralCategory {
     /// `Lu` | `Ll` | `Lt`  (Short form: `LC`)
     pub fn is_cased_letter(&self) -> bool {
-        matches!(*self, UppercaseLetter | LowercaseLetter | TitlecaseLetter)
+        matches!(*self, Lu | Ll | Lt)
     }
 
     /// `Lu` | `Ll` | `Lt` | `Lm` | `Lo`  (Short form: `L`)
     pub fn is_letter(&self) -> bool {
         matches!(
             *self,
-            UppercaseLetter | LowercaseLetter | TitlecaseLetter | ModifierLetter | OtherLetter
+            Lu | Ll | Lt | Lm | Lo
         )
     }
 
     /// `Mn` | `Mc` | `Me`  (Short form: `M`)
     pub fn is_mark(&self) -> bool {
-        matches!(*self, NonspacingMark | SpacingMark | EnclosingMark)
+        matches!(*self, Mn | Mc | Me)
     }
 
     /// `Nd` | `Nl` | `No`  (Short form: `N`)
     pub fn is_number(&self) -> bool {
-        matches!(*self, DecimalNumber | LetterNumber | OtherNumber)
+        matches!(*self, Nd | Nl | No)
     }
 
     /// `Pc` | `Pd` | `Ps` | `Pe` | `Pi` | `Pf` | `Po`  (Short form: `P`)
     pub fn is_punctuation(&self) -> bool {
         matches!(
             *self,
-            ConnectorPunctuation | DashPunctuation | OpenPunctuation | ClosePunctuation |
-                InitialPunctuation | FinalPunctuation | OtherPunctuation
+            Pc | Pd | Ps | Pe |
+                Pi | Pf | Po
         )
     }
 
@@ -129,20 +158,20 @@ impl GeneralCategory {
     pub fn is_symbol(&self) -> bool {
         matches!(
             *self,
-            MathSymbol | CurrencySymbol | ModifierSymbol | OtherSymbol
+            Sm | Sc | Sk | So
         )
     }
 
     /// `Zs` | `Zl` | `Zp`  (Short form: `Z`)
     pub fn is_separator(&self) -> bool {
-        matches!(*self, SpaceSeparator | LineSeparator | ParagraphSeparator)
+        matches!(*self, Zs | Zl | Zp)
     }
 
     /// `Cc` | `Cf` | `Cs` | `Co` | `Cn`  (Short form: `C`)
     pub fn is_other(&self) -> bool {
         matches!(
             *self,
-            Control | Format | Surrogate | PrivateUse | Unassigned
+            Cc | Cf | Cs | Co | Cn
         )
     }
 }
