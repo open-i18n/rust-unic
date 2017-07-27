@@ -129,7 +129,7 @@ impl GeneralCategory {
     pub fn is_symbol(&self) -> bool {
         matches!(
             *self,
-            MathSymbol | CurrencySymbol | ModifierLetter | OtherSymbol
+            MathSymbol | CurrencySymbol | ModifierSymbol | OtherSymbol
         )
     }
 
