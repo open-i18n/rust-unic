@@ -74,7 +74,7 @@ impl FromStr for IdnaMapping {
     fn from_str(str: &str) -> Result<Self, Self::Err> {
         lazy_static! {
             static ref REGEX: Regex = Regex::new(
-                r"(?xm)(?xm)^
+                r"(?xm)^
                   ([[:xdigit:]]{4,6})                              # low code point
                   (?:\.\.([[:xdigit:]]{4,6}))?                     # high code point (option)
                   [[:space:]]*;[[:space:]]*
