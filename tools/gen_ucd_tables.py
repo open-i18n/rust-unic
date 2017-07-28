@@ -376,7 +376,7 @@ def emit_normal_form_tables(dir):
             __file__,
             values_file,
             canonical_combining_class,
-            print_fun=lambda x: "(%s, %s, %s)" % (
+            print_fun=lambda x: "(%s, %s, CanonicalCombiningClass(%s))" % (
                 rustout.char_literal(x[0]),
                 rustout.char_literal(x[1]),
                 x[2],
