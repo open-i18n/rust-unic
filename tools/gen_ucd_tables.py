@@ -490,39 +490,6 @@ def emit_normal_tests_tables(dir):
 
 # == Category ==
 
-SHORT_CATEGORY_NAME_MAP = {
-    'Lu': "UppercaseLetter",
-    'Ll': "LowercaseLetter",
-    'Lt': "TitlecaseLetter",
-    'Lm': "ModifierLetter",
-    'Lo': "OtherLetter",
-    'Mn': "NonspacingMark",
-    'Mc': "SpacingMark",
-    'Me': "EnclosingMark",
-    'Nd': "DecimalNumber",
-    'Nl': "LetterNumber",
-    'No': "OtherNumber",
-    'Pc': "ConnectorPunctuation",
-    'Pd': "DashPunctuation",
-    'Ps': "OpenPunctuation",
-    'Pe': "ClosePunctuation",
-    'Pi': "InitialPunctuation",
-    'Pf': "FinalPunctuation",
-    'Po': "OtherPunctuation",
-    'Sm': "MathSymbol",
-    'Sc': "CurrencySymbol",
-    'Sk': "ModifierSymbol",
-    'So': "OtherSymbol",
-    'Zs': "SpaceSeparator",
-    'Zl': "LineSeparator",
-    'Zp': "ParagraphSeparator",
-    'Cc': "Control",
-    'Cf': "Format",
-    'Cs': "Surrogate",
-    'Co': "PrivateUse",
-    'Cn': "Unassigned",
-}
-
 
 @memoize
 def get_general_category_mapping():
@@ -534,10 +501,9 @@ def get_general_category_mapping():
         [_, name, gen_cat, ccc, bidi_class, decomp, deci, digit, num, mirror,
          old, iso, upcase, lowcase, titlecase] = unicode_data[cp]
 
-        long_category = SHORT_CATEGORY_NAME_MAP[gen_cat]
-        if long_category not in general_category_mapping:
-            general_category_mapping[long_category] = []
-        general_category_mapping[long_category].append(cp)
+        if gen_cat not in general_category_mapping:
+            general_category_mapping[gen_cat] = []
+        general_category_mapping[gen_cat].append(cp)
 
     general_category_mapping = range_value_triplets_from_codepoints(
         general_category_mapping)
