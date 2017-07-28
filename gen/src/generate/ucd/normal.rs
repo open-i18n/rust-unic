@@ -118,7 +118,7 @@ struct CompatibilityDecompositionData<'a>(BTreeMap<char, (&'a str, &'a [char])>)
 
 impl<'a> CompatibilityDecompositionData<'a> {
     fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
-        let mut file = File::create(dir.as_ref().join("compatibility_decomposition_mapping"))?;
+        let mut file = File::create(dir.as_ref().join("compatibility_decomposition_mapping.rsv"))?;
         writeln!(
             file,
             "{}\n{}",
@@ -167,13 +167,13 @@ pub fn generate<P: AsRef<Path>>(
 ) -> io::Result<()> {
     println!("> unic::ucd::normal::tables::unicode_version");
     version.emit(&dir)?;
-    println!("> unic::ucd::normal::tables::general_category_mark.rsv");
+    println!("> unic::ucd::normal::tables::general_category_mark");
     GeneralCategoryMarkData::from(data.iter()).emit(&dir)?;
-    println!("> unic::ucd::normal::tables::canonical_combining_class_values.rsv");
+    println!("> unic::ucd::normal::tables::canonical_combining_class_values");
     CanonicalCombiningClassData::from(data.iter()).emit(&dir)?;
-    println!("> unic::ucd::normal::tables::canonical_decomposition_mapping.rsv");
+    println!("> unic::ucd::normal::tables::canonical_decomposition_mapping");
     CanonicalDecompositionData::from(data.iter()).emit(&dir)?;
-    println!("> unic::ucd::normal::tables::compatibility_decomposition_mapping.rsv");
+    println!("> unic::ucd::normal::tables::compatibility_decomposition_mapping");
     CompatibilityDecompositionData::from(data.iter())
         .emit(&dir)?;
     Ok(())
