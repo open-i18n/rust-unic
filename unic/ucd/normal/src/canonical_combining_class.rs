@@ -97,6 +97,10 @@ impl CanonicalCombiningClass {
     pub fn is_not_reordered(&self) -> bool {
         self.0 == 0
     }
+    /// If the *ccc* should be reordered in bidi algorithms (`!= CCC0`)
+    pub fn is_reordered(&self) -> bool {
+        self.0 != 0
+    }
 }
 
 

@@ -24,7 +24,7 @@ fn canonical_sort(comb: &mut [(char, CanonicalCombiningClass)]) {
         for j in 1..len - i {
             let class_a = comb[j - 1].1;
             let class_b = comb[j].1;
-            if class_a != ccc::NotReordered && class_b != ccc::NotReordered && class_a > class_b {
+            if class_a.is_reordered() && class_b.is_reordered() && class_a > class_b {
                 comb.swap(j - 1, j);
                 swapped = true;
             }
