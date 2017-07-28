@@ -80,36 +80,39 @@ pub enum GeneralCategory {
     Unassigned,
 }
 
-use GeneralCategory::UppercaseLetter as Lu;
-use GeneralCategory::LowercaseLetter as Ll;
-use GeneralCategory::TitlecaseLetter as Lt;
-use GeneralCategory::ModifierLetter as Lm;
-use GeneralCategory::OtherLetter as Lo;
-use GeneralCategory::NonspacingMark as Mn;
-use GeneralCategory::SpacingMark as Mc;
-use GeneralCategory::EnclosingMark as Me;
-use GeneralCategory::DecimalNumber as Nd;
-use GeneralCategory::LetterNumber as Nl;
-use GeneralCategory::OtherNumber as No;
-use GeneralCategory::ConnectorPunctuation as Pc;
-use GeneralCategory::DashPunctuation as Pd;
-use GeneralCategory::OpenPunctuation as Ps;
-use GeneralCategory::ClosePunctuation as Pe;
-use GeneralCategory::InitialPunctuation as Pi;
-use GeneralCategory::FinalPunctuation as Pf;
-use GeneralCategory::OtherPunctuation as Po;
-use GeneralCategory::MathSymbol as Sm;
-use GeneralCategory::CurrencySymbol as Sc;
-use GeneralCategory::ModifierSymbol as Sk;
-use GeneralCategory::OtherSymbol as So;
-use GeneralCategory::SpaceSeparator as Zs;
-use GeneralCategory::LineSeparator as Zl;
-use GeneralCategory::ParagraphSeparator as Zp;
-use GeneralCategory::Control as Cc;
-use GeneralCategory::Format as Cf;
-use GeneralCategory::Surrogate as Cs;
-use GeneralCategory::PrivateUse as Co;
-use GeneralCategory::Unassigned as Cn;
+pub mod abbr_names {
+    pub use super::GeneralCategory::UppercaseLetter as Lu;
+    pub use super::GeneralCategory::LowercaseLetter as Ll;
+    pub use super::GeneralCategory::TitlecaseLetter as Lt;
+    pub use super::GeneralCategory::ModifierLetter as Lm;
+    pub use super::GeneralCategory::OtherLetter as Lo;
+    pub use super::GeneralCategory::NonspacingMark as Mn;
+    pub use super::GeneralCategory::SpacingMark as Mc;
+    pub use super::GeneralCategory::EnclosingMark as Me;
+    pub use super::GeneralCategory::DecimalNumber as Nd;
+    pub use super::GeneralCategory::LetterNumber as Nl;
+    pub use super::GeneralCategory::OtherNumber as No;
+    pub use super::GeneralCategory::ConnectorPunctuation as Pc;
+    pub use super::GeneralCategory::DashPunctuation as Pd;
+    pub use super::GeneralCategory::OpenPunctuation as Ps;
+    pub use super::GeneralCategory::ClosePunctuation as Pe;
+    pub use super::GeneralCategory::InitialPunctuation as Pi;
+    pub use super::GeneralCategory::FinalPunctuation as Pf;
+    pub use super::GeneralCategory::OtherPunctuation as Po;
+    pub use super::GeneralCategory::MathSymbol as Sm;
+    pub use super::GeneralCategory::CurrencySymbol as Sc;
+    pub use super::GeneralCategory::ModifierSymbol as Sk;
+    pub use super::GeneralCategory::OtherSymbol as So;
+    pub use super::GeneralCategory::SpaceSeparator as Zs;
+    pub use super::GeneralCategory::LineSeparator as Zl;
+    pub use super::GeneralCategory::ParagraphSeparator as Zp;
+    pub use super::GeneralCategory::Control as Cc;
+    pub use super::GeneralCategory::Format as Cf;
+    pub use super::GeneralCategory::Surrogate as Cs;
+    pub use super::GeneralCategory::PrivateUse as Co;
+    pub use super::GeneralCategory::Unassigned as Cn;
+}
+use self::abbr_names::*;
 
 const GENERAL_CATEGORY_TABLE: &'static [(char, char, GeneralCategory)] =
     include!("tables/general_category.rsv");
