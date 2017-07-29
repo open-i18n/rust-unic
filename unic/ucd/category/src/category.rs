@@ -80,7 +80,39 @@ pub enum GeneralCategory {
     Unassigned,
 }
 
-use self::GeneralCategory::*;
+pub mod abbr_names {
+    pub use super::GeneralCategory::UppercaseLetter as Lu;
+    pub use super::GeneralCategory::LowercaseLetter as Ll;
+    pub use super::GeneralCategory::TitlecaseLetter as Lt;
+    pub use super::GeneralCategory::ModifierLetter as Lm;
+    pub use super::GeneralCategory::OtherLetter as Lo;
+    pub use super::GeneralCategory::NonspacingMark as Mn;
+    pub use super::GeneralCategory::SpacingMark as Mc;
+    pub use super::GeneralCategory::EnclosingMark as Me;
+    pub use super::GeneralCategory::DecimalNumber as Nd;
+    pub use super::GeneralCategory::LetterNumber as Nl;
+    pub use super::GeneralCategory::OtherNumber as No;
+    pub use super::GeneralCategory::ConnectorPunctuation as Pc;
+    pub use super::GeneralCategory::DashPunctuation as Pd;
+    pub use super::GeneralCategory::OpenPunctuation as Ps;
+    pub use super::GeneralCategory::ClosePunctuation as Pe;
+    pub use super::GeneralCategory::InitialPunctuation as Pi;
+    pub use super::GeneralCategory::FinalPunctuation as Pf;
+    pub use super::GeneralCategory::OtherPunctuation as Po;
+    pub use super::GeneralCategory::MathSymbol as Sm;
+    pub use super::GeneralCategory::CurrencySymbol as Sc;
+    pub use super::GeneralCategory::ModifierSymbol as Sk;
+    pub use super::GeneralCategory::OtherSymbol as So;
+    pub use super::GeneralCategory::SpaceSeparator as Zs;
+    pub use super::GeneralCategory::LineSeparator as Zl;
+    pub use super::GeneralCategory::ParagraphSeparator as Zp;
+    pub use super::GeneralCategory::Control as Cc;
+    pub use super::GeneralCategory::Format as Cf;
+    pub use super::GeneralCategory::Surrogate as Cs;
+    pub use super::GeneralCategory::PrivateUse as Co;
+    pub use super::GeneralCategory::Unassigned as Cn;
+}
+use self::abbr_names::*;
 
 const GENERAL_CATEGORY_TABLE: &'static [(char, char, GeneralCategory)] =
     include!("tables/general_category.rsv");
@@ -95,55 +127,42 @@ impl GeneralCategory {
 impl GeneralCategory {
     /// `Lu` | `Ll` | `Lt`  (Short form: `LC`)
     pub fn is_cased_letter(&self) -> bool {
-        matches!(*self, UppercaseLetter | LowercaseLetter | TitlecaseLetter)
+        matches!(*self, Lu | Ll | Lt)
     }
 
     /// `Lu` | `Ll` | `Lt` | `Lm` | `Lo`  (Short form: `L`)
     pub fn is_letter(&self) -> bool {
-        matches!(
-            *self,
-            UppercaseLetter | LowercaseLetter | TitlecaseLetter | ModifierLetter | OtherLetter
-        )
+        matches!(*self, Lu | Ll | Lt | Lm | Lo)
     }
 
     /// `Mn` | `Mc` | `Me`  (Short form: `M`)
     pub fn is_mark(&self) -> bool {
-        matches!(*self, NonspacingMark | SpacingMark | EnclosingMark)
+        matches!(*self, Mn | Mc | Me)
     }
 
     /// `Nd` | `Nl` | `No`  (Short form: `N`)
     pub fn is_number(&self) -> bool {
-        matches!(*self, DecimalNumber | LetterNumber | OtherNumber)
+        matches!(*self, Nd | Nl | No)
     }
 
     /// `Pc` | `Pd` | `Ps` | `Pe` | `Pi` | `Pf` | `Po`  (Short form: `P`)
     pub fn is_punctuation(&self) -> bool {
-        matches!(
-            *self,
-            ConnectorPunctuation | DashPunctuation | OpenPunctuation | ClosePunctuation |
-                InitialPunctuation | FinalPunctuation | OtherPunctuation
-        )
+        matches!(*self, Pc | Pd | Ps | Pe | Pi | Pf | Po)
     }
 
     /// `Sm` | `Sc` | `Sk` | `So`  (Short form: `S`)
     pub fn is_symbol(&self) -> bool {
-        matches!(
-            *self,
-            MathSymbol | CurrencySymbol | ModifierSymbol | OtherSymbol
-        )
+        matches!(*self, Sm | Sc | Sk | So)
     }
 
     /// `Zs` | `Zl` | `Zp`  (Short form: `Z`)
     pub fn is_separator(&self) -> bool {
-        matches!(*self, SpaceSeparator | LineSeparator | ParagraphSeparator)
+        matches!(*self, Zs | Zl | Zp)
     }
 
     /// `Cc` | `Cf` | `Cs` | `Co` | `Cn`  (Short form: `C`)
     pub fn is_other(&self) -> bool {
-        matches!(
-            *self,
-            Control | Format | Surrogate | PrivateUse | Unassigned
-        )
+        matches!(*self, Cc | Cf | Cs | Co | Cn)
     }
 }
 
