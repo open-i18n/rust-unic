@@ -45,8 +45,7 @@ pub fn canonical_composition(c: char) -> Option<&'static ([(char, char)])> {
 pub fn canonical_decomposition(c: char) -> Option<&'static [char]> {
     const LOOKUP: &'static [(char, Slice)] =
         include!("tables/canonical_decomposition_mapping_lookup.rsv");
-    const VALUES: &'static [char] =
-        include!("tables/canonical_decomposition_mapping_values.rsv");
+    const VALUES: &'static [char] = include!("tables/canonical_decomposition_mapping_values.rsv");
     bsearch_lookup_table(c, LOOKUP, VALUES)
 }
 
