@@ -32,7 +32,7 @@ from unicode_utils import is_surrogate, cp_to_char
 
 
 OUTPUT_DIRS = {
-    'IDNA_MAPPING': path("components/idna/mapping/src/tables"),
+    'IDNA_MAPPING': path("unic/idna/mapping/src/tables"),
 }
 
 

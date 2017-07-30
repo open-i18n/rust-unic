@@ -14,7 +14,6 @@ use std::collections::VecDeque;
 use std::fmt::{self, Write};
 
 use unic_ucd_normal::{CanonicalCombiningClass, compose};
-use unic_ucd_normal::canonical_combining_class::values as ccc;
 
 use decompose::Decompositions;
 
