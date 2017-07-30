@@ -14,6 +14,7 @@ use std::collections::VecDeque;
 use std::fmt::{self, Write};
 
 use unic_ucd_normal::{CanonicalCombiningClass, compose};
+use unic_ucd_normal::canonical_combining_class::values as ccc;
 
 use decompose::Decompositions;
 
@@ -32,7 +33,7 @@ pub struct Recompositions<I> {
     state: RecompositionState,
     buffer: VecDeque<char>,
     composee: Option<char>,
-    last_ccc: Option<u8>,
+    last_ccc: Option<CanonicalCombiningClass>,
 }
 
 #[inline]
@@ -70,7 +71,7 @@ impl<I: Iterator<Item = char>> Iterator for Recompositions<I> {
                     for ch in self.iter.by_ref() {
                         let ch_ccc = CanonicalCombiningClass::of(ch);
                         if self.composee.is_none() {
-                            if !ch_ccc.ccc_is_not_reordered() {
+                            if ch_ccc.is_reordered() {
                                 return Some(ch);
                             }
                             self.composee = Some(ch);
@@ -86,7 +87,7 @@ impl<I: Iterator<Item = char>> Iterator for Recompositions<I> {
                                         continue;
                                     }
                                     None => {
-                                        if ch_ccc.ccc_is_not_reordered() {
+                                        if ch_ccc.is_not_reordered() {
                                             self.composee = Some(ch);
                                             return Some(k);
                                         }
@@ -98,7 +99,7 @@ impl<I: Iterator<Item = char>> Iterator for Recompositions<I> {
                             Some(last_ccc) => {
                                 if last_ccc >= ch_ccc {
                                     // `ch` is blocked from `composee`
-                                    if ch_ccc == 0 {
+                                    if ch_ccc.is_not_reordered() {
                                         self.composee = Some(ch);
                                         self.last_ccc = None;
                                         self.state = Purging;

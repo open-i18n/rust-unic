@@ -13,17 +13,18 @@
 use std::fmt::{self, Write};
 
 use unic_ucd_normal::{CanonicalCombiningClass, decompose_canonical, decompose_compatible};
+use unic_ucd_normal::canonical_combining_class::values as ccc;
 
 
 // Helper functions used for Unicode normalization
-fn canonical_sort(comb: &mut [(char, u8)]) {
+fn canonical_sort(comb: &mut [(char, CanonicalCombiningClass)]) {
     let len = comb.len();
     for i in 0..len {
         let mut swapped = false;
         for j in 1..len - i {
             let class_a = comb[j - 1].1;
             let class_b = comb[j].1;
-            if class_a != 0 && class_b != 0 && class_a > class_b {
+            if class_a.is_reordered() && class_b.is_reordered() && class_a > class_b {
                 comb.swap(j - 1, j);
                 swapped = true;
             }
@@ -45,7 +46,7 @@ enum DecompositionType {
 pub struct Decompositions<I> {
     kind: DecompositionType,
     iter: I,
-    buffer: Vec<(char, u8)>,
+    buffer: Vec<(char, CanonicalCombiningClass)>,
     sorted: bool,
 }
 
@@ -77,7 +78,7 @@ impl<I: Iterator<Item = char>> Iterator for Decompositions<I> {
         use self::DecompositionType::*;
 
         match self.buffer.first() {
-            Some(&(c, 0)) => {
+            Some(&(c, ccc::NotReordered)) => {
                 self.sorted = false;
                 self.buffer.remove(0);
                 return Some(c);
@@ -96,7 +97,7 @@ impl<I: Iterator<Item = char>> Iterator for Decompositions<I> {
                 {
                     let callback = |d| {
                         let ccc = CanonicalCombiningClass::of(d);
-                        if ccc.ccc_is_not_reordered() && !*sorted {
+                        if ccc.is_not_reordered() && !*sorted {
                             canonical_sort(buffer);
                             *sorted = true;
                         }
@@ -122,7 +123,7 @@ impl<I: Iterator<Item = char>> Iterator for Decompositions<I> {
             None
         } else {
             match self.buffer.remove(0) {
-                (c, 0) => {
+                (c, ccc::NotReordered) => {
                     self.sorted = false;
                     Some(c)
                 }
