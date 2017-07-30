@@ -30,12 +30,12 @@ from unicode_utils import is_surrogate
 
 
 OUTPUT_DIRS = {
-    'UCD_CORE': path("components/ucd/core/src/tables"),
-    'UCD_AGE': path("components/ucd/age/src/tables"),
-    'UCD_BIDI': path("components/ucd/bidi/src/tables"),
-    'UCD_NORMAL': path("components/ucd/normal/src/tables"),
-    'UCD_CATEGORY': path("components/ucd/category/src/tables"),
-    'NORMAL_TESTS': path("components/normal/tests/tables"),
+    'UCD_CORE': path("unic/ucd/core/src/tables"),
+    'UCD_AGE': path("unic/ucd/age/src/tables"),
+    'UCD_BIDI': path("unic/ucd/bidi/src/tables"),
+    'UCD_NORMAL': path("unic/ucd/normal/src/tables"),
+    'UCD_CATEGORY': path("unic/ucd/category/src/tables"),
+    'NORMAL_TESTS': path("unic/normal/tests/tables"),
 }
 
 
