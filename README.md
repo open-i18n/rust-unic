@@ -140,7 +140,7 @@ In `Cargo.toml`:
 
 ```toml
 [dependencies]
-unic = "0.2.0"  # This has Unicode 10.0.0 data and algorithms
+unic = "0.4.0"  # This has Unicode 10.0.0 data and algorithms
 ```
 
 And in `main.rs`:
