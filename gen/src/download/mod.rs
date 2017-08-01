@@ -24,6 +24,7 @@ use toml;
 struct Config {
     idna: DataSource,
     ucd: DataSource,
+    normal: DataSource,
 }
 
 /// Information under one component heading in the config
@@ -90,7 +91,13 @@ pub fn download(components: &[&str]) -> Result<(), Box<Error>> {
                 }
             }
             "normal" => {
-                // TODO: This is handled in UCD currently
+                let version = &config.normal.version;
+                for download in &config.normal.resources {
+                    downloads.push(DownloadPath {
+                        url: download.url.replace("{version}", version),
+                        dest: download.dest.clone(),
+                    })
+                }
             }
             _ => panic!("Invalid component to download data for"),
         }

@@ -29,7 +29,10 @@ dest = "data/ucd/test/BidiTest.txt"
 url = "http://www.unicode.org/Public/{version}/ucd/extracted/DerivedDecompositionType.txt"
 dest = "data/ucd/test/DecompositionTypeTest.txt"
 
-[[ucd.resources]]
+[normal]
+version = "10.0.0"
+
+[[normal.resources]]
 url = "http://www.unicode.org/Public/{version}/ucd/NormalizationTest.txt"
 dest = "data/ucd/test/NormalizationTest.txt"
 
