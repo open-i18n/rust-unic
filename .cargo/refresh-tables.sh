@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cargo run --release --package=unic-gen -- --download --generate idna ucd
+cargo run --release --package=unic-gen -- --download --generate idna ucd normal
 
 echo "Generating idna tables with python"
 python2 tools/gen_idna_tables.py
