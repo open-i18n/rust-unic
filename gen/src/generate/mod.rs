@@ -11,6 +11,7 @@
 mod char_property;
 
 pub mod idna;
+pub mod normal;
 pub mod ucd;
 
 /// The standard auto-generated source disclaimer.

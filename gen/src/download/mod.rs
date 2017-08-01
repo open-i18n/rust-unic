@@ -89,6 +89,9 @@ pub fn download(components: &[&str]) -> Result<(), Box<Error>> {
                     })
                 }
             }
+            "normal" => {
+                // TODO: This is handled in UCD currently
+            }
             _ => panic!("Invalid component to download data for"),
         }
     }

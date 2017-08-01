@@ -36,11 +36,11 @@ mod generate;
 #[cfg_attr(rustfmt, allow(needless_pass_by_value))]
 // This signature is enforced by clap
 fn validate_component_name(name: String) -> Result<(), String> {
-    if matches!(name.as_str(), "idna" | "ucd") {
+    if matches!(name.as_str(), "idna" | "ucd" | "normal") {
         Ok(())
     } else {
         Err(format!(
-            "Valid components are `idna` and `ucd`, you put `{}`",
+            "Valid components are `idna`, `ucd`, and `normal`; you put `{}`",
             name
         ))
     }
@@ -76,18 +76,20 @@ fn main() {
         if components.contains(&"ucd") {
             generate::ucd::generate().expect("Failed to generate UCD tables");
         }
+        if components.contains(&"normal") {
+            generate::normal::generate().expect("Failed to generate normal tables");
+        }
     }
 
     if !download && !generate {
         use std::io::Write;
-        let stderr = std::io::stderr();
-        let mut err = stderr.lock();
-        writeln!(err, "{}\n", matches.usage()).unwrap();
         writeln!(
-            err,
-            "Either the --download or --generate flag must be present."
+            std::io::stderr(),
+            "{}\n\n\
+             Either the --download or --generate flag must be present.\n\
+             For more information try --help",
+            matches.usage(),
         ).unwrap();
-        writeln!(err, "For more information try --help").unwrap();
         std::process::exit(1);
     }
 }
