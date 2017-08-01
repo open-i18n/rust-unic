@@ -1,3 +1,5 @@
+#![allow(dead_code)] // until full integration
+
 #[macro_use]
 extern crate clap;
 
@@ -57,7 +59,9 @@ fn main() {
 
     if generate {
         if components.contains(&"idna") {
-            generate::idna::generate().expect("Failed to generate Idna tables");
+//            generate::idna::generate().expect("Failed to generate Idna tables");
+            use std::io::Write;
+            writeln!(std::io::stderr(), "Use Python generation for idna").unwrap();
         }
         if components.contains(&"ucd") {
             generate::ucd::generate().expect("Failed to generate UCD tables");
