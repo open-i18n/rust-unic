@@ -17,14 +17,14 @@ GitHub](https://github.com/behnam/rust-unic/issues/new).
 
 You find these directories in the project root:
 
--   [/.cargo/](.cargo/): scripts for code maintenance and deployment.
-
 -   [/data/](data/): source data; used to generate data tables for consumption
     in the code; or, used at runtime by integration tests (like conformance
     tests) and benches.
 
 -   [/docs/](docs/): project high-level documentations, such as tutorials and
     guidelines.
+
+-   [/etc/](etc/): scripts for project maintenance and deployment.
 
 -   [/tools/](tools/): tooling for generating data tables from source data.
 
