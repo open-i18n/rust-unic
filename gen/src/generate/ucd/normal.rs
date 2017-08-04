@@ -155,7 +155,9 @@ impl<'a, 'b> From<&'a CanonicalDecompositionData<'b>> for CanonicalCompositionDa
         let &CanonicalDecompositionData(ref decomposition_map) = decomposition;
 
         for (&composed, decomposed) in decomposition_map {
-            if decomposed.len() == 1 { continue; }
+            if decomposed.len() == 1 {
+                continue;
+            }
             assert_eq!(decomposed.len(), 2);
             let lead = decomposed[0];
             let follow = decomposed[1];

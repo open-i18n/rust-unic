@@ -30,4 +30,3 @@ fn test_gen_cat_against_normal() {
         assert_eq!(GC::of(cp).is_mark(), is_combining_mark(cp));
     }
 }
-
