@@ -27,17 +27,23 @@ pub const N_COUNT: u32 = (V_COUNT * T_COUNT);
 pub const S_COUNT: u32 = (L_COUNT * N_COUNT);
 
 
+pub fn is_syllable(ch: char) -> bool {
+    let cp = ch as u32;
+    cp >= S_BASE && cp < (S_BASE + S_COUNT)
+}
+
+
 /// Decompose a precomposed Hangul syllable
 // FIXME: This is a workaround, we should use `F` instead of `&mut F`
 #[allow(unsafe_code)]
 #[inline(always)]
-pub fn decompose<F>(s: char, f: &mut F)
+pub fn decompose<F>(syllable: char, f: &mut F)
 where
     F: FnMut(char),
 {
     use std::mem::transmute;
 
-    let si = s as u32 - S_BASE;
+    let si = syllable as u32 - S_BASE;
 
     let li = si / N_COUNT;
     unsafe {
@@ -56,11 +62,11 @@ where
 /// Compose a pair of Hangul Jamo
 #[allow(unsafe_code)]
 #[inline(always)]
-pub fn compose(a: char, b: char) -> Option<char> {
+pub fn compose(jamo1: char, jamo2: char) -> Option<char> {
     use std::mem::transmute;
 
-    let l = a as u32;
-    let v = b as u32;
+    let l = jamo1 as u32;
+    let v = jamo2 as u32;
     // Compose an LPart and a VPart
     if L_BASE <= l && l < (L_BASE + L_COUNT) // l should be an L choseong jamo
         && V_BASE <= v && v < (V_BASE + V_COUNT)

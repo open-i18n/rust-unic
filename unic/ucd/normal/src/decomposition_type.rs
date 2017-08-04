@@ -15,6 +15,7 @@
 use std::cmp::Ordering;
 
 use composition::canonical_decomposition;
+use hangul;
 
 
 /// Represents the Unicode character
@@ -55,7 +56,11 @@ const COMPATIBILITY_DECOMPOSITION_TYPE_TABLE: &'static [(char, char, Decompositi
 impl DecompositionType {
     /// Find the DecompositionType of a single char.
     pub fn of(ch: char) -> Option<DecompositionType> {
-        // First check the canonical decompositions
+        // First, check for Hangul Syllables
+        if hangul::is_syllable(ch) {
+            return Some(Canonical);
+        }
+        // Then, check the canonical decompositions
         if let Some(_) = canonical_decomposition(ch) {
             return Some(Canonical);
         }
