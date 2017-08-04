@@ -17,25 +17,25 @@ GitHub](https://github.com/behnam/rust-unic/issues/new).
 
 You find these directories in the project root:
 
--   [/.cargo/](.cargo/): scripts for code maintenance and deployment.
-
--   [/data/](data/): source data; used to generate data tables for consumption
+-   [`/data/`](data/): source data; used to generate data tables for consumption
     in the code; or, used at runtime by integration tests (like conformance
     tests) and benches.
 
--   [/docs/](docs/): project high-level documentations, such as tutorials and
+-   [`/docs/`](docs/): project high-level documentations, such as tutorials and
     guidelines.
 
--   [/tools/](tools/): tooling for generating data tables from source data.
+-   [`/etc/`](etc/): scripts for project maintenance and deployment.
 
--   [/unic/](unic/): source code for the `unic` super-crate package. Also, under
-    this directory goes all major UNIC components, each under their own
+-   [`/tools/`](tools/): tooling for generating data tables from source data.
+
+-   [`/unic/`](unic/): source code for the `unic` super-crate package. Also,
+    under this directory goes all major UNIC components, each under their own
     directory. The components are separate by multiple aspects: source of
     data/algorithm (like Unicode, CLDR, IETF), abstraction level (like
     character-level functionalities vs. string-level functionalities), and
     practicality for users of the library.
 
--   [/unic/utils/](unic/utils/): the `utils` component is special, as it hosts
+-   [`/unic/utils/`](unic/utils/): the `utils` component is special, as it hosts
     components that are not related to Unicode/i18n specifically, or are
     slightly related, but not depending on any data or algorithm, like helper
     utilities for working with Rust `char` and `str` types.
@@ -45,7 +45,7 @@ You find these directories in the project root:
 Please consider running through these steps before submitting a PR for UNIC:
 
 1.  If you're adding a new component, add it to the `COMPONENTS` list in
-    [/.cargo/common.sh](.cargo/common.sh), somewhere after all its dependencies.
+    [`/etc/common.sh`](etc/common.sh), somewhere after all its dependencies.
     (This list is used for packaging and publishing the components, as `cargo
     package` does not support workspaces, yet.
 
@@ -84,15 +84,16 @@ Please consider running through these steps before submitting a PR for UNIC:
     -   Traits for non-UNIC types, like the Rust core `char` and `str` types to
         into separate modules, usually named `trait.rs`.
 
-6.  Format the code (Rust and Python) using the `/.cargo/format.sh`. This allows
-    everyone to use auto-formatting and not worry about manual code formatting.
-    Please make use you are using the latest version of
+6.  Format the code (Rust and Python) using the
+    [`/etc/format.sh`](etc/format.sh). This allows everyone to use
+    auto-formatting and not worry about manual code formatting.  Please make use
+    you are using the latest version of
     [`rustfmt-nightly`](https://crates.io/crates/rustfmt-nightly) before running
     the script.
 
     If you have suggestions to change the Rust formatting style, please
-    submitting a separate PR, updating `/.rustfmt.toml` in one commit, and
-    applying the changes in another diff.
+    submitting a separate PR, updating [`/.rustfmt.toml`](.rustfmt.toml) in one
+    commit, and applying the changes in another diff.
 
 7.  For pre-`1.0.0` development, we try to have a new release after each new
     Rust release. Therefore, there's no need to make new releases after each
