@@ -69,8 +69,8 @@ Please consider running through these steps before submitting a PR for UNIC:
 
 5.  For each component, we keep the source code organized as this:
 
-    -   The library file [`src/lib.rs`](src/lib.rs) contains version information
-        of the package (like `CARGO_PKG_VERSION`) and the data (like
+    -   The library file (`src/lib.rs`) contains version information of the
+        package (like `CARGO_PKG_VERSION`) and the data (like
         `UNICODE_VERSION`), and API is `pub use`d from other crates and local
         modules.
 
