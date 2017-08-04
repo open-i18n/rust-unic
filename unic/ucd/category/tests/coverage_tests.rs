@@ -10,20 +10,16 @@
 
 
 extern crate unic_ucd_category;
-extern crate unic_utils;
 
 
 use unic_ucd_category::GeneralCategory;
-use unic_utils::iter_all_chars;
 
 
 /// Every char falls in exactly one of the major categories; with the exception of `CasedLetter`,
 /// when it's also a `Letter`.
 #[test]
 fn test_general_category_major_groups() {
-    for cp in iter_all_chars() {
-        let gc = GeneralCategory::of(cp);
-
+    for gc in GeneralCategory::all_values() {
         if gc.is_cased_letter() {
             assert!(
                 gc.is_letter() &&
@@ -33,8 +29,7 @@ fn test_general_category_major_groups() {
                 !gc.is_symbol() &&
                 !gc.is_separator() &&
                 !gc.is_other(),
-                "cp: U+{:04X}, GC: `{:?}`",
-                cp as u32,
+                "GC: `{:?}`",
                 gc
             );
 
@@ -46,8 +41,7 @@ fn test_general_category_major_groups() {
                 !gc.is_symbol() &&
                 !gc.is_separator() &&
                 !gc.is_other(),
-                "cp: U+{:04X}, GC: `{:?}`",
-                cp as u32,
+                "GC: `{:?}`",
                 gc
             );
 
@@ -58,8 +52,7 @@ fn test_general_category_major_groups() {
                 !gc.is_symbol() &&
                 !gc.is_separator() &&
                 !gc.is_other(),
-                "cp: U+{:04X}, GC: `{:?}`",
-                cp as u32,
+                "GC: `{:?}`",
                 gc
             );
 
@@ -69,8 +62,7 @@ fn test_general_category_major_groups() {
                 !gc.is_symbol() &&
                 !gc.is_separator() &&
                 !gc.is_other(),
-                "cp: U+{:04X}, GC: `{:?}`",
-                cp as u32,
+                "GC: `{:?}`",
                 gc
             );
 
@@ -79,8 +71,7 @@ fn test_general_category_major_groups() {
                 !gc.is_symbol() &&
                 !gc.is_separator() &&
                 !gc.is_other(),
-                "cp: U+{:04X}, GC: `{:?}`",
-                cp as u32,
+                "GC: `{:?}`",
                 gc
             );
 
@@ -88,24 +79,21 @@ fn test_general_category_major_groups() {
             assert!(
                 !gc.is_separator() &&
                 !gc.is_other(),
-                "cp: U+{:04X}, GC: `{:?}`",
-                cp as u32,
+                "GC: `{:?}`",
                 gc
             );
 
         } else if gc.is_separator() {
             assert!(
                 !gc.is_other(),
-                "cp: U+{:04X}, GC: `{:?}`",
-                cp as u32,
+                "GC: `{:?}`",
                 gc
             );
 
         } else {
             assert!(
                 gc.is_other(),
-                "cp: U+{:04X}, GC: `{:?}`",
-                cp as u32,
+                "GC: `{:?}`",
                 gc
             );
 

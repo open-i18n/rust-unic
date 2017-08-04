@@ -118,9 +118,49 @@ const GENERAL_CATEGORY_TABLE: &'static [(char, char, GeneralCategory)] =
     include!("tables/general_category.rsv");
 
 impl GeneralCategory {
-    /// Find the GeneralCategory of a single char.
+    /// Find the `GeneralCategory` of a single char.
     pub fn of(ch: char) -> GeneralCategory {
         bsearch_range_value_table(ch, GENERAL_CATEGORY_TABLE)
+    }
+
+    /// Exhaustive list of all `GeneralCategory` property values.
+    ///
+    /// Ref: <http://unicode.org/reports/tr44/#General_Category_Values>
+    pub fn all_values() -> &'static [GeneralCategory] {
+        use GeneralCategory::*;
+        const ALL_VALUES: &[GeneralCategory] = &[
+            UppercaseLetter,
+            LowercaseLetter,
+            TitlecaseLetter,
+            ModifierLetter,
+            OtherLetter,
+            NonspacingMark,
+            SpacingMark,
+            EnclosingMark,
+            DecimalNumber,
+            LetterNumber,
+            OtherNumber,
+            ConnectorPunctuation,
+            DashPunctuation,
+            OpenPunctuation,
+            ClosePunctuation,
+            InitialPunctuation,
+            FinalPunctuation,
+            OtherPunctuation,
+            MathSymbol,
+            CurrencySymbol,
+            ModifierSymbol,
+            OtherSymbol,
+            SpaceSeparator,
+            LineSeparator,
+            ParagraphSeparator,
+            Control,
+            Format,
+            Surrogate,
+            PrivateUse,
+            Unassigned,
+        ];
+        ALL_VALUES
     }
 }
 
