@@ -114,6 +114,50 @@ where
     }
 }
 
+struct CanonicalCompositionData(BTreeMap<char, Vec<(char, char)>>);
+
+impl CanonicalCompositionData {
+    fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
+        let mut file = File::create(dir.as_ref().join("canonical_composition_mapping.rsv"))?;
+        writeln!(
+            file,
+            "{}\n{}",
+            PREAMBLE,
+            self.0.to_single_bsearch_map(|val, f| {
+                write!(f, "&[")?;
+                for pair in val.iter() {
+                    write!(
+                        f,
+                        "('{}','{}'),",
+                        pair.0.escape_unicode(),
+                        pair.1.escape_unicode(),
+                    )?;
+                }
+                write!(f, "]")
+            }),
+        )
+    }
+}
+
+impl<'a, 'b> From<&'a CanonicalDecompositionData<'b>> for CanonicalCompositionData {
+    fn from(decomposition: &CanonicalDecompositionData<'b>) -> Self {
+        let mut map = BTreeMap::default();
+        let &CanonicalDecompositionData(ref decomposition_map) = decomposition;
+
+        for (&composed, decomposed) in decomposition_map {
+            if decomposed.len() == 1 { continue; }
+            assert_eq!(decomposed.len(), 2);
+            let lead = decomposed[0];
+            let follow = decomposed[1];
+            map.entry(lead)
+                .or_insert_with(|| Vec::with_capacity(1))
+                .push((follow, composed));
+        }
+
+        CanonicalCompositionData(map)
+    }
+}
+
 struct CompatibilityDecompositionData<'a>(BTreeMap<char, (&'a str, &'a [char])>);
 
 impl<'a> CompatibilityDecompositionData<'a> {
@@ -172,7 +216,10 @@ pub fn generate<P: AsRef<Path>>(
     println!("> unic::ucd::normal::tables::canonical_combining_class_values");
     CanonicalCombiningClassData::from(data.iter()).emit(&dir)?;
     println!("> unic::ucd::normal::tables::canonical_decomposition_mapping");
-    CanonicalDecompositionData::from(data.iter()).emit(&dir)?;
+    let decomposition = CanonicalDecompositionData::from(data.iter());
+    decomposition.emit(&dir)?;
+    println!("> unic::ucd::normal::tables::canonical_composition_mapping");
+    CanonicalCompositionData::from(&decomposition).emit(&dir)?;
     println!("> unic::ucd::normal::tables::compatibility_decomposition_mapping");
     CompatibilityDecompositionData::from(data.iter())
         .emit(&dir)?;
