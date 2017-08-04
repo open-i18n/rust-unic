@@ -12,7 +12,7 @@
 
 //! Conjoining Jamo composition to/decomposition from Hangul syllables.
 //!
-//! Ref: Section 3.12 Conjoining Jamo Behavior, Unicode 9.0.0
+//! Reference: Section 3.12 Conjoining Jamo Behavior, Unicode 9.0.0
 //! <http://www.unicode.org/versions/Unicode9.0.0/ch03.pdf>
 
 

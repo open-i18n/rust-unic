@@ -125,7 +125,7 @@ impl GeneralCategory {
 
     /// Exhaustive list of all `GeneralCategory` property values.
     ///
-    /// Ref: <http://unicode.org/reports/tr44/#General_Category_Values>
+    /// Reference: <http://unicode.org/reports/tr44/#General_Category_Values>
     pub fn all_values() -> &'static [GeneralCategory] {
         use GeneralCategory::*;
         const ALL_VALUES: &[GeneralCategory] = &[
