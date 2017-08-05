@@ -1,6 +1,6 @@
 [package]
 name = "unic-bidi"
-version = "0.4.0"
+version = "0.5.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
@@ -25,8 +25,8 @@ bench_it = []
 [dependencies]
 matches = "0.1"
 serde = { version = ">=0.8, <2.0", optional = true, features = ["derive"] }
-unic-ucd-bidi = { path = "../ucd/bidi/", version = "0.4.0" }
+unic-ucd-bidi = { path = "../ucd/bidi/", version = "0.5.0" }
 
 [dev-dependencies]
 serde_test = ">=0.8, <2.0"
-unic-ucd-core = { path = "../ucd/core/", version = "0.4.0" }
+unic-ucd-core = { path = "../ucd/core/", version = "0.5.0" }
