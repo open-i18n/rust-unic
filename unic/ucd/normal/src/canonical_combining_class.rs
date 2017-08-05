@@ -95,6 +95,11 @@ impl CanonicalCombiningClass {
 
 
 impl CanonicalCombiningClass {
+    /// Get numeric *Canonical_Combining_Class* value
+    pub fn number(&self) -> u8 {
+        self.0
+    }
+
     /// If the *ccc* has value `Not_Reordered` (`0`).
     pub fn is_not_reordered(&self) -> bool {
         self.0 == 0
@@ -232,5 +237,13 @@ mod tests {
         assert_eq!(CCC::of('\u{80000}'), ccc::NotReordered);
         assert_eq!(CCC::of('\u{90000}'), ccc::NotReordered);
         assert_eq!(CCC::of('\u{a0000}'), ccc::NotReordered);
+    }
+
+    #[test]
+    fn test_number() {
+        assert_eq!(CCC::of('\u{0000}').number(), 0);
+        assert_eq!(CCC::of('\u{0300}').number(), 230);
+        assert_eq!(CCC::of('\u{0315}').number(), 232);
+        assert_eq!(CCC::of('\u{1e94a}').number(), 7);
     }
 }
