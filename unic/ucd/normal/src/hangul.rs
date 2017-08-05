@@ -12,7 +12,7 @@
 
 //! Conjoining Jamo composition to/decomposition from Hangul syllables.
 //!
-//! Ref: Section 3.12 Conjoining Jamo Behavior, Unicode 9.0.0
+//! Reference: Section 3.12 Conjoining Jamo Behavior, Unicode 9.0.0
 //! <http://www.unicode.org/versions/Unicode9.0.0/ch03.pdf>
 
 
@@ -36,7 +36,7 @@ pub fn is_syllable(ch: char) -> bool {
 /// Decompose a precomposed Hangul syllable
 // FIXME: This is a workaround, we should use `F` instead of `&mut F`
 #[allow(unsafe_code)]
-#[inline(always)]
+#[inline]
 pub fn decompose<F>(syllable: char, f: &mut F)
 where
     F: FnMut(char),
@@ -61,7 +61,7 @@ where
 
 /// Compose a pair of Hangul Jamo
 #[allow(unsafe_code)]
-#[inline(always)]
+#[inline]
 pub fn compose(jamo1: char, jamo2: char) -> Option<char> {
     use std::mem::transmute;
 

@@ -10,7 +10,7 @@
 // except according to those terms.
 
 
-//! Accessor for Canonical_Combining_Class (ccc) property
+//! Accessor for *Canonical_Combining_Class* (ccc) property
 
 
 use std::cmp::Ordering;
@@ -24,7 +24,7 @@ pub struct CanonicalCombiningClass(u8);
 
 
 // TODO: Once we fully adopt 1.20 change these to associated consts on CanonicalCombiningClass
-/// Canonical Combining Classes by their name
+/// *Canonical_Combining_Class*es by their name
 #[allow(non_upper_case_globals)]
 pub mod values {
     use super::CanonicalCombiningClass as CCC;
@@ -85,7 +85,7 @@ const CANONICAL_COMBINING_CLASS_VALUES: &'static [(char, char, CanonicalCombinin
 
 
 impl CanonicalCombiningClass {
-    /// Lookup Canonical Combining Class of the character
+    /// Find the character *Canonical_Combining_Class* property value.
     pub fn of(ch: char) -> CanonicalCombiningClass {
         bsearch_range_value_table(ch, CANONICAL_COMBINING_CLASS_VALUES)
     }

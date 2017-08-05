@@ -38,16 +38,16 @@ pub struct UnicodeDataEntry {
 
     /// (2) This is a useful breakdown into various character types which
     /// can be used as a default categorization in implementations.
-    /// For the property values, see [General Category Values].
+    /// For the property values, see [General_Category Values].
     ///
-    /// [General Category Values]: http://unicode.org/reports/tr44/#General_Category_Values
+    /// [General_Category Values]: http://unicode.org/reports/tr44/#General_Category_Values
     pub general_category: String,
 
     /// (3) The classes used for the Canonical Ordering Algorithm in the Unicode Standard.
     /// This property could be considered either an enumerated property or a numeric property:
     /// the principal use of the property is in terms of the numeric values.
     /// For the property value names associated with different numeric values,
-    /// see [DerivedCombiningClass.txt] and [Canonical Combining Class Values][CCC Values].
+    /// see [DerivedCombiningClass.txt] and [Canonical_Combining_Class Values][CCC Values].
     ///
     /// [DerivedCombiningClass.txt]: http://unicode.org/reports/tr44/#DerivedCombiningClass.txt
     /// [CCC Values]: http://unicode.org/reports/tr44/#Canonical_Combining_Class_Values

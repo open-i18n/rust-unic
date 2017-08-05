@@ -21,9 +21,9 @@ set -e
 
 
 # List of components, in order of dependency
-COMPONENTS="
+export COMPONENTS="
+    unic/utils
     unic/ucd/core
-    unic/ucd/utils
     unic/ucd/age
     unic/ucd/bidi
     unic/ucd/category

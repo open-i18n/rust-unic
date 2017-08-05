@@ -235,6 +235,7 @@ pub fn encode(input: &[char]) -> Option<String> {
 
 #[inline]
 fn value_to_digit(value: u32) -> char {
+    #[cfg_attr(clippy, allow(char_lit_as_u8))]
     match value {
         0...25 => (value as u8 + 'a' as u8) as char,  // a..z
         26...35 => (value as u8 - 26 + '0' as u8) as char,  // 0..9

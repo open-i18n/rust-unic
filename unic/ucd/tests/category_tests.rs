@@ -39,7 +39,7 @@ fn test_bidi_en_against_gen_cat() {
 fn test_bidi_es_against_gen_cat() {
     for cp in iter_all_chars() {
         if BC::of(cp) == BC::EuropeanSeparator {
-            assert!(matches!(GC::of(cp) , GC::MathSymbol | GC::DashPunctuation));
+            assert!(matches!(GC::of(cp), GC::MathSymbol | GC::DashPunctuation));
         }
     }
 }
@@ -50,8 +50,8 @@ fn test_bidi_et_against_gen_cat() {
     for cp in iter_all_chars() {
         if BC::of(cp) == BC::EuropeanTerminator {
             assert!(
-                GC::of(cp).is_symbol()          ||
-                matches!(GC::of(cp) , GC::Unassigned | GC::OtherPunctuation)
+                GC::of(cp).is_symbol() ||
+                    matches!(GC::of(cp), GC::Unassigned | GC::OtherPunctuation)
             );
         }
     }
@@ -62,9 +62,10 @@ fn test_bidi_et_against_gen_cat() {
 fn test_bidi_an_against_gen_cat() {
     for cp in iter_all_chars() {
         if BC::of(cp) == BC::ArabicNumber {
-            assert!(
-                matches!(GC::of(cp) , GC::Format | GC::OtherNumber | GC::OtherPunctuation | GC::DecimalNumber)
-            );
+            assert!(matches!(
+                GC::of(cp),
+                GC::Format | GC::OtherNumber | GC::OtherPunctuation | GC::DecimalNumber
+            ));
         }
     }
 }
@@ -74,7 +75,10 @@ fn test_bidi_an_against_gen_cat() {
 fn test_bidi_cs_against_gen_cat() {
     for cp in iter_all_chars() {
         if BC::of(cp) == BC::CommonSeparator {
-            assert!(matches!(GC::of(cp) , GC::OtherPunctuation | GC::SpaceSeparator | GC::MathSymbol));
+            assert!(matches!(
+                GC::of(cp),
+                GC::OtherPunctuation | GC::SpaceSeparator | GC::MathSymbol
+            ));
         }
     }
 }
@@ -114,7 +118,7 @@ fn test_bidi_bn_against_gen_cat() {
 fn test_bidi_b_against_gen_cat() {
     for cp in iter_all_chars() {
         if BC::of(cp) == BC::ParagraphSeparator {
-            assert!(matches!(GC::of(cp) , GC::Control | GC::ParagraphSeparator));
+            assert!(matches!(GC::of(cp), GC::Control | GC::ParagraphSeparator));
         }
     }
 }
@@ -124,7 +128,7 @@ fn test_bidi_b_against_gen_cat() {
 fn test_bidi_s_against_gen_cat() {
     for cp in iter_all_chars() {
         if BC::of(cp) == BC::SegmentSeparator {
-            assert!(matches!(GC::of(cp) , GC::Control));
+            assert!(matches!(GC::of(cp), GC::Control));
         }
     }
 }
@@ -134,7 +138,10 @@ fn test_bidi_s_against_gen_cat() {
 fn test_bidi_ws_against_gen_cat() {
     for cp in iter_all_chars() {
         if BC::of(cp) == BC::WhiteSpace {
-            assert!(matches!(GC::of(cp) , GC::Control | GC::SpaceSeparator | GC::LineSeparator));
+            assert!(matches!(
+                GC::of(cp),
+                GC::Control | GC::SpaceSeparator | GC::LineSeparator
+            ));
         }
     }
 }

@@ -33,5 +33,3 @@ for component in $COMPONENTS; do
     - cargo clippy --verbose
     - cd "$ROOT"
 done
-
-- cargo clippy --verbose

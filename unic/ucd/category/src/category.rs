@@ -11,11 +11,11 @@
 use std::cmp::Ordering;
 
 /// Represents the Unicode Character
-/// [*General Category*](http://unicode.org/reports/tr44/#General_Category) property.
+/// [*General_Category*](http://unicode.org/reports/tr44/#General_Category) property.
 ///
 /// This is a useful breakdown into various character types which can be used as a default
 /// categorization in implementations. For the property values, see
-/// [*General Category Values*](http://unicode.org/reports/tr44/#General_Category_Values).
+/// [*General_Category Values*](http://unicode.org/reports/tr44/#General_Category_Values).
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum GeneralCategory {
     /// An uppercase letter (Short form: `Lu`)
@@ -125,7 +125,7 @@ impl GeneralCategory {
 
     /// Exhaustive list of all `GeneralCategory` property values.
     ///
-    /// Ref: <http://unicode.org/reports/tr44/#General_Category_Values>
+    /// Reference: <http://unicode.org/reports/tr44/#General_Category_Values>
     pub fn all_values() -> &'static [GeneralCategory] {
         use GeneralCategory::*;
         const ALL_VALUES: &[GeneralCategory] = &[
@@ -308,17 +308,17 @@ mod tests {
 
     #[test]
     fn test_private_use() {
-        for c in 0xF0000..(0xFFFFD + 1) {
+        for c in 0xF_0000..(0xF_FFFD + 1) {
             let c = char::from_u32(c).unwrap();
             assert_eq!(GC::of(c), GC::PrivateUse);
         }
 
-        for c in 0x100000..(0x10FFFD + 1) {
+        for c in 0x10_0000..(0x10_FFFD + 1) {
             let c = char::from_u32(c).unwrap();
             assert_eq!(GC::of(c), GC::PrivateUse);
         }
 
-        for &c in [0xFFFFE, 0xFFFFF, 0x10FFFE, 0x10FFFF].iter() {
+        for &c in [0xF_FFFE, 0xF_FFFF, 0x10_FFFE, 0x10_FFFF].iter() {
             let c = char::from_u32(c).unwrap();
             assert_eq!(GC::of(c), GC::Unassigned);
         }
