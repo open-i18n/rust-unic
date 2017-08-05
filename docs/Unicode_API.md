@@ -44,46 +44,39 @@ namespace collision.
 
 Example:
 
-|                    | *Unicode Name*        | *UNIC Name*                               |
-|--------------------|-----------------------|-------------------------------------------|
-| **Property**       | General_Category (gc) | `GeneralCategory`                         |
-| **Property Value** | Uppercase_Letter (Lu) | `UppercaseLetter` / `is_uppercase_letter` |
-| **Property Value** | Cased_Letter (LC)     | `is_cased_letter()`                       |
+|                    | *Unicode Name*        | *UNIC Name*                                 |
+|--------------------|-----------------------|---------------------------------------------|
+| **Property**       | General_Category (gc) | `GeneralCategory`                           |
+| **Property Value** | Uppercase_Letter (Lu) | `UppercaseLetter` / `is_uppercase_letter()` |
+| **Property Value** | Cased_Letter (LC)     | `is_cased_letter()`                         |
 
 In UNIC, the common way of accessing property values is using static function `of()` on the
-property type (`enum` or `trait`).
+property type (`enum`, `struct`, or `trait`).
 
 For example, *Some_Example* Unicode character property will be available via
 `SomeExample::of(ch)`.
 
-Rust `trait` types are used for Unicode numeric properties. In this case, name collision could
-happen is with helper methods of property `trait`s, when property values have similar names,
-therefore all the helper methods for specific property will be *prefixed* with the *abbreviation
-name* of the property.  (This won't happen for `enum` types, of course, since they are different
-`type`s.)
-
-For example, `trait CanonicalCombiningClass` returns an integer (`u8`) from its `of()` function,
-therefore, we will have:
-
-```rust
-let ch_ccc = CanonicalCombiningClass::of(ch);
-assert!(ch_ccc.ccc_is_not_reordered());
-```
-
 
 ### Unicode Character Database
 
-From the
+The UCD [defines](http://www.unicode.org/reports/tr44/#Property_Index_Table)
+various *character properties* for Unicode characters.
 
-| **Property Name** (short name)  | **Property Type** | **UNIC Component** | **UNIC Implementation**            |
-|---------------------------------|-------------------|--------------------|------------------------------------|
-| **General**                     |                   |                    |                                    |
-| Age (age)                       | Catalog           | `unic-ucd-age`     | `enum Age`                         |
-| **Bidirectional**               |                   |                    |                                    |
-| Bidi_Class                (bc)  | Enumeration       | `unic-ucd-bidi`    | `enum BidiClass`                   |
-| **Normalization**               |                   |                    |                                    |
-| Canonical_Combining_Class (ccc) | Enumeration       | `unic-ucd-normal`  | `u8 trait CanonicalCombiningClass` |
-| Decomposition_Type (dt)         | Enumeration       | `unic-ucd-normal`  | `enum DecompositionType`           |
+The following table shows their implementation status in UNIC.
+
+| **Property Name** (abbr)        | **Property Type** | **UNIC Component**  | **UNIC Implementation**                             |
+|---------------------------------|-------------------|---------------------|-----------------------------------------------------|
+|                                 |                   |                     |                                                     |
+| **General**                     |                   |                     |                                                     |
+| Age (age)                       | Catalog           | `unic-ucd-age`      | `enum Age { Assigned(UnicodeVersion), Unassigned }` |
+| General_Category (gc)           | Enumeration       | `unic-ucd-category` | `enum GeneralCategory {...}`                        |
+|                                 |                   |                     |                                                     |
+| **Bidirectional**               |                   |                     |                                                     |
+| Bidi_Class                (bc)  | Enumeration       | `unic-ucd-bidi`     | `enum BidiClass {...}`                              |
+|                                 |                   |                     |                                                     |
+| **Normalization**               |                   |                     |                                                     |
+| Canonical_Combining_Class (ccc) | Enumeration       | `unic-ucd-normal`   | `struct CanonicalCombiningClass(u8)`                |
+| Decomposition_Type (dt)         | Enumeration       | `unic-ucd-normal`   | `enum DecompositionType {...}`                      |
 
 
 ## Named Unicode Algorithms
