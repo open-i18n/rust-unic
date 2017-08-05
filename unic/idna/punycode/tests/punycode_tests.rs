@@ -9,11 +9,48 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use unic_idna_punycode::{decode, encode_str};
-use rustc_serialize::json::{Json, Object};
-use test::TestFn;
 
-fn one_test(decoded: &str, encoded: &str) {
+extern crate unic_idna_punycode;
+extern crate rustc_serialize;
+
+
+use unic_idna_punycode::{decode, encode_str};
+use rustc_serialize::json::{self, Json};
+
+
+#[test]
+pub fn test_punycode_js_data() {
+    let tests = match Json::from_str(include_str!(
+        "../../../../data/punycode/test/punycode.js_data.json"
+    )).unwrap()
+    {
+        Json::Array(tests) => tests,
+        _ => panic!("Bad JSON tests data"),
+    };
+
+    for (i, test) in tests.into_iter().enumerate() {
+        match test {
+            Json::Object(obj) => {
+                let test_name = {
+                    let desc = get_string(&obj, "description");
+                    if desc.is_empty() {
+                        format!("Punycode {}", i + 1)
+                    } else {
+                        format!("Punycode {}: {}", i + 1, desc)
+                    }
+                };
+                one_test(
+                    &test_name,
+                    get_string(&obj, "decoded"),
+                    get_string(&obj, "encoded"),
+                )
+            }
+            _ => panic!("Bad JSON test data"),
+        }
+    }
+}
+
+fn one_test(test_name: &str, decoded: &str, encoded: &str) {
     match decode(encoded) {
         None => panic!("Decoding {} failed.", encoded),
         Some(result) => {
@@ -21,7 +58,8 @@ fn one_test(decoded: &str, encoded: &str) {
             assert_eq!(
                 result,
                 decoded,
-                "Incorrect decoding of \"{}\":\n   \"{}\"\n!= \"{}\"\n",
+                "Test `{}`: Incorrect decoding of \"{}\":\n   \"{}\"\n!= \"{}\"\n",
+                test_name,
                 encoded,
                 result,
                 decoded
@@ -34,7 +72,8 @@ fn one_test(decoded: &str, encoded: &str) {
         Some(result) => assert_eq!(
             result,
             encoded,
-            "Incorrect encoding of \"{}\":\n   \"{}\"\n!= \"{}\"\n",
+            "Test `{}`: Incorrect encoding of \"{}\":\n   \"{}\"\n!= \"{}\"\n",
+            test_name,
             decoded,
             result,
             encoded
@@ -42,39 +81,10 @@ fn one_test(decoded: &str, encoded: &str) {
     }
 }
 
-fn get_string<'a>(map: &'a Object, key: &str) -> &'a str {
-    match map.get(&key.to_string()) {
+fn get_string<'a>(obj: &'a json::Object, key: &str) -> &'a str {
+    match obj.get(key) {
         Some(&Json::String(ref s)) => s,
         None => "",
         _ => panic!(),
-    }
-}
-
-pub fn collect_tests<F: FnMut(String, TestFn)>(add_test: &mut F) {
-    match Json::from_str(include_str!(
-        "../../../../data/punycode/test/punycode.js_data.json"
-    )) {
-        Ok(Json::Array(tests)) => for (i, test) in tests.into_iter().enumerate() {
-            match test {
-                Json::Object(o) => {
-                    let test_name = {
-                        let desc = get_string(&o, "description");
-                        if desc.is_empty() {
-                            format!("Punycode {}", i + 1)
-                        } else {
-                            format!("Punycode {}: {}", i + 1, desc)
-                        }
-                    };
-                    add_test(
-                        test_name,
-                        TestFn::dyn_test_fn(move || {
-                            one_test(get_string(&o, "decoded"), get_string(&o, "encoded"))
-                        }),
-                    )
-                }
-                _ => panic!(),
-            }
-        },
-        other => panic!("{:?}", other),
     }
 }
