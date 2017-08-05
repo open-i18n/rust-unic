@@ -66,14 +66,13 @@ The following table shows their implementation status in UNIC.
 
 | **Property Name** (abbr)        | **Property Type** | **UNIC Component**  | **UNIC Implementation**                             |
 |---------------------------------|-------------------|---------------------|-----------------------------------------------------|
-|                                 |                   |                     |                                                     |
 | **General**                     |                   |                     |                                                     |
 | Age (age)                       | Catalog           | `unic-ucd-age`      | `enum Age { Assigned(UnicodeVersion), Unassigned }` |
 | General_Category (gc)           | Enumeration       | `unic-ucd-category` | `enum GeneralCategory {...}`                        |
-|                                 |                   |                     |                                                     |
+| ——                              |                   |                     |                                                     |
 | **Bidirectional**               |                   |                     |                                                     |
 | Bidi_Class                (bc)  | Enumeration       | `unic-ucd-bidi`     | `enum BidiClass {...}`                              |
-|                                 |                   |                     |                                                     |
+| ——                              |                   |                     |                                                     |
 | **Normalization**               |                   |                     |                                                     |
 | Canonical_Combining_Class (ccc) | Enumeration       | `unic-ucd-normal`   | `struct CanonicalCombiningClass(u8)`                |
 | Decomposition_Type (dt)         | Enumeration       | `unic-ucd-normal`   | `enum DecompositionType {...}`                      |
