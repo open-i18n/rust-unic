@@ -50,11 +50,13 @@ Example:
 | **Property Value** | Uppercase_Letter (Lu) | `UppercaseLetter` / `is_uppercase_letter()` |
 | **Property Value** | Cased_Letter (LC)     | `is_cased_letter()`                         |
 
-In UNIC, the common way of accessing property values is using static function `of()` on the
-property type (`enum`, `struct`, or `trait`).
+In UNIC, the common way of accessing property values is using static function
+`of()` on the property type (`enum`, `struct`). For example, *Some_Example*
+property of a character will be available via `SomeExample::of(ch)`.
 
-For example, *Some_Example* Unicode character property will be available via
-`SomeExample::of(ch)`.
+For property types with numeric values, the `number()` method will return the
+numeric value. For example, `CanonicalCombiningClass::of(ch).number()` returns a
+`u8` number.
 
 
 ### Unicode Character Database
