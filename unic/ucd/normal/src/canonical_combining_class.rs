@@ -11,6 +11,8 @@
 
 
 //! Accessor for *Canonical_Combining_Class* (ccc) property
+//!
+//! Reference: <http://unicode.org/reports/tr44/#Canonical_Combining_Class_Values>
 
 
 use std::cmp::Ordering;
@@ -97,7 +99,8 @@ impl CanonicalCombiningClass {
     pub fn is_not_reordered(&self) -> bool {
         self.0 == 0
     }
-    /// If the *ccc* should be reordered in bidi algorithms (`!= CCC0`)
+
+    /// If the *ccc* any value other than `Not_Reordered` (`0`).
     pub fn is_reordered(&self) -> bool {
         self.0 != 0
     }
