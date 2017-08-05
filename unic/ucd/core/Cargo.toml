@@ -2,11 +2,11 @@
 name = "unic-ucd-core"
 version = "0.4.0"
 authors = ["The UNIC Project Developers"]
-homepage = "https://github.com/behnam/rust-unic/"
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
-keywords = ["text", "unicode"]
+keywords = ["text", "unicode", "version"]
 description = "UNIC - Unicode Character Database - Version"
+categories = ["text-processing", "parsing", "rendering"]
 
 # No tests/benches that depends on /data/
 exclude = []
