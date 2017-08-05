@@ -90,11 +90,9 @@ pub fn resolve_weak(sequence: &IsolatingRunSequence, processing_classes: &mut [B
                     _ => et_run_indices.push(i), // In case this is followed by an EN.
                 }
             }
-            class => {
-                if removed_by_x9(class) {
-                    continue;
-                }
-            }
+            class => if removed_by_x9(class) {
+                continue;
+            },
         }
 
         prev_class = processing_classes[i];

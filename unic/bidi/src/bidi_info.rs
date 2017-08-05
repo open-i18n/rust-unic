@@ -310,11 +310,9 @@ impl<'text> BidiInfo<'text> {
                     }
                 }
                 // Whitespace, isolate formatting
-                WS | FSI | LRI | RLI | PDI => {
-                    if reset_from == None {
-                        reset_from = Some(i);
-                    }
-                }
+                WS | FSI | LRI | RLI | PDI => if reset_from == None {
+                    reset_from = Some(i);
+                },
                 _ => {
                     reset_from = None;
                 }
@@ -789,7 +787,7 @@ mod tests {
 
 #[cfg(all(feature = "serde", test))]
 mod serde_tests {
-    use serde_test::{Token, assert_tokens};
+    use serde_test::{assert_tokens, Token};
     use super::*;
 
     #[test]
