@@ -48,6 +48,7 @@ struct Range {
 
 use self::Mapping::*;
 
+#[cfg_attr(feature = "cargo-clippy", allow(unreadable_literal))]
 const MAP: &'static [Range] = include!("tables/idna_map.rsv");
 const MAP_STRING: &'static str = include!("tables/idna_map_string.rsv");
 

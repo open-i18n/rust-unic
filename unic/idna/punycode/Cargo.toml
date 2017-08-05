@@ -15,10 +15,5 @@ exclude = ["tests/punycode_tests.rs"]
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
-[[test]]
-name = "tests"
-harness = false
-
 [dev-dependencies]
-rustc-test = "0.2"
 rustc-serialize = "0.3"
