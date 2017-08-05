@@ -30,7 +30,3 @@ for component in $COMPONENTS; do
     - cargo update  --verbose --manifest-path "$component/Cargo.toml"
     - cargo package --verbose --manifest-path "$component/Cargo.toml"
 done
-
-# Package root
-- cargo update  --verbose
-- cargo package --verbose
