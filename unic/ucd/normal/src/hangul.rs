@@ -36,7 +36,7 @@ pub fn is_syllable(ch: char) -> bool {
 /// Decompose a precomposed Hangul syllable
 // FIXME: This is a workaround, we should use `F` instead of `&mut F`
 #[allow(unsafe_code)]
-#[inline(always)]
+#[inline]
 pub fn decompose<F>(syllable: char, f: &mut F)
 where
     F: FnMut(char),
@@ -61,7 +61,7 @@ where
 
 /// Compose a pair of Hangul Jamo
 #[allow(unsafe_code)]
-#[inline(always)]
+#[inline]
 pub fn compose(jamo1: char, jamo2: char) -> Option<char> {
     use std::mem::transmute;
 

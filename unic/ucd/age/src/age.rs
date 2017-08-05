@@ -45,7 +45,7 @@ use Age::{Assigned, Unassigned};
 pub const AGE_TABLE: &'static [(char, char, Age)] = include!("tables/age_values.rsv");
 
 impl Age {
-    /// Find the character Age
+    /// Find the character *Age* property value.
     pub fn of(ch: char) -> Age {
         bsearch_range_value_table(ch, AGE_TABLE)
     }

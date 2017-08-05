@@ -305,7 +305,7 @@ fn test_gen_char_from_bidi_class() {
         WS,
     ] {
         let class_name = class.abbr_name();
-        let sample_char = gen_char_from_bidi_class(&class_name);
+        let sample_char = gen_char_from_bidi_class(class_name);
         assert_eq!(BidiClass::of(sample_char), class);
     }
 }

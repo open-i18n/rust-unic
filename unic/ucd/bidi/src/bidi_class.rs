@@ -107,12 +107,12 @@ pub enum BidiClassCategory {
 }
 
 impl BidiClass {
-    /// Find the BidiClass of a single char.
+    /// Find the character *Bidi_Class* property value.
     pub fn of(ch: char) -> BidiClass {
         bsearch_range_value_table(ch, BIDI_CLASS_TABLE)
     }
 
-    /// Abbreviated name of the Bidi Class property value.
+    /// Abbreviated name of the *Bidi_Class* property value.
     ///
     /// <http://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#Bidi_Class>
     pub fn abbr_name(&self) -> &str {
@@ -143,7 +143,7 @@ impl BidiClass {
         }
     }
 
-    /// Human-readable description of the Bidi Class property value.
+    /// Human-readable description of the *Bidi_Class* property value.
     ///
     /// <http://www.unicode.org/reports/tr9/#Table_Bidirectional_Character_Types>
     #[inline]

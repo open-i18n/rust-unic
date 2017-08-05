@@ -16,17 +16,15 @@ Here's a list of components (available or planned) for this super-crate:
 
 - [X] `core`: Providing basic information about UCD data, specifically the
   [Unicode Version](http://www.unicode.org/versions/).
-- [X] `utils`: Providing basic utilities for working with Unicode characters.
 
-
-- [X] `age`: Character Age.
-- [ ] `name`: Character Name.
-- [ ] `category`: Character General Category.
+- [X] `age`: Character Age property.
+- [ ] `name`: Character Name property.
+- [x] `category`: Character General_Category property.
 
 - [ ] `block`: Character Block properties
 - [ ] `script`: Character Script properties.
 
-- [ ] `normal`: Normalization properties.
+- [x] `normal`: Normalization properties.
 - [ ] `case`: Character case properties.
 - [ ] `grapheme`: Character grapheme properties.
 - [ ] `numeric`: Character numeric properties.

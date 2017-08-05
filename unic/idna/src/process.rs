@@ -160,7 +160,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
         }
     }
 
-    return true;
+    true
 }
 
 // http://www.unicode.org/reports/tr46/#Validity_Criteria
