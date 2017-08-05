@@ -35,7 +35,3 @@ done
 for component in $COMPONENTS; do
     - cargo publish --verbose --manifest-path "$component/Cargo.toml" || true
 done
-
-# Then package root
-- cargo update  --verbose
-- cargo publish --verbose

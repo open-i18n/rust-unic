@@ -4,7 +4,7 @@ version = "0.5.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
-keywords = ["text", "unicode", "character property", "bidi", "rtl"]
+keywords = ["text", "unicode", "character-property", "bidi", "rtl"]
 description = "UNIC - Unicode Character Database - Bidi Properties"
 categories = ["text-processing", "parsing", "rendering"]
 
