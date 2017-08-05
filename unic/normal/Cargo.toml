@@ -1,6 +1,6 @@
 [package]
 name = "unic-normal"
-version = "0.4.0"
+version = "0.5.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
@@ -16,7 +16,7 @@ exclude = ["tests/conformance_tests.rs"]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
 [dependencies]
-unic-ucd-normal = { path = "../ucd/normal/", version = "0.4.0" }
+unic-ucd-normal = { path = "../ucd/normal/", version = "0.5.0" }
 
 [dev-dependencies]
-unic-ucd-core = { path = "../ucd/core/", version = "0.4.0" }
+unic-ucd-core = { path = "../ucd/core/", version = "0.5.0" }

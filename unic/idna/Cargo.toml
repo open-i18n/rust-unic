@@ -1,6 +1,6 @@
 [package]
 name = "unic-idna"
-version = "0.4.0"
+version = "0.5.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
@@ -17,9 +17,9 @@ travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
 [dependencies]
 matches = "0.1"
-unic-idna-punycode = { path = "punycode/", version = "0.4.0" }
-unic-idna-mapping = { path = "mapping/", version = "0.4.0" }
-unic-normal = { path = "../normal/", version = "0.4.0" }
-unic-ucd-bidi = { path = "../ucd/bidi/", version = "0.4.0" }
-unic-ucd-core = { path = "../ucd/core/", version = "0.4.0" }
-unic-ucd-normal = { path = "../ucd/normal/", version = "0.4.0" }
+unic-idna-punycode = { path = "punycode/", version = "0.5.0" }
+unic-idna-mapping = { path = "mapping/", version = "0.5.0" }
+unic-normal = { path = "../normal/", version = "0.5.0" }
+unic-ucd-bidi = { path = "../ucd/bidi/", version = "0.5.0" }
+unic-ucd-core = { path = "../ucd/core/", version = "0.5.0" }
+unic-ucd-normal = { path = "../ucd/normal/", version = "0.5.0" }

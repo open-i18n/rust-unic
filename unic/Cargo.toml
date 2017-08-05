@@ -1,6 +1,6 @@
 [package]
 name = "unic"
-version = "0.4.0"
+version = "0.5.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
@@ -19,11 +19,11 @@ bench_it = ["unic-bidi/bench_it"]
 serde = ["unic-bidi/serde"]
 
 [dependencies]
-unic-bidi = { path = "bidi/", version = "0.4.0" }
-unic-idna = { path = "idna/", version = "0.4.0" }
-unic-normal = { path = "normal/", version = "0.4.0" }
-unic-ucd = { path = "ucd/", version = "0.4.0" }
-unic-utils = { path = "utils/", version = "0.4.0" }
+unic-bidi = { path = "bidi/", version = "0.5.0" }
+unic-idna = { path = "idna/", version = "0.5.0" }
+unic-normal = { path = "normal/", version = "0.5.0" }
+unic-ucd = { path = "ucd/", version = "0.5.0" }
+unic-utils = { path = "utils/", version = "0.5.0" }
 
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
