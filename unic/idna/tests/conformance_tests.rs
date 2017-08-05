@@ -77,12 +77,12 @@ pub fn collect_tests<F: FnMut(String, TestFn)>(add_test: &mut F) {
                         return;
                     }
                     let res = result.ok();
-                    assert!(
-                        res == None,
-                        "Expected error. result: {} | original: {} | source: {}",
-                        res.unwrap(),
-                        original,
-                        source
+                    assert_eq!(
+                        res,
+                        None,
+                        "Expected error for source `{}`. original: `{}`",
+                        source,
+                        original
                     );
                     return;
                 }
@@ -102,19 +102,18 @@ pub fn collect_tests<F: FnMut(String, TestFn)>(add_test: &mut F) {
 
                 assert!(
                     result.is_ok(),
-                    "Couldn't parse {} | original: {} | error: {:?}",
+                    "Couldn't parse source `{}`. original: `{}`. error: `{:?}`",
                     source,
                     original,
                     result.err()
                 );
-                let output = result.ok().unwrap();
-                assert!(
-                    output == to_ascii,
-                    "result: {} | expected: {} | original: {} | source: {}",
+                let output = result.unwrap();
+                assert_eq!(
                     output,
                     to_ascii,
-                    original,
-                    source
+                    "Incorrect result for source `{}`. original: `{}`",
+                    source,
+                    original
                 );
             }),
         )
