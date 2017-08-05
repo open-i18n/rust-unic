@@ -15,7 +15,7 @@
 extern crate unic_bidi;
 
 
-use unic_bidi::{BidiClass, bidi_class, BidiInfo, format_chars, level, Level};
+use unic_bidi::{bidi_class, format_chars, level, BidiClass, BidiInfo, Level};
 
 
 const BASIC_TEST_DATA: &'static str = include_str!("../../../data/ucd/test/BidiTest.txt");

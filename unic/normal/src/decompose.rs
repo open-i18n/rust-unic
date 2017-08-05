@@ -12,7 +12,7 @@
 
 use std::fmt::{self, Write};
 
-use unic_ucd_normal::{CanonicalCombiningClass, decompose_canonical, decompose_compatible};
+use unic_ucd_normal::{decompose_canonical, decompose_compatible, CanonicalCombiningClass};
 use unic_ucd_normal::canonical_combining_class::values as ccc;
 
 

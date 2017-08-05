@@ -445,48 +445,44 @@ mod tests {
                 major: 1,
                 minor: 1,
                 micro: 0,
-            }) ==
-                Assigned(UnicodeVersion {
-                    major: 1,
-                    minor: 1,
-                    micro: 0,
-                })
+            }) == Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
         );
         assert!(
             Assigned(UnicodeVersion {
                 major: 1,
                 minor: 1,
                 micro: 0,
-            }) <
-                Assigned(UnicodeVersion {
-                    major: 2,
-                    minor: 0,
-                    micro: 0,
-                })
+            }) < Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            })
         );
         assert!(
             Assigned(UnicodeVersion {
                 major: 1,
                 minor: 1,
                 micro: 0,
-            }) <
-                Assigned(UnicodeVersion {
-                    major: 3,
-                    minor: 0,
-                    micro: 0,
-                })
+            }) < Assigned(UnicodeVersion {
+                major: 3,
+                minor: 0,
+                micro: 0,
+            })
         );
         assert!(
             Assigned(UnicodeVersion {
                 major: 1,
                 minor: 1,
                 micro: 0,
-            }) <
-                Assigned(UnicodeVersion {
-                    major: 10,
-                    minor: 0,
-                    micro: 0,
-                })
+            }) < Assigned(UnicodeVersion {
+                major: 10,
+                minor: 0,
+                micro: 0,
+            })
         );
         assert!(
             Assigned(UnicodeVersion {
@@ -501,48 +497,44 @@ mod tests {
                 major: 2,
                 minor: 0,
                 micro: 0,
-            }) >
-                Assigned(UnicodeVersion {
-                    major: 1,
-                    minor: 1,
-                    micro: 0,
-                })
+            }) > Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
         );
         assert!(
             Assigned(UnicodeVersion {
                 major: 2,
                 minor: 0,
                 micro: 0,
-            }) ==
-                Assigned(UnicodeVersion {
-                    major: 2,
-                    minor: 0,
-                    micro: 0,
-                })
+            }) == Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            })
         );
         assert!(
             Assigned(UnicodeVersion {
                 major: 2,
                 minor: 0,
                 micro: 0,
-            }) <
-                Assigned(UnicodeVersion {
-                    major: 3,
-                    minor: 0,
-                    micro: 0,
-                })
+            }) < Assigned(UnicodeVersion {
+                major: 3,
+                minor: 0,
+                micro: 0,
+            })
         );
         assert!(
             Assigned(UnicodeVersion {
                 major: 2,
                 minor: 0,
                 micro: 0,
-            }) <
-                Assigned(UnicodeVersion {
-                    major: 10,
-                    minor: 0,
-                    micro: 0,
-                })
+            }) < Assigned(UnicodeVersion {
+                major: 10,
+                minor: 0,
+                micro: 0,
+            })
         );
         assert!(
             Assigned(UnicodeVersion {
@@ -557,48 +549,44 @@ mod tests {
                 major: 3,
                 minor: 0,
                 micro: 0,
-            }) >
-                Assigned(UnicodeVersion {
-                    major: 1,
-                    minor: 1,
-                    micro: 0,
-                })
+            }) > Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
         );
         assert!(
             Assigned(UnicodeVersion {
                 major: 3,
                 minor: 0,
                 micro: 0,
-            }) >
-                Assigned(UnicodeVersion {
-                    major: 2,
-                    minor: 0,
-                    micro: 0,
-                })
+            }) > Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            })
         );
         assert!(
             Assigned(UnicodeVersion {
                 major: 3,
                 minor: 0,
                 micro: 0,
-            }) ==
-                Assigned(UnicodeVersion {
-                    major: 3,
-                    minor: 0,
-                    micro: 0,
-                })
+            }) == Assigned(UnicodeVersion {
+                major: 3,
+                minor: 0,
+                micro: 0,
+            })
         );
         assert!(
             Assigned(UnicodeVersion {
                 major: 3,
                 minor: 0,
                 micro: 0,
-            }) <
-                Assigned(UnicodeVersion {
-                    major: 10,
-                    minor: 0,
-                    micro: 0,
-                })
+            }) < Assigned(UnicodeVersion {
+                major: 10,
+                minor: 0,
+                micro: 0,
+            })
         );
         assert!(
             Assigned(UnicodeVersion {
@@ -613,48 +601,44 @@ mod tests {
                 major: 10,
                 minor: 0,
                 micro: 0,
-            }) >
-                Assigned(UnicodeVersion {
-                    major: 1,
-                    minor: 1,
-                    micro: 0,
-                })
+            }) > Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
         );
         assert!(
             Assigned(UnicodeVersion {
                 major: 10,
                 minor: 0,
                 micro: 0,
-            }) >
-                Assigned(UnicodeVersion {
-                    major: 2,
-                    minor: 0,
-                    micro: 0,
-                })
+            }) > Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            })
         );
         assert!(
             Assigned(UnicodeVersion {
                 major: 10,
                 minor: 0,
                 micro: 0,
-            }) >
-                Assigned(UnicodeVersion {
-                    major: 3,
-                    minor: 0,
-                    micro: 0,
-                })
+            }) > Assigned(UnicodeVersion {
+                major: 3,
+                minor: 0,
+                micro: 0,
+            })
         );
         assert!(
             Assigned(UnicodeVersion {
                 major: 10,
                 minor: 0,
                 micro: 0,
-            }) ==
-                Assigned(UnicodeVersion {
-                    major: 10,
-                    minor: 0,
-                    micro: 0,
-                })
+            }) == Assigned(UnicodeVersion {
+                major: 10,
+                minor: 0,
+                micro: 0,
+            })
         );
         assert!(
             Assigned(UnicodeVersion {
@@ -665,36 +649,32 @@ mod tests {
         );
 
         assert!(
-            Unassigned >
-                Assigned(UnicodeVersion {
-                    major: 1,
-                    minor: 1,
-                    micro: 0,
-                })
+            Unassigned > Assigned(UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            })
         );
         assert!(
-            Unassigned >
-                Assigned(UnicodeVersion {
-                    major: 2,
-                    minor: 0,
-                    micro: 0,
-                })
+            Unassigned > Assigned(UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            })
         );
         assert!(
-            Unassigned >
-                Assigned(UnicodeVersion {
-                    major: 3,
-                    minor: 0,
-                    micro: 0,
-                })
+            Unassigned > Assigned(UnicodeVersion {
+                major: 3,
+                minor: 0,
+                micro: 0,
+            })
         );
         assert!(
-            Unassigned >
-                Assigned(UnicodeVersion {
-                    major: 10,
-                    minor: 0,
-                    micro: 0,
-                })
+            Unassigned > Assigned(UnicodeVersion {
+                major: 10,
+                minor: 0,
+                micro: 0,
+            })
         );
         assert!(Unassigned == Unassigned);
     }

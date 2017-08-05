@@ -40,7 +40,7 @@ mod decomposition_type;
 
 
 pub use canonical_combining_class::CanonicalCombiningClass;
-pub use composition::{canonical_decomposition, compatibility_decomposition, canonical_composition};
+pub use composition::{canonical_composition, canonical_decomposition, compatibility_decomposition};
 pub use gen_cat::is_combining_mark;
 pub use decompose::{decompose_canonical, decompose_compatible};
 pub use decomposition_type::DecompositionType;
@@ -59,20 +59,18 @@ pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv
 pub fn compose(a: char, b: char) -> Option<char> {
     hangul::compose(a, b).or_else(|| match canonical_composition(a) {
         None => None,
-        Some(candidates) => {
-            match candidates.binary_search_by(|&(val, _)| if b == val {
-                Ordering::Equal
-            } else if val < b {
-                Ordering::Less
-            } else {
-                Ordering::Greater
-            }) {
-                Ok(idx) => {
-                    let (_, result) = candidates[idx];
-                    Some(result)
-                }
-                Err(_) => None,
+        Some(candidates) => match candidates.binary_search_by(|&(val, _)| if b == val {
+            Ordering::Equal
+        } else if val < b {
+            Ordering::Less
+        } else {
+            Ordering::Greater
+        }) {
+            Ok(idx) => {
+                let (_, result) = candidates[idx];
+                Some(result)
             }
-        }
+            Err(_) => None,
+        },
     })
 }

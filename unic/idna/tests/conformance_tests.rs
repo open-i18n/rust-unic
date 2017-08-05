@@ -127,29 +127,26 @@ fn unescape(input: &str) -> String {
     loop {
         match chars.next() {
             None => return output,
-            Some(c) => {
-                if c == '\\' {
-                    match chars.next().unwrap() {
-                        '\\' => output.push('\\'),
-                        'u' => {
-                            let c1 = chars.next().unwrap().to_digit(16).unwrap();
-                            let c2 = chars.next().unwrap().to_digit(16).unwrap();
-                            let c3 = chars.next().unwrap().to_digit(16).unwrap();
-                            let c4 = chars.next().unwrap().to_digit(16).unwrap();
-                            match char::from_u32(((c1 * 16 + c2) * 16 + c3) * 16 + c4) {
-                                Some(c) => output.push(c),
-                                None => {
-                                    output
-                                        .push_str(&format!("\\u{:X}{:X}{:X}{:X}", c1, c2, c3, c4));
-                                }
-                            };
-                        }
-                        _ => panic!("Invalid test data input"),
+            Some(c) => if c == '\\' {
+                match chars.next().unwrap() {
+                    '\\' => output.push('\\'),
+                    'u' => {
+                        let c1 = chars.next().unwrap().to_digit(16).unwrap();
+                        let c2 = chars.next().unwrap().to_digit(16).unwrap();
+                        let c3 = chars.next().unwrap().to_digit(16).unwrap();
+                        let c4 = chars.next().unwrap().to_digit(16).unwrap();
+                        match char::from_u32(((c1 * 16 + c2) * 16 + c3) * 16 + c4) {
+                            Some(c) => output.push(c),
+                            None => {
+                                output.push_str(&format!("\\u{:X}{:X}{:X}{:X}", c1, c2, c3, c4));
+                            }
+                        };
                     }
-                } else {
-                    output.push(c);
+                    _ => panic!("Invalid test data input"),
                 }
-            }
+            } else {
+                output.push(c);
+            },
         }
     }
 }
