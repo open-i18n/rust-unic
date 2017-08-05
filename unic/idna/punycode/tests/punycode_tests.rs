@@ -28,15 +28,15 @@ pub fn test_punycode_js_data() {
         _ => panic!("Bad JSON tests data"),
     };
 
-    for (i, test) in tests.into_iter().enumerate() {
+    for (test_idx, test) in tests.into_iter().enumerate() {
         match test {
             Json::Object(obj) => {
                 let test_name = {
                     let desc = get_string(&obj, "description");
                     if desc.is_empty() {
-                        format!("Punycode {}", i + 1)
+                        format!("Punycode {}", test_idx + 1)
                     } else {
-                        format!("Punycode {}: {}", i + 1, desc)
+                        format!("Punycode {}: {}", test_idx + 1, desc)
                     }
                 };
                 one_test(
