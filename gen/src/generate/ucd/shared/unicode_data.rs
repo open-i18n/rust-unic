@@ -214,12 +214,15 @@ impl FromStr for UnicodeData {
             ).unwrap();
         }
 
-        /// impl note:
-        /// 0x44000 (278528) is one quarter of the possible Unicode values (0x110000).
-        /// As of Unicode 10, 274235 (0x42F3B) code points are assigned (excluding surrogates).
-        /// I (@CAD97) picked one quarter of the full range because doubling capacity as needed
-        /// will never go out of the required range and this is a much smaller required allocation
-        /// for the near future -- for the next 4000 characters assigned.
+        // ## Implementation Note
+        //
+        // 0x4_4000 (278_528) is one quarter of the possible Unicode values (0x11_0000).
+        //
+        // As of Unicode 10, 274_235 (0x4_2F3B) code points are assigned (excluding surrogates).
+        //
+        // @CAD97 picked one quarter of the full range because doubling capacity as needed
+        // will never go out of the required range and this is a much smaller required allocation
+        // for the near future -- for the next 4000 characters assigned.
         let mut entries = Vec::with_capacity(0x44000);
         let mut start = None;
 
@@ -270,7 +273,7 @@ impl FromStr for UnicodeData {
                     let angle_idx = entry.name.find('>').unwrap();
                     entry.name.drain(comma_idx..angle_idx);
                 } else if entry.name.ends_with(", Last>") {
-                    let start = start.unwrap();
+                    let start = start.expect("Missing range start");
                     let end = entry.character;
                     assert!(start < end);
                     let comma_idx = entry.name.find(',').unwrap();
