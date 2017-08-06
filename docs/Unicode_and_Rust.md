@@ -10,7 +10,7 @@ and properties. Here’s a summary for working with Unicode when programming in 
     control, or representation of textual data.
 
 -   **Unicode Code Points** are integer values in the **Unicode codespace**: numbers between `0`
-    (zero) and `0x10FFFF`, inclusive.
+    (zero) and `0x10_FFFF`, inclusive.
 
 -   **Unicode Scalar Values** are integer values in a subset of *Unicode Code Points*: the
     *Unicode codespace* excluding high-surrogate and low-surrogate code points:

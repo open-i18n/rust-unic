@@ -56,7 +56,7 @@ mod process;
 
 pub use mapping::UNICODE_VERSION;
 pub use process::PUNYCODE_PREFIX;
-pub use process::{Flags, Errors};
+pub use process::{Errors, Flags};
 pub use process::{to_ascii, to_unicode};
 
 

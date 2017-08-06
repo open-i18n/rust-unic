@@ -25,17 +25,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Steps
 
-# Test all components
-for component in $COMPONENTS; do
-    - cargo update --verbose --manifest-path "$component/Cargo.toml"
-    - cargo test   --verbose --manifest-path "$component/Cargo.toml"
-done
-
 # Publish all components (ignore failures, because of the version being released already)
 for component in $COMPONENTS; do
+    - cargo update  --verbose --manifest-path "$component/Cargo.toml"
     - cargo publish --verbose --manifest-path "$component/Cargo.toml" || true
 done
-
-# Then package root
-- cargo update  --verbose
-- cargo publish --verbose

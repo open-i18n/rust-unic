@@ -13,7 +13,7 @@
 use std::collections::VecDeque;
 use std::fmt::{self, Write};
 
-use unic_ucd_normal::{CanonicalCombiningClass, compose};
+use unic_ucd_normal::{compose, CanonicalCombiningClass};
 
 use decompose::Decompositions;
 
@@ -79,22 +79,20 @@ impl<I: Iterator<Item = char>> Iterator for Recompositions<I> {
                         let k = self.composee.unwrap();
 
                         match self.last_ccc {
-                            None => {
-                                match compose(k, ch) {
-                                    Some(r) => {
-                                        self.composee = Some(r);
-                                        continue;
-                                    }
-                                    None => {
-                                        if ch_ccc.is_not_reordered() {
-                                            self.composee = Some(ch);
-                                            return Some(k);
-                                        }
-                                        self.buffer.push_back(ch);
-                                        self.last_ccc = Some(ch_ccc);
-                                    }
+                            None => match compose(k, ch) {
+                                Some(r) => {
+                                    self.composee = Some(r);
+                                    continue;
                                 }
-                            }
+                                None => {
+                                    if ch_ccc.is_not_reordered() {
+                                        self.composee = Some(ch);
+                                        return Some(k);
+                                    }
+                                    self.buffer.push_back(ch);
+                                    self.last_ccc = Some(ch_ccc);
+                                }
+                            },
                             Some(last_ccc) => {
                                 if last_ccc >= ch_ccc {
                                     // `ch` is blocked from `composee`
@@ -126,18 +124,14 @@ impl<I: Iterator<Item = char>> Iterator for Recompositions<I> {
                         return self.composee.take();
                     }
                 }
-                Purging => {
-                    match self.buffer.pop_front() {
-                        None => self.state = Composing,
-                        s => return s,
-                    }
-                }
-                Finished => {
-                    match self.buffer.pop_front() {
-                        None => return self.composee.take(),
-                        s => return s,
-                    }
-                }
+                Purging => match self.buffer.pop_front() {
+                    None => self.state = Composing,
+                    s => return s,
+                },
+                Finished => match self.buffer.pop_front() {
+                    None => return self.composee.take(),
+                    s => return s,
+                },
             }
         }
     }

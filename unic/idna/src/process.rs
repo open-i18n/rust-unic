@@ -13,7 +13,7 @@
 use std::ascii::AsciiExt;
 
 use unic_normal::StrNormalForm;
-use unic_ucd_bidi::{BidiClass, bidi_class};
+use unic_ucd_bidi::{bidi_class, BidiClass};
 use unic_ucd_normal::is_combining_mark;
 
 use mapping::Mapping;
@@ -29,13 +29,11 @@ fn map_char(codepoint: char, flags: Flags, output: &mut String, errors: &mut Vec
         Mapping::Valid => output.push(codepoint),
         Mapping::Ignored => {}
         Mapping::Mapped(ref slice) => output.push_str(slice.value()),
-        Mapping::Deviation(ref slice) => {
-            if flags.transitional_processing {
-                output.push_str(slice.value())
-            } else {
-                output.push(codepoint)
-            }
-        }
+        Mapping::Deviation(ref slice) => if flags.transitional_processing {
+            output.push_str(slice.value())
+        } else {
+            output.push(codepoint)
+        },
         Mapping::Disallowed => {
             errors.push(Error::DissallowedCharacter);
             output.push(codepoint);
@@ -160,7 +158,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
         }
     }
 
-    return true;
+    true
 }
 
 // http://www.unicode.org/reports/tr46/#Validity_Criteria
@@ -235,14 +233,12 @@ fn processing(domain: &str, flags: Flags, errors: &mut Vec<Error>) -> String {
         for label in normalized.split('.') {
             if label.starts_with(PUNYCODE_PREFIX) {
                 match punycode::decode_to_string(&label[PUNYCODE_PREFIX.len()..]) {
-                    Some(decoded_label) => {
-                        if decoded_label
-                            .chars()
-                            .any(|c| matches!(BidiClass::of(c), R | AL | AN))
-                        {
-                            is_bidi_domain = true;
-                        }
-                    }
+                    Some(decoded_label) => if decoded_label
+                        .chars()
+                        .any(|c| matches!(BidiClass::of(c), R | AL | AN))
+                    {
+                        is_bidi_domain = true;
+                    },
                     None => {
                         is_bidi_domain = true;
                     }

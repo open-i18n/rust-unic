@@ -1,3 +1,13 @@
+// Copyright 2017 The UNIC Project Developers.
+//
+// See the COPYRIGHT file at the top-level directory of this distribution.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
 use std::char;
 use std::fs::File;
 use std::io::{self, Read};
@@ -28,16 +38,16 @@ pub struct UnicodeDataEntry {
 
     /// (2) This is a useful breakdown into various character types which
     /// can be used as a default categorization in implementations.
-    /// For the property values, see [General Category Values].
+    /// For the property values, see [General_Category Values].
     ///
-    /// [General Category Values]: http://unicode.org/reports/tr44/#General_Category_Values
+    /// [General_Category Values]: http://unicode.org/reports/tr44/#General_Category_Values
     pub general_category: String,
 
     /// (3) The classes used for the Canonical Ordering Algorithm in the Unicode Standard.
     /// This property could be considered either an enumerated property or a numeric property:
     /// the principal use of the property is in terms of the numeric values.
     /// For the property value names associated with different numeric values,
-    /// see [DerivedCombiningClass.txt] and [Canonical Combining Class Values][CCC Values].
+    /// see [DerivedCombiningClass.txt] and [Canonical_Combining_Class Values][CCC Values].
     ///
     /// [DerivedCombiningClass.txt]: http://unicode.org/reports/tr44/#DerivedCombiningClass.txt
     /// [CCC Values]: http://unicode.org/reports/tr44/#Canonical_Combining_Class_Values
@@ -204,12 +214,15 @@ impl FromStr for UnicodeData {
             ).unwrap();
         }
 
-        /// impl note:
-        /// 0x44000 (278528) is one quarter of the possible Unicode values (0x110000).
-        /// As of Unicode 10, 274235 (0x42F3B) code points are assigned (excluding surrogates).
-        /// I (@CAD97) picked one quarter of the full range because doubling capacity as needed
-        /// will never go out of the required range and this is a much smaller required allocation
-        /// for the near future -- for the next 4000 characters assigned.
+        // ## Implementation Note
+        //
+        // 0x4_4000 (278_528) is one quarter of the possible Unicode values (0x11_0000).
+        //
+        // As of Unicode 10, 274_235 (0x4_2F3B) code points are assigned (excluding surrogates).
+        //
+        // @CAD97 picked one quarter of the full range because doubling capacity as needed
+        // will never go out of the required range and this is a much smaller required allocation
+        // for the near future -- for the next 4000 characters assigned.
         let mut entries = Vec::with_capacity(0x44000);
         let mut start = None;
 
@@ -260,7 +273,7 @@ impl FromStr for UnicodeData {
                     let angle_idx = entry.name.find('>').unwrap();
                     entry.name.drain(comma_idx..angle_idx);
                 } else if entry.name.ends_with(", Last>") {
-                    let start = start.unwrap();
+                    let start = start.expect("Missing range start");
                     let end = entry.character;
                     assert!(start < end);
                     let comma_idx = entry.name.find(',').unwrap();

@@ -49,7 +49,7 @@ where
     }
 
     // Perform decomposition for Hangul
-    if (ch as u32) >= hangul::S_BASE && (ch as u32) < (hangul::S_BASE + hangul::S_COUNT) {
+    if hangul::is_syllable(ch) {
         hangul::decompose(ch, callback);
         return;
     }

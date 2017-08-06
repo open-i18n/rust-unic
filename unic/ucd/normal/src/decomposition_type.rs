@@ -10,11 +10,12 @@
 // except according to those terms.
 
 
-//! Accessor for Decomposition_Type (dt) property
+//! Accessor for *Decomposition_Type* (dt) property
 
 use std::cmp::Ordering;
 
 use composition::canonical_decomposition;
+use hangul;
 
 
 /// Represents the Unicode character
@@ -55,8 +56,8 @@ const COMPATIBILITY_DECOMPOSITION_TYPE_TABLE: &'static [(char, char, Decompositi
 impl DecompositionType {
     /// Find the DecompositionType of a single char.
     pub fn of(ch: char) -> Option<DecompositionType> {
-        // First check the canonical decompositions
-        if let Some(_) = canonical_decomposition(ch) {
+        // First, check for Hangul Syllables and other canonical decompositions
+        if hangul::is_syllable(ch) || canonical_decomposition(ch).is_some() {
             return Some(Canonical);
         }
         bsearch_range_value_table(ch, COMPATIBILITY_DECOMPOSITION_TYPE_TABLE)

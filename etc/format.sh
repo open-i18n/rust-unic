@@ -17,20 +17,11 @@
 # directories used for each component, increasing the test and publish process
 # time.
 
-set -e
+set -ev
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-. "$DIR/common.sh"
+# Rust
+cargo fmt --all
 
-
-# Steps
-
-# Test all components
-for component in $COMPONENTS; do
-    - cargo update --verbose --manifest-path "$component/Cargo.toml"
-    - cargo test   --verbose --manifest-path "$component/Cargo.toml"
-done
-
-# Test root
-- cargo update --verbose
-- cargo test   --verbose
+# Python
+# this goes second, since not everyone has autopep8 installed
+autopep8 --in-place tools/*.py tools/*/*.py

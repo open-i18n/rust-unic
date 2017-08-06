@@ -27,7 +27,7 @@ use std::ops::Range;
 /// Range of Unicode Code Points.
 ///
 /// Reference: <http://unicode.org/glossary/#code_point>
-pub const CODEPOINTS_RANGE: Range<u32> = 0x0..(0x10FFFF + 1);
+pub const CODEPOINTS_RANGE: Range<u32> = 0x0..(0x10_FFFF + 1);
 
 /// Range of Unicde Scalar Values.
 ///

@@ -310,11 +310,9 @@ impl<'text> BidiInfo<'text> {
                     }
                 }
                 // Whitespace, isolate formatting
-                WS | FSI | LRI | RLI | PDI => {
-                    if reset_from == None {
-                        reset_from = Some(i);
-                    }
-                }
+                WS | FSI | LRI | RLI | PDI => if reset_from == None {
+                    reset_from = Some(i);
+                },
                 _ => {
                     reset_from = None;
                 }
@@ -601,7 +599,7 @@ mod tests {
             }
         );
 
-        /// BidiTest:69635 (AL ET EN)
+        // BidiTest:69635 (AL ET EN)
         let bidi_info = BidiInfo::new("\u{060B}\u{20CF}\u{06F9}", None);
         assert_eq!(bidi_info.original_classes, vec![AL, AL, ET, ET, ET, EN, EN]);
     }
@@ -739,7 +737,7 @@ mod tests {
     #[test]
     fn test_reordered_levels() {
 
-        /// BidiTest:946 (LRI PDI)
+        // BidiTest:946 (LRI PDI)
         let text = "\u{2067}\u{2069}";
         assert_eq!(
             reordered_levels_for_paras(text),
@@ -751,7 +749,7 @@ mod tests {
         );
 
         /* TODO
-        /// BidiTest:69635 (AL ET EN)
+        // BidiTest:69635 (AL ET EN)
         let text = "\u{060B}\u{20CF}\u{06F9}";
         assert_eq!(
             reordered_levels_for_paras(text),
@@ -789,7 +787,7 @@ mod tests {
 
 #[cfg(all(feature = "serde", test))]
 mod serde_tests {
-    use serde_test::{Token, assert_tokens};
+    use serde_test::{assert_tokens, Token};
     use super::*;
 
     #[test]

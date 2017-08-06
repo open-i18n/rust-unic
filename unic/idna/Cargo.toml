@@ -1,12 +1,12 @@
 [package]
 name = "unic-idna"
-version = "0.4.0"
+version = "0.5.0"
 authors = ["The UNIC Project Developers"]
-homepage = "https://github.com/behnam/rust-unic/"
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
-keywords = ["text", "unicode"]
+keywords = ["text", "unicode", "idna", "internationalized", "domain-names"]
 description = "UNIC - Unicode IDNA Compatibility Processing"
+categories = ["text-processing", "parsing", "rendering"]
 readme = "README.md"
 
 # No tests/benches that depends on /data/
@@ -15,19 +15,11 @@ exclude = ["tests/conformance_tests.rs"]
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
-[[test]]
-name = "tests"
-harness = false
-
-[dev-dependencies]
-rustc-test = "0.2"
-rustc-serialize = "0.3"
-
 [dependencies]
 matches = "0.1"
-unic-idna-punycode = { path = "punycode/", version = "0.4.0" }
-unic-idna-mapping = { path = "mapping/", version = "0.4.0" }
-unic-normal = { path = "../normal/", version = "0.4.0" }
-unic-ucd-bidi = { path = "../ucd/bidi/", version = "0.4.0" }
-unic-ucd-core = { path = "../ucd/core/", version = "0.4.0" }
-unic-ucd-normal = { path = "../ucd/normal/", version = "0.4.0" }
+unic-idna-punycode = { path = "punycode/", version = "0.5.0" }
+unic-idna-mapping = { path = "mapping/", version = "0.5.0" }
+unic-normal = { path = "../normal/", version = "0.5.0" }
+unic-ucd-bidi = { path = "../ucd/bidi/", version = "0.5.0" }
+unic-ucd-core = { path = "../ucd/core/", version = "0.5.0" }
+unic-ucd-normal = { path = "../ucd/normal/", version = "0.5.0" }

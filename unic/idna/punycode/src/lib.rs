@@ -71,16 +71,14 @@ pub fn decode(input: &str) -> Option<Vec<char>> {
     // They are encoded as-is before the last delimiter, if any.
     let (mut output, input) = match input.rfind(DELIMITER) {
         None => (Vec::new(), input),
-        Some(position) => {
-            (
-                input[..position].chars().collect(),
-                if position > 0 {
-                    &input[position + 1..]
-                } else {
-                    input
-                },
-            )
-        }
+        Some(position) => (
+            input[..position].chars().collect(),
+            if position > 0 {
+                &input[position + 1..]
+            } else {
+                input
+            },
+        ),
     };
     let mut code_point = INITIAL_N;
     let mut bias = INITIAL_BIAS;
@@ -235,6 +233,7 @@ pub fn encode(input: &[char]) -> Option<String> {
 
 #[inline]
 fn value_to_digit(value: u32) -> char {
+    #[cfg_attr(clippy, allow(char_lit_as_u8))]
     match value {
         0...25 => (value as u8 + 'a' as u8) as char,  // a..z
         26...35 => (value as u8 - 26 + '0' as u8) as char,  // 0..9

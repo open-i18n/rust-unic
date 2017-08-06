@@ -33,12 +33,11 @@ fn test_earliest_assigned_age() {
     for ch in iter_all_chars() {
         if let Some(uni_ver) = Age::of(ch).assigned() {
             assert!(
-                uni_ver >=
-                    UnicodeVersion {
-                        major: 1,
-                        minor: 1,
-                        micro: 0,
-                    }
+                uni_ver >= UnicodeVersion {
+                    major: 1,
+                    minor: 1,
+                    micro: 0,
+                }
             );
         }
     }

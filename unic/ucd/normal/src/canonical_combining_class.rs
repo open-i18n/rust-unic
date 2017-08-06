@@ -10,7 +10,9 @@
 // except according to those terms.
 
 
-//! Accessor for Canonical_Combining_Class (ccc) property
+//! Accessor for *Canonical_Combining_Class* (ccc) property
+//!
+//! Reference: <http://unicode.org/reports/tr44/#Canonical_Combining_Class_Values>
 
 
 use std::cmp::Ordering;
@@ -24,7 +26,7 @@ pub struct CanonicalCombiningClass(u8);
 
 
 // TODO: Once we fully adopt 1.20 change these to associated consts on CanonicalCombiningClass
-/// Canonical Combining Classes by their name
+/// *Canonical_Combining_Class*es by their name
 #[allow(non_upper_case_globals)]
 pub mod values {
     use super::CanonicalCombiningClass as CCC;
@@ -85,7 +87,7 @@ const CANONICAL_COMBINING_CLASS_VALUES: &'static [(char, char, CanonicalCombinin
 
 
 impl CanonicalCombiningClass {
-    /// Lookup Canonical Combining Class of the character
+    /// Find the character *Canonical_Combining_Class* property value.
     pub fn of(ch: char) -> CanonicalCombiningClass {
         bsearch_range_value_table(ch, CANONICAL_COMBINING_CLASS_VALUES)
     }
@@ -93,11 +95,17 @@ impl CanonicalCombiningClass {
 
 
 impl CanonicalCombiningClass {
+    /// Get numeric *Canonical_Combining_Class* value
+    pub fn number(&self) -> u8 {
+        self.0
+    }
+
     /// If the *ccc* has value `Not_Reordered` (`0`).
     pub fn is_not_reordered(&self) -> bool {
         self.0 == 0
     }
-    /// If the *ccc* should be reordered in bidi algorithms (`!= CCC0`)
+
+    /// If the *ccc* any value other than `Not_Reordered` (`0`).
     pub fn is_reordered(&self) -> bool {
         self.0 != 0
     }
@@ -229,5 +237,13 @@ mod tests {
         assert_eq!(CCC::of('\u{80000}'), ccc::NotReordered);
         assert_eq!(CCC::of('\u{90000}'), ccc::NotReordered);
         assert_eq!(CCC::of('\u{a0000}'), ccc::NotReordered);
+    }
+
+    #[test]
+    fn test_number() {
+        assert_eq!(CCC::of('\u{0000}').number(), 0);
+        assert_eq!(CCC::of('\u{0300}').number(), 230);
+        assert_eq!(CCC::of('\u{0315}').number(), 232);
+        assert_eq!(CCC::of('\u{1e94a}').number(), 7);
     }
 }
