@@ -9,7 +9,7 @@
 // except according to those terms.
 
 
-#![forbid(unsafe_code, missing_docs)]
+#![forbid(missing_docs)]
 
 //! # UNIC — Utilities
 //!
