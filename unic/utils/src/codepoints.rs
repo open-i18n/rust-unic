@@ -34,108 +34,23 @@ pub const CODEPOINTS_RANGE: Range<u32> = 0x0..(0x10_FFFF + 1);
 /// Reference: <http://unicode.org/glossary/#surrogate_code_point>
 pub const SURROGATE_RANGE: Range<u32> = 0xD800..(0xDFFF + 1);
 
-/// Check a code-point against `SURROGATE_CODEPOINTS_RANGE`.
 #[inline]
-pub fn iter_all_chars() -> Box<Iterator<Item = char>> {
-    Box::new(CharIterator::new())
-}
-
-#[derive(Copy, Clone, Debug, Ord, PartialOrd, Eq, PartialEq)]
-/// An iterator over all `char`.
-pub struct CharIterator {
-    /// The codepoint of the smallest uniterated codepoint.
-    ///
-    /// If greater than or equal to `end`, iteration is finished.
-    ///
-    /// # Safety
-    ///
-    /// Must be a valid, non-surrogate codepoint.
-    current: u32,
-
-    /// The codepoint one greater than the largest uniterated codepoint.
-    ///
-    /// If less than or equal to `current`, iteration is finished.
-    ///
-    /// # Safety
-    ///
-    /// Must be a valid, non-surrogate codepoint.
-    end: u32,
-}
-
-impl CharIterator {
-    fn new() -> CharIterator {
-        CharIterator {
-            current: CODEPOINTS_RANGE.start,
-            end: CODEPOINTS_RANGE.end,
-        }
-    }
-
-    // cannot be is_empty because usages conflict the unstable is_empty
-    fn is_finished(&self) -> bool {
-        self.current >= self.end
-    }
-}
-
-impl Default for CharIterator {
-    fn default() -> CharIterator {
-        CharIterator::new()
-    }
-}
-
-impl Iterator for CharIterator {
-    type Item = char;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        if self.is_finished() {
-            return None;
-        }
-
-        let next = unsafe { char::from_u32_unchecked(self.current) };
-
-        self.current += 1;
-        if self.current == SURROGATE_RANGE.start {
-            self.current = SURROGATE_RANGE.end
-        }
-
-        Some(next)
-    }
-
-    fn size_hint(&self) -> (usize, Option<usize>) {
-        let len = self.len();
-        (len, Some(len))
-    }
-}
-
-impl DoubleEndedIterator for CharIterator {
-    fn next_back(&mut self) -> Option<Self::Item> {
-        if self.is_finished() {
-            return None;
-        }
-
-        if self.end == SURROGATE_RANGE.end {
-            self.end = SURROGATE_RANGE.start;
-        }
-        self.end -= 1;
-
-        let next = unsafe { char::from_u32_unchecked(self.end) };
-
-        Some(next)
-    }
-}
-
-impl ExactSizeIterator for CharIterator {
-    fn len(&self) -> usize {
-        let mut remaining_codepoints = self.end - self.current;
-        if self.current < SURROGATE_RANGE.start && self.end >= SURROGATE_RANGE.end {
-            remaining_codepoints -= SURROGATE_RANGE.len() as u32;
-        }
-        remaining_codepoints as usize
-    }
+#[allow(unsafe_code)]
+/// Create an iterator over all characters
+pub fn iter_all_chars() -> Box<DoubleEndedIterator<Item = char>> {
+    Box::new(
+        (CODEPOINTS_RANGE.start..SURROGATE_RANGE.start)
+            .chain(SURROGATE_RANGE.end..CODEPOINTS_RANGE.end)
+            .map(|codepoint| {
+                debug_assert!(char::from_u32(codepoint).is_some());
+                unsafe { char::from_u32_unchecked(codepoint) }
+            }),
+    )
 }
 
 #[cfg(test)]
 mod test {
-    use super::{iter_all_chars, CharIterator};
+    use super::iter_all_chars;
     use std::{char, fmt};
 
     fn evident_iter_all_chars() -> Box<Iterator<Item = char>> {
@@ -165,58 +80,12 @@ mod test {
 
     #[test]
     fn reverse_iteration_works() {
-        let ours = CharIterator::new().rev();
+        let ours = iter_all_chars().rev();
         let evident = evident_iter_all_chars()
             .collect::<Vec<_>>()
             .into_iter()
             .rev();
 
         assert_equal_contents(ours, evident);
-    }
-
-    #[test]
-    fn is_exact_size_hint_forwards() {
-        let mut iter = CharIterator::new();
-        let mut len = iter.len();
-        let (mut lower_bound, higher_bound) = iter.size_hint();
-
-        assert_eq!(Some(lower_bound), higher_bound);
-        let mut higher_bound = higher_bound.unwrap();
-
-        while let Some(_) = iter.next() {
-            len -= 1;
-            lower_bound -= 1;
-            higher_bound -= 1;
-
-            assert_eq!(len, iter.len());
-            assert_eq!((lower_bound, Some(higher_bound)), iter.size_hint());
-        }
-
-        assert_eq!(len, 0);
-        assert_eq!(lower_bound, 0);
-        assert_eq!(higher_bound, 0);
-    }
-
-    #[test]
-    fn is_exact_size_hint_backwards() {
-        let mut iter = CharIterator::new();
-        let mut len = iter.len();
-        let (mut lower_bound, higher_bound) = iter.size_hint();
-
-        assert_eq!(Some(lower_bound), higher_bound);
-        let mut higher_bound = higher_bound.unwrap();
-
-        while let Some(_) = iter.next_back() {
-            len -= 1;
-            lower_bound -= 1;
-            higher_bound -= 1;
-
-            assert_eq!(len, iter.len());
-            assert_eq!((lower_bound, Some(higher_bound)), iter.size_hint());
-        }
-
-        assert_eq!(len, 0);
-        assert_eq!(lower_bound, 0);
-        assert_eq!(higher_bound, 0);
     }
 }

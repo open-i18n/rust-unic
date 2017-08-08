@@ -10,6 +10,7 @@
 
 
 #![forbid(missing_docs)]
+#![deny(unsafe_code)]
 
 //! # UNIC — Utilities
 //!
