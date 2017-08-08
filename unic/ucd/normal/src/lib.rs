@@ -29,6 +29,7 @@
 //! ```
 
 extern crate unic_ucd_core;
+extern crate unic_utils;
 
 
 pub mod canonical_combining_class;
@@ -45,9 +46,8 @@ pub use gen_cat::is_combining_mark;
 pub use decompose::{decompose_canonical, decompose_compatible};
 pub use decomposition_type::DecompositionType;
 
-use std::cmp::Ordering;
-
 use unic_ucd_core::UnicodeVersion;
+use unic_utils::CharBsearchTable;
 
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data
@@ -57,20 +57,7 @@ pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv
 /// See [Unicode Standard Annex #15](http://www.unicode.org/reports/tr15/)
 /// for more information.
 pub fn compose(a: char, b: char) -> Option<char> {
-    hangul::compose(a, b).or_else(|| match canonical_composition(a) {
-        None => None,
-        Some(candidates) => match candidates.binary_search_by(|&(val, _)| if b == val {
-            Ordering::Equal
-        } else if val < b {
-            Ordering::Less
-        } else {
-            Ordering::Greater
-        }) {
-            Ok(idx) => {
-                let (_, result) = candidates[idx];
-                Some(result)
-            }
-            Err(_) => None,
-        },
+    hangul::compose(a, b).or_else(|| {
+        canonical_composition(a).and_then(|table| table.find(b).cloned())
     })
 }

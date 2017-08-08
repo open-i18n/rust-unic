@@ -23,6 +23,7 @@
 //! * <http://www.unicode.org/reports/tr44/#Character_Age>
 
 extern crate unic_ucd_core;
+extern crate unic_utils;
 
 
 mod age;

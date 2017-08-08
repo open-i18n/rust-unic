@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use std::cmp::Ordering;
+use unic_utils::CharBsearchTable;
 
 /// Represents the Unicode Character
 /// [*General_Category*](http://unicode.org/reports/tr44/#General_Category) property.
@@ -120,7 +120,7 @@ const GENERAL_CATEGORY_TABLE: &'static [(char, char, GeneralCategory)] =
 impl GeneralCategory {
     /// Find the `GeneralCategory` of a single char.
     pub fn of(ch: char) -> GeneralCategory {
-        bsearch_range_value_table(ch, GENERAL_CATEGORY_TABLE)
+        *GENERAL_CATEGORY_TABLE.binary_search_or(ch, &GeneralCategory::Unassigned)
     }
 
     /// Exhaustive list of all `GeneralCategory` property values.
@@ -203,25 +203,6 @@ impl GeneralCategory {
     /// `Cc` | `Cf` | `Cs` | `Co` | `Cn`  (Short form: `C`)
     pub fn is_other(&self) -> bool {
         matches!(*self, Cc | Cf | Cs | Co | Cn)
-    }
-}
-
-fn bsearch_range_value_table(
-    c: char,
-    r: &'static [(char, char, GeneralCategory)],
-) -> GeneralCategory {
-    match r.binary_search_by(|&(lo, hi, _)| if lo <= c && c <= hi {
-        Ordering::Equal
-    } else if hi < c {
-        Ordering::Less
-    } else {
-        Ordering::Greater
-    }) {
-        Ok(idx) => {
-            let (_, _, category) = r[idx];
-            category
-        }
-        Err(_) => GeneralCategory::Unassigned,
     }
 }
 

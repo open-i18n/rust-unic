@@ -15,7 +15,7 @@
 //! Reference: <http://unicode.org/reports/tr44/#Canonical_Combining_Class_Values>
 
 
-use std::cmp::Ordering;
+use unic_utils::CharBsearchTable;
 
 
 /// Represents *Canonical_Combining_Class* property of a Unicode character.
@@ -89,7 +89,7 @@ const CANONICAL_COMBINING_CLASS_VALUES: &'static [(char, char, CanonicalCombinin
 impl CanonicalCombiningClass {
     /// Find the character *Canonical_Combining_Class* property value.
     pub fn of(ch: char) -> CanonicalCombiningClass {
-        bsearch_range_value_table(ch, CANONICAL_COMBINING_CLASS_VALUES)
+        *CANONICAL_COMBINING_CLASS_VALUES.binary_search_or(ch, &CanonicalCombiningClass(0))
     }
 }
 
@@ -108,26 +108,6 @@ impl CanonicalCombiningClass {
     /// If the *ccc* any value other than `Not_Reordered` (`0`).
     pub fn is_reordered(&self) -> bool {
         self.0 != 0
-    }
-}
-
-
-fn bsearch_range_value_table(
-    c: char,
-    r: &'static [(char, char, CanonicalCombiningClass)],
-) -> CanonicalCombiningClass {
-    match r.binary_search_by(|&(lo, hi, _)| if lo <= c && c <= hi {
-        Ordering::Equal
-    } else if hi < c {
-        Ordering::Less
-    } else {
-        Ordering::Greater
-    }) {
-        Ok(idx) => {
-            let (_, _, result) = r[idx];
-            result
-        }
-        Err(_) => CanonicalCombiningClass(0),
     }
 }
 

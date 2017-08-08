@@ -18,17 +18,7 @@ mod mark {
 
     /// Return whether the given character is a combining mark (`General_Category=Mark`)
     pub fn is_combining_mark(c: char) -> bool {
-        bsearch_range_table(c, GENERAL_CATEGORY_MARK)
-    }
-
-    fn bsearch_range_table(c: char, r: &'static [(char, char)]) -> bool {
-        r.binary_search_by(|&(lo, hi)| if lo <= c && c <= hi {
-            Ordering::Equal
-        } else if hi < c {
-            Ordering::Less
-        } else {
-            Ordering::Greater
-        }).is_ok()
+        GENERAL_CATEGORY_MARK.find(c).is_some()
     }
 }
 

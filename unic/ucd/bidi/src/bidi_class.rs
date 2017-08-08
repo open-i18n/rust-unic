@@ -9,9 +9,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use std::cmp::Ordering;
 use std::fmt;
 
+use unic_utils::CharBsearchTable;
 
 /// Represents the Unicode character
 /// [*Bidi_Class*](http://www.unicode.org/reports/tr44/#Bidi_Class) property, also known as the
@@ -109,7 +109,9 @@ pub enum BidiClassCategory {
 impl BidiClass {
     /// Find the character *Bidi_Class* property value.
     pub fn of(ch: char) -> BidiClass {
-        bsearch_range_value_table(ch, BIDI_CLASS_TABLE)
+        // UCD/extracted/DerivedBidiClass.txt: "All code points not explicitly listed
+        // for Bidi_Class have the value Left_To_Right (L)."
+        *BIDI_CLASS_TABLE.binary_search_or(ch, &L)
     }
 
     /// Abbreviated name of the *Bidi_Class* property value.
@@ -211,24 +213,6 @@ impl BidiClass {
             AL | R | RLE | RLO | RLI => true,
             _ => false,
         }
-    }
-}
-
-fn bsearch_range_value_table(c: char, r: &'static [(char, char, BidiClass)]) -> BidiClass {
-    match r.binary_search_by(|&(lo, hi, _)| if lo <= c && c <= hi {
-        Ordering::Equal
-    } else if hi < c {
-        Ordering::Less
-    } else {
-        Ordering::Greater
-    }) {
-        Ok(idx) => {
-            let (_, _, cat) = r[idx];
-            cat
-        }
-        // UCD/extracted/DerivedBidiClass.txt: "All code points not explicitly listed
-        // for Bidi_Class have the value Left_To_Right (L)."
-        Err(_) => L,
     }
 }
 
