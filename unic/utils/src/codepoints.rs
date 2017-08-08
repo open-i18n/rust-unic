@@ -20,7 +20,7 @@
 //! * [**Unicode Code Point**](http://unicode.org/glossary/#code_point)
 //! * [**Unicode Scalar Value**](http://unicode.org/glossary/#unicode_scalar_value)
 
-use std::char::from_u32;
+use std::char;
 use std::ops::Range;
 
 
@@ -29,19 +29,63 @@ use std::ops::Range;
 /// Reference: <http://unicode.org/glossary/#code_point>
 pub const CODEPOINTS_RANGE: Range<u32> = 0x0..(0x10_FFFF + 1);
 
-/// Range of Unicde Scalar Values.
+/// Range of Surrogate Code Points.
 ///
-/// Reference: <http://unicode.org/glossary/#unicode_scalar_value>
-const SCALAR_VALUE_RANGE_1: Range<u32> = 0x0..0xD800;
-const SCALAR_VALUE_RANGE_2: Range<u32> = (0xDFFF + 1)..(0x10_FFFF + 1);
+/// Reference: <http://unicode.org/glossary/#surrogate_code_point>
+pub const SURROGATE_RANGE: Range<u32> = 0xD800..(0xDFFF + 1);
 
-/// Check a code-point against `SURROGATE_CODEPOINTS_RANGE`.
 #[inline]
-pub fn iter_all_chars() -> Box<Iterator<Item = char>> {
+#[allow(unsafe_code)]
+/// Create an iterator over all characters
+pub fn iter_all_chars() -> Box<DoubleEndedIterator<Item = char>> {
     Box::new(
-        // TODO: maybe use char::from_u32_unchecked()
-        SCALAR_VALUE_RANGE_1
-            .chain(SCALAR_VALUE_RANGE_2)
-            .filter_map(from_u32),
+        (CODEPOINTS_RANGE.start..SURROGATE_RANGE.start)
+            .chain(SURROGATE_RANGE.end..CODEPOINTS_RANGE.end)
+            .map(|codepoint| {
+                debug_assert!(char::from_u32(codepoint).is_some());
+                unsafe { char::from_u32_unchecked(codepoint) }
+            }),
     )
+}
+
+#[cfg(test)]
+mod test {
+    use super::iter_all_chars;
+    use std::{char, fmt};
+
+    fn evident_iter_all_chars() -> Box<Iterator<Item = char>> {
+        Box::new((0..char::MAX as u32 + 1).filter_map(char::from_u32))
+    }
+
+    fn assert_equal_contents<I, J, Item>(lhs: I, rhs: J)
+    where
+        I: Iterator<Item = Item>,
+        J: Iterator<Item = Item>,
+        Item: PartialEq + fmt::Debug,
+    {
+        let mut rhs = rhs.fuse();
+        for item in lhs {
+            assert_eq!(Some(item), rhs.next());
+        }
+        assert_eq!(rhs.count(), 0);
+    }
+
+    #[test]
+    fn iter_all_chars_does_so() {
+        let ours = iter_all_chars();
+        let evident = evident_iter_all_chars();
+
+        assert_equal_contents(ours, evident);
+    }
+
+    #[test]
+    fn reverse_iteration_works() {
+        let ours = iter_all_chars().rev();
+        let evident = evident_iter_all_chars()
+            .collect::<Vec<_>>()
+            .into_iter()
+            .rev();
+
+        assert_equal_contents(ours, evident);
+    }
 }
