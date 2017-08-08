@@ -24,6 +24,7 @@ use toml;
 struct Config {
     idna: DataSource,
     ucd: DataSource,
+    normal: DataSource,
 }
 
 /// Information under one component heading in the config
@@ -83,6 +84,15 @@ pub fn download(components: &[&str]) -> Result<(), Box<Error>> {
             "ucd" => {
                 let version = &config.ucd.version;
                 for download in &config.ucd.resources {
+                    downloads.push(DownloadPath {
+                        url: download.url.replace("{version}", version),
+                        dest: download.dest.clone(),
+                    })
+                }
+            }
+            "normal" => {
+                let version = &config.normal.version;
+                for download in &config.normal.resources {
                     downloads.push(DownloadPath {
                         url: download.url.replace("{version}", version),
                         dest: download.dest.clone(),

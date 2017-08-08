@@ -31,7 +31,6 @@ from unicode_utils import is_surrogate
 
 OUTPUT_DIRS = {
     'UCD_NORMAL': path("unic/ucd/normal/src/tables"),
-    'NORMAL_TESTS': path("unic/normal/tests/tables"),
 }
 
 
@@ -297,63 +296,6 @@ def emit_normal_form_tables(dir):
         )
 
 
-@memoize
-def get_normal_tests_data():
-    data = []
-    datumRe = re.compile("^(.*?);(.*?);(.*?);(.*?);(.*?);\s+#.*$")
-
-    for line in fileinput.input(test_data_path("NormalizationTest.txt")):
-        # comment and header lines start with # and @ respectively
-        if len(line) < 1 or line[0:1] == '#' or line[0:1] == '@':
-            continue
-
-        m = datumRe.match(line)
-        if not m:
-            raise "Error: no match on line where test was expected: %s" % line
-
-        datum = []
-        has_surrogates = False
-
-        for i in range(1, 6):
-            group = []
-            codepoints = m.group(i).split()
-            for cp_hex in codepoints:
-                cp = int(cp_hex, 16)
-                if is_surrogate(cp):
-                    has_surrogates = True
-                    break
-                group.append(cp)
-            if has_surrogates:
-                break
-            datum.append(group)
-
-        if has_surrogates:
-            continue
-
-        data.append(datum)
-
-    return data
-
-
-def emit_normal_tests_tables(dir):
-    normal_tests_data = get_normal_tests_data()
-
-    with open(join(dir, 'conformance_tests_data.rsv'), "w") as values_file:
-        rustout.emit_table(
-            __file__,
-            values_file,
-            normal_tests_data,
-            print_fun=lambda datum: (
-                '(' +
-                ', '.join([
-                    rustout.string_literal(codepoints)
-                    for codepoints in datum
-                ]) +
-                ')'
-            ),
-        )
-
-
 # == Misc ==
 
 def range_value_triplets_from_codepoints(groups):
@@ -403,4 +345,3 @@ if __name__ == "__main__":
     # Normal
     emit_unicode_version(OUTPUT_DIRS['UCD_NORMAL'])
     emit_normal_form_tables(OUTPUT_DIRS['UCD_NORMAL'])
-    emit_normal_tests_tables(OUTPUT_DIRS['NORMAL_TESTS'])
