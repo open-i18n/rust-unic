@@ -23,8 +23,7 @@ fn test_general_category_major_groups() {
         if gc.is_cased_letter() {
             assert!(
                 gc.is_letter() && !gc.is_mark() && !gc.is_number() && !gc.is_punctuation() &&
-                    !gc.is_symbol() &&
-                    !gc.is_separator() && !gc.is_other(),
+                    !gc.is_symbol() && !gc.is_separator() && !gc.is_other(),
                 "GC: `{:?}`",
                 gc
             );
@@ -39,8 +38,8 @@ fn test_general_category_major_groups() {
 
         } else if gc.is_mark() {
             assert!(
-                !gc.is_number() && !gc.is_punctuation() && !gc.is_symbol() &&
-                    !gc.is_separator() && !gc.is_other(),
+                !gc.is_number() && !gc.is_punctuation() && !gc.is_symbol() && !gc.is_separator() &&
+                    !gc.is_other(),
                 "GC: `{:?}`",
                 gc
             );
