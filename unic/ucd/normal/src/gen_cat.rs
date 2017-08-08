@@ -11,7 +11,7 @@
 
 #[cfg(not(feature = "unic-ucd-category"))]
 mod mark {
-    use std::cmp::Ordering;
+    use unic_utils::CharDataTable;
 
     const GENERAL_CATEGORY_MARK: &'static [(char, char)] =
         include!("tables/general_category_mark.rsv");
