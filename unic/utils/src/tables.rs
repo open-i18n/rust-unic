@@ -3,17 +3,17 @@
 use std::cmp;
 
 /// bananas
-pub trait CharBsearchTable<V> {
+pub trait CharDataTable<V> {
     /// bananas
     fn find(&self, needle: char) -> Option<V>;
 
     /// bananas
-    fn binary_search_or(&self, needle: char, default: V) -> V {
+    fn find_or(&self, needle: char, default: V) -> V {
         self.find(needle).unwrap_or(default)
     }
 
     /// bananas
-    fn binary_search_or_else<F>(&self, needle: char, f: F) -> V
+    fn find_or_else<F>(&self, needle: char, f: F) -> V
     where
         F: FnOnce() -> V,
     {
@@ -21,7 +21,7 @@ pub trait CharBsearchTable<V> {
     }
 }
 
-impl<'a, V> CharBsearchTable<&'a V> for &'a [(char, V)] {
+impl<'a, V> CharDataTable<&'a V> for &'a [(char, V)] {
     fn find(&self, needle: char) -> Option<&'a V> {
         self.binary_search_by_key(&needle, |&(k, _)| k)
             .map(|idx| &self[idx].1)
@@ -29,7 +29,7 @@ impl<'a, V> CharBsearchTable<&'a V> for &'a [(char, V)] {
     }
 }
 
-impl<'a, V> CharBsearchTable<&'a V> for &'a [(char, char, V)] {
+impl<'a, V> CharDataTable<&'a V> for &'a [(char, char, V)] {
     fn find(&self, needle: char) -> Option<&'a V> {
         self.binary_search_by(|&(low, high, _)| if low > needle {
             cmp::Ordering::Greater
@@ -42,7 +42,7 @@ impl<'a, V> CharBsearchTable<&'a V> for &'a [(char, char, V)] {
     }
 }
 
-impl CharBsearchTable<()> for &'static [(char, char)] {
+impl CharDataTable<()> for &'static [(char, char)] {
     fn find(&self, needle: char) -> Option<()> {
         self.binary_search_by(|&(low, high)| if low > needle {
             cmp::Ordering::Greater

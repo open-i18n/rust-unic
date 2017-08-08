@@ -31,4 +31,4 @@ pub mod tables;
 
 
 pub use codepoints::iter_all_chars;
-pub use tables::CharBsearchTable;
+pub use tables::CharDataTable;

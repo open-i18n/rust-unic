@@ -10,7 +10,7 @@
 // except according to those terms.
 
 
-use unic_utils::CharBsearchTable;
+use unic_utils::CharDataTable;
 
 
 pub struct Slice {

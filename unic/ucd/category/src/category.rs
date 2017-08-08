@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use unic_utils::CharBsearchTable;
+use unic_utils::CharDataTable;
 
 /// Represents the Unicode Character
 /// [*General_Category*](http://unicode.org/reports/tr44/#General_Category) property.
@@ -120,7 +120,7 @@ const GENERAL_CATEGORY_TABLE: &'static [(char, char, GeneralCategory)] =
 impl GeneralCategory {
     /// Find the `GeneralCategory` of a single char.
     pub fn of(ch: char) -> GeneralCategory {
-        *GENERAL_CATEGORY_TABLE.binary_search_or(ch, &GeneralCategory::Unassigned)
+        *GENERAL_CATEGORY_TABLE.find_or(ch, &GeneralCategory::Unassigned)
     }
 
     /// Exhaustive list of all `GeneralCategory` property values.

@@ -11,7 +11,7 @@
 
 use std::fmt;
 
-use unic_utils::CharBsearchTable;
+use unic_utils::CharDataTable;
 
 pub use unic_ucd_core::UnicodeVersion;
 
@@ -48,7 +48,7 @@ pub const AGE_TABLE: &'static [(char, char, Age)] = include!("tables/age_values.
 impl Age {
     /// Find the character *Age* property value.
     pub fn of(ch: char) -> Age {
-        *AGE_TABLE.binary_search_or(ch, &Age::Unassigned)
+        *AGE_TABLE.find_or(ch, &Age::Unassigned)
     }
 
     /// Return `Some(unicode_version)`, if code point is assigned (as character or noncharacter,

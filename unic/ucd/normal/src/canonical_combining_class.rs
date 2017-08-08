@@ -15,7 +15,7 @@
 //! Reference: <http://unicode.org/reports/tr44/#Canonical_Combining_Class_Values>
 
 
-use unic_utils::CharBsearchTable;
+use unic_utils::CharDataTable;
 
 
 /// Represents *Canonical_Combining_Class* property of a Unicode character.
@@ -89,7 +89,7 @@ const CANONICAL_COMBINING_CLASS_VALUES: &'static [(char, char, CanonicalCombinin
 impl CanonicalCombiningClass {
     /// Find the character *Canonical_Combining_Class* property value.
     pub fn of(ch: char) -> CanonicalCombiningClass {
-        *CANONICAL_COMBINING_CLASS_VALUES.binary_search_or(ch, &CanonicalCombiningClass(0))
+        *CANONICAL_COMBINING_CLASS_VALUES.find_or(ch, &CanonicalCombiningClass(0))
     }
 }
 

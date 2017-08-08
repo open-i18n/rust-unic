@@ -47,7 +47,7 @@ pub use decompose::{decompose_canonical, decompose_compatible};
 pub use decomposition_type::DecompositionType;
 
 use unic_ucd_core::UnicodeVersion;
-use unic_utils::CharBsearchTable;
+use unic_utils::CharDataTable;
 
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data

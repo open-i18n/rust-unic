@@ -11,7 +11,7 @@
 
 use std::fmt;
 
-use unic_utils::CharBsearchTable;
+use unic_utils::CharDataTable;
 
 /// Represents the Unicode character
 /// [*Bidi_Class*](http://www.unicode.org/reports/tr44/#Bidi_Class) property, also known as the
@@ -111,7 +111,7 @@ impl BidiClass {
     pub fn of(ch: char) -> BidiClass {
         // UCD/extracted/DerivedBidiClass.txt: "All code points not explicitly listed
         // for Bidi_Class have the value Left_To_Right (L)."
-        *BIDI_CLASS_TABLE.binary_search_or(ch, &L)
+        *BIDI_CLASS_TABLE.find_or(ch, &L)
     }
 
     /// Abbreviated name of the *Bidi_Class* property value.

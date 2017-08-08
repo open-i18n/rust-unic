@@ -12,7 +12,7 @@
 
 //! Accessor for *Decomposition_Type* (dt) property
 
-use unic_utils::CharBsearchTable;
+use unic_utils::CharDataTable;
 
 use composition::canonical_decomposition;
 use hangul;
