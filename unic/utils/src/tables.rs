@@ -13,7 +13,10 @@ pub trait CharBsearchTable<V> {
     }
 
     /// bananas
-    fn binary_search_or_else(&self, needle: char, f: fn() -> V) -> V {
+    fn binary_search_or_else<F>(&self, needle: char, f: F) -> V
+    where
+        F: FnOnce() -> V,
+    {
         self.find(needle).unwrap_or_else(f)
     }
 }
