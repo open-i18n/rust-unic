@@ -3,31 +3,31 @@
 use std::cmp;
 
 /// bananas
-pub trait CharBsearchTable<V: 'static> {
+pub trait CharBsearchTable<V> {
     /// bananas
-    fn find(&self, needle: char) -> Option<&V>;
+    fn find(&self, needle: char) -> Option<V>;
 
     /// bananas
-    fn binary_search_or<'a>(&'a self, needle: char, default: &'a V) -> &'a V {
+    fn binary_search_or(&self, needle: char, default: V) -> V {
         self.find(needle).unwrap_or(default)
     }
 
     /// bananas
-    fn binary_search_or_else<'a>(&'a self, needle: char, f: fn() -> &'a V) -> &'a V {
+    fn binary_search_or_else(&self, needle: char, f: fn() -> V) -> V {
         self.find(needle).unwrap_or_else(f)
     }
 }
 
-impl<V: 'static> CharBsearchTable<V> for &'static [(char, V)] {
-    fn find(&self, needle: char) -> Option<&V> {
+impl<'a, V> CharBsearchTable<&'a V> for &'a [(char, V)] {
+    fn find(&self, needle: char) -> Option<&'a V> {
         self.binary_search_by_key(&needle, |&(k, _)| k)
             .map(|idx| &self[idx].1)
             .ok()
     }
 }
 
-impl<V: 'static> CharBsearchTable<V> for &'static [(char, char, V)] {
-    fn find(&self, needle: char) -> Option<&V> {
+impl<'a, V> CharBsearchTable<&'a V> for &'a [(char, char, V)] {
+    fn find(&self, needle: char) -> Option<&'a V> {
         self.binary_search_by(|&(low, high, _)| if low > needle {
             cmp::Ordering::Greater
         } else if high < needle {
@@ -40,17 +40,14 @@ impl<V: 'static> CharBsearchTable<V> for &'static [(char, char, V)] {
 }
 
 impl CharBsearchTable<()> for &'static [(char, char)] {
-    fn find(&self, needle: char) -> Option<&()> {
+    fn find(&self, needle: char) -> Option<()> {
         self.binary_search_by(|&(low, high)| if low > needle {
             cmp::Ordering::Greater
         } else if high < needle {
             cmp::Ordering::Less
         } else {
             cmp::Ordering::Equal
-        }).map(|_| {
-                const UNIT: &() = &();
-                UNIT
-            })
+        }).map(|_| ())
             .ok()
     }
 }
