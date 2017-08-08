@@ -1,18 +1,18 @@
-//! bananas
+//! Trait and impls for character data tables used in UNIC.
 
 use std::cmp;
 
-/// bananas
+/// A table from characters to data associated with those characters.
 pub trait CharDataTable<V> {
-    /// bananas
+    /// Find the associated data for a character in this table.
     fn find(&self, needle: char) -> Option<V>;
 
-    /// bananas
+    /// Find the associated data for a character in this table or use a provided default.
     fn find_or(&self, needle: char, default: V) -> V {
         self.find(needle).unwrap_or(default)
     }
 
-    /// bananas
+    /// Find the associated data for a character in this table or generate a default.
     fn find_or_else<F>(&self, needle: char, f: F) -> V
     where
         F: FnOnce() -> V,
