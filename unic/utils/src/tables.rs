@@ -28,10 +28,10 @@ impl<V: 'static> CharBsearchTable<V> for &'static [(char, V)] {
 
 impl<V: 'static> CharBsearchTable<V> for &'static [(char, char, V)] {
     fn find(&self, needle: char) -> Option<&V> {
-        self.binary_search_by(|&(low, high, _)| if needle < low {
-            cmp::Ordering::Less
-        } else if needle > high {
+        self.binary_search_by(|&(low, high, _)| if low > needle {
             cmp::Ordering::Greater
+        } else if high < needle {
+            cmp::Ordering::Less
         } else {
             cmp::Ordering::Equal
         }).map(|idx| &self[idx].2)
@@ -41,10 +41,10 @@ impl<V: 'static> CharBsearchTable<V> for &'static [(char, char, V)] {
 
 impl CharBsearchTable<()> for &'static [(char, char)] {
     fn find(&self, needle: char) -> Option<&()> {
-        self.binary_search_by(|&(low, high)| if needle < low {
-            cmp::Ordering::Less
-        } else if needle > high {
+        self.binary_search_by(|&(low, high)| if low > needle {
             cmp::Ordering::Greater
+        } else if high < needle {
+            cmp::Ordering::Less
         } else {
             cmp::Ordering::Equal
         }).map(|_| {
