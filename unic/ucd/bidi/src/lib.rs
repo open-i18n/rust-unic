@@ -20,6 +20,7 @@
 //! Accessor for `Bidi_Class` property from Unicode Character Database (UCD)
 
 extern crate unic_ucd_core;
+extern crate unic_utils;
 
 
 /// Unicode *Bidi_Class* Character Property.

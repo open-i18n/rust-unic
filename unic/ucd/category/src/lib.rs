@@ -39,6 +39,7 @@
 #[macro_use]
 extern crate matches;
 extern crate unic_ucd_core;
+extern crate unic_utils;
 
 mod category;
 

@@ -12,7 +12,7 @@
 
 //! Accessor for *Decomposition_Type* (dt) property
 
-use std::cmp::Ordering;
+use unic_utils::CharDataTable;
 
 use composition::canonical_decomposition;
 use hangul;
@@ -60,26 +60,7 @@ impl DecompositionType {
         if hangul::is_syllable(ch) || canonical_decomposition(ch).is_some() {
             return Some(Canonical);
         }
-        bsearch_range_value_table(ch, COMPATIBILITY_DECOMPOSITION_TYPE_TABLE)
-    }
-}
-
-fn bsearch_range_value_table(
-    c: char,
-    r: &'static [(char, char, DecompositionType)],
-) -> Option<DecompositionType> {
-    match r.binary_search_by(|&(lo, hi, _)| if lo <= c && c <= hi {
-        Ordering::Equal
-    } else if hi < c {
-        Ordering::Less
-    } else {
-        Ordering::Greater
-    }) {
-        Ok(idx) => {
-            let (_, _, dt) = r[idx];
-            Some(dt)
-        }
-        Err(_) => Option::None,
+        COMPATIBILITY_DECOMPOSITION_TYPE_TABLE.find(ch).cloned()
     }
 }
 

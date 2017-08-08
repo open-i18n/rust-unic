@@ -10,7 +10,7 @@
 // except according to those terms.
 
 
-use std::cmp::Ordering;
+use unic_utils::CharDataTable;
 
 
 pub struct Slice {
@@ -23,21 +23,11 @@ fn bsearch_lookup_table<T>(
     r: &'static [(char, Slice)],
     chars_table: &'static [T],
 ) -> Option<&'static [T]> {
-    match r.binary_search_by(|&(val, _)| if c == val {
-        Ordering::Equal
-    } else if val < c {
-        Ordering::Less
-    } else {
-        Ordering::Greater
-    }) {
-        Ok(idx) => {
-            let slice = &r[idx].1;
-            let offset = slice.offset as usize;
-            let length = slice.length as usize;
-            Some(&chars_table[offset..(offset + length)])
-        }
-        Err(_) => None,
-    }
+    r.find(c).map(|slice| {
+        let offset = slice.offset as usize;
+        let length = slice.length as usize;
+        &chars_table[offset..(offset + length)]
+    })
 }
 
 // == Canonical Composition (C) ==

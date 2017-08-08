@@ -9,8 +9,9 @@
 // except according to those terms.
 
 
-use std::cmp::Ordering;
 use std::fmt;
+
+use unic_utils::CharDataTable;
 
 pub use unic_ucd_core::UnicodeVersion;
 
@@ -47,7 +48,7 @@ pub const AGE_TABLE: &'static [(char, char, Age)] = include!("tables/age_values.
 impl Age {
     /// Find the character *Age* property value.
     pub fn of(ch: char) -> Age {
-        bsearch_range_value_table(ch, AGE_TABLE)
+        *AGE_TABLE.find_or(ch, &Age::Unassigned)
     }
 
     /// Return `Some(unicode_version)`, if code point is assigned (as character or noncharacter,
@@ -86,25 +87,6 @@ impl Age {
             Age::Assigned(uni_ver) => format!("Assigned in Unicode {}", uni_ver).to_owned(),
             Age::Unassigned => "Unassigned".to_owned(),
         }
-    }
-}
-
-// TODO: Generic'ize and move to `unic-ucd-utils`
-// TODO: Optimize: put Unassigned ranges into the table, then only store (start, age) instead of
-// (start, end, age)
-fn bsearch_range_value_table(ch: char, r: &'static [(char, char, Age)]) -> Age {
-    match r.binary_search_by(|&(lo, hi, _)| if lo <= ch && ch <= hi {
-        Ordering::Equal
-    } else if hi < ch {
-        Ordering::Less
-    } else {
-        Ordering::Greater
-    }) {
-        Ok(idx) => {
-            let (_, _, cat) = r[idx];
-            cat
-        }
-        Err(_) => Unassigned,
     }
 }
 
