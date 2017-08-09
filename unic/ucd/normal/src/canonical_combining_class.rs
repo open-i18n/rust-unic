@@ -17,7 +17,7 @@
 
 use std::fmt;
 
-use unic_utils::{CharDataTable, CharProperty, NumericCharProperty};
+use unic_utils::{CharDataTable, CharProperty};
 
 
 /// Represents *Canonical_Combining_Class* property of a Unicode character.
@@ -25,21 +25,6 @@ use unic_utils::{CharDataTable, CharProperty, NumericCharProperty};
 /// * <http://unicode.org/reports/tr44/#Canonical_Combining_Class>
 #[derive(Copy, Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct CanonicalCombiningClass(u8);
-
-
-impl CharProperty for CanonicalCombiningClass {
-    fn of(ch: char) -> Self {
-        Self::of(ch)
-    }
-}
-
-
-impl NumericCharProperty<u8> for CanonicalCombiningClass {
-    /// Get numeric value for character property value
-    fn number(&self) -> u8 {
-        self.number()
-    }
-}
 
 
 // TODO: Once we fully adopt 1.20 change these to associated consts on CanonicalCombiningClass
@@ -96,6 +81,13 @@ pub mod values {
     pub const DoubleAbove: CCC = CCC(234);
     /// Greek iota subscript only
     pub const IotaSubscript: CCC = CCC(240);
+}
+
+
+impl CharProperty for CanonicalCombiningClass {
+    fn of(ch: char) -> Self {
+        Self::of(ch)
+    }
 }
 
 
