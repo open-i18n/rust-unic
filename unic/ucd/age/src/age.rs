@@ -41,11 +41,13 @@ pub enum Age {
     Unassigned, // Unassigned is older (larger) than any age
 }
 
+
 impl CompleteCharProperty for Age {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }
 }
+
 
 use Age::{Assigned, Unassigned};
 

@@ -51,13 +51,15 @@ pub enum BidiClass {
     // [UNIC_UPDATE_ON_UNICODE_UPDATE] Source: `tables/bidi_class_type.rsv`
 }
 
+
 impl CompleteCharProperty for BidiClass {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }
 }
 
-impl EnumeratedCharProperty<BidiClass> for BidiClass {
+
+impl EnumeratedCharProperty for BidiClass {
     fn all_values() -> &'static [Self] {
         Self::all_values()
     }

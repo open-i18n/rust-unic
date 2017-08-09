@@ -93,7 +93,7 @@ impl CompleteCharProperty for GeneralCategory {
 }
 
 
-impl EnumeratedCharProperty<GeneralCategory> for GeneralCategory {
+impl EnumeratedCharProperty for GeneralCategory {
     fn all_values() -> &'static [Self] {
         Self::all_values()
     }

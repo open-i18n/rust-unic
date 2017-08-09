@@ -56,7 +56,7 @@ impl PartialCharProperty for DecompositionType {
 }
 
 
-impl EnumeratedCharProperty<DecompositionType> for DecompositionType {
+impl EnumeratedCharProperty for DecompositionType {
     fn all_values() -> &'static [Self] {
         Self::all_values()
     }
