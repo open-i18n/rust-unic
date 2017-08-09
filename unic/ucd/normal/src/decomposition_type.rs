@@ -186,9 +186,4 @@ mod tests {
         assert_eq!(DT::of('\u{90000}'), None);
         assert_eq!(DT::of('\u{a0000}'), None);
     }
-
-    #[test]
-    fn test_display() {
-        assert_eq!(format!("{}", DT::of('\u{a0}').unwrap()), "NoBreak");
-    }
 }
