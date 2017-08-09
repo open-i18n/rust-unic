@@ -32,11 +32,5 @@ pub mod codepoints;
 pub mod tables;
 
 
-pub use char_property::{
-    CharProperty,
-    EnumeratedCharProperty,
-    NumericCharProperty,
-    OptionCharProperty,
-};
 pub use codepoints::iter_all_chars;
 pub use tables::CharDataTable;

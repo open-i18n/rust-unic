@@ -14,7 +14,8 @@
 
 use std::fmt;
 
-use unic_utils::{CharDataTable, EnumeratedCharProperty, OptionCharProperty};
+use unic_utils::CharDataTable;
+use unic_utils::char_property::{EnumeratedCharProperty, PartialCharProperty};
 
 use composition::canonical_decomposition;
 use hangul;
@@ -48,14 +49,14 @@ pub enum DecompositionType {
 }
 
 
-impl OptionCharProperty for DecompositionType {
+impl PartialCharProperty for DecompositionType {
     fn of(ch: char) -> Option<Self> {
         Self::of(ch)
     }
 }
 
 
-impl EnumeratedCharProperty for DecompositionType {
+impl EnumeratedCharProperty<DecompositionType> for DecompositionType {
     fn all_values() -> &'static [Self] {
         Self::all_values()
     }

@@ -17,7 +17,8 @@
 
 use std::fmt;
 
-use unic_utils::{CharDataTable, CharProperty, NumericCharProperty};
+use unic_utils::CharDataTable;
+use unic_utils::char_property::{CompleteCharProperty, NumericCharProperty};
 
 
 /// Represents *Canonical_Combining_Class* property of a Unicode character.
@@ -27,14 +28,14 @@ use unic_utils::{CharDataTable, CharProperty, NumericCharProperty};
 pub struct CanonicalCombiningClass(u8);
 
 
-impl CharProperty for CanonicalCombiningClass {
+impl CompleteCharProperty for CanonicalCombiningClass {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }
 }
 
 
-impl NumericCharProperty<u8> for CanonicalCombiningClass {
+impl NumericCharProperty<CanonicalCombiningClass, u8> for CanonicalCombiningClass {
     /// Get numeric value for character property value
     fn number(&self) -> u8 {
         self.number()

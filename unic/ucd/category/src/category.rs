@@ -11,7 +11,8 @@
 
 use std::fmt;
 
-use unic_utils::{CharDataTable, CharProperty, EnumeratedCharProperty};
+use unic_utils::CharDataTable;
+use unic_utils::char_property::{CompleteCharProperty, EnumeratedCharProperty};
 
 
 /// Represents the Unicode Character
@@ -85,14 +86,14 @@ pub enum GeneralCategory {
 }
 
 
-impl CharProperty for GeneralCategory {
+impl CompleteCharProperty for GeneralCategory {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }
 }
 
 
-impl EnumeratedCharProperty for GeneralCategory {
+impl EnumeratedCharProperty<GeneralCategory> for GeneralCategory {
     fn all_values() -> &'static [Self] {
         Self::all_values()
     }

@@ -12,7 +12,8 @@
 
 use std::fmt;
 
-use unic_utils::{CharDataTable, CharProperty, EnumeratedCharProperty};
+use unic_utils::CharDataTable;
+use unic_utils::char_property::{CompleteCharProperty, EnumeratedCharProperty};
 
 
 /// Represents the Unicode character
@@ -50,13 +51,13 @@ pub enum BidiClass {
     // [UNIC_UPDATE_ON_UNICODE_UPDATE] Source: `tables/bidi_class_type.rsv`
 }
 
-impl CharProperty for BidiClass {
+impl CompleteCharProperty for BidiClass {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }
 }
 
-impl EnumeratedCharProperty for BidiClass {
+impl EnumeratedCharProperty<BidiClass> for BidiClass {
     fn all_values() -> &'static [Self] {
         Self::all_values()
     }
