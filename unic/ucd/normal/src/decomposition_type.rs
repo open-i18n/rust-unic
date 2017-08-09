@@ -72,20 +72,20 @@ pub mod abbr_names {
     pub use DecompositionType::Compat as Com;
     pub use DecompositionType::Circle as Enc;
     pub use DecompositionType::Final as Fin;
-    pub use DecompositionType::Font as Font;
+    pub use DecompositionType::Font;
     pub use DecompositionType::Fraction as Fra;
     pub use DecompositionType::Initial as Init;
     pub use DecompositionType::Isolated as Iso;
     pub use DecompositionType::Medial as Med;
     pub use DecompositionType::Narrow as Nar;
     pub use DecompositionType::Nobreak as Nb;
-    pub use DecompositionType::None as None;
+    pub use DecompositionType::None;
     pub use DecompositionType::Small as Sml;
     pub use DecompositionType::Square as Sqr;
-    pub use DecompositionType::Sub as Sub;
+    pub use DecompositionType::Sub;
     pub use DecompositionType::Super as Sup;
     pub use DecompositionType::Vertical as Vert;
-    pub use DecompositionType::Wide as Wide;
+    pub use DecompositionType::Wide;
 }
 
 
