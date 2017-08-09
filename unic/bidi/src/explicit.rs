@@ -64,7 +64,8 @@ pub fn compute(
                 } else {
                     last_level.new_explicit_next_ltr()
                 };
-                if new_level.is_ok() && overflow_isolate_count == 0 && overflow_embedding_count == 0
+                if new_level.is_ok() && overflow_isolate_count == 0 &&
+                    overflow_embedding_count == 0
                 {
                     let new_level = new_level.unwrap();
                     stack.push(

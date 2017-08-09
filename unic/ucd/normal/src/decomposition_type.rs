@@ -16,7 +16,7 @@ use std::fmt;
 
 use unic_utils::{CharDataTable, EnumeratedCharProperty, OptionCharProperty};
 
-use composition::canonical_decomposition;
+use composition::{canonical_decomposition, COMPATIBILITY_DECOMPOSITION_MAPPING};
 use hangul;
 
 
@@ -37,7 +37,7 @@ pub enum DecompositionType {
     Isolated,  // abbreviated: Iso
     Medial,    // abbreviated: Med
     Narrow,    // abbreviated: Nar
-    Nobreak,   // abbreviated: Nb
+    NoBreak,   // abbreviated: Nb
     None,      // abbreviated: None
     Small,     // abbreviated: Sml
     Square,    // abbreviated: Sqr
@@ -62,18 +62,14 @@ impl EnumeratedCharProperty for DecompositionType {
 }
 
 
-use self::DecompositionType::*;
-
-
 impl DecompositionType {
     /// Find the DecompositionType of a single char.
     pub fn of(ch: char) -> Option<DecompositionType> {
         // First, check for Hangul Syllables and other canonical decompositions
         if hangul::is_syllable(ch) || canonical_decomposition(ch).is_some() {
-            return Some(Canonical);
+            return Some(DecompositionType::Canonical);
         }
-        const TABLE: &'static [(char, char, DecompositionType)] = unimplemented!();
-        TABLE.find(ch).cloned()
+        COMPATIBILITY_DECOMPOSITION_MAPPING.find(ch).map(|it| it.0)
     }
 
     /// Exhaustive list of all `DecompositionType` property values.
@@ -90,7 +86,7 @@ impl DecompositionType {
             Isolated,
             Medial,
             Narrow,
-            Nobreak,
+            NoBreak,
             None,
             Small,
             Square,
@@ -134,7 +130,7 @@ mod tests {
     #[test]
     fn test_bmp() {
         // Compatibility
-        assert_eq!(DT::of('\u{a0}'), Some(DT::Nobreak));
+        assert_eq!(DT::of('\u{a0}'), Some(DT::NoBreak));
         assert_eq!(DT::of('\u{a8}'), Some(DT::Compat));
         assert_eq!(DT::of('\u{aa}'), Some(DT::Super));
         assert_eq!(DT::of('\u{af}'), Some(DT::Compat));
@@ -249,6 +245,6 @@ mod tests {
 
     #[test]
     fn test_display() {
-        assert_eq!(format!("{}", DT::of('\u{a0}').unwrap()), "Nobreak");
+        assert_eq!(format!("{}", DT::of('\u{a0}').unwrap()), "NoBreak");
     }
 }

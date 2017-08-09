@@ -11,12 +11,12 @@
 
 #[cfg(not(feature = "unic-ucd-category"))]
 mod mark {
-    use std::cmp::Ordering;
+    use unic_utils::CharDataTable;
 
     /// Return whether the given character is a combining mark (`General_Category=Mark`)
     pub fn is_combining_mark(c: char) -> bool {
         const TABLE: &'static [(char, char)] = include!("tables/general_category_mark.rsv");
-        TABLE.find(c).is_some()
+        CharDataTable::<()>::find(&TABLE, c).is_some()
     }
 }
 

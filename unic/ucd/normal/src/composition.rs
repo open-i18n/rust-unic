@@ -12,23 +12,7 @@
 
 use unic_utils::CharDataTable;
 
-
-pub struct Slice {
-    pub offset: u16,
-    pub length: u16,
-}
-
-fn bsearch_lookup_table<T>(
-    c: char,
-    r: &'static [(char, Slice)],
-    chars_table: &'static [T],
-) -> Option<&'static [T]> {
-    r.find(c).map(|slice| {
-        let offset = slice.offset as usize;
-        let length = slice.length as usize;
-        &chars_table[offset..(offset + length)]
-    })
-}
+use decomposition_type::DecompositionType;
 
 // == Canonical Composition (C) ==
 const CANONICAL_COMPOSITION_MAPPING: &'static [(char, &'static [(char, char)])] =
@@ -36,9 +20,7 @@ const CANONICAL_COMPOSITION_MAPPING: &'static [(char, &'static [(char, char)])] 
 
 /// Canonical Composition of the character.
 pub fn canonical_composition(c: char) -> Option<&'static ([(char, char)])> {
-    const LOOKUP: &'static [(char, Slice)] = unimplemented!();
-    const VALUES: &'static [(char, char)] = unimplemented!();
-    bsearch_lookup_table(c, LOOKUP, VALUES)
+    CANONICAL_COMPOSITION_MAPPING.find(c).map(|it| *it)
 }
 
 // == Canonical Decomposition (D) ==
@@ -47,18 +29,15 @@ const CANONICAL_DECOMPOSITION_MAPPING: &'static [(char, &'static [char])] =
 
 /// Canonical Decomposition of the character.
 pub fn canonical_decomposition(c: char) -> Option<&'static [char]> {
-    const LOOKUP: &'static [(char, Slice)] = unimplemented!();
-    const VALUES: &'static [char] = unimplemented!();
-    bsearch_lookup_table(c, LOOKUP, VALUES)
+    CANONICAL_DECOMPOSITION_MAPPING.find(c).map(|it| *it)
 }
 
 // == Compatibility Decomposition (KD) ==
-const COMPATIBILITY_DECOMPOSITION_MAPPING: &'static [(char, (&'static str, &'static [char]))] =
+use DecompositionType::*;
+pub(crate) const COMPATIBILITY_DECOMPOSITION_MAPPING: &'static [(char, (DecompositionType, &'static [char]))] =
     include!("tables/compatibility_decomposition_mapping.rsv");
 
 /// Compatibility Decomposition of the character.
 pub fn compatibility_decomposition(c: char) -> Option<&'static [char]> {
-    const LOOKUP: &'static [(char, Slice)] = unimplemented!();
-    const VALUES: &'static [char] = unimplemented!();
-    bsearch_lookup_table(c, LOOKUP, VALUES)
+    COMPATIBILITY_DECOMPOSITION_MAPPING.find(c).map(|it| it.1)
 }
