@@ -9,7 +9,7 @@
 // except according to those terms.
 
 
-#![forbid(unsafe_code, missing_docs, unconditional_recursion)]
+#![forbid(unsafe_code, missing_docs)]
 
 //! # UNIC — Unicode Character Database
 //!

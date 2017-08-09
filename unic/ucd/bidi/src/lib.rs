@@ -10,7 +10,7 @@
 // except according to those terms.
 
 
-#![forbid(unsafe_code, unconditional_recursion)]
+#![forbid(unsafe_code)]
 #![deny(missing_docs)]
 
 //! # UNIC — UCD — Bidi

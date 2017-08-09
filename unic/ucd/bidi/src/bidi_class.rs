@@ -9,11 +9,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::fmt;
 
-use unic_utils::{CharDataTable, CharProperty, EnumeratedCharProperty};
-
+use unic_utils::CharDataTable;
 
 /// Represents the Unicode character
 /// [*Bidi_Class*](http://www.unicode.org/reports/tr44/#Bidi_Class) property, also known as the
@@ -48,18 +46,6 @@ pub enum BidiClass {
     SegmentSeparator,
     WhiteSpace,
     // [UNIC_UPDATE_ON_UNICODE_UPDATE] Source: `tables/bidi_class_type.rsv`
-}
-
-impl CharProperty for BidiClass {
-    fn of(ch: char) -> Self {
-        Self::of(ch)
-    }
-}
-
-impl EnumeratedCharProperty for BidiClass {
-    fn all_values() -> &'static [Self] {
-        Self::all_values()
-    }
 }
 
 
@@ -123,37 +109,6 @@ impl BidiClass {
         // UCD/extracted/DerivedBidiClass.txt: "All code points not explicitly listed
         // for Bidi_Class have the value Left_To_Right (L)."
         *TABLE.find_or(ch, &L)
-    }
-
-    /// Exhaustive list of all `BidiClass` property values.
-    pub fn all_values() -> &'static [BidiClass] {
-        use BidiClass::*;
-        const ALL_VALUES: &[BidiClass] = &[
-            ArabicLetter,
-            ArabicNumber,
-            ParagraphSeparator,
-            BoundaryNeutral,
-            CommonSeparator,
-            EuropeanNumber,
-            EuropeanSeparator,
-            EuropeanTerminator,
-            FirstStrongIsolate,
-            LeftToRight,
-            LeftToRightEmbedding,
-            LeftToRightIsolate,
-            LeftToRightOverride,
-            NonspacingMark,
-            OtherNeutral,
-            PopDirectionalFormat,
-            PopDirectionalIsolate,
-            RightToLeft,
-            RightToLeftEmbedding,
-            RightToLeftIsolate,
-            RightToLeftOverride,
-            SegmentSeparator,
-            WhiteSpace,
-        ];
-        ALL_VALUES
     }
 
     /// Abbreviated name of the *Bidi_Class* property value.
@@ -257,14 +212,6 @@ impl BidiClass {
         }
     }
 }
-
-
-impl Default for BidiClass {
-    fn default() -> Self {
-        BidiClass::LeftToRight
-    }
-}
-
 
 impl fmt::Display for BidiClass {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

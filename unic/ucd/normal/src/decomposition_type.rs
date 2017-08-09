@@ -12,9 +12,7 @@
 
 //! Accessor for *Decomposition_Type* (dt) property
 
-use std::fmt;
-
-use unic_utils::{CharDataTable, EnumeratedCharProperty, OptionCharProperty};
+use unic_utils::CharDataTable;
 
 use composition::{canonical_decomposition, COMPATIBILITY_DECOMPOSITION_MAPPING};
 use hangul;
@@ -24,7 +22,7 @@ use hangul;
 /// [*Decomposition_Type*](http://www.unicode.org/reports/tr44/#Decomposition_Type) property.
 ///
 /// * <http://www.unicode.org/reports/tr44/#Character_Decomposition_Mappings>
-#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[allow(missing_docs)]
 pub enum DecompositionType {
     Canonical, // abbreviated: Can
@@ -48,20 +46,6 @@ pub enum DecompositionType {
 }
 
 
-impl OptionCharProperty for DecompositionType {
-    fn of(ch: char) -> Option<Self> {
-        Self::of(ch)
-    }
-}
-
-
-impl EnumeratedCharProperty for DecompositionType {
-    fn all_values() -> &'static [Self] {
-        Self::all_values()
-    }
-}
-
-
 impl DecompositionType {
     /// Find the DecompositionType of a single char.
     pub fn of(ch: char) -> Option<DecompositionType> {
@@ -70,46 +54,6 @@ impl DecompositionType {
             return Some(DecompositionType::Canonical);
         }
         COMPATIBILITY_DECOMPOSITION_MAPPING.find(ch).map(|it| it.0)
-    }
-
-    /// Exhaustive list of all `DecompositionType` property values.
-    pub fn all_values() -> &'static [DecompositionType] {
-        use DecompositionType::*;
-        const ALL_VALUES: &[DecompositionType] = &[
-            Canonical,
-            Compat,
-            Circle,
-            Final,
-            Font,
-            Fraction,
-            Initial,
-            Isolated,
-            Medial,
-            Narrow,
-            NoBreak,
-            None,
-            Small,
-            Square,
-            Sub,
-            Super,
-            Vertical,
-            Wide,
-        ];
-        ALL_VALUES
-    }
-
-    /// Human-readable description of the property value.
-    // TODO: Needs to be improved by returning long-name with underscores replaced by space.
-    #[inline]
-    pub fn display(&self) -> String {
-        format!("{:?}", self).to_owned()
-    }
-}
-
-
-impl fmt::Display for DecompositionType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.display())
     }
 }
 
