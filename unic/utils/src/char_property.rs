@@ -60,6 +60,9 @@ impl<T: CompleteCharProperty> PartialCharProperty for T {
 pub trait EnumeratedCharProperty: Sized + PartialCharProperty {
     /// Exhaustive list of all property values.
     fn all_values() -> &'static [Self];
+
+    /// Get *abbreviated name* of the property value
+    fn abbr_name(&self) -> &'static str;
 }
 
 

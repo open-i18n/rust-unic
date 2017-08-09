@@ -97,40 +97,44 @@ impl EnumeratedCharProperty for GeneralCategory {
     fn all_values() -> &'static [Self] {
         Self::all_values()
     }
+
+    fn abbr_name(&self) -> &'static str {
+        self.abbr_name()
+    }
 }
 
 
 pub mod abbr_names {
-    pub use super::GeneralCategory::UppercaseLetter as Lu;
-    pub use super::GeneralCategory::LowercaseLetter as Ll;
-    pub use super::GeneralCategory::TitlecaseLetter as Lt;
-    pub use super::GeneralCategory::ModifierLetter as Lm;
-    pub use super::GeneralCategory::OtherLetter as Lo;
-    pub use super::GeneralCategory::NonspacingMark as Mn;
-    pub use super::GeneralCategory::SpacingMark as Mc;
-    pub use super::GeneralCategory::EnclosingMark as Me;
-    pub use super::GeneralCategory::DecimalNumber as Nd;
-    pub use super::GeneralCategory::LetterNumber as Nl;
-    pub use super::GeneralCategory::OtherNumber as No;
-    pub use super::GeneralCategory::ConnectorPunctuation as Pc;
-    pub use super::GeneralCategory::DashPunctuation as Pd;
-    pub use super::GeneralCategory::OpenPunctuation as Ps;
-    pub use super::GeneralCategory::ClosePunctuation as Pe;
-    pub use super::GeneralCategory::InitialPunctuation as Pi;
-    pub use super::GeneralCategory::FinalPunctuation as Pf;
-    pub use super::GeneralCategory::OtherPunctuation as Po;
-    pub use super::GeneralCategory::MathSymbol as Sm;
-    pub use super::GeneralCategory::CurrencySymbol as Sc;
-    pub use super::GeneralCategory::ModifierSymbol as Sk;
-    pub use super::GeneralCategory::OtherSymbol as So;
-    pub use super::GeneralCategory::SpaceSeparator as Zs;
-    pub use super::GeneralCategory::LineSeparator as Zl;
-    pub use super::GeneralCategory::ParagraphSeparator as Zp;
-    pub use super::GeneralCategory::Control as Cc;
-    pub use super::GeneralCategory::Format as Cf;
-    pub use super::GeneralCategory::Surrogate as Cs;
-    pub use super::GeneralCategory::PrivateUse as Co;
-    pub use super::GeneralCategory::Unassigned as Cn;
+    pub use GeneralCategory::UppercaseLetter as Lu;
+    pub use GeneralCategory::LowercaseLetter as Ll;
+    pub use GeneralCategory::TitlecaseLetter as Lt;
+    pub use GeneralCategory::ModifierLetter as Lm;
+    pub use GeneralCategory::OtherLetter as Lo;
+    pub use GeneralCategory::NonspacingMark as Mn;
+    pub use GeneralCategory::SpacingMark as Mc;
+    pub use GeneralCategory::EnclosingMark as Me;
+    pub use GeneralCategory::DecimalNumber as Nd;
+    pub use GeneralCategory::LetterNumber as Nl;
+    pub use GeneralCategory::OtherNumber as No;
+    pub use GeneralCategory::ConnectorPunctuation as Pc;
+    pub use GeneralCategory::DashPunctuation as Pd;
+    pub use GeneralCategory::OpenPunctuation as Ps;
+    pub use GeneralCategory::ClosePunctuation as Pe;
+    pub use GeneralCategory::InitialPunctuation as Pi;
+    pub use GeneralCategory::FinalPunctuation as Pf;
+    pub use GeneralCategory::OtherPunctuation as Po;
+    pub use GeneralCategory::MathSymbol as Sm;
+    pub use GeneralCategory::CurrencySymbol as Sc;
+    pub use GeneralCategory::ModifierSymbol as Sk;
+    pub use GeneralCategory::OtherSymbol as So;
+    pub use GeneralCategory::SpaceSeparator as Zs;
+    pub use GeneralCategory::LineSeparator as Zl;
+    pub use GeneralCategory::ParagraphSeparator as Zp;
+    pub use GeneralCategory::Control as Cc;
+    pub use GeneralCategory::Format as Cf;
+    pub use GeneralCategory::Surrogate as Cs;
+    pub use GeneralCategory::PrivateUse as Co;
+    pub use GeneralCategory::Unassigned as Cn;
 }
 use self::abbr_names::*;
 
@@ -179,6 +183,45 @@ impl GeneralCategory {
             Unassigned,
         ];
         ALL_VALUES
+    }
+
+    /// Abbreviated name of the *General_Category* property value.
+    ///
+    /// <http://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#General_Category>
+    pub fn abbr_name(&self) -> &'static str {
+        use GeneralCategory::*;
+        match *self {
+            UppercaseLetter => "Lu",
+            LowercaseLetter => "Ll",
+            TitlecaseLetter => "Lt",
+            ModifierLetter => "Lm",
+            OtherLetter => "Lo",
+            NonspacingMark => "Mn",
+            SpacingMark => "Mc",
+            EnclosingMark => "Me",
+            DecimalNumber => "Nd",
+            LetterNumber => "Nl",
+            OtherNumber => "No",
+            ConnectorPunctuation => "Pc",
+            DashPunctuation => "Pd",
+            OpenPunctuation => "Ps",
+            ClosePunctuation => "Pe",
+            InitialPunctuation => "Pi",
+            FinalPunctuation => "Pf",
+            OtherPunctuation => "Po",
+            MathSymbol => "Sm",
+            CurrencySymbol => "Sc",
+            ModifierSymbol => "Sk",
+            OtherSymbol => "So",
+            SpaceSeparator => "Zs",
+            LineSeparator => "Zl",
+            ParagraphSeparator => "Zp",
+            Control => "Cc",
+            Format => "Cf",
+            Surrogate => "Cs",
+            PrivateUse => "Co",
+            Unassigned => "Cn",
+        }
     }
 
     /// Human-readable description of the property value.
@@ -351,5 +394,11 @@ mod tests {
         //assert_eq!(format!("{}", GC::UppercaseLetter), "Uppercase Letter");
         assert_eq!(format!("{}", GC::UppercaseLetter), "UppercaseLetter");
         assert_eq!(format!("{}", GC::Unassigned), "Unassigned");
+    }
+
+    #[test]
+    fn test_abbr_name() {
+        use super::abbr_names::*;
+        assert_eq!(Lu.abbr_name(), "Lu");
     }
 }

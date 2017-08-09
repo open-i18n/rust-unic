@@ -242,12 +242,12 @@ fn gen_base_level_for_characters_tests(idx: usize) -> Option<Level> {
 fn get_sample_string_from_bidi_classes(class_names: &[&str]) -> String {
     class_names
         .iter()
-        .map(|class_name| gen_char_from_bidi_class(class_name))
+        .map(|bidi_class_abbr| gen_char_from_bidi_class_abbr(bidi_class_abbr))
         .collect()
 }
 
-fn gen_char_from_bidi_class(class_name: &str) -> char {
-    match class_name {
+fn gen_char_from_bidi_class_abbr(bidi_class_abbr: &str) -> char {
+    match bidi_class_abbr {
         "AL" => '\u{060B}',
         "AN" => '\u{0605}',
         "B" => '\u{000A}',
@@ -271,7 +271,7 @@ fn gen_char_from_bidi_class(class_name: &str) -> char {
         "RLO" => format_chars::RLO,
         "S" => '\u{001F}',
         "WS" => '\u{200A}',
-        &_ => panic!("Invalid Bidi_Class name: {}", class_name),
+        &_ => panic!("Invalid Bidi_Class name: {}", bidi_class_abbr),
     }
 }
 
@@ -304,8 +304,8 @@ fn test_gen_char_from_bidi_class() {
         S,
         WS,
     ] {
-        let class_name = class.abbr_name();
-        let sample_char = gen_char_from_bidi_class(class_name);
+        let bidi_class_abbr = class.abbr_name();
+        let sample_char = gen_char_from_bidi_class_abbr(bidi_class_abbr);
         assert_eq!(BidiClass::of(sample_char), class);
     }
 }
