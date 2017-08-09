@@ -82,14 +82,12 @@ pub mod values {
 }
 
 
-const CANONICAL_COMBINING_CLASS_VALUES: &'static [(char, char, CanonicalCombiningClass)] =
-    include!("tables/canonical_combining_class_values.rsv");
-
-
 impl CanonicalCombiningClass {
     /// Find the character *Canonical_Combining_Class* property value.
     pub fn of(ch: char) -> CanonicalCombiningClass {
-        *CANONICAL_COMBINING_CLASS_VALUES.find_or(ch, &CanonicalCombiningClass(0))
+        const TABLE: &'static [(char, char, CanonicalCombiningClass)] =
+            include!("tables/canonical_combining_class_values.rsv");
+        *TABLE.find_or(ch, &CanonicalCombiningClass(0))
     }
 }
 

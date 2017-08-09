@@ -80,11 +80,7 @@ pub mod abbr_names {
     // [UNIC_UPDATE_ON_UNICODE_UPDATE] Source: `tables/bidi_class_type.rsv`
 }
 
-
 use self::abbr_names::*;
-
-const BIDI_CLASS_TABLE: &'static [(char, char, BidiClass)] =
-    include!("tables/bidi_class_values.rsv");
 
 
 /// Represents **Category** of Unicode character `Bidi_Class` property, as demostrated under "Table
@@ -109,9 +105,10 @@ pub enum BidiClassCategory {
 impl BidiClass {
     /// Find the character *Bidi_Class* property value.
     pub fn of(ch: char) -> BidiClass {
+        const TABLE: &'static [(char, char, BidiClass)] = include!("tables/bidi_class_values.rsv");
         // UCD/extracted/DerivedBidiClass.txt: "All code points not explicitly listed
         // for Bidi_Class have the value Left_To_Right (L)."
-        *BIDI_CLASS_TABLE.find_or(ch, &L)
+        *TABLE.find_or(ch, &L)
     }
 
     /// Abbreviated name of the *Bidi_Class* property value.

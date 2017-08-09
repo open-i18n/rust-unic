@@ -13,12 +13,10 @@
 mod mark {
     use unic_utils::CharDataTable;
 
-    const GENERAL_CATEGORY_MARK: &'static [(char, char)] =
-        include!("tables/general_category_mark.rsv");
-
     /// Return whether the given character is a combining mark (`General_Category=Mark`)
     pub fn is_combining_mark(c: char) -> bool {
-        GENERAL_CATEGORY_MARK.find(c).is_some()
+        const TABLE: &'static [(char, char)] = include!("tables/general_category_mark.rsv");
+        CharDataTable::<()>::find(&TABLE, c).is_some()
     }
 }
 

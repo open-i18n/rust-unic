@@ -43,12 +43,12 @@ pub enum Age {
 
 use Age::{Assigned, Unassigned};
 
-pub const AGE_TABLE: &'static [(char, char, Age)] = include!("tables/age_values.rsv");
 
 impl Age {
     /// Find the character *Age* property value.
     pub fn of(ch: char) -> Age {
-        *AGE_TABLE.find_or(ch, &Age::Unassigned)
+        pub const TABLE: &'static [(char, char, Age)] = include!("tables/age_values.rsv");
+        *TABLE.find_or(ch, &Age::Unassigned)
     }
 
     /// Return `Some(unicode_version)`, if code point is assigned (as character or noncharacter,

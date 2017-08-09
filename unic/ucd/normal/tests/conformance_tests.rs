@@ -139,7 +139,7 @@ fn get_dt_from_name(name: &str) -> DT {
         "Isolated" | "Iso" => DT::Isolated,
         "Medial" | "Med" => DT::Medial,
         "Narrow" | "Nar" => DT::Narrow,
-        "Nobreak" | "Nb" => DT::Nobreak,
+        "Nobreak" | "Nb" => DT::NoBreak,
         "None" => DT::None,
         "Small" | "Sml" => DT::Small,
         "Square" | "Sqr" => DT::Square,

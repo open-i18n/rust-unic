@@ -122,10 +122,11 @@ fn test_from_bidi_class() {
                 assert!(!matches!(
                     GC::of(cp),
                     GC::UppercaseLetter | GC::LowercaseLetter | GC::TitlecaseLetter |
-                        GC::OtherLetter | GC::NonspacingMark | GC::SpacingMark |
-                        GC::EnclosingMark | GC::DecimalNumber |
-                        GC::SpaceSeparator | GC::LineSeparator |
-                        GC::ParagraphSeparator
+                        GC::OtherLetter | GC::NonspacingMark |
+                        GC::SpacingMark | GC::EnclosingMark |
+                        GC::DecimalNumber |
+                        GC::SpaceSeparator |
+                        GC::LineSeparator | GC::ParagraphSeparator
                 ));
             }
 

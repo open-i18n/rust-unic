@@ -14,7 +14,7 @@
 
 use unic_utils::CharDataTable;
 
-use composition::canonical_decomposition;
+use composition::{canonical_decomposition, COMPATIBILITY_DECOMPOSITION_MAPPING};
 use hangul;
 
 
@@ -35,7 +35,7 @@ pub enum DecompositionType {
     Isolated,  // abbreviated: Iso
     Medial,    // abbreviated: Med
     Narrow,    // abbreviated: Nar
-    Nobreak,   // abbreviated: Nb
+    NoBreak,   // abbreviated: Nb
     None,      // abbreviated: None
     Small,     // abbreviated: Sml
     Square,    // abbreviated: Sqr
@@ -46,21 +46,14 @@ pub enum DecompositionType {
 }
 
 
-use self::DecompositionType::*;
-
-// TODO: Maybe merge this table with compatibility_decomposition_mapping ones
-const COMPATIBILITY_DECOMPOSITION_TYPE_TABLE: &'static [(char, char, DecompositionType)] =
-    include!("tables/compatibility_decomposition_type_values.rsv");
-
-
 impl DecompositionType {
     /// Find the DecompositionType of a single char.
     pub fn of(ch: char) -> Option<DecompositionType> {
         // First, check for Hangul Syllables and other canonical decompositions
         if hangul::is_syllable(ch) || canonical_decomposition(ch).is_some() {
-            return Some(Canonical);
+            return Some(DecompositionType::Canonical);
         }
-        COMPATIBILITY_DECOMPOSITION_TYPE_TABLE.find(ch).cloned()
+        COMPATIBILITY_DECOMPOSITION_MAPPING.find(ch).map(|it| it.0)
     }
 }
 
@@ -81,7 +74,7 @@ mod tests {
     #[test]
     fn test_bmp() {
         // Compatibility
-        assert_eq!(DT::of('\u{a0}'), Some(DT::Nobreak));
+        assert_eq!(DT::of('\u{a0}'), Some(DT::NoBreak));
         assert_eq!(DT::of('\u{a8}'), Some(DT::Compat));
         assert_eq!(DT::of('\u{aa}'), Some(DT::Super));
         assert_eq!(DT::of('\u{af}'), Some(DT::Compat));

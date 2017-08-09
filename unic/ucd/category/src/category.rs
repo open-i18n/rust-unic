@@ -112,15 +112,16 @@ pub mod abbr_names {
     pub use super::GeneralCategory::PrivateUse as Co;
     pub use super::GeneralCategory::Unassigned as Cn;
 }
+
 use self::abbr_names::*;
 
-const GENERAL_CATEGORY_TABLE: &'static [(char, char, GeneralCategory)] =
-    include!("tables/general_category.rsv");
 
 impl GeneralCategory {
     /// Find the `GeneralCategory` of a single char.
     pub fn of(ch: char) -> GeneralCategory {
-        *GENERAL_CATEGORY_TABLE.find_or(ch, &GeneralCategory::Unassigned)
+        const TABLE: &'static [(char, char, GeneralCategory)] =
+            include!("tables/general_category.rsv");
+        *TABLE.find_or(ch, &GeneralCategory::Unassigned)
     }
 
     /// Exhaustive list of all `GeneralCategory` property values.
