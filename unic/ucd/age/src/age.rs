@@ -11,9 +11,9 @@
 
 use std::fmt;
 
-use unic_utils::CharDataTable;
-
 pub use unic_ucd_core::UnicodeVersion;
+use unic_utils::CharDataTable;
+use unic_utils::char_property::CompleteCharProperty;
 
 
 /// Represents values of the Unicode character property
@@ -40,6 +40,14 @@ pub enum Age {
     /// Unassigned Unicode Code Point (can be assigned in future).
     Unassigned, // Unassigned is older (larger) than any age
 }
+
+
+impl CompleteCharProperty for Age {
+    fn of(ch: char) -> Self {
+        Self::of(ch)
+    }
+}
+
 
 use Age::{Assigned, Unassigned};
 

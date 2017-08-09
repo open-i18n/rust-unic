@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![deny(unsafe_code, missing_docs)]
+#![deny(unsafe_code, missing_docs, unconditional_recursion)]
 
 //! # UNIC — UCD — Category
 //!
@@ -38,6 +38,7 @@
 
 #[macro_use]
 extern crate matches;
+
 extern crate unic_ucd_core;
 extern crate unic_utils;
 

@@ -10,7 +10,7 @@
 // except according to those terms.
 
 
-#![forbid(unsafe_code)]
+#![forbid(unsafe_code, unconditional_recursion)]
 #![deny(missing_docs)]
 
 //! # UNIC — UCD — Character Age

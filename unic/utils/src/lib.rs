@@ -27,6 +27,7 @@ pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
 pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
 
 
+pub mod char_property;
 pub mod codepoints;
 pub mod tables;
 
