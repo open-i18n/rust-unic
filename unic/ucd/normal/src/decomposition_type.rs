@@ -28,24 +28,24 @@ use hangul;
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 #[allow(missing_docs)]
 pub enum DecompositionType {
-    Canonical, // abbreviated: Can
-    Compat,    // abbreviated: Com
-    Circle,    // abbreviated: Enc
-    Final,     // abbreviated: Fin
-    Font,      // abbreviated: Font
-    Fraction,  // abbreviated: Fra
-    Initial,   // abbreviated: Init
-    Isolated,  // abbreviated: Iso
-    Medial,    // abbreviated: Med
-    Narrow,    // abbreviated: Nar
-    Nobreak,   // abbreviated: Nb
-    None,      // abbreviated: None
-    Small,     // abbreviated: Sml
-    Square,    // abbreviated: Sqr
-    Sub,       // abbreviated: Sub
-    Super,     // abbreviated: Sup
-    Vertical,  // abbreviated: Vert
-    Wide,      // abbreviated: Wide
+    Canonical,
+    Compat,
+    Circle,
+    Final,
+    Font,
+    Fraction,
+    Initial,
+    Isolated,
+    Medial,
+    Narrow,
+    Nobreak,
+    None,
+    Small,
+    Square,
+    Sub,
+    Super,
+    Vertical,
+    Wide,
 }
 
 
@@ -60,6 +60,32 @@ impl EnumeratedCharProperty for DecompositionType {
     fn all_values() -> &'static [Self] {
         Self::all_values()
     }
+
+    fn abbr_name(&self) -> &'static str {
+        self.abbr_name()
+    }
+}
+
+
+pub mod abbr_names {
+    pub use DecompositionType::Canonical as Can;
+    pub use DecompositionType::Compat as Com;
+    pub use DecompositionType::Circle as Enc;
+    pub use DecompositionType::Final as Fin;
+    pub use DecompositionType::Font as Font;
+    pub use DecompositionType::Fraction as Fra;
+    pub use DecompositionType::Initial as Init;
+    pub use DecompositionType::Isolated as Iso;
+    pub use DecompositionType::Medial as Med;
+    pub use DecompositionType::Narrow as Nar;
+    pub use DecompositionType::Nobreak as Nb;
+    pub use DecompositionType::None as None;
+    pub use DecompositionType::Small as Sml;
+    pub use DecompositionType::Square as Sqr;
+    pub use DecompositionType::Sub as Sub;
+    pub use DecompositionType::Super as Sup;
+    pub use DecompositionType::Vertical as Vert;
+    pub use DecompositionType::Wide as Wide;
 }
 
 
@@ -104,6 +130,33 @@ impl DecompositionType {
             Wide,
         ];
         ALL_VALUES
+    }
+
+    /// Abbreviated name of the *Decomposition_Type* property value.
+    ///
+    /// <http://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#Decomposition_Type>
+    pub fn abbr_name(&self) -> &'static str {
+        use DecompositionType::*;
+        match *self {
+            Canonical => "Can",
+            Compat => "Com",
+            Circle => "Enc",
+            Final => "Fin",
+            Font => "Font",
+            Fraction => "Fra",
+            Initial => "Init",
+            Isolated => "Iso",
+            Medial => "Med",
+            Narrow => "Nar",
+            Nobreak => "Nb",
+            None => "None",
+            Small => "Sml",
+            Square => "Sqr",
+            Sub => "Sub",
+            Super => "Sup",
+            Vertical => "Vert",
+            Wide => "Wide",
+        }
     }
 
     /// Human-readable description of the property value.
@@ -254,5 +307,11 @@ mod tests {
     #[test]
     fn test_display() {
         assert_eq!(format!("{}", DT::of('\u{a0}').unwrap()), "Nobreak");
+    }
+
+    #[test]
+    fn test_abbr_name() {
+        use super::abbr_names::*;
+        assert_eq!(Can.abbr_name(), "Can");
     }
 }
