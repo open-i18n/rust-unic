@@ -8,7 +8,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use unic_utils::CharDataTable;
+
+use std::fmt;
+
+use unic_utils::{CharDataTable, CharProperty, EnumeratedCharProperty};
+
 
 /// Represents the Unicode Character
 /// [*General_Category*](http://unicode.org/reports/tr44/#General_Category) property.
@@ -16,7 +20,7 @@ use unic_utils::CharDataTable;
 /// This is a useful breakdown into various character types which can be used as a default
 /// categorization in implementations. For the property values, see
 /// [*General_Category Values*](http://unicode.org/reports/tr44/#General_Category_Values).
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub enum GeneralCategory {
     /// An uppercase letter (Short form: `Lu`)
     UppercaseLetter,
@@ -80,6 +84,21 @@ pub enum GeneralCategory {
     Unassigned,
 }
 
+
+impl CharProperty for GeneralCategory {
+    fn of(ch: char) -> Self {
+        Self::of(ch)
+    }
+}
+
+
+impl EnumeratedCharProperty for GeneralCategory {
+    fn all_values() -> &'static [Self] {
+        Self::all_values()
+    }
+}
+
+
 pub mod abbr_names {
     pub use super::GeneralCategory::UppercaseLetter as Lu;
     pub use super::GeneralCategory::LowercaseLetter as Ll;
@@ -112,20 +131,19 @@ pub mod abbr_names {
     pub use super::GeneralCategory::PrivateUse as Co;
     pub use super::GeneralCategory::Unassigned as Cn;
 }
+
 use self::abbr_names::*;
 
-const GENERAL_CATEGORY_TABLE: &'static [(char, char, GeneralCategory)] =
-    include!("tables/general_category.rsv");
 
 impl GeneralCategory {
     /// Find the `GeneralCategory` of a single char.
     pub fn of(ch: char) -> GeneralCategory {
-        *GENERAL_CATEGORY_TABLE.find_or(ch, &GeneralCategory::Unassigned)
+        const TABLE: &'static [(char, char, GeneralCategory)] =
+            include!("tables/general_category.rsv");
+        *TABLE.find_or(ch, &GeneralCategory::Unassigned)
     }
 
     /// Exhaustive list of all `GeneralCategory` property values.
-    ///
-    /// Reference: <http://unicode.org/reports/tr44/#General_Category_Values>
     pub fn all_values() -> &'static [GeneralCategory] {
         use GeneralCategory::*;
         const ALL_VALUES: &[GeneralCategory] = &[
@@ -162,7 +180,15 @@ impl GeneralCategory {
         ];
         ALL_VALUES
     }
+
+    /// Human-readable description of the property value.
+    // TODO: Needs to be improved by returning long-name with underscores replaced by space.
+    #[inline]
+    pub fn display(&self) -> String {
+        format!("{:?}", self).to_owned()
+    }
 }
+
 
 impl GeneralCategory {
     /// `Lu` | `Ll` | `Lt`  (Short form: `LC`)
@@ -205,6 +231,21 @@ impl GeneralCategory {
         matches!(*self, Cc | Cf | Cs | Co | Cn)
     }
 }
+
+
+impl Default for GeneralCategory {
+    fn default() -> Self {
+        GeneralCategory::Unassigned
+    }
+}
+
+
+impl fmt::Display for GeneralCategory {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.display())
+    }
+}
+
 
 #[cfg(test)]
 mod tests {
@@ -303,5 +344,12 @@ mod tests {
             let c = char::from_u32(c).unwrap();
             assert_eq!(GC::of(c), GC::Unassigned);
         }
+    }
+
+    #[test]
+    fn test_display() {
+        //assert_eq!(format!("{}", GC::UppercaseLetter), "Uppercase Letter");
+        assert_eq!(format!("{}", GC::UppercaseLetter), "UppercaseLetter");
+        assert_eq!(format!("{}", GC::Unassigned), "Unassigned");
     }
 }

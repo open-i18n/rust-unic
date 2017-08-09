@@ -12,7 +12,9 @@
 
 //! Accessor for *Decomposition_Type* (dt) property
 
-use unic_utils::CharDataTable;
+use std::fmt;
+
+use unic_utils::{CharDataTable, EnumeratedCharProperty, OptionCharProperty};
 
 use composition::canonical_decomposition;
 use hangul;
@@ -22,7 +24,7 @@ use hangul;
 /// [*Decomposition_Type*](http://www.unicode.org/reports/tr44/#Decomposition_Type) property.
 ///
 /// * <http://www.unicode.org/reports/tr44/#Character_Decomposition_Mappings>
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 #[allow(missing_docs)]
 pub enum DecompositionType {
     Canonical, // abbreviated: Can
@@ -46,7 +48,22 @@ pub enum DecompositionType {
 }
 
 
+impl OptionCharProperty for DecompositionType {
+    fn of(ch: char) -> Option<Self> {
+        Self::of(ch)
+    }
+}
+
+
+impl EnumeratedCharProperty for DecompositionType {
+    fn all_values() -> &'static [Self] {
+        Self::all_values()
+    }
+}
+
+
 use self::DecompositionType::*;
+
 
 impl DecompositionType {
     /// Find the DecompositionType of a single char.
@@ -55,7 +72,48 @@ impl DecompositionType {
         if hangul::is_syllable(ch) || canonical_decomposition(ch).is_some() {
             return Some(Canonical);
         }
-        COMPATIBILITY_DECOMPOSITION_TYPE_TABLE.find(ch).cloned()
+        const TABLE: &'static [(char, char, DecompositionType)] = unimplemented!();
+        TABLE.find(ch).cloned()
+    }
+
+    /// Exhaustive list of all `DecompositionType` property values.
+    pub fn all_values() -> &'static [DecompositionType] {
+        use DecompositionType::*;
+        const ALL_VALUES: &[DecompositionType] = &[
+            Canonical,
+            Compat,
+            Circle,
+            Final,
+            Font,
+            Fraction,
+            Initial,
+            Isolated,
+            Medial,
+            Narrow,
+            Nobreak,
+            None,
+            Small,
+            Square,
+            Sub,
+            Super,
+            Vertical,
+            Wide,
+        ];
+        ALL_VALUES
+    }
+
+    /// Human-readable description of the property value.
+    // TODO: Needs to be improved by returning long-name with underscores replaced by space.
+    #[inline]
+    pub fn display(&self) -> String {
+        format!("{:?}", self).to_owned()
+    }
+}
+
+
+impl fmt::Display for DecompositionType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.display())
     }
 }
 
@@ -187,5 +245,10 @@ mod tests {
         assert_eq!(DT::of('\u{80000}'), None);
         assert_eq!(DT::of('\u{90000}'), None);
         assert_eq!(DT::of('\u{a0000}'), None);
+    }
+
+    #[test]
+    fn test_display() {
+        assert_eq!(format!("{}", DT::of('\u{a0}').unwrap()), "Nobreak");
     }
 }

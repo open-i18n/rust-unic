@@ -14,6 +14,7 @@ use std::fmt;
 use unic_utils::CharDataTable;
 
 pub use unic_ucd_core::UnicodeVersion;
+use unic_utils::CharProperty;
 
 
 /// Represents values of the Unicode character property
@@ -41,14 +42,20 @@ pub enum Age {
     Unassigned, // Unassigned is older (larger) than any age
 }
 
+impl CharProperty for Age {
+    fn of(ch: char) -> Self {
+        Self::of(ch)
+    }
+}
+
 use Age::{Assigned, Unassigned};
 
-pub const AGE_TABLE: &'static [(char, char, Age)] = include!("tables/age_values.rsv");
 
 impl Age {
     /// Find the character *Age* property value.
     pub fn of(ch: char) -> Age {
-        *AGE_TABLE.find_or(ch, &Age::Unassigned)
+        pub const TABLE: &'static [(char, char, Age)] = include!("tables/age_values.rsv");
+        *TABLE.find_or(ch, &Age::Unassigned)
     }
 
     /// Return `Some(unicode_version)`, if code point is assigned (as character or noncharacter,

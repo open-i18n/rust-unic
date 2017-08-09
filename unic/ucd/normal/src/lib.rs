@@ -10,7 +10,7 @@
 // except according to those terms.
 
 
-#![deny(unsafe_code, missing_docs)]
+#![deny(unsafe_code, missing_docs, unconditional_recursion)]
 
 //! # UNIC — UCD — Normalization
 //!

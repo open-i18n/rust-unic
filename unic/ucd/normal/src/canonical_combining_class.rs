@@ -15,7 +15,9 @@
 //! Reference: <http://unicode.org/reports/tr44/#Canonical_Combining_Class_Values>
 
 
-use unic_utils::CharDataTable;
+use std::fmt;
+
+use unic_utils::{CharDataTable, CharProperty, NumericCharProperty};
 
 
 /// Represents *Canonical_Combining_Class* property of a Unicode character.
@@ -23,6 +25,21 @@ use unic_utils::CharDataTable;
 /// * <http://unicode.org/reports/tr44/#Canonical_Combining_Class>
 #[derive(Copy, Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct CanonicalCombiningClass(u8);
+
+
+impl CharProperty for CanonicalCombiningClass {
+    fn of(ch: char) -> Self {
+        Self::of(ch)
+    }
+}
+
+
+impl NumericCharProperty<u8> for CanonicalCombiningClass {
+    /// Get numeric value for character property value
+    fn number(&self) -> u8 {
+        self.number()
+    }
+}
 
 
 // TODO: Once we fully adopt 1.20 change these to associated consts on CanonicalCombiningClass
@@ -82,14 +99,25 @@ pub mod values {
 }
 
 
-const CANONICAL_COMBINING_CLASS_VALUES: &'static [(char, char, CanonicalCombiningClass)] =
-    include!("tables/canonical_combining_class_values.rsv");
-
-
 impl CanonicalCombiningClass {
     /// Find the character *Canonical_Combining_Class* property value.
     pub fn of(ch: char) -> CanonicalCombiningClass {
-        *CANONICAL_COMBINING_CLASS_VALUES.find_or(ch, &CanonicalCombiningClass(0))
+        const TABLE: &'static [(char, char, CanonicalCombiningClass)] =
+            include!("tables/canonical_combining_class_values.rsv");
+        *TABLE.find_or(ch, &CanonicalCombiningClass(0))
+    }
+
+    /// Human-readable description of the property value.
+    // TODO: Needs to be improved by returning long-name with underscores replaced by space.
+    #[inline]
+    pub fn display(&self) -> String {
+        format!("{}", self.number())
+    }
+}
+
+impl fmt::Display for CanonicalCombiningClass {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.display())
     }
 }
 
@@ -225,5 +253,11 @@ mod tests {
         assert_eq!(CCC::of('\u{0300}').number(), 230);
         assert_eq!(CCC::of('\u{0315}').number(), 232);
         assert_eq!(CCC::of('\u{1e94a}').number(), 7);
+    }
+
+    #[test]
+    fn test_display() {
+        assert_eq!(format!("{}", CCC::of('\u{0000}')), "0");
+        assert_eq!(format!("{}", CCC::of('\u{0300}')), "230");
     }
 }

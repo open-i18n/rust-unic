@@ -36,11 +36,9 @@ const CANONICAL_COMPOSITION_MAPPING: &'static [(char, &'static [(char, char)])] 
 
 /// Canonical Composition of the character.
 pub fn canonical_composition(c: char) -> Option<&'static ([(char, char)])> {
-    bsearch_lookup_table(
-        c,
-        CANONICAL_COMPOSITION_LOOKUP,
-        CANONICAL_COMPOSITION_VALUES,
-    )
+    const LOOKUP: &'static [(char, Slice)] = unimplemented!();
+    const VALUES: &'static [(char, char)] = unimplemented!();
+    bsearch_lookup_table(c, LOOKUP, VALUES)
 }
 
 // == Canonical Decomposition (D) ==
@@ -49,11 +47,9 @@ const CANONICAL_DECOMPOSITION_MAPPING: &'static [(char, &'static [char])] =
 
 /// Canonical Decomposition of the character.
 pub fn canonical_decomposition(c: char) -> Option<&'static [char]> {
-    bsearch_lookup_table(
-        c,
-        CANONICAL_DECOMPOSITION_LOOKUP,
-        CANONICAL_DECOMPOSITION_VALUES,
-    )
+    const LOOKUP: &'static [(char, Slice)] = unimplemented!();
+    const VALUES: &'static [char] = unimplemented!();
+    bsearch_lookup_table(c, LOOKUP, VALUES)
 }
 
 // == Compatibility Decomposition (KD) ==
@@ -62,9 +58,7 @@ const COMPATIBILITY_DECOMPOSITION_MAPPING: &'static [(char, (&'static str, &'sta
 
 /// Compatibility Decomposition of the character.
 pub fn compatibility_decomposition(c: char) -> Option<&'static [char]> {
-    bsearch_lookup_table(
-        c,
-        COMPATIBILITY_DECOMPOSITION_LOOKUP,
-        COMPATIBILITY_DECOMPOSITION_VALUES,
-    )
+    const LOOKUP: &'static [(char, Slice)] = unimplemented!();
+    const VALUES: &'static [char] = unimplemented!();
+    bsearch_lookup_table(c, LOOKUP, VALUES)
 }
