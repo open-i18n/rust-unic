@@ -8,13 +8,16 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+
 mod shared;
 
 mod age;
 mod bidi;
 mod category;
 mod core;
+mod name;
 mod normal;
+
 
 use std::{fs, io};
 use std::path::Path;
@@ -22,12 +25,18 @@ use std::path::Path;
 pub use self::shared::unicode_data::{UnicodeData, UnicodeDataEntry};
 pub use self::shared::version::UnicodeVersion;
 
+
 /// Generate all tables for the UCD component
 pub fn generate() -> io::Result<()> {
     println!(">>> Loading UCD Version");
     let ucd_version = shared::version::read_unicode_version()?;
     println!(">>> Loading UCD UnicodeData");
     let unicode_data = shared::unicode_data::read_unicode_data()?;
+
+    let path = Path::new("unic/ucd/core/src/tables");
+    let _ = fs::remove_dir_all(path);
+    fs::create_dir_all(path)?;
+    core::generate(path, &ucd_version, &unicode_data)?;
 
     let path = Path::new("unic/ucd/age/src/tables");
     let _ = fs::remove_dir_all(path);
@@ -44,10 +53,10 @@ pub fn generate() -> io::Result<()> {
     fs::create_dir_all(path)?;
     category::generate(path, &ucd_version, &unicode_data)?;
 
-    let path = Path::new("unic/ucd/core/src/tables");
+    let path = Path::new("unic/ucd/name/src/tables");
     let _ = fs::remove_dir_all(path);
     fs::create_dir_all(path)?;
-    core::generate(path, &ucd_version, &unicode_data)?;
+    name::generate(path, &ucd_version, &unicode_data)?;
 
     let path = Path::new("unic/ucd/normal/src/tables");
     let _ = fs::remove_dir_all(path);
