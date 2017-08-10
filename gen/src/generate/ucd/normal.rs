@@ -233,7 +233,6 @@ pub fn generate<P: AsRef<Path>>(
     println!("> unic::ucd::normal::tables::canonical_composition_mapping");
     CanonicalCompositionData::from(&decomposition).emit(&dir)?;
     println!("> unic::ucd::normal::tables::compatibility_decomposition_mapping");
-    CompatibilityDecompositionData::from(data.iter())
-        .emit(&dir)?;
+    CompatibilityDecompositionData::from(data.iter()).emit(&dir)?;
     Ok(())
 }

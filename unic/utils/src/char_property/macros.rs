@@ -340,7 +340,9 @@ macro_rules! __char_property_internal {
             fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
                 match *self {
                     $( $name::$display_variant => write!(f, "{}", $display), )*
-                    $( $name::$long_variant => write!(f, "{}", stringify!($long).replace('_', " ")), )*
+                    $( $name::$long_variant
+                        => write!(f, "{}", stringify!($long).replace('_', " ")),
+                     )*
                     _ => write!(f, "{}", match *self {
                         $( $name::$abbr_variant => stringify!($abbr), )*
                         $( $name::$variant => stringify!($variant), )*
