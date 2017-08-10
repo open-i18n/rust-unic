@@ -9,6 +9,11 @@ rust:
   - stable
   - 1.17.0
 
+branches:
+  except:
+    - staging.tmp
+    - trying.tmp
+
 matrix:
   fast_finish: true
 

@@ -8,6 +8,11 @@ install:
 
 build: false
 
+branches:
+  except:
+    - staging.tmp
+    - trying.tmp
+
 environment:
   global:
     RUST_BACKTRACE: full
