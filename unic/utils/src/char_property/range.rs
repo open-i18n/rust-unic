@@ -9,50 +9,13 @@
 // except according to those terms.
 
 
-//! Taxonomy and Contracts for Character Property types.
-//!
-//! See also the list of types of character properties defined in the UCD:
-//! <http://unicode.org/reports/tr44/#About_Property_Table>, in [Unicode® Standard Annex #44 —
-//! Unicode Character Database](http://unicode.org/reports/tr44/#About_Property_Table)
+//! Taxonomy and contracts for character property types: property range.
 
 
-use std::fmt::{Debug, Display};
-use std::hash::Hash;
+use super::PartialCharProperty;
 
 
-// == Property Domain ==
-
-/// A Character Property defined for some characters.
-///
-/// Examples: *Decomposition_Type*, *Numeric_Type*
-pub trait PartialCharProperty: Copy + Debug + Display + Eq + Hash {
-    /// Find the character property value, or None.
-    fn of(ch: char) -> Option<Self>;
-}
-
-
-/// A Character Property defined on all characters.
-///
-/// Examples: *Age*, *Name*, *General_Category*, *Bidi_Class*
-// Because of rustc bug, we cannot rely on inheritance for the moment.
-// See: <https://github.com/rust-lang/rust/issues/43777>
-//pub trait CompleteCharProperty: PartialCharProperty + Default {
-pub trait CompleteCharProperty
-    : PartialCharProperty + Copy + Debug + Display + Eq + Hash + Default {
-    /// Find the character property value.
-    fn of(ch: char) -> Self;
-}
-
-impl<T: CompleteCharProperty> PartialCharProperty for T {
-    fn of(ch: char) -> Option<Self> {
-        Some(<Self as CompleteCharProperty>::of(ch))
-    }
-}
-
-
-// == Property Range ==
-
-// === Enumerated/Catalog Types ===
+// == Enumerated/Catalog Types ==
 
 /// A Character Property with enumerated values.
 ///
@@ -70,7 +33,7 @@ pub trait EnumeratedCharProperty: Sized + PartialCharProperty {
 }
 
 
-// === Numeric Types ===
+// == Numeric Types ==
 
 /// Marker for numeric types accepted by `NumericCharProperty`.
 pub trait NumericCharPropertyValue {}

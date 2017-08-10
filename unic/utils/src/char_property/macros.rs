@@ -1,13 +1,26 @@
+// Copyright 2017 The UNIC Project Developers.
+//
+// See the COPYRIGHT file at the top-level directory of this distribution.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+
 /// Macro for declaring a character property.
 ///
 /// # Syntax (Enumerated Property)
 ///
 /// ```
-/// # #[macro_use] extern crate unic_utils;
-/// # fn main() {}
+/// #[macro_use]
+/// extern crate unic_utils;
+///
+/// // First we define the type itself.
 /// char_property! {
-///     /// Zero or more attributes
-///     pub enum PropertyName {
+///     /// This is the enum type created for the character property.
+///     pub enum MyProp {
 ///         /// Exactly one attribute
 ///         RustName {
 ///             abbr => AbbrName,
@@ -21,17 +34,19 @@
 ///         }
 ///     }
 ///
-///     /// Zero or more attributes
+///     /// Module aliasing property value abbreviated names.
 ///     pub mod abbr_names for abbr;
 ///
-///     /// Zero or more attributes
+///     /// Module aliasing property value long names.
 ///     pub mod long_names for long;
 /// }
 ///
-/// // You must impl (Partial/Complete)CharProperty manually.
-/// # impl unic_utils::char_property::PartialCharProperty for PropertyName {
+/// // We also need to impl `PartialCharProperty` or `CompleteCharProperty` manually.
+/// # impl unic_utils::char_property::PartialCharProperty for MyProp {
 /// #     fn of(_: char) -> Option<Self> { None }
 /// # }
+/// #
+/// # fn main() {}
 /// ```
 ///
 /// # Effect
@@ -49,16 +64,18 @@
 ///
 /// Due to [rust-lang/rust/#24189](https://github.com/rust-lang/rust/issues/24189), (fixed in
 /// [rust-lang/rust/#42913](https://github.com/rust-lang/rust/pull/42913), landing in 1.20),
-/// exactly one attribute line must be used on each variant. On 1.20 or higher, one or more may
-/// be used, and the restriction can be relaxed back the intended zero or more by replacing
-/// `$(#[$variant_meta:meta])+` with `$(#[$variant_meta:meta])*`, and
-/// `$(#[$variant_meta])+` with `$(#[$variant_meta])*`, and
-/// `$(#[$ident_meta:meta])+` with `$(#[$ident_meta:meta])*` and
-/// `$(#[$ident_meta])+` with `$(#[$ident_meta])*`, and
-/// `$(#[$rest_meta:meta])+` with `$(#[$rest_meta:meta])*`, and
-/// `$(#[$rest_meta])+` with `$(#[$rest_meta])*`, and
-/// `$(#[$queue_meta:meta])+` with `$(#[$queue_meta:meta])*`, and
-/// `$(#[$queue_meta])+` with `$(#[$queue_meta])*`
+/// exactly one attribute line must be used on each variant.
+///
+/// On 1.20 or higher, one or more may be used, and the restriction can be relaxed back the intended
+/// zero or more by replacing
+/// - `$(#[$variant_meta:meta])+` with `$(#[$variant_meta:meta])*`,
+/// - `$(#[$variant_meta])+` with `$(#[$variant_meta])*`,
+/// - `$(#[$ident_meta:meta])+` with `$(#[$ident_meta:meta])*`
+/// - `$(#[$ident_meta])+` with `$(#[$ident_meta])*`,
+/// - `$(#[$rest_meta:meta])+` with `$(#[$rest_meta:meta])*`,
+/// - `$(#[$rest_meta])+` with `$(#[$rest_meta])*`,
+/// - `$(#[$queue_meta:meta])+` with `$(#[$queue_meta:meta])*`, and
+/// - `$(#[$queue_meta])+` with `$(#[$queue_meta])*`.
 // TODO: Once adopting 1.20, fix the macro to work with zero attributes on variants (see above)
 #[macro_export]
 macro_rules! char_property {
@@ -85,6 +102,7 @@ macro_rules! char_property {
         }
     };
 }
+
 
 #[macro_export]
 macro_rules! __char_property_internal {
