@@ -17,7 +17,7 @@ char_property! {
         /// Required
         DisplayVariant {
             abbr => DV,
-            display => "The one and only DISPLAY VARIANT!!!11!",
+            display => "The one and only DISPLAY VARIANT!",
         }
         /// Required
         EmptyVariant {
@@ -25,8 +25,8 @@ char_property! {
         }
     }
 
-    pub mod abbr_names;
-    pub mod long_names;
+    pub mod abbr_names for abbr;
+    pub mod long_names for long;
 }
 
 impl unic_utils::char_property::PartialCharProperty for Property {
@@ -51,6 +51,6 @@ fn basic_macro_use() {
 
     assert_eq!(format!("{}", Property::AbbrVariant), "AV");
     assert_eq!(format!("{}", Property::LongVariant), "Long Variant");
-    assert_eq!(format!("{}", Property::DisplayVariant), "The one and only DISPLAY VARIANT!!!11!");
+    assert_eq!(format!("{}", Property::DisplayVariant), "The one and only DISPLAY VARIANT!");
     assert_eq!(format!("{}", Property::EmptyVariant), "EV");
 }

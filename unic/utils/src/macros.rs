@@ -22,10 +22,10 @@
 ///     }
 ///
 ///     /// Zero or more attributes
-///     pub mod abbr_names;
+///     pub mod abbr_names for abbr;
 ///
 ///     /// Zero or more attributes
-///     pub mod long_names;
+///     pub mod long_names for long;
 /// }
 ///
 /// // You must impl (Partial/Complete)CharProperty manually.
@@ -67,8 +67,8 @@ macro_rules! char_property {
             $( $(#[$variant_meta:meta])+ $variant:ident $tt:tt )*
         }
 
-        $(#[$abbr_names_meta:meta])* pub mod $abbr_names:ident;
-        $(#[$long_names_meta:meta])* pub mod $long_names:ident;
+        $(#[$abbr_names_meta:meta])* pub mod $abbr_names:ident for abbr;
+        $(#[$long_names_meta:meta])* pub mod $long_names:ident for long;
     ) => {
         __char_property_internal! {
             $(#[$name_meta])* pub enum $name
@@ -320,7 +320,6 @@ macro_rules! __char_property_internal {
         }
 
         #[allow(bad_style)]
-        #[allow(unreachable_patterns)]
         impl $crate::char_property::EnumeratedCharProperty for $name {
             fn abbr_name(&self) -> &'static str {
                 match *self {
