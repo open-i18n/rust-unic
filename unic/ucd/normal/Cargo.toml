@@ -11,9 +11,6 @@ categories = ["text-processing", "parsing", "rendering"]
 # No tests/benches that depends on /data/
 exclude = ["tests/conformance_tests.rs"]
 
-[features]
-default = []
-
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
@@ -25,3 +22,7 @@ unic-utils = { path = "../../utils/", version = "0.5.0" }
 [dev-dependencies]
 unic-utils = { path = "../../utils", version = "0.5.0" }
 unic-ucd-category = { path = "../category/", version = "0.5.0" }
+
+[features]
+default = []
+use-ucd-category = ["unic-ucd-category"]

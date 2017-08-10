@@ -9,7 +9,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#[cfg(not(feature = "unic-ucd-category"))]
+#[cfg(not(feature = "use-ucd-category"))]
 mod mark {
     use unic_utils::CharDataTable;
 
@@ -22,9 +22,10 @@ mod mark {
     }
 }
 
-#[cfg(feature = "unic-ucd-category")]
+#[cfg(feature = "use-ucd-category")]
 mod mark {
     extern crate unic_ucd_category;
+
     use self::unic_ucd_category::GeneralCategory;
 
     /// Return whether the given character is a combining mark (`General_Category=Mark`)
