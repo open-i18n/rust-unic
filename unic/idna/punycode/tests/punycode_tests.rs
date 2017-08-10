@@ -10,8 +10,8 @@
 // except according to those terms.
 
 
-extern crate unic_idna_punycode;
 extern crate rustc_serialize;
+extern crate unic_idna_punycode;
 
 
 use unic_idna_punycode::{decode, encode_str};

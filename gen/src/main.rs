@@ -17,9 +17,9 @@ extern crate futures;
 extern crate hyper;
 extern crate tokio_core;
 
+extern crate serde;
 #[macro_use]
 extern crate serde_derive;
-extern crate serde;
 extern crate toml;
 
 #[macro_use]

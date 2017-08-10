@@ -19,11 +19,11 @@
 //! Standard Annex #44 - Unicode Character Database](http://unicode.org/reports/tr44/).
 
 
-pub extern crate unic_ucd_core as core;
 pub extern crate unic_ucd_age as age;
 pub extern crate unic_ucd_bidi as bidi;
-pub extern crate unic_ucd_normal as normal;
 pub extern crate unic_ucd_category as category;
+pub extern crate unic_ucd_core as core;
+pub extern crate unic_ucd_normal as normal;
 
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data

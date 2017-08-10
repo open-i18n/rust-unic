@@ -66,7 +66,10 @@ fn basic_macro_use() {
 
     assert_eq!(format!("{}", MyProp::AbbrVariant), "AV");
     assert_eq!(format!("{}", MyProp::LongVariant), "Long Variant");
-    assert_eq!(format!("{}", MyProp::DisplayVariant), "The one and only DISPLAY VARIANT!");
+    assert_eq!(
+        format!("{}", MyProp::DisplayVariant),
+        "The one and only DISPLAY VARIANT!"
+    );
     assert_eq!(format!("{}", MyProp::EmptyVariant), "EV");
 }
 
