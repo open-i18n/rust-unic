@@ -34,7 +34,11 @@ pub trait PartialCharProperty: Copy + Debug + Display + Eq + Hash {
 /// A Character Property defined on all characters.
 ///
 /// Examples: *Age*, *Name*, *General_Category*, *Bidi_Class*
-pub trait CompleteCharProperty: PartialCharProperty + Default {
+// Because of rustc bug, we cannot rely on inheritance for the moment.
+// See: <https://github.com/rust-lang/rust/issues/43777>
+//pub trait CompleteCharProperty: PartialCharProperty + Default {
+pub trait CompleteCharProperty
+    : PartialCharProperty + Copy + Debug + Display + Eq + Hash + Default {
     /// Find the character property value.
     fn of(ch: char) -> Self;
 }

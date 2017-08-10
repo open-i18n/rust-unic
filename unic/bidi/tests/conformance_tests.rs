@@ -242,7 +242,9 @@ fn gen_base_level_for_characters_tests(idx: usize) -> Option<Level> {
 fn get_sample_string_from_bidi_classes(class_names: &[&str]) -> String {
     class_names
         .iter()
-        .map(|bidi_class_abbr| gen_char_from_bidi_class_abbr(bidi_class_abbr))
+        .map(|bidi_class_abbr| {
+            gen_char_from_bidi_class_abbr(bidi_class_abbr)
+        })
         .collect()
 }
 
