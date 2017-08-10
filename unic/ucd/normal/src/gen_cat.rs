@@ -18,7 +18,7 @@ mod mark {
 
     /// Return whether the given character is a combining mark (`General_Category=Mark`)
     pub fn is_combining_mark(c: char) -> bool {
-        GENERAL_CATEGORY_MARK.find(c).is_some()
+        CharDataTable::<()>::find(&GENERAL_CATEGORY_MARK, c).is_some()
     }
 }
 
