@@ -98,7 +98,6 @@ pub mod abbr_names {
     pub use BidiClass::RightToLeftOverride as RLO;
     pub use BidiClass::SegmentSeparator as S;
     pub use BidiClass::WhiteSpace as WS;
-    // [UNIC_UPDATE_ON_UNICODE_UPDATE] Source: `tables/bidi_class_type.rsv`
 }
 
 
@@ -106,7 +105,6 @@ use self::abbr_names::*;
 
 const BIDI_CLASS_TABLE: &'static [(char, char, BidiClass)] =
     include!("tables/bidi_class_values.rsv");
-
 
 /// Represents **Category** of Unicode character `Bidi_Class` property, as demostrated under "Table
 /// 4. Bidirectional Character Types".
@@ -165,7 +163,6 @@ impl BidiClass {
         ];
         ALL_VALUES
     }
-
     /// Abbreviated name of the *Bidi_Class* property value.
     ///
     /// <http://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#Bidi_Class>

@@ -17,7 +17,7 @@ use std::fmt;
 use unic_utils::CharDataTable;
 use unic_utils::char_property::{EnumeratedCharProperty, PartialCharProperty};
 
-use composition::canonical_decomposition;
+use composition::{canonical_decomposition, COMPATIBILITY_DECOMPOSITION_MAPPING};
 use hangul;
 
 
@@ -91,10 +91,6 @@ pub mod abbr_names {
 
 use self::DecompositionType::*;
 
-// TODO: Maybe merge this table with compatibility_decomposition_mapping ones
-const COMPATIBILITY_DECOMPOSITION_TYPE_TABLE: &'static [(char, char, DecompositionType)] =
-    include!("tables/compatibility_decomposition_type_values.rsv");
-
 
 impl DecompositionType {
     /// Find the DecompositionType of a single char.
@@ -103,7 +99,7 @@ impl DecompositionType {
         if hangul::is_syllable(ch) || canonical_decomposition(ch).is_some() {
             return Some(Canonical);
         }
-        COMPATIBILITY_DECOMPOSITION_TYPE_TABLE.find(ch).cloned()
+        COMPATIBILITY_DECOMPOSITION_MAPPING.find(ch).map(|it| it.0)
     }
 
     /// Exhaustive list of all `DecompositionType` property values.

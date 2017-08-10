@@ -18,6 +18,7 @@ use super::{UnicodeData, UnicodeDataEntry, UnicodeVersion};
 
 use generate::PREAMBLE;
 use generate::char_property::{ToBSearchSet, ToRangeBSearchMap, ToSingleBSearchMap};
+use generate::capitalize;
 
 struct GeneralCategoryMarkData(BTreeSet<char>);
 
@@ -166,6 +167,10 @@ impl<'a, 'b> From<&'a CanonicalDecompositionData<'b>> for CanonicalCompositionDa
                 .push((follow, composed));
         }
 
+        for value in map.values_mut() {
+            value.sort_by_key(|it| it.0)
+        }
+
         CanonicalCompositionData(map)
     }
 }
@@ -180,7 +185,7 @@ impl<'a> CompatibilityDecompositionData<'a> {
             "{}\n{}",
             PREAMBLE,
             self.0.to_single_bsearch_map(|val, f| {
-                write!(f, "(\"{}\", &[", val.0)?;
+                write!(f, "({}, &[", capitalize(&val.0.to_lowercase()))?;
                 for char in val.1.iter() {
                     write!(f, "'{}',", char.escape_unicode()).unwrap();
                 }
