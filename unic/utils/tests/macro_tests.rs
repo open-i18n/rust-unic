@@ -54,3 +54,12 @@ fn basic_macro_use() {
     assert_eq!(format!("{}", Property::DisplayVariant), "The one and only DISPLAY VARIANT!");
     assert_eq!(format!("{}", Property::EmptyVariant), "EV");
 }
+
+#[test]
+fn fromstr_ignores_case() {
+    use abbr_names::LV;
+    assert_eq!("long_variant".parse(), Ok(LV));
+    assert_eq!("lOnG_vArIaNt".parse(), Ok(LV));
+    assert_eq!("LoNg_VaRiAnT".parse(), Ok(LV));
+    assert_eq!("LONG_VARIANT".parse(), Ok(LV));
+}

@@ -299,6 +299,18 @@ macro_rules! __char_property_internal {
                     $( stringify!($variant) => Ok($name::$variant), )*
                     $( stringify!($abbr) => Ok($name::$abbr_variant), )*
                     $( stringify!($long) => Ok($name::$long_variant), )*
+                    $( str
+                        if ::std::ascii::AsciiExt::eq_ignore_ascii_case(str, stringify!($variant))
+                        => Ok($name::$variant),
+                     )*
+                    $( str
+                        if ::std::ascii::AsciiExt::eq_ignore_ascii_case(str, stringify!($abbr))
+                        => Ok($name::$abbr_variant),
+                     )*
+                    $( str
+                        if ::std::ascii::AsciiExt::eq_ignore_ascii_case(str, stringify!($long))
+                        => Ok($name::$long_variant),
+                     )*
                     _ => Err(()),
                 }
             }
