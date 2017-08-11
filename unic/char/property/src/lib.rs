@@ -10,8 +10,7 @@
 // except according to those terms.
 
 
-#![forbid(unsafe_code, unconditional_recursion)]
-#![deny(missing_docs)]
+#![forbid(unsafe_code, unconditional_recursion, missing_docs)]
 
 //! # UNIC — UCD — Character Age
 //!
@@ -22,19 +21,21 @@
 //!
 //! * <http://www.unicode.org/reports/tr44/#Character_Age>
 
-extern crate unic_char_property;
-extern crate unic_ucd_core;
-extern crate unic_utils;
+
+/// UNIC component version.
+pub const PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");
+
+/// UNIC component name.
+pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
+
+/// UNIC component description.
+pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
 
 
-mod age;
-mod traits;
-
-pub use unic_ucd_core::UnicodeVersion;
-
-pub use age::Age;
-pub use traits::CharAge;
+mod domain;
+mod range;
+mod macros;
 
 
-/// The [Unicode version](http://www.unicode.org/versions/) of data
-pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv");
+pub use self::domain::{CompleteCharProperty, PartialCharProperty};
+pub use self::range::{EnumeratedCharProperty, NumericCharProperty, NumericCharPropertyValue};

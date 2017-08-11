@@ -12,7 +12,7 @@
 use std::fmt;
 
 use unic_utils::CharDataTable;
-use unic_utils::char_property::{CompleteCharProperty, EnumeratedCharProperty};
+use unic_char_property::{CompleteCharProperty, EnumeratedCharProperty};
 
 
 /// Represents the Unicode Character

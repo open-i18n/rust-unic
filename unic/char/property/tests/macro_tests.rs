@@ -10,10 +10,10 @@
 
 
 #[macro_use]
-extern crate unic_utils;
+extern crate unic_char_property;
 
 
-use unic_utils::char_property::EnumeratedCharProperty;
+use unic_char_property::EnumeratedCharProperty;
 
 
 char_property! {
@@ -43,7 +43,7 @@ char_property! {
 }
 
 
-impl unic_utils::char_property::PartialCharProperty for MyProp {
+impl unic_char_property::PartialCharProperty for MyProp {
     fn of(_: char) -> Option<Self> {
         None
     }

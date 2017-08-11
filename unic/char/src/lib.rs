@@ -17,6 +17,9 @@
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
 
 
+pub extern crate unic_char_property as property;
+
+
 /// UNIC component version.
 pub const PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
@@ -25,11 +28,3 @@ pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
 
 /// UNIC component description.
 pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
-
-
-pub mod codepoints;
-pub mod tables;
-
-
-pub use codepoints::iter_all_chars;
-pub use tables::CharDataTable;

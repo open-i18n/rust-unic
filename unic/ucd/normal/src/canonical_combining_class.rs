@@ -18,7 +18,7 @@
 use std::fmt;
 
 use unic_utils::CharDataTable;
-use unic_utils::char_property::{CompleteCharProperty, NumericCharProperty};
+use unic_char_property::{CompleteCharProperty, NumericCharProperty};
 
 
 /// Represents *Canonical_Combining_Class* property of a Unicode character.

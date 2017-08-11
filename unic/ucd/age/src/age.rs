@@ -13,7 +13,7 @@ use std::fmt;
 
 pub use unic_ucd_core::UnicodeVersion;
 use unic_utils::CharDataTable;
-use unic_utils::char_property::CompleteCharProperty;
+use unic_char_property::CompleteCharProperty;
 
 
 /// Represents values of the Unicode character property

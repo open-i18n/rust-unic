@@ -1,0 +1,18 @@
+[package]
+name = "unic-char"
+version = "0.5.0"
+authors = ["The UNIC Project Developers"]
+repository = "https://github.com/behnam/rust-unic/"
+license = "MIT/Apache-2.0"
+keywords = ["text", "unicode", "utilities"]
+description = "UNIC - Unicode Characters"
+categories = ["text-processing", "parsing"]
+
+# No tests/benches that depends on /data/
+exclude = []
+
+[badges]
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }
+
+[dependencies]
+unic-char-property = { path = "property/", version = "0.5.0" }
