@@ -34,7 +34,7 @@ extern crate unic_utils;
 
 pub mod canonical_combining_class;
 mod composition;
-mod decompose;
+mod decomposition;
 mod gen_cat;
 mod hangul;
 mod decomposition_type;
@@ -43,7 +43,7 @@ mod decomposition_type;
 pub use canonical_combining_class::CanonicalCombiningClass;
 pub use composition::{canonical_composition, canonical_decomposition, compatibility_decomposition};
 pub use gen_cat::is_combining_mark;
-pub use decompose::{decompose_canonical, decompose_compatible};
+pub use decomposition::{decompose_canonical, decompose_compatible};
 pub use decomposition_type::DecompositionType;
 
 use unic_ucd_core::UnicodeVersion;

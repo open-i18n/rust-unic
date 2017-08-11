@@ -49,12 +49,10 @@ pub fn generate() -> io::Result<()> {
     fs::create_dir_all(path)?;
     core::generate(path, &ucd_version, &unicode_data)?;
 
-    // let path = Path::new("unic/ucd/normal/src/tables");
-    // let _ = fs::remove_dir_all(path);
-    // fs::create_dir_all(path)?;
-    // normal::generate(path, &ucd_version, &unicode_data)?;
-    use std::io::Write;
-    writeln!(::std::io::stderr(), "Use Python generation for ucd/normal")?;
+    let path = Path::new("unic/ucd/normal/src/tables");
+    let _ = fs::remove_dir_all(path);
+    fs::create_dir_all(path)?;
+    normal::generate(path, &ucd_version, &unicode_data)?;
 
     Ok(())
 }
