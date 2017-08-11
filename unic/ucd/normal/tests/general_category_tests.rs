@@ -9,6 +9,10 @@
 // except according to those terms.
 
 
+// Run these tests only if using local GC=Mark implementation
+#![cfg(not(feature = "unic-ucd-category"))]
+
+
 extern crate unic_ucd_category;
 extern crate unic_ucd_normal;
 extern crate unic_utils;
@@ -25,7 +29,7 @@ use self::unic_utils::iter_all_chars;
 /// Since `unic-ucd-category` feature is not enabled, `is_combining_mark` resolves to the local
 /// implementation.
 #[test]
-fn test_gen_cat_against_normal() {
+fn test_local_is_mark_against_ucd_category() {
     for cp in iter_all_chars() {
         assert_eq!(GC::of(cp).is_mark(), is_combining_mark(cp));
     }

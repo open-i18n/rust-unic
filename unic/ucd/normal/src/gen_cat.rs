@@ -9,7 +9,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#[cfg(not(feature = "use-ucd-category"))]
+#[cfg(not(feature = "unic-ucd-category"))]
 mod mark {
     use unic_utils::CharDataTable;
 
@@ -22,7 +22,7 @@ mod mark {
     }
 }
 
-#[cfg(feature = "use-ucd-category")]
+#[cfg(feature = "unic-ucd-category")]
 mod mark {
     extern crate unic_ucd_category;
 
