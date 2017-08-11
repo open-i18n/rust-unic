@@ -15,12 +15,12 @@ exclude = ["tests/conformance_tests.rs"]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
 [dependencies]
-unic-ucd-core = { path = "../core/", version = "0.5.0" }
+unic-char-property = { path = "../../char/property/", version = "0.5.0" }
 unic-ucd-category = { path = "../category/", version = "0.5.0", optional = true }
+unic-ucd-core = { path = "../core/", version = "0.5.0" }
 unic-utils = { path = "../../utils/", version = "0.5.0" }
 
 [dev-dependencies]
-unic-utils = { path = "../../utils", version = "0.5.0" }
 unic-ucd-category = { path = "../category/", version = "0.5.0" }
 
 [features]

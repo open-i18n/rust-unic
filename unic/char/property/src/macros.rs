@@ -15,7 +15,7 @@
 ///
 /// ```
 /// #[macro_use]
-/// extern crate unic_utils;
+/// extern crate unic_char_property;
 ///
 /// // First we define the type itself.
 /// char_property! {
@@ -42,7 +42,7 @@
 /// }
 ///
 /// // We also need to impl `PartialCharProperty` or `CompleteCharProperty` manually.
-/// # impl unic_utils::char_property::PartialCharProperty for MyProp {
+/// # impl unic_char_property::PartialCharProperty for MyProp {
 /// #     fn of(_: char) -> Option<Self> { None }
 /// # }
 /// #
@@ -352,7 +352,7 @@ macro_rules! __char_property_internal {
         }
 
         #[allow(bad_style)]
-        impl $crate::char_property::EnumeratedCharProperty for $name {
+        impl $crate::EnumeratedCharProperty for $name {
             fn abbr_name(&self) -> &'static str {
                 match *self {
                     $( $name::$abbr_variant => stringify!($abbr), )*

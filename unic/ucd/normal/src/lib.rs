@@ -28,6 +28,7 @@
 //! }
 //! ```
 
+extern crate unic_char_property;
 extern crate unic_ucd_core;
 extern crate unic_utils;
 

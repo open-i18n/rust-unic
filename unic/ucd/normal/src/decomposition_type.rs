@@ -15,7 +15,7 @@
 use std::fmt;
 
 use unic_utils::CharDataTable;
-use unic_utils::char_property::{EnumeratedCharProperty, PartialCharProperty};
+use unic_char_property::{EnumeratedCharProperty, PartialCharProperty};
 
 use composition::{canonical_decomposition, COMPATIBILITY_DECOMPOSITION_MAPPING};
 use hangul;

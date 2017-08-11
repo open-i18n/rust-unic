@@ -20,11 +20,12 @@ serde = ["unic-bidi/serde"]
 
 [dependencies]
 unic-bidi = { path = "bidi/", version = "0.5.0" }
+unic-char = { path = "char/", version = "0.5.0" }
 unic-idna = { path = "idna/", version = "0.5.0" }
 unic-normal = { path = "normal/", version = "0.5.0" }
 unic-ucd = { path = "ucd/", version = "0.5.0" }
 unic-utils = { path = "utils/", version = "0.5.0" }
 
 [badges]
-travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 appveyor = { repository = "behnam/rust-unic", branch = "master", service = "github" }
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }
