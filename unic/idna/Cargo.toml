@@ -23,3 +23,7 @@ unic-normal = { path = "../normal/", version = "0.5.0" }
 unic-ucd-bidi = { path = "../ucd/bidi/", version = "0.5.0" }
 unic-ucd-core = { path = "../ucd/core/", version = "0.5.0" }
 unic-ucd-normal = { path = "../ucd/normal/", version = "0.5.0" }
+
+[features]
+default = []
+unic-ucd-category = ["unic-ucd-normal/unic-ucd-category"]
