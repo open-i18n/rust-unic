@@ -11,14 +11,17 @@
 use std::char;
 use std::collections::{BTreeMap, BTreeSet};
 use std::fs::File;
-use std::io::{self, Write};
+use std::io::{self, Read, Write};
 use std::path::Path;
+use std::str::FromStr;
 
 use super::{UnicodeData, UnicodeDataEntry, UnicodeVersion};
 
 use generate::PREAMBLE;
 use generate::char_property::{ToBSearchSet, ToRangeBSearchMap, ToSingleBSearchMap};
 use generate::capitalize;
+
+use regex::Regex;
 
 struct GeneralCategoryMarkData(BTreeSet<char>);
 
@@ -125,6 +128,46 @@ where
     }
 }
 
+struct CompositionExclusions(BTreeSet<char>);
+
+impl CompositionExclusions {
+    fn contains(&self, ch: char) -> bool {
+        self.0.contains(&ch)
+    }
+}
+
+impl FromStr for CompositionExclusions {
+    type Err = ();
+
+    fn from_str(str: &str) -> Result<Self, Self::Err> {
+        lazy_static! {
+            static ref REGEX: Regex = Regex::new(
+                r"(?xm)^
+                  ([[:xdigit:]]{4,6})
+                  (?:\.\.([[:xdigit:]]{4,6}))?
+                  [[:space:]]*;
+                  \x20Full_Composition_Exclusion\x20
+                \#",
+            ).unwrap();
+        }
+
+        let mut exclusions = BTreeSet::default();
+        for capture in REGEX.captures_iter(str) {
+            let low = u32::from_str_radix(&capture[1], 16).unwrap();
+            let high = capture
+                .get(2)
+                .map_or(low, |m| u32::from_str_radix(&m.as_str(), 16).unwrap());
+            for point in low..(high + 1) {
+                if let Some(char) = char::from_u32(point) {
+                    exclusions.insert(char);
+                }
+            }
+        }
+
+        Ok(CompositionExclusions(exclusions))
+    }
+}
+
 struct CanonicalCompositionData(BTreeMap<char, Vec<(char, char)>>);
 
 impl CanonicalCompositionData {
@@ -148,10 +191,11 @@ impl CanonicalCompositionData {
             }),
         )
     }
-}
 
-impl<'a, 'b> From<&'a CanonicalDecompositionData<'b>> for CanonicalCompositionData {
-    fn from(decomposition: &CanonicalDecompositionData<'b>) -> Self {
+    fn from<'a>(
+        decomposition: &CanonicalDecompositionData<'a>,
+        exclusions: &CompositionExclusions,
+    ) -> CanonicalCompositionData {
         let mut map = BTreeMap::default();
         let &CanonicalDecompositionData(ref decomposition_map) = decomposition;
 
@@ -160,6 +204,9 @@ impl<'a, 'b> From<&'a CanonicalDecompositionData<'b>> for CanonicalCompositionDa
                 continue;
             }
             assert_eq!(decomposed.len(), 2);
+            if exclusions.contains(composed) {
+                continue;
+            }
             let lead = decomposed[0];
             let follow = decomposed[1];
             map.entry(lead)
@@ -235,8 +282,13 @@ pub fn generate<P: AsRef<Path>>(
     println!("> unic::ucd::normal::tables::canonical_decomposition_mapping");
     let decomposition = CanonicalDecompositionData::from(data.iter());
     decomposition.emit(&dir)?;
+    println!(">>> Loading Composition Exclusions");
+    let mut buffer = String::new();
+    let mut file = File::open(Path::new("data/ucd/DerivedNormalizationProps.txt"))?;
+    file.read_to_string(&mut buffer)?;
+    let exclusions: CompositionExclusions = buffer.parse().unwrap();
     println!("> unic::ucd::normal::tables::canonical_composition_mapping");
-    CanonicalCompositionData::from(&decomposition).emit(&dir)?;
+    CanonicalCompositionData::from(&decomposition, &exclusions).emit(&dir)?;
     println!("> unic::ucd::normal::tables::compatibility_decomposition_mapping");
     CompatibilityDecompositionData::from(data.iter()).emit(&dir)?;
     Ok(())
