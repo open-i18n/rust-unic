@@ -127,6 +127,22 @@ impl Iterator for CharRange {
         let len = self.len();
         (len, Some(len))
     }
+
+    fn last(self) -> Option<char> {
+        if self.low > self.high {
+            None
+        } else {
+            Some(self.high)
+        }
+    }
+
+    fn max(self) -> Option<char> {
+        self.last()
+    }
+
+    fn min(mut self) -> Option<char> {
+        self.next()
+    }
 }
 
 impl DoubleEndedIterator for CharRange {
