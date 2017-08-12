@@ -5,7 +5,7 @@ use step;
 const SURROGATE_RANGE: Range<u32> = 0xD800..0xE000;
 
 /// A range of unicode code points.
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub struct CharRange {
     /// The lowest uniterated character.
     ///
