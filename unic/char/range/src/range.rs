@@ -1,4 +1,5 @@
 use std::char;
+use std::collections::Bound;
 use std::ops::Range;
 use step;
 
@@ -60,6 +61,23 @@ impl CharRange {
         range.step_forward();
         range.step_backward();
         range
+    }
+
+    /// Construct a range of characters from bounds.
+    pub fn bound(mut start: Bound<char>, mut stop: Bound<char>) -> CharRange {
+        if start == Bound::Unbounded {
+            start = Bound::Included('\0');
+        }
+        if stop == Bound::Unbounded {
+            stop = Bound::Included(char::MAX);
+        }
+        match (start, stop) {
+            (Bound::Included(start), Bound::Included(stop)) => CharRange::closed(start, stop),
+            (Bound::Excluded(start), Bound::Excluded(stop)) => CharRange::open(start, stop),
+            (Bound::Included(start), Bound::Excluded(stop)) => CharRange::open_right(start, stop),
+            (Bound::Excluded(start), Bound::Included(stop)) => CharRange::open_left(start, stop),
+            (Bound::Unbounded, _) | (_, Bound::Unbounded) => unreachable!(),
+        }
     }
 
     /// Construct a range over all characters.
