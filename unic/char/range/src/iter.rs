@@ -24,11 +24,10 @@ pub struct CharIter {
 }
 
 impl<'a> From<&'a CharRange> for CharIter {
-    #[inline]
     fn from(range: &CharRange) -> CharIter {
         CharIter {
-            low: range.start as u32,
-            high: range.end as u32 + 1,
+            low: range.first() as u32,
+            high: range.last() as u32 + 1,
         }
     }
 }

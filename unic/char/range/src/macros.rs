@@ -11,7 +11,7 @@
 /// ```
 macro_rules! chars {
     // $:expr can only be terminated by `=>`, `,`, `;` so use a $:tt
-    ( $start:tt ..= $end:tt ) => ( $crate::CharRange::new($start, $end) );
+    ( $start:tt ..= $end:tt ) => ( $crate::CharRange::closed_range($start, $end) );
 }
 
 #[cfg(test)]
