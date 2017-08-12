@@ -1,7 +1,7 @@
 use std::char;
 
-const BEFORE_SURROGATE: u32 = 0xD800 - 1;
-const AFTER_SURROGATE: u32 = 0xDFFF + 1;
+const BEFORE_SURROGATE: char = '\u{D7FF}';
+const AFTER_SURROGATE: char = '\u{E000}';
 
 /// Step a `char` toward `char::MAX`.
 ///
@@ -15,14 +15,13 @@ const AFTER_SURROGATE: u32 = 0xDFFF + 1;
 #[allow(unsafe_code)]
 pub unsafe fn step_forward_unsafe(c: char) -> char {
     debug_assert_ne!(c, char::MAX);
-    let old_point = c as u32;
-    let new_point = if old_point == BEFORE_SURROGATE {
+    if c == BEFORE_SURROGATE {
         AFTER_SURROGATE
     } else {
-        c as u32 + 1
-    };
-    debug_assert!(char::from_u32(new_point).is_some());
-    char::from_u32_unchecked(new_point)
+        let codepoint = c as u32 + 1;
+        debug_assert!(char::from_u32(codepoint).is_some());
+        char::from_u32_unchecked(codepoint)
+    }
 }
 
 /// Step a `char` toward `char::MAX`.
@@ -49,14 +48,13 @@ pub fn step_forward(c: char) -> char {
 #[allow(unsafe_code)]
 pub unsafe fn step_backward_unsafe(c: char) -> char {
     debug_assert_ne!(c, '\0');
-    let old_point = c as u32;
-    let new_point = if old_point == BEFORE_SURROGATE {
-        AFTER_SURROGATE
+    if c == AFTER_SURROGATE {
+        BEFORE_SURROGATE
     } else {
-        old_point as u32 + 1
-    };
-    debug_assert!(char::from_u32(new_point).is_some());
-    char::from_u32_unchecked(new_point)
+        let codepoint = c as u32 - 1;
+        debug_assert!(char::from_u32(codepoint).is_some());
+        char::from_u32_unchecked(codepoint)
+    }
 }
 
 /// Step a `char` toward `'\0'`.
