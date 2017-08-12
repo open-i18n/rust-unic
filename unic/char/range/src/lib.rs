@@ -18,6 +18,17 @@
 //! # }
 //! ```
 //!
+//! # Features
+//!
+//! None of these features are included by default; they rely on unstable Rust feature gates.
+//!
+//! - `unstable`: enables all features
+//! - `fused`: impl the [`FusedIterator`] contract
+//! - `trusted-len`: impl the [`TrustedLen`] contract
+//!
+//! [`FusedIterator`](https://doc.rust-lang.org/std/iter/trait.FusedIterator.html)
+//! [`TrustedLen`](https://doc.rust-lang.org/std/iter/trait.TrustedLen.html)
+//!
 #![forbid(bad_style, missing_debug_implementations, unconditional_recursion)]
 #![deny(missing_docs, unsafe_code, unused, future_incompatible)]
 #![cfg_attr(feature = "fused", feature(fused))]
