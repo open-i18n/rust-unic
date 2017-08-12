@@ -47,6 +47,7 @@ impl CharIter {
 impl Iterator for CharIter {
     type Item = char;
 
+    #[inline]
     #[allow(unsafe_code)]
     fn next(&mut self) -> Option<char> {
         if self.is_finished() {
