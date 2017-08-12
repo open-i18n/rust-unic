@@ -22,6 +22,7 @@
 #![forbid(bad_style, missing_debug_implementations, unconditional_recursion)]
 #![deny(missing_docs, unsafe_code, unused, future_incompatible)]
 
+mod macros;
 mod range;
 mod step;
 

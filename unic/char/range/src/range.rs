@@ -5,9 +5,13 @@ use step;
 const SURROGATE_RANGE: Range<u32> = 0xD800..0xE000;
 
 /// A range of unicode code points.
+///
+/// The members of this struct are public for const initialization by `chars!(..=)` only.
+/// They should be considered unstable private API that may change at any time.
+/// If you decide to use them anyway, make sure to note the safety notes.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub struct CharRange {
-    /// The lowest uniterated character.
+    /// The lowest uniterated character (inclusive).
     ///
     /// Iteration is finished if this is higher than `high`.
     ///
@@ -16,12 +20,14 @@ pub struct CharRange {
     /// This is not guaranteed to always be a valid character. Check before using!
     /// Note that `high` _is_ guaranteed to be a valid character,
     /// so this will always be a valid character when iteration is not yet finished.
-    low: char,
+    #[doc(hidden)]
+    pub low: char,
 
-    /// The highest uniterated character.
+    /// The highest uniterated character (inclusive).
     ///
     /// Iteration is finished if this is lower than `low`.
-    high: char,
+    #[doc(hidden)]
+    pub high: char,
 }
 
 /// Constructors
