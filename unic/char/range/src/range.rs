@@ -151,7 +151,7 @@ impl ExactSizeIterator for CharRange {
         let end = self.high as u32;
         let naive_len = self.high as usize - self.low as usize + 1;
         if start <= SURROGATE_RANGE.start && SURROGATE_RANGE.end <= end {
-            naive_len - SURROGATE_RANGE.len() as usize
+            naive_len - SURROGATE_RANGE.len()
         } else {
             naive_len
         }
