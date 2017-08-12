@@ -3,7 +3,6 @@
 extern crate test;
 extern crate unic_char_range;
 
-use std::char;
 use unic_char_range::*;
 
 #[bench]
