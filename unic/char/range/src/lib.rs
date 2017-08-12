@@ -19,9 +19,8 @@
 //! # }
 //! ```
 //!
-#![forbid(bad_style, future_incompatible)]
-#![forbid(missing_debug_implementations, unconditional_recursion)]
-#![deny(missing_docs, unsafe_code, unused)]
+#![forbid(bad_style, missing_debug_implementations, unconditional_recursion)]
+#![deny(missing_docs, unsafe_code, unused, future_incompatible)]
 #![cfg_attr(feature = "fused", feature(fused))]
 #![cfg_attr(feature = "trusted-len", feature(trusted_len))]
 
