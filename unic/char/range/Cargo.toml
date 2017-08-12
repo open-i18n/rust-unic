@@ -15,7 +15,8 @@ exclude = []
 default = []
 
 # Unstable features
-unstable = [ "fused", "trusted-len" ]
+unstable = [ "exact-size-is-empty", "fused", "trusted-len" ]
+exact-size-is-empty = []
 fused = []
 trusted-len = []
 

@@ -1,39 +1,34 @@
 use std::char;
 use std::collections::Bound;
-use std::ops::Range;
-use step;
-
-const SURROGATE_RANGE: Range<u32> = 0xD800..0xE000;
+use CharIter;
 
 /// A range of unicode code points.
 ///
-/// The members of this struct are public for const initialization by `chars!(..=)` only.
-/// They should be considered unstable private API that may change at any time.
-/// If you decide to use them anyway, make sure to note the safety notes.
+/// The most idiomatic way to construct this range is through the use of the `chars!` macro:
+///
+/// ```
+/// # #[macro_use] extern crate unic_char_range;
+/// # use unic_char_range::*;
+/// # fn main() {
+/// assert_eq!(chars!('a'..='z'), CharRange::closed('a', 'z'));
+/// assert_eq!(chars!('a'..'z'), CharRange::open_right('a', 'z'));
+/// assert_eq!(chars!(..), CharRange::all());
+/// # }
+/// ```
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub struct CharRange {
-    /// The lowest uniterated character (inclusive).
-    ///
-    /// Iteration is finished if this is higher than `high`.
-    ///
-    /// # Safety
-    ///
-    /// This is not guaranteed to always be a valid character. Check before using!
-    /// Note that `high` _is_ guaranteed to be a valid character,
-    /// so this will always be a valid character when iteration is not yet finished.
-    #[doc(hidden)]
+    /// The lowest character in this range (inclusive).
     pub low: char,
 
-    /// The highest uniterated character (inclusive).
-    ///
-    /// Iteration is finished if this is lower than `low`.
-    #[doc(hidden)]
+    /// The highest character in this range (inclusive).
     pub high: char,
 }
 
 /// Constructors
 impl CharRange {
     /// Construct a closed range of characters.
+    ///
+    /// If `stop` is ordered before `start`, the resulting range will be empty.
     pub fn closed(start: char, stop: char) -> CharRange {
         CharRange {
             low: start,
@@ -42,28 +37,36 @@ impl CharRange {
     }
 
     /// Construct a half open (right) range of characters.
+    ///
+    /// If `stop` is ordered before `start`, the resulting range will be empty.
     pub fn open_right(start: char, stop: char) -> CharRange {
-        let mut range = CharRange::closed(start, stop);
-        range.step_backward();
-        range
+        let mut iter = CharRange::closed(start, stop).iter();
+        let _ = iter.next_back();
+        iter.into()
     }
 
     /// Construct a half open (left) range of characters.
+    ///
+    /// If `stop` is ordered before `start`, the resulting range will be empty.
     pub fn open_left(start: char, stop: char) -> CharRange {
-        let mut range = CharRange::closed(start, stop);
-        range.step_forward();
-        range
+        let mut iter = CharRange::closed(start, stop).iter();
+        let _ = iter.next();
+        iter.into()
     }
 
     /// Construct a fully open range of characters.
+    ///
+    /// If `stop` is ordered before `start`, the resulting range will be empty.
     pub fn open(start: char, stop: char) -> CharRange {
-        let mut range = CharRange::closed(start, stop);
-        range.step_forward();
-        range.step_backward();
-        range
+        let mut iter = CharRange::closed(start, stop).iter();
+        let _ = iter.next();
+        let _ = iter.next_back();
+        iter.into()
     }
 
     /// Construct a range of characters from bounds.
+    ///
+    /// If `stop` is ordered before `start`, the resulting range will be empty.
     pub fn bound(start: Bound<char>, stop: Bound<char>) -> CharRange {
         let start = if start == Bound::Unbounded {
             Bound::Included('\0')
@@ -90,29 +93,7 @@ impl CharRange {
     }
 }
 
-impl CharRange {
-    #[inline]
-    #[allow(unsafe_code)]
-    // It is always safe to step `self.low` forward because
-    // `self.low` will only be used when less than `self.high`.
-    fn step_forward(&mut self) {
-        self.low = unsafe { step::forward(self.low) }
-    }
-
-    #[inline]
-    #[allow(unsafe_code)]
-    // When stepping `self.high` backward would cause underflow,
-    // step `self.low` forward instead. It will have the same effect --
-    // consuming the last element from the iterator and ending iteration.
-    fn step_backward(&mut self) {
-        if self.high == '\0' {
-            self.step_forward();
-        } else {
-            self.high = unsafe { step::backward(self.high) }
-        }
-    }
-}
-
+/// Collection-like fn
 impl CharRange {
     /// Does this range include a character?
     ///
@@ -129,79 +110,23 @@ impl CharRange {
     pub fn contains(&self, ch: char) -> bool {
         self.low <= ch && ch <= self.high
     }
+
+    /// How many characters are in this range?
+    pub fn len(&self) -> usize {
+        self.iter().len()
+    }
+
+    /// Create an iterator over this range.
+    pub fn iter(&self) -> CharIter {
+        (*self).into()
+    }
 }
 
-impl Iterator for CharRange {
+impl IntoIterator for CharRange {
     type Item = char;
+    type IntoIter = CharIter;
 
-    #[inline]
-    fn next(&mut self) -> Option<char> {
-        if self.low > self.high {
-            return None;
-        }
-
-        let ch = self.low;
-        self.step_forward();
-        Some(ch)
-    }
-
-    fn size_hint(&self) -> (usize, Option<usize>) {
-        let len = self.len();
-        (len, Some(len))
-    }
-
-    fn last(self) -> Option<char> {
-        if self.low > self.high {
-            None
-        } else {
-            Some(self.high)
-        }
-    }
-
-    fn max(self) -> Option<char> {
-        self.last()
-    }
-
-    fn min(mut self) -> Option<char> {
-        self.next()
+    fn into_iter(self) -> CharIter {
+        self.iter()
     }
 }
-
-impl DoubleEndedIterator for CharRange {
-    #[inline]
-    fn next_back(&mut self) -> Option<Self::Item> {
-        if self.low > self.high {
-            return None;
-        }
-
-        let ch = self.high;
-        self.step_backward();
-        Some(ch)
-    }
-}
-
-impl ExactSizeIterator for CharRange {
-    fn len(&self) -> usize {
-        if self.low > self.high {
-            return 0;
-        }
-        let start = self.low as u32;
-        let end = self.high as u32;
-        let naive_len = self.high as usize - self.low as usize + 1;
-        if start <= SURROGATE_RANGE.start && SURROGATE_RANGE.end <= end {
-            naive_len - SURROGATE_RANGE.len()
-        } else {
-            naive_len
-        }
-    }
-}
-
-#[cfg(any(feature = "fused", feature = "trusted-len"))]
-use std::iter;
-
-#[cfg(feature = "fused")]
-impl iter::FusedIterator for CharRange {}
-
-#[allow(unsafe_code)]
-#[cfg(feature = "trusted-len")]
-unsafe impl iter::TrustedLen for CharRange {}

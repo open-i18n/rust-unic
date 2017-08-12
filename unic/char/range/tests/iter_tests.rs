@@ -13,17 +13,17 @@ fn all_chars() -> vec::IntoIter<char> {
 
 #[test]
 fn iter_all_chars() {
-    assert!(CharRange::all().eq(all_chars()))
+    assert!(CharRange::all().iter().eq(all_chars()))
 }
 
 #[test]
 fn iter_all_chars_rev() {
-    assert!(CharRange::all().rev().eq(all_chars().rev()))
+    assert!(CharRange::all().iter().rev().eq(all_chars().rev()))
 }
 
 #[test]
 fn iter_all_chars_mixed_next_back() {
-    let mut custom = CharRange::all();
+    let mut custom = CharRange::all().iter();
     let mut simple = all_chars();
     while let Some(custom_char) = custom.next() {
         assert_eq!(Some(custom_char), simple.next());
@@ -34,7 +34,7 @@ fn iter_all_chars_mixed_next_back() {
 
 #[test]
 fn iter_fused() {
-    let mut iter = CharRange::all();
+    let mut iter = CharRange::all().iter();
     let mut fused = all_chars().fuse();
     assert!(iter.by_ref().eq(fused.by_ref()));
     for _ in 0..100 {
@@ -49,7 +49,7 @@ fn iter_exact_trusted_len() {
         assert_eq!(iter.size_hint(), (len, Some(len)));
     }
 
-    let mut iter = CharRange::all();
+    let mut iter = CharRange::all().iter();
     let mut predicted_length = iter.len();
     assert_eq!(predicted_length, all_chars().len());
 

@@ -8,7 +8,7 @@ use unic_char_range::CharRange;
 
 #[bench]
 fn forward_iteration(b: &mut test::Bencher) {
-    b.iter(|| CharRange::all().count())
+    b.iter(|| CharRange::all().iter().count())
 }
 
 #[bench]
@@ -18,7 +18,7 @@ fn forward_iteration_baseline(b: &mut test::Bencher) {
 
 #[bench]
 fn reverse_iteration(b: &mut test::Bencher) {
-    b.iter(|| CharRange::all().rev().count())
+    b.iter(|| CharRange::all().iter().rev().count())
 }
 
 #[bench]

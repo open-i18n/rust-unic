@@ -19,7 +19,7 @@
 /// this macro captures token trees. This means that if you want to pass more than one token,
 /// you must parenthesize it (e.g. `chars!('\0' ..= (char::MAX)`).
 macro_rules! chars {
-    ( $low:tt .. $high:tt ) => ( $crate::CharRange { low: $low, high: $high } );
-    ( $low:tt ..= $high:tt ) => ( $crate::CharRange::open_right($low, $high) );
+    ( $low:tt .. $high:tt ) => ( $crate::CharRange::open_right($low, $high) );
+    ( $low:tt ..= $high:tt ) => ( $crate::CharRange { low: $low, high: $high } );
     ( .. ) => ( chars!( '\0' ..= (::std::char::MAX) ) );
 }
