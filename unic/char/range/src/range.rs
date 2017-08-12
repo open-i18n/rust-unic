@@ -1,5 +1,5 @@
 use std::char;
-use {step_backward, step_forward, CharIter};
+use {step, CharIter};
 
 // This is a closed range to match the pattern used in text processing rather than in Rust's Range:
 // regex `['a'-'z']` and unicode ranges `U+0000 - U+10FFFF` are inclusive on both ends.
@@ -41,14 +41,14 @@ impl CharRange {
     pub fn half_open_right_range(start: char, end: char) -> CharRange {
         CharRange {
             first: start,
-            last: step_backward(end),
+            last: step::backward(end),
         }
     }
 
     /// Construct a `CharRange` from a half open (left) range.
     pub fn half_open_left_range(start: char, end: char) -> CharRange {
         CharRange {
-            first: step_forward(start),
+            first: step::forward(start),
             last: end,
         }
     }
@@ -56,8 +56,8 @@ impl CharRange {
     /// Construct a `CharRange` from an open range.
     pub fn open_range(start: char, end: char) -> CharRange {
         CharRange {
-            first: step_forward(start),
-            last: step_backward(end),
+            first: step::forward(start),
+            last: step::backward(end),
         }
     }
 

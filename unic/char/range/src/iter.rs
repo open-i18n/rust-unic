@@ -1,5 +1,10 @@
 use std::{char, iter};
-use {CharRange, SURROGATE_RANGE};
+use CharRange;
+
+/// Range of Surrogate Code Points.
+///
+/// Reference: <http://unicode.org/glossary/#surrogate_code_point>
+const SURROGATE_RANGE: ::std::ops::Range<u32> = 0xD800..0xE000;
 
 /// An iterator over `char`.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]

@@ -29,14 +29,5 @@ mod iter;
 mod step;
 mod macros;
 
-use std::ops::Range;
-
 pub use range::CharRange;
 pub use iter::CharIter;
-
-use step::{step_backward, step_forward};
-
-/// Range of Surrogate Code Points.
-///
-/// Reference: <http://unicode.org/glossary/#surrogate_code_point>
-const SURROGATE_RANGE: Range<u32> = 0xD800..0xE000;

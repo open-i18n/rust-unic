@@ -17,7 +17,12 @@ fn iter_all_chars() {
 
 #[test]
 fn iter_all_chars_rev() {
-    assert!(CharRange::all().iter().rev().eq(all_chars().into_iter().rev()))
+    assert!(
+        CharRange::all()
+            .iter()
+            .rev()
+            .eq(all_chars().into_iter().rev())
+    )
 }
 
 #[test]
