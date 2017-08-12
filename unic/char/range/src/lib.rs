@@ -9,7 +9,7 @@
 //! # use unic_char_range::*;
 //!
 //! # fn main() {
-//! for character in chars!('a'..='z') {
+//! for character in chars!('a'=..='z') {
 //!     // character is each character in the lowercase english alphabet in order
 //! }
 //!

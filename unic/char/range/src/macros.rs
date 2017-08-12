@@ -6,12 +6,18 @@
 /// ```
 /// # #[macro_use] extern crate unic_char_range;
 /// # fn main() {
-/// chars!('a'..='z'); // iterates the inclusive range 'a' through 'z'
+/// chars!('a'=..='z'); // iterates the inclusive range 'a' through 'z'
+/// chars!('a'=..<'z'); // iterates the inclusive range 'a' through 'y'
+/// chars!('a'<..='z'); // iterates the inclusive range 'b' through 'z'
+/// chars!('a'<..<'z'); // iterates the inclusive range 'b' through 'y'
 /// # }
 /// ```
 macro_rules! chars {
     // $:expr can only be terminated by `=>`, `,`, `;` so use a $:tt
-    ( $start:tt ..= $end:tt ) => ( $crate::CharRange::closed_range($start, $end) );
+    ( $start:tt =..= $end:tt ) => ( $crate::CharRange::closed_range($start, $end) );
+    ( $start:tt =..< $end:tt ) => ( $crate::CharRange::half_open_right_range($start, $end) );
+    ( $start:tt <..= $end:tt ) => ( $crate::CharRange::half_open_left_range($start, $end) );
+    ( $start:tt <..< $end:tt ) => ( $crate::CharRange::open_range($start, $end) );
 }
 
 #[cfg(test)]
@@ -19,14 +25,50 @@ mod test {
     use std::char;
 
     #[test]
-    fn char_inclusive_iteration_works() {
+    fn char_closed_iteration_works() {
         let mut target = 'a' as u32 - 1;
 
-        for char in chars!('a'..='z') {
+        for char in chars!('a'=..='z') {
             target += 1;
             assert_eq!(Some(char), char::from_u32(target));
         }
 
         assert_eq!(target, 'z' as u32, "All characters were iterated");
+    }
+
+    #[test]
+    fn char_half_open_right_iteration_works() {
+        let mut target = 'a' as u32 - 1;
+
+        for char in chars!('a'=..<'z') {
+            target += 1;
+            assert_eq!(Some(char), char::from_u32(target));
+        }
+
+        assert_eq!(target, 'y' as u32, "All characters were iterated");
+    }
+
+    #[test]
+    fn char_half_open_left_iteration_works() {
+        let mut target = 'b' as u32 - 1;
+
+        for char in chars!('a'<..='z') {
+            target += 1;
+            assert_eq!(Some(char), char::from_u32(target));
+        }
+
+        assert_eq!(target, 'z' as u32, "All characters were iterated");
+    }
+
+    #[test]
+    fn char_open_iteration_works() {
+        let mut target = 'b' as u32 - 1;
+
+        for char in chars!('a'<..<'z') {
+            target += 1;
+            assert_eq!(Some(char), char::from_u32(target));
+        }
+
+        assert_eq!(target, 'y' as u32, "All characters were iterated");
     }
 }
