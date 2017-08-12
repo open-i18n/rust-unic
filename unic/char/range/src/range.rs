@@ -109,6 +109,24 @@ impl CharRange {
     }
 }
 
+impl CharRange {
+    /// Does this range include a character?
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use unic_char_range::CharRange;
+    /// assert!(   CharRange::closed('a', 'g').contains('d'));
+    /// assert!( ! CharRange::closed('a', 'g').contains('z'));
+    ///
+    /// assert!( ! CharRange:: open ('a', 'a').contains('a'));
+    /// assert!( ! CharRange::closed('z', 'a').contains('g'));
+    /// ```
+    pub fn contains(&self, ch: char) -> bool {
+        self.low <= ch && ch <= self.high
+    }
+}
+
 impl Iterator for CharRange {
     type Item = char;
 
