@@ -22,6 +22,7 @@ impl CharRange {
 impl Iterator for CharRange {
     type Item = char;
 
+    #[inline]
     #[allow(unsafe_code)]
     fn next(&mut self) -> Option<char> {
         if self.low > self.high {
