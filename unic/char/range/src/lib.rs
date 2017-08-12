@@ -9,7 +9,7 @@
 //! # use unic_char_range::*;
 //!
 //! # fn main() {
-//! for character in chars!('a'=..='z') {
+//! for character in chars!('a'..='z') {
 //!     // character is each character in the lowercase english alphabet in order
 //! }
 //!
@@ -21,9 +21,6 @@
 //!
 #![forbid(bad_style, missing_debug_implementations, unconditional_recursion)]
 #![deny(missing_docs, unsafe_code, unused, future_incompatible)]
-
-const BEFORE_SURROGATE: u32 = 0xD7FF;
-const AFTER_SURROGATE: u32 = 0xE000;
 
 mod range;
 mod step;
