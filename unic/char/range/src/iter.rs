@@ -45,7 +45,9 @@ impl Iterator for CharIter {
 
     #[allow(unsafe_code)]
     fn next(&mut self) -> Option<char> {
-        if self.is_finished() { return None }
+        if self.is_finished() {
+            return None;
+        }
 
         let char = unsafe { char::from_u32_unchecked(self.low) };
         self.low += 1;
@@ -67,7 +69,9 @@ impl Iterator for CharIter {
 impl iter::DoubleEndedIterator for CharIter {
     #[allow(unsafe_code)]
     fn next_back(&mut self) -> Option<char> {
-        if self.is_finished() { return None }
+        if self.is_finished() {
+            return None;
+        }
 
         self.high -= 1;
         let char = unsafe { char::from_u32_unchecked(self.high) };
@@ -83,7 +87,9 @@ impl iter::DoubleEndedIterator for CharIter {
 
 impl iter::ExactSizeIterator for CharIter {
     fn len(&self) -> usize {
-        if self.is_finished() { return 0 }
+        if self.is_finished() {
+            return 0;
+        }
         let naive_len = self.high as usize - self.low as usize;
         if self.low <= SURROGATE_RANGE.start && SURROGATE_RANGE.end <= self.high {
             naive_len - SURROGATE_RANGE.len()
