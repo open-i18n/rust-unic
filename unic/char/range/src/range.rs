@@ -64,13 +64,17 @@ impl CharRange {
     }
 
     /// Construct a range of characters from bounds.
-    pub fn bound(mut start: Bound<char>, mut stop: Bound<char>) -> CharRange {
-        if start == Bound::Unbounded {
-            start = Bound::Included('\0');
-        }
-        if stop == Bound::Unbounded {
-            stop = Bound::Included(char::MAX);
-        }
+    pub fn bound(start: Bound<char>, stop: Bound<char>) -> CharRange {
+        let start = if start == Bound::Unbounded {
+            Bound::Included('\0')
+        } else {
+            start
+        };
+        let stop = if stop == Bound::Unbounded {
+            Bound::Included(char::MAX)
+        } else {
+            stop
+        };
         match (start, stop) {
             (Bound::Included(start), Bound::Included(stop)) => CharRange::closed(start, stop),
             (Bound::Excluded(start), Bound::Excluded(stop)) => CharRange::open(start, stop),
