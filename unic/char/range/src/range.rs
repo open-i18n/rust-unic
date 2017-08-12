@@ -94,9 +94,9 @@ impl Iterator for CharRange {
             return None;
         }
 
-        let char = self.low;
+        let ch = self.low;
         self.step_forward();
-        Some(char)
+        Some(ch)
     }
 
     fn size_hint(&self) -> (usize, Option<usize>) {
@@ -112,9 +112,9 @@ impl DoubleEndedIterator for CharRange {
             return None;
         }
 
-        let char = self.high;
+        let ch = self.high;
         self.step_backward();
-        Some(char)
+        Some(ch)
     }
 }
 
@@ -125,7 +125,7 @@ impl ExactSizeIterator for CharRange {
         }
         let start = self.low as u32;
         let end = self.high as u32;
-        let naive_len = (end - start + 1) as usize;
+        let naive_len = self.high as usize - self.low as usize + 1;
         if start <= SURROGATE_RANGE.start && SURROGATE_RANGE.end <= end {
             naive_len - SURROGATE_RANGE.len() as usize
         } else {
