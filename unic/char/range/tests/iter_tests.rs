@@ -1,6 +1,6 @@
 extern crate unic_char_range;
 
-use std::{char, u32, vec};
+use std::{char, vec, u32};
 use unic_char_range::CharRange;
 
 fn all_chars() -> vec::IntoIter<char> {

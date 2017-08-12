@@ -157,3 +157,13 @@ impl ExactSizeIterator for CharRange {
         }
     }
 }
+
+#[cfg(any(feature = "fused", feature = "trusted-len"))]
+use std::iter;
+
+#[cfg(feature = "fused")]
+impl iter::FusedIterator for CharRange {}
+
+#[allow(unsafe_code)]
+#[cfg(feature = "trusted-len")]
+unsafe impl iter::TrustedLen for CharRange {}

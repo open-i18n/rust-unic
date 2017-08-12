@@ -14,5 +14,11 @@ exclude = []
 [features]
 default = []
 
+# Unstable features
+unstable = [ "fused", "trusted-len" ]
+fused = []
+trusted-len = []
+
+
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
