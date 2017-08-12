@@ -12,7 +12,7 @@
 //!     // character is each character in the lowercase english alphabet in order
 //! }
 //!
-//! for character in CharRange::all() {
+//! for character in chars!(..) {
 //!     // character is every valid char from lowest codepoint to highest
 //! }
 //! # }
