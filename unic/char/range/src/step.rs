@@ -27,9 +27,9 @@ pub unsafe fn forward(c: char) -> char {
 /// If the given character is `'\0'`, this will cause an underflow.
 /// (Thus, it will panic in debug mode, undefined behavior in release mode.)
 pub unsafe fn backward(c: char) -> char {
-    if c == BEFORE_SURROGATE {
-        AFTER_SURROGATE
+    if c == AFTER_SURROGATE {
+        BEFORE_SURROGATE
     } else {
-        char::from_u32_unchecked(c as u32 + 1)
+        char::from_u32_unchecked(c as u32 - 1)
     }
 }
