@@ -1,6 +1,6 @@
 use std::char;
 use std::ops::Range;
-use {CharRange, step};
+use {step, CharRange};
 
 const SURROGATE_RANGE: Range<u32> = 0xD800..0xE000;
 
@@ -20,13 +20,19 @@ pub struct CharIter {
 
 impl From<CharRange> for CharIter {
     fn from(range: CharRange) -> CharIter {
-        CharIter { low: range.low, high: range.high }
+        CharIter {
+            low: range.low,
+            high: range.high,
+        }
     }
 }
 
 impl From<CharIter> for CharRange {
     fn from(iter: CharIter) -> CharRange {
-        CharRange { low: iter.low, high: iter.high }
+        CharRange {
+            low: iter.low,
+            high: iter.high,
+        }
     }
 }
 

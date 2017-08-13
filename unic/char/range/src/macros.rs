@@ -6,9 +6,9 @@
 /// ```
 /// # #[macro_use] extern crate unic_char_range;
 /// # fn main() {
-/// chars!('a'..'z'); // Iterate the half open range including 'a' and excluding 'z'
-/// chars!('a'..='z'); // Iterate the closed range including 'a' and including 'z'
-/// chars!(..); // Iterate all characters
+/// chars!('a'..'z'); // The half open range including 'a' and excluding 'z'
+/// chars!('a'..='z'); // The closed range including 'a' and including 'z'
+/// chars!(..); // All characters
 /// # }
 /// ```
 ///

@@ -29,6 +29,16 @@ impl CharRange {
     /// Construct a closed range of characters.
     ///
     /// If `stop` is ordered before `start`, the resulting range will be empty.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use unic_char_range::*;
+    /// assert_eq!(
+    ///     CharRange::closed('a', 'd').iter().collect::<Vec<_>>(),
+    ///     vec!['a', 'b', 'c', 'd']
+    /// )
+    /// ```
     pub fn closed(start: char, stop: char) -> CharRange {
         CharRange {
             low: start,
@@ -39,6 +49,16 @@ impl CharRange {
     /// Construct a half open (right) range of characters.
     ///
     /// If `stop` is ordered before `start`, the resulting range will be empty.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use unic_char_range::*;
+    /// assert_eq!(
+    ///     CharRange::open_right('a', 'd').iter().collect::<Vec<_>>(),
+    ///     vec!['a', 'b', 'c']
+    /// )
+    /// ```
     pub fn open_right(start: char, stop: char) -> CharRange {
         let mut iter = CharRange::closed(start, stop).iter();
         let _ = iter.next_back();
@@ -48,6 +68,16 @@ impl CharRange {
     /// Construct a half open (left) range of characters.
     ///
     /// If `stop` is ordered before `start`, the resulting range will be empty.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use unic_char_range::*;
+    /// assert_eq!(
+    ///     CharRange::open_left('a', 'd').iter().collect::<Vec<_>>(),
+    ///     vec!['b', 'c', 'd']
+    /// )
+    /// ```
     pub fn open_left(start: char, stop: char) -> CharRange {
         let mut iter = CharRange::closed(start, stop).iter();
         let _ = iter.next();
@@ -57,6 +87,16 @@ impl CharRange {
     /// Construct a fully open range of characters.
     ///
     /// If `stop` is ordered before `start`, the resulting range will be empty.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use unic_char_range::*;
+    /// assert_eq!(
+    ///     CharRange::open('a', 'd').iter().collect::<Vec<_>>(),
+    ///     vec!['b', 'c']
+    /// )
+    /// ```
     pub fn open(start: char, stop: char) -> CharRange {
         let mut iter = CharRange::closed(start, stop).iter();
         let _ = iter.next();
