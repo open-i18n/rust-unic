@@ -10,12 +10,6 @@ pub struct CharIter {
     /// The lowest uniterated character (inclusive).
     ///
     /// Iteration is finished if this is higher than `high`.
-    ///
-    /// # Safety
-    ///
-    /// This is not guaranteed to always be a valid character. Check before using!
-    /// Note that `high` _is_ guaranteed to be a valid character,
-    /// so this will always be a valid character when iteration is not yet finished.
     low: char,
 
     /// The highest uniterated character (inclusive).
@@ -39,16 +33,21 @@ impl From<CharIter> for CharRange {
 impl CharIter {
     #[inline]
     #[allow(unsafe_code)]
-    // It is always safe to step `self.low` forward because
-    // `self.low` will only be used when less than `self.high`.
+    // When stepping `self.low` forward would go over `char::MAX`,
+    // Set `self.high` to `'\0'` instead. It will have the same effect --
+    // consuming the last element from the iterator and ending iteration.
     fn step_forward(&mut self) {
-        self.low = unsafe { step::forward(self.low) }
+        if self.low == char::MAX {
+            self.high = '\0'
+        } else {
+            self.low = unsafe { step::forward(self.low) }
+        }
     }
 
     #[inline]
     #[allow(unsafe_code)]
     // When stepping `self.high` backward would cause underflow,
-    // step `self.low` forward instead. It will have the same effect --
+    // set `self.low` to `char::MAX` instead. It will have the same effect --
     // consuming the last element from the iterator and ending iteration.
     fn step_backward(&mut self) {
         if self.high == '\0' {
