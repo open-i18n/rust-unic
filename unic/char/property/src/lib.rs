@@ -12,14 +12,19 @@
 
 #![forbid(unsafe_code, unconditional_recursion, missing_docs)]
 
-//! # UNIC — UCD — Character Age
+//! # UNIC - Unicode Characters - Character Property
 //!
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
 //!
-//! Accessor for character [**Age**](http://www.unicode.org/reports/tr44/#Age) property from
-//! Unicode Character Database (UCD)
+//! Character Property taxonomy, contracts and build macros.
 //!
-//! * <http://www.unicode.org/reports/tr44/#Character_Age>
+//! ## References
+//!
+//! * [Unicode UTR #23: The Unicode Character Property Model](http://unicode.org/reports/tr23/>).
+//!
+//! * [Unicode UAX #44: Unicode Character Database](http://unicode.org/reports/tr44/).
+//!
+//! * [UCD's PropertyAliases.txt](http://www.unicode.org/Public/UCD/latest/ucd/PropertyAliases.txt).
 
 
 /// UNIC component version.
@@ -32,10 +37,10 @@ pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
 pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
 
 
-mod domain;
-mod range;
 mod macros;
+mod property;
+mod range_types;
 
 
-pub use self::domain::{CharProperty, CompleteCharProperty, PartialCharProperty};
-pub use self::range::{EnumeratedCharProperty, NumericCharProperty, NumericCharPropertyValue};
+pub use self::property::{CharProperty, CompleteCharProperty, PartialCharProperty};
+pub use self::range_types::{EnumeratedCharProperty, NumericCharProperty, NumericCharPropertyValue};

@@ -9,7 +9,7 @@
 // except according to those terms.
 
 
-//! Taxonomy and contracts for character property types: property domain.
+//! Taxonomy and contracts for Character Property types.
 
 
 use std::fmt::{Debug, Display};
@@ -17,7 +17,7 @@ use std::hash::Hash;
 
 
 /// A Character Property, defined for some or all Unicode characters.
-pub trait CharProperty: PartialCharProperty {
+pub trait CharProperty: PartialCharProperty + Debug + Display + Eq + Hash {
     /// Get property abbreviated name
     fn prop_abbr_name() -> &'static str;
 
@@ -32,7 +32,7 @@ pub trait CharProperty: PartialCharProperty {
 /// A Character Property defined for some characters.
 ///
 /// Examples: *Decomposition_Type*, *Numeric_Type*
-pub trait PartialCharProperty: Copy + Debug + Display + Eq + Hash {
+pub trait PartialCharProperty: Copy {
     /// Find the character property value, or None.
     fn of(ch: char) -> Option<Self>;
 }
@@ -46,8 +46,7 @@ pub trait PartialCharProperty: Copy + Debug + Display + Eq + Hash {
 // See: <https://github.com/rust-lang/rust/issues/43784>
 // TODO: Drop extra super-traits after the bugs are fixed.
 //pub trait CompleteCharProperty: PartialCharProperty + Default {
-pub trait CompleteCharProperty
-    : PartialCharProperty + Copy + Debug + Display + Eq + Hash + Default {
+pub trait CompleteCharProperty : PartialCharProperty + Copy + Default {
     /// Find the character property value.
     fn of(ch: char) -> Self;
 }
