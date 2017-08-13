@@ -41,7 +41,14 @@
 ///     pub mod long_names for long;
 /// }
 ///
-/// // We also need to impl `PartialCharProperty` or `CompleteCharProperty` manually.
+/// // We also need to impl `CharProperty`, and `PartialCharProperty` or `CompleteCharProperty`
+/// // manually.
+/// # // TODO: impl CharProperty by the macro.
+/// # impl unic_char_property::CharProperty for MyProp {
+/// #     fn prop_abbr_name() -> &'static str { "myprop" }
+/// #     fn prop_long_name() -> &'static str { "MyProp" }
+/// #     fn prop_human_name() -> &'static str { "MyProp" }
+/// # }
 /// # impl unic_char_property::PartialCharProperty for MyProp {
 /// #     fn of(_: char) -> Option<Self> { None }
 /// # }
