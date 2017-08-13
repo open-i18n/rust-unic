@@ -79,6 +79,14 @@ impl EnumeratedCharProperty for DecompositionType {
     fn abbr_name(&self) -> &'static str {
         self.abbr_name()
     }
+
+    fn long_name(&self) -> &'static str {
+        self.long_name()
+    }
+
+    fn human_name(&self) -> &'static str {
+        self.human_name()
+    }
 }
 
 
@@ -143,45 +151,83 @@ impl DecompositionType {
         ALL_VALUES
     }
 
-    /// Abbreviated name of the *Decomposition_Type* property value.
-    ///
-    /// <http://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#Decomposition_Type>
+    /// The *abbreviated name* of the property value.
     pub fn abbr_name(&self) -> &'static str {
-        use DecompositionType::*;
         match *self {
-            Canonical => "Can",
-            Compat => "Com",
-            Circle => "Enc",
-            Final => "Fin",
-            Font => "Font",
-            Fraction => "Fra",
-            Initial => "Init",
-            Isolated => "Iso",
-            Medial => "Med",
-            Narrow => "Nar",
-            Nobreak => "Nb",
-            None => "None",
-            Small => "Sml",
-            Square => "Sqr",
-            Sub => "Sub",
-            Super => "Sup",
-            Vertical => "Vert",
-            Wide => "Wide",
+            DecompositionType::Canonical => "Can",
+            DecompositionType::Compat => "Com",
+            DecompositionType::Circle => "Enc",
+            DecompositionType::Final => "Fin",
+            DecompositionType::Font => "Font",
+            DecompositionType::Fraction => "Fra",
+            DecompositionType::Initial => "Init",
+            DecompositionType::Isolated => "Iso",
+            DecompositionType::Medial => "Med",
+            DecompositionType::Narrow => "Nar",
+            DecompositionType::Nobreak => "Nb",
+            DecompositionType::None => "None",
+            DecompositionType::Small => "Sml",
+            DecompositionType::Square => "Sqr",
+            DecompositionType::Sub => "Sub",
+            DecompositionType::Super => "Sup",
+            DecompositionType::Vertical => "Vert",
+            DecompositionType::Wide => "Wide",
         }
     }
 
-    /// Human-readable description of the property value.
-    // TODO: Needs to be improved by returning long-name with underscores replaced by space.
-    #[inline]
-    pub fn display(&self) -> String {
-        format!("{:?}", self).to_owned()
+    /// The *long name* of the property value.
+    pub fn long_name(&self) -> &'static str {
+        match *self {
+            DecompositionType::Canonical => "Canonical",
+            DecompositionType::Compat => "Compat",
+            DecompositionType::Circle => "Circle",
+            DecompositionType::Final => "Final",
+            DecompositionType::Font => "Font",
+            DecompositionType::Fraction => "Fraction",
+            DecompositionType::Initial => "Initial",
+            DecompositionType::Isolated => "Isolated",
+            DecompositionType::Medial => "Medial",
+            DecompositionType::Narrow => "Narrow",
+            DecompositionType::Nobreak => "Nobreak",
+            DecompositionType::None => "None",
+            DecompositionType::Small => "Small",
+            DecompositionType::Square => "Square",
+            DecompositionType::Sub => "Sub",
+            DecompositionType::Super => "Super",
+            DecompositionType::Vertical => "Vertical",
+            DecompositionType::Wide => "Wide",
+        }
+    }
+
+    /// The *human-readable name* of the property value.
+    pub fn human_name(&self) -> &'static str {
+        match *self {
+            DecompositionType::Canonical => "Canonical",
+            DecompositionType::Compat => "Compat",
+            DecompositionType::Circle => "Circle",
+            DecompositionType::Final => "Final",
+            DecompositionType::Font => "Font",
+            DecompositionType::Fraction => "Fraction",
+            DecompositionType::Initial => "Initial",
+            DecompositionType::Isolated => "Isolated",
+            DecompositionType::Medial => "Medial",
+            DecompositionType::Narrow => "Narrow",
+            DecompositionType::Nobreak => "No-Break",
+            DecompositionType::None => "None",
+            DecompositionType::Small => "Small",
+            DecompositionType::Square => "Square",
+            DecompositionType::Sub => "Sub",
+            DecompositionType::Super => "Super",
+            DecompositionType::Vertical => "Vertical",
+            DecompositionType::Wide => "Wide",
+        }
     }
 }
 
 
 impl fmt::Display for DecompositionType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.display())
+        write!(f, "{}", self.human_name())
     }
 }
 
@@ -316,13 +362,25 @@ mod tests {
     }
 
     #[test]
-    fn test_display() {
-        assert_eq!(format!("{}", DT::of('\u{a0}').unwrap()), "Nobreak");
+    fn test_abbr_name() {
+        assert_eq!(DT::Canonical.abbr_name(), "Can");
+        assert_eq!(DT::Nobreak.abbr_name(), "Nb");
     }
 
     #[test]
-    fn test_abbr_name() {
-        use super::abbr_names::*;
-        assert_eq!(Can.abbr_name(), "Can");
+    fn test_long_name() {
+        assert_eq!(DT::Canonical.long_name(), "Canonical");
+        assert_eq!(DT::Nobreak.long_name(), "Nobreak");
+    }
+
+    #[test]
+    fn test_human_name() {
+        assert_eq!(DT::Canonical.human_name(), "Canonical");
+        assert_eq!(DT::Nobreak.human_name(), "No-Break");
+    }
+
+    #[test]
+    fn test_display() {
+        assert_eq!(format!("{}", DT::of('\u{a0}').unwrap()), "No-Break");
     }
 }

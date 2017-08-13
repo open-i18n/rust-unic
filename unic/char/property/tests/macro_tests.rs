@@ -43,6 +43,7 @@ char_property! {
 }
 
 
+// TODO: Impl by char_property!()
 impl CharProperty for MyProp {
     fn prop_abbr_name() -> &'static str {
         "myprop"
@@ -56,6 +57,7 @@ impl CharProperty for MyProp {
         "MyProp"
     }
 }
+
 
 impl PartialCharProperty for MyProp {
     fn of(_: char) -> Option<Self> {

@@ -18,13 +18,13 @@ use std::hash::Hash;
 
 /// A Character Property, defined for some or all Unicode characters.
 pub trait CharProperty: PartialCharProperty + Debug + Display + Eq + Hash {
-    /// Get property abbreviated name
+    /// The *abbreviated name* of the property.
     fn prop_abbr_name() -> &'static str;
 
-    /// Get property long name
+    /// The *long name* of the property.
     fn prop_long_name() -> &'static str;
 
-    /// Get property human-readable name
+    /// The *human-readable* name of the property.
     fn prop_human_name() -> &'static str;
 }
 
@@ -33,7 +33,7 @@ pub trait CharProperty: PartialCharProperty + Debug + Display + Eq + Hash {
 ///
 /// Examples: *Decomposition_Type*, *Numeric_Type*
 pub trait PartialCharProperty: Copy {
-    /// Find the character property value, or None.
+    /// The property value for the character, or None.
     fn of(ch: char) -> Option<Self>;
 }
 
@@ -46,8 +46,8 @@ pub trait PartialCharProperty: Copy {
 // See: <https://github.com/rust-lang/rust/issues/43784>
 // TODO: Drop extra super-traits after the bugs are fixed.
 //pub trait CompleteCharProperty: PartialCharProperty + Default {
-pub trait CompleteCharProperty : PartialCharProperty + Copy + Default {
-    /// Find the character property value.
+pub trait CompleteCharProperty: PartialCharProperty + Copy + Default {
+    /// The property value for the character.
     fn of(ch: char) -> Self;
 }
 
