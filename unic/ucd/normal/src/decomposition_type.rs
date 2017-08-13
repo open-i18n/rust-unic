@@ -15,7 +15,7 @@
 use std::fmt;
 
 use unic_utils::CharDataTable;
-use unic_char_property::{EnumeratedCharProperty, PartialCharProperty};
+use unic_char_property::{CharProperty, EnumeratedCharProperty, PartialCharProperty};
 
 use composition::{canonical_decomposition, COMPATIBILITY_DECOMPOSITION_MAPPING};
 use hangul;
@@ -46,6 +46,21 @@ pub enum DecompositionType {
     Super,
     Vertical,
     Wide,
+}
+
+
+impl CharProperty for DecompositionType {
+    fn prop_abbr_name() -> &'static str {
+        "dt"
+    }
+
+    fn prop_long_name() -> &'static str {
+        "Decomposition_Type"
+    }
+
+    fn prop_human_name() -> &'static str {
+        "Decomposition Type"
+    }
 }
 
 

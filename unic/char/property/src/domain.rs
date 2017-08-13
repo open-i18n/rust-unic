@@ -16,6 +16,19 @@ use std::fmt::{Debug, Display};
 use std::hash::Hash;
 
 
+/// A Character Property, defined for some or all Unicode characters.
+pub trait CharProperty: PartialCharProperty {
+    /// Get property abbreviated name
+    fn prop_abbr_name() -> &'static str;
+
+    /// Get property long name
+    fn prop_long_name() -> &'static str;
+
+    /// Get property human-readable name
+    fn prop_human_name() -> &'static str;
+}
+
+
 /// A Character Property defined for some characters.
 ///
 /// Examples: *Decomposition_Type*, *Numeric_Type*
@@ -30,6 +43,8 @@ pub trait PartialCharProperty: Copy + Debug + Display + Eq + Hash {
 /// Examples: *Age*, *Name*, *General_Category*, *Bidi_Class*
 // Because of rustc bug, we cannot rely on inheritance for the moment.
 // See: <https://github.com/rust-lang/rust/issues/43777>
+// See: <https://github.com/rust-lang/rust/issues/43784>
+// TODO: Drop extra super-traits after the bugs are fixed.
 //pub trait CompleteCharProperty: PartialCharProperty + Default {
 pub trait CompleteCharProperty
     : PartialCharProperty + Copy + Debug + Display + Eq + Hash + Default {

@@ -13,7 +13,7 @@ use std::fmt;
 
 pub use unic_ucd_core::UnicodeVersion;
 use unic_utils::CharDataTable;
-use unic_char_property::CompleteCharProperty;
+use unic_char_property::{CharProperty, CompleteCharProperty};
 
 
 /// Represents values of the Unicode character property
@@ -39,6 +39,21 @@ pub enum Age {
 
     /// Unassigned Unicode Code Point (can be assigned in future).
     Unassigned, // Unassigned is older (larger) than any age
+}
+
+
+impl CharProperty for Age {
+    fn prop_abbr_name() -> &'static str {
+        "age"
+    }
+
+    fn prop_long_name() -> &'static str {
+        "Age"
+    }
+
+    fn prop_human_name() -> &'static str {
+        "Age"
+    }
 }
 
 

@@ -13,7 +13,7 @@
 extern crate unic_char_property;
 
 
-use unic_char_property::EnumeratedCharProperty;
+use unic_char_property::{CharProperty, PartialCharProperty};
 
 
 char_property! {
@@ -43,7 +43,21 @@ char_property! {
 }
 
 
-impl unic_char_property::PartialCharProperty for MyProp {
+impl CharProperty for MyProp {
+    fn prop_abbr_name() -> &'static str {
+        "myprop"
+    }
+
+    fn prop_long_name() -> &'static str {
+        "MyProp"
+    }
+
+    fn prop_human_name() -> &'static str {
+        "MyProp"
+    }
+}
+
+impl PartialCharProperty for MyProp {
     fn of(_: char) -> Option<Self> {
         None
     }
@@ -52,6 +66,8 @@ impl unic_char_property::PartialCharProperty for MyProp {
 
 #[test]
 fn basic_macro_use() {
+    use unic_char_property::EnumeratedCharProperty;
+
     assert_eq!(MyProp::AbbrVariant, abbr_names::AV);
     assert_eq!(MyProp::LongVariant, abbr_names::LV);
     assert_eq!(MyProp::DisplayVariant, abbr_names::DV);
@@ -76,6 +92,7 @@ fn basic_macro_use() {
 #[test]
 fn fromstr_ignores_case() {
     use abbr_names::LV;
+
     assert_eq!("long_variant".parse(), Ok(LV));
     assert_eq!("lOnG_vArIaNt".parse(), Ok(LV));
     assert_eq!("LoNg_VaRiAnT".parse(), Ok(LV));

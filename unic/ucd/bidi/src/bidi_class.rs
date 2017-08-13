@@ -13,7 +13,7 @@
 use std::fmt;
 
 use unic_utils::CharDataTable;
-use unic_char_property::{CompleteCharProperty, EnumeratedCharProperty};
+use unic_char_property::{CharProperty, CompleteCharProperty, EnumeratedCharProperty};
 
 
 /// Represents the Unicode character
@@ -49,6 +49,21 @@ pub enum BidiClass {
     SegmentSeparator,
     WhiteSpace,
     // [UNIC_UPDATE_ON_UNICODE_UPDATE] Source: `tables/bidi_class_type.rsv`
+}
+
+
+impl CharProperty for BidiClass {
+    fn prop_abbr_name() -> &'static str {
+        "bc"
+    }
+
+    fn prop_long_name() -> &'static str {
+        "Bidi_Class"
+    }
+
+    fn prop_human_name() -> &'static str {
+        "Bidi Class"
+    }
 }
 
 
