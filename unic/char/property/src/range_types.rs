@@ -36,7 +36,6 @@ pub trait EnumeratedCharProperty: Sized + CharProperty {
 
     /// The *human-readable name* of the property value.
     fn human_name(&self) -> &'static str;
-
 }
 
 
