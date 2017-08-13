@@ -18,7 +18,7 @@
 use std::fmt;
 
 use unic_utils::CharDataTable;
-use unic_char_property::{CompleteCharProperty, NumericCharProperty};
+use unic_char_property::{CharProperty, CompleteCharProperty, NumericCharProperty};
 
 
 /// Represents *Canonical_Combining_Class* property of a Unicode character.
@@ -26,6 +26,21 @@ use unic_char_property::{CompleteCharProperty, NumericCharProperty};
 /// * <http://unicode.org/reports/tr44/#Canonical_Combining_Class>
 #[derive(Copy, Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct CanonicalCombiningClass(u8);
+
+
+impl CharProperty for CanonicalCombiningClass {
+    fn prop_abbr_name() -> &'static str {
+        "ccc"
+    }
+
+    fn prop_long_name() -> &'static str {
+        "Canonical_Combining_Class"
+    }
+
+    fn prop_human_name() -> &'static str {
+        "Canonical Combining Class"
+    }
+}
 
 
 impl CompleteCharProperty for CanonicalCombiningClass {

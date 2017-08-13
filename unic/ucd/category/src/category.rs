@@ -12,7 +12,7 @@
 use std::fmt;
 
 use unic_utils::CharDataTable;
-use unic_char_property::{CompleteCharProperty, EnumeratedCharProperty};
+use unic_char_property::{CharProperty, CompleteCharProperty, EnumeratedCharProperty};
 
 
 /// Represents the Unicode Character
@@ -83,6 +83,21 @@ pub enum GeneralCategory {
     PrivateUse,
     /// Unassigned (Short form: `Cn`)
     Unassigned,
+}
+
+
+impl CharProperty for GeneralCategory {
+    fn prop_abbr_name() -> &'static str {
+        "gc"
+    }
+
+    fn prop_long_name() -> &'static str {
+        "General_Category"
+    }
+
+    fn prop_human_name() -> &'static str {
+        "General Category"
+    }
 }
 
 

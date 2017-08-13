@@ -37,5 +37,5 @@ mod range;
 mod macros;
 
 
-pub use self::domain::{CompleteCharProperty, PartialCharProperty};
+pub use self::domain::{CharProperty, CompleteCharProperty, PartialCharProperty};
 pub use self::range::{EnumeratedCharProperty, NumericCharProperty, NumericCharPropertyValue};

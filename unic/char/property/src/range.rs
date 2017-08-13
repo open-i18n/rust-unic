@@ -12,7 +12,7 @@
 //! Taxonomy and contracts for character property types: property range.
 
 
-use super::PartialCharProperty;
+use super::CharProperty;
 
 
 // == Enumerated/Catalog Types ==
@@ -24,7 +24,7 @@ use super::PartialCharProperty;
 /// Usage Note: If the property is of type *Catalog*, it's recommended to (in some way) mark the
 /// type as *non-exhaustive*, so that adding new variants to the `enum` type won't result in API
 /// breakage.
-pub trait EnumeratedCharProperty: Sized + PartialCharProperty {
+pub trait EnumeratedCharProperty: Sized + CharProperty {
     /// Exhaustive list of all property values.
     fn all_values() -> &'static [Self];
 
@@ -44,8 +44,7 @@ impl NumericCharPropertyValue for u8 {}
 /// A Character Property with numeric values.
 ///
 /// Examples: *Numeric_Value*, *Canonical_Combining_Class*
-pub trait NumericCharProperty<Value: NumericCharPropertyValue>
-    : PartialCharProperty {
+pub trait NumericCharProperty<Value: NumericCharPropertyValue>: CharProperty {
     /// Get numeric value for character property value
     fn number(&self) -> Value;
 }
