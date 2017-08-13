@@ -9,95 +9,234 @@
 // except according to those terms.
 
 
-use std::fmt;
-
 use unic_utils::CharDataTable;
-use unic_char_property::{CharProperty, CompleteCharProperty, EnumeratedCharProperty};
+use unic_char_property::CompleteCharProperty;
 
+char_property! {
+    /// Represents the Unicode Character
+    /// [*General_Category*](http://unicode.org/reports/tr44/#General_Category) property.
+    ///
+    /// This is a useful breakdown into various character types which can be used as a default
+    /// categorization in implementations. For the property values, see
+    /// [*General_Category Values*](http://unicode.org/reports/tr44/#General_Category_Values).
+    pub enum GeneralCategory {
+        abbr => "gc";
+        long => "General_Category";
+        human => "General Category";
 
-/// Represents the Unicode Character
-/// [*General_Category*](http://unicode.org/reports/tr44/#General_Category) property.
-///
-/// This is a useful breakdown into various character types which can be used as a default
-/// categorization in implementations. For the property values, see
-/// [*General_Category Values*](http://unicode.org/reports/tr44/#General_Category_Values).
-#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
-pub enum GeneralCategory {
-    /// An uppercase letter (Short form: `Lu`)
-    UppercaseLetter,
-    /// A lowercase letter (Short form: `Ll`)
-    LowercaseLetter,
-    /// A digraphic character, with first part uppercase (Short form: `Lt`)
-    TitlecaseLetter,
-    /// A modifier letter (Short form: `Lm`)
-    ModifierLetter,
-    /// Other letters, including syllables and ideographs (Short form: `Lo`)
-    OtherLetter,
-    /// A nonspacing combining mark (zero advance width) (Short form: `Mn`)
-    NonspacingMark,
-    /// A spacing combining mark (positive advance width) (Short form: `Mc`)
-    SpacingMark,
-    /// An enclosing combining mark (Short form: `Me`)
-    EnclosingMark,
-    /// A decimal digit (Short form: `Nd`)
-    DecimalNumber,
-    /// A letterlike numeric character (Short form: `Nl`)
-    LetterNumber,
-    /// A numeric character of other type (Short form: `No`)
-    OtherNumber,
-    /// A connecting punctuation mark, like a tie (Short form: `Pc`)
-    ConnectorPunctuation,
-    /// A dash or hyphen punctuation mark (Short form: `Pd`)
-    DashPunctuation,
-    /// An opening punctuation mark (of a pair) (Short form: `Ps`)
-    OpenPunctuation,
-    /// A closing punctuation mark (of a pair) (Short form: `Pe`)
-    ClosePunctuation,
-    /// An initial quotation mark (Short form: `Pi`)
-    InitialPunctuation,
-    /// A final quotation mark (Short form: `Pf`)
-    FinalPunctuation,
-    /// A punctuation mark of other type (Short form: `Po`)
-    OtherPunctuation,
-    /// A symbol of mathematical use (Short form: `Sm`)
-    MathSymbol,
-    /// A currency sign (Short form: `Sc`)
-    CurrencySymbol,
-    /// A non-letterlike modifier symbol (Short form: `Sk`)
-    ModifierSymbol,
-    /// A symbol of other type (Short form: `So`)
-    OtherSymbol,
-    /// A space character (of various non-zero widths) (Short form: `Zs`)
-    SpaceSeparator,
-    /// U+2028 LINE SEPARATOR only (Short form: `Zl`)
-    LineSeparator,
-    /// U+2029 PARAGRAPH SEPARATOR only (Short form: `Zp`)
-    ParagraphSeparator,
-    /// A C0 or C1 control code (Short form: `Cc`)
-    Control,
-    /// A format control character (Short form: `Cf`)
-    Format,
-    /// A surrogate code point (Short form: `Cs`)
-    Surrogate,
-    /// A private-use character (Short form: `Co`)
-    PrivateUse,
-    /// Unassigned (Short form: `Cn`)
-    Unassigned,
-}
+        /// An uppercase letter
+        UppercaseLetter {
+            abbr => Lu,
+            long => Uppercase_Letter,
+            human => "Uppercase Letter",
+        }
 
+        /// A lowercase letter
+        LowercaseLetter {
+            abbr => Ll,
+            long => Lowercase_Letter,
+            human => "Lowercase Letter",
+        }
 
-impl CharProperty for GeneralCategory {
-    fn prop_abbr_name() -> &'static str {
-        "gc"
+        /// A digraphic character, with first part uppercase
+        TitlecaseLetter {
+            abbr => Lt,
+            long => Titlecase_Letter,
+            human => "Titlecase Letter",
+        }
+
+        /// A modifier letter
+        ModifierLetter {
+            abbr => Lm,
+            long => Modifier_Letter,
+            human => "Modifier Letter",
+        }
+
+        /// Other letters, including syllables and ideographs
+        OtherLetter {
+            abbr => Lo,
+            long => Other_Letter,
+            human => "Other Letter",
+        }
+
+        /// A nonspacing combining mark (zero advance width)
+        NonspacingMark {
+            abbr => Mn,
+            long => Nonspacing_Mark,
+            human => "Nonspacing Mark",
+        }
+
+        /// A spacing combining mark (positive advance width)
+        SpacingMark {
+            abbr => Mc,
+            long => Spacing_Mark,
+            human => "Spacing Mark",
+        }
+
+        /// An enclosing combining mark
+        EnclosingMark {
+            abbr => Me,
+            long => Enclosing_Mark,
+            human => "Enclosing Mark",
+        }
+
+        /// A decimal digit
+        DecimalNumber {
+            abbr => Nd,
+            long => Decimal_Number,
+            human => "Decimal Digit",
+        }
+
+        /// A letterlike numeric character
+        LetterNumber {
+            abbr => Nl,
+            long => Letter_Number,
+            human => "Letterlike Number",
+        }
+
+        /// A numeric character of other type
+        OtherNumber {
+            abbr => No,
+            long => Other_Number,
+            human => "Other Numeric",
+        }
+
+        /// A connecting punctuation mark, like a tie
+        ConnectorPunctuation {
+            abbr => Pc,
+            long => Connector_Punctuation,
+            human => "Connecting Punctuation",
+        }
+
+        /// A dash or hyphen punctuation mark
+        DashPunctuation {
+            abbr => Pd,
+            long => Dash_Punctuation,
+            human => "Dash Punctuation",
+        }
+
+        /// An opening punctuation mark (of a pair)
+        OpenPunctuation {
+            abbr => Ps,
+            long => Open_Punctuation,
+            human => "Opening Punctuation",
+        }
+
+        /// A closing punctuation mark (of a pair)
+        ClosePunctuation {
+            abbr => Pe,
+            long => Close_Punctuation,
+            human => "Closing Punctuation",
+        }
+
+        /// An initial quotation mark
+        InitialPunctuation {
+            abbr => Pi,
+            long => Initial_Punctuation,
+            human => "Initial Quotation",
+        }
+
+        /// A final quotation mark
+        FinalPunctuation {
+            abbr => Pf,
+            long => Final_Punctuation,
+            human => "Final Quotation",
+        }
+
+        /// A punctuation mark of other type
+        OtherPunctuation {
+            abbr => Po,
+            long => Other_Punctuation,
+            human => "Other Punctuation",
+        }
+
+        /// A symbol of mathematical use
+        MathSymbol {
+            abbr => Sm,
+            long => Math_Symbol,
+            human => "Math Symbol",
+        }
+
+        /// A currency sign
+        CurrencySymbol {
+            abbr => Sc,
+            long => Currency_Symbol,
+            human => "Currency Symbol",
+        }
+
+        /// A non-letterlike modifier symbol
+        ModifierSymbol {
+            abbr => Sk,
+            long => Modifier_Symbol,
+            human => "Modifier Symbol",
+        }
+
+        /// A symbol of other type
+        OtherSymbol {
+            abbr => So,
+            long => Other_Symbol,
+            human => "Other Symbol",
+        }
+
+        /// A space character (of various non-zero widths)
+        SpaceSeparator {
+            abbr => Zs,
+            long => Space_Separator,
+            human => "Space",
+        }
+
+        /// U+2028 LINE SEPARATOR only
+        LineSeparator {
+            abbr => Zl,
+            long => Line_Separator,
+            human => "Line Separator",
+        }
+
+        /// U+2029 PARAGRAPH SEPARATOR only
+        ParagraphSeparator {
+            abbr => Zp,
+            long => Paragraph_Separator,
+            human => "Paragraph Separator",
+        }
+
+        /// A C0 or C1 control code
+        Control {
+            abbr => Cc,
+            long => Control,
+            human => "Control",
+        }
+
+        /// A format control character
+        Format {
+            abbr => Cf,
+            long => Format,
+            human => "Formatting",
+        }
+
+        /// A surrogate code point
+        Surrogate {
+            abbr => Cs,
+            long => Surrogate,
+            human => "Surrogate",
+        }
+
+        /// A private-use character
+        PrivateUse {
+            abbr => Co,
+            long => Private_Use,
+            human => "Private-Use",
+        }
+
+        /// Unassigned
+        Unassigned {
+            abbr => Cn,
+            long => Unassigned,
+            human => "Unassigned",
+        }
     }
 
-    fn prop_long_name() -> &'static str {
-        "General_Category"
-    }
-
-    fn prop_human_name() -> &'static str {
-        "General Category"
-    }
+    pub mod abbr_names for abbr;
+    pub mod long_names for long;
 }
 
 
@@ -108,212 +247,23 @@ impl CompleteCharProperty for GeneralCategory {
 }
 
 
-impl EnumeratedCharProperty for GeneralCategory {
-    fn all_values() -> &'static [Self] {
-        Self::all_values()
-    }
-
-    fn abbr_name(&self) -> &'static str {
-        self.abbr_name()
-    }
-
-    fn long_name(&self) -> &'static str {
-        self.long_name()
-    }
-
-    fn human_name(&self) -> &'static str {
-        self.human_name()
+impl Default for GeneralCategory {
+    fn default() -> Self {
+        GeneralCategory::Unassigned
     }
 }
 
 
-pub mod abbr_names {
-    pub use GeneralCategory::UppercaseLetter as Lu;
-    pub use GeneralCategory::LowercaseLetter as Ll;
-    pub use GeneralCategory::TitlecaseLetter as Lt;
-    pub use GeneralCategory::ModifierLetter as Lm;
-    pub use GeneralCategory::OtherLetter as Lo;
-    pub use GeneralCategory::NonspacingMark as Mn;
-    pub use GeneralCategory::SpacingMark as Mc;
-    pub use GeneralCategory::EnclosingMark as Me;
-    pub use GeneralCategory::DecimalNumber as Nd;
-    pub use GeneralCategory::LetterNumber as Nl;
-    pub use GeneralCategory::OtherNumber as No;
-    pub use GeneralCategory::ConnectorPunctuation as Pc;
-    pub use GeneralCategory::DashPunctuation as Pd;
-    pub use GeneralCategory::OpenPunctuation as Ps;
-    pub use GeneralCategory::ClosePunctuation as Pe;
-    pub use GeneralCategory::InitialPunctuation as Pi;
-    pub use GeneralCategory::FinalPunctuation as Pf;
-    pub use GeneralCategory::OtherPunctuation as Po;
-    pub use GeneralCategory::MathSymbol as Sm;
-    pub use GeneralCategory::CurrencySymbol as Sc;
-    pub use GeneralCategory::ModifierSymbol as Sk;
-    pub use GeneralCategory::OtherSymbol as So;
-    pub use GeneralCategory::SpaceSeparator as Zs;
-    pub use GeneralCategory::LineSeparator as Zl;
-    pub use GeneralCategory::ParagraphSeparator as Zp;
-    pub use GeneralCategory::Control as Cc;
-    pub use GeneralCategory::Format as Cf;
-    pub use GeneralCategory::Surrogate as Cs;
-    pub use GeneralCategory::PrivateUse as Co;
-    pub use GeneralCategory::Unassigned as Cn;
-}
 use self::abbr_names::*;
 
 const GENERAL_CATEGORY_TABLE: &'static [(char, char, GeneralCategory)] =
     include!("tables/general_category.rsv");
 
+
 impl GeneralCategory {
     /// Find the `GeneralCategory` of a single char.
     pub fn of(ch: char) -> GeneralCategory {
         *GENERAL_CATEGORY_TABLE.find_or(ch, &GeneralCategory::Unassigned)
-    }
-
-    /// Exhaustive list of all `GeneralCategory` property values.
-    pub fn all_values() -> &'static [GeneralCategory] {
-        const ALL_VALUES: &[GeneralCategory] = &[
-            GeneralCategory::UppercaseLetter,
-            GeneralCategory::LowercaseLetter,
-            GeneralCategory::TitlecaseLetter,
-            GeneralCategory::ModifierLetter,
-            GeneralCategory::OtherLetter,
-            GeneralCategory::NonspacingMark,
-            GeneralCategory::SpacingMark,
-            GeneralCategory::EnclosingMark,
-            GeneralCategory::DecimalNumber,
-            GeneralCategory::LetterNumber,
-            GeneralCategory::OtherNumber,
-            GeneralCategory::ConnectorPunctuation,
-            GeneralCategory::DashPunctuation,
-            GeneralCategory::OpenPunctuation,
-            GeneralCategory::ClosePunctuation,
-            GeneralCategory::InitialPunctuation,
-            GeneralCategory::FinalPunctuation,
-            GeneralCategory::OtherPunctuation,
-            GeneralCategory::MathSymbol,
-            GeneralCategory::CurrencySymbol,
-            GeneralCategory::ModifierSymbol,
-            GeneralCategory::OtherSymbol,
-            GeneralCategory::SpaceSeparator,
-            GeneralCategory::LineSeparator,
-            GeneralCategory::ParagraphSeparator,
-            GeneralCategory::Control,
-            GeneralCategory::Format,
-            GeneralCategory::Surrogate,
-            GeneralCategory::PrivateUse,
-            GeneralCategory::Unassigned,
-        ];
-        ALL_VALUES
-    }
-
-    /// The *abbreviated name* of the property value.
-    pub fn abbr_name(&self) -> &'static str {
-        match *self {
-            GeneralCategory::UppercaseLetter => "Lu",
-            GeneralCategory::LowercaseLetter => "Ll",
-            GeneralCategory::TitlecaseLetter => "Lt",
-            GeneralCategory::ModifierLetter => "Lm",
-            GeneralCategory::OtherLetter => "Lo",
-            GeneralCategory::NonspacingMark => "Mn",
-            GeneralCategory::SpacingMark => "Mc",
-            GeneralCategory::EnclosingMark => "Me",
-            GeneralCategory::DecimalNumber => "Nd",
-            GeneralCategory::LetterNumber => "Nl",
-            GeneralCategory::OtherNumber => "No",
-            GeneralCategory::ConnectorPunctuation => "Pc",
-            GeneralCategory::DashPunctuation => "Pd",
-            GeneralCategory::OpenPunctuation => "Ps",
-            GeneralCategory::ClosePunctuation => "Pe",
-            GeneralCategory::InitialPunctuation => "Pi",
-            GeneralCategory::FinalPunctuation => "Pf",
-            GeneralCategory::OtherPunctuation => "Po",
-            GeneralCategory::MathSymbol => "Sm",
-            GeneralCategory::CurrencySymbol => "Sc",
-            GeneralCategory::ModifierSymbol => "Sk",
-            GeneralCategory::OtherSymbol => "So",
-            GeneralCategory::SpaceSeparator => "Zs",
-            GeneralCategory::LineSeparator => "Zl",
-            GeneralCategory::ParagraphSeparator => "Zp",
-            GeneralCategory::Control => "Cc",
-            GeneralCategory::Format => "Cf",
-            GeneralCategory::Surrogate => "Cs",
-            GeneralCategory::PrivateUse => "Co",
-            GeneralCategory::Unassigned => "Cn",
-        }
-    }
-
-    /// The *long name* of the property value.
-    pub fn long_name(&self) -> &'static str {
-        match *self {
-            GeneralCategory::UppercaseLetter => "Uppercase_Letter",
-            GeneralCategory::LowercaseLetter => "Lowercase_Letter",
-            GeneralCategory::TitlecaseLetter => "Titlecase_Letter",
-            GeneralCategory::ModifierLetter => "Modifier_Letter",
-            GeneralCategory::OtherLetter => "Other_Letter",
-            GeneralCategory::NonspacingMark => "Nonspacing_Mark",
-            GeneralCategory::SpacingMark => "Spacing_Mark",
-            GeneralCategory::EnclosingMark => "Enclosing_Mark",
-            GeneralCategory::DecimalNumber => "Decimal_Number",
-            GeneralCategory::LetterNumber => "Letter_Number",
-            GeneralCategory::OtherNumber => "Other_Number",
-            GeneralCategory::ConnectorPunctuation => "Connector_Punctuation",
-            GeneralCategory::DashPunctuation => "Dash_Punctuation",
-            GeneralCategory::OpenPunctuation => "Open_Punctuation",
-            GeneralCategory::ClosePunctuation => "Close_Punctuation",
-            GeneralCategory::InitialPunctuation => "Initial_Punctuation",
-            GeneralCategory::FinalPunctuation => "Final_Punctuation",
-            GeneralCategory::OtherPunctuation => "Other_Punctuation",
-            GeneralCategory::MathSymbol => "Math_Symbol",
-            GeneralCategory::CurrencySymbol => "Currency_Symbol",
-            GeneralCategory::ModifierSymbol => "Modifier_Symbol",
-            GeneralCategory::OtherSymbol => "Other_Symbol",
-            GeneralCategory::SpaceSeparator => "Space_Separator",
-            GeneralCategory::LineSeparator => "Line_Separator",
-            GeneralCategory::ParagraphSeparator => "Paragraph_Separator",
-            GeneralCategory::Control => "Control",
-            GeneralCategory::Format => "Format",
-            GeneralCategory::Surrogate => "Surrogate",
-            GeneralCategory::PrivateUse => "Private_Use",
-            GeneralCategory::Unassigned => "Unassigned",
-        }
-    }
-
-    /// The *human-readable name* of the property value.
-    #[inline]
-    pub fn human_name(&self) -> &'static str {
-        match *self {
-            GeneralCategory::UppercaseLetter => "Uppercase Letter",
-            GeneralCategory::LowercaseLetter => "Lowercase Letter",
-            GeneralCategory::TitlecaseLetter => "Titlecase Letter",
-            GeneralCategory::ModifierLetter => "Modifier Letter",
-            GeneralCategory::OtherLetter => "Other Letter",
-            GeneralCategory::NonspacingMark => "Nonspacing Mark",
-            GeneralCategory::SpacingMark => "Spacing Mark",
-            GeneralCategory::EnclosingMark => "Enclosing Mark",
-            GeneralCategory::DecimalNumber => "Decimal Number",
-            GeneralCategory::LetterNumber => "Letter Number",
-            GeneralCategory::OtherNumber => "Other Number",
-            GeneralCategory::ConnectorPunctuation => "Connector Punctuation",
-            GeneralCategory::DashPunctuation => "Dash Punctuation",
-            GeneralCategory::OpenPunctuation => "Open Punctuation",
-            GeneralCategory::ClosePunctuation => "Close Punctuation",
-            GeneralCategory::InitialPunctuation => "Initial Punctuation",
-            GeneralCategory::FinalPunctuation => "Final Punctuation",
-            GeneralCategory::OtherPunctuation => "Other Punctuation",
-            GeneralCategory::MathSymbol => "Math Symbol",
-            GeneralCategory::CurrencySymbol => "Currency Symbol",
-            GeneralCategory::ModifierSymbol => "Modifier Symbol",
-            GeneralCategory::OtherSymbol => "Other Symbol",
-            GeneralCategory::SpaceSeparator => "Space Separator",
-            GeneralCategory::LineSeparator => "Line Separator",
-            GeneralCategory::ParagraphSeparator => "Paragraph Separator",
-            GeneralCategory::Control => "Control",
-            GeneralCategory::Format => "Format",
-            GeneralCategory::Surrogate => "Surrogate",
-            GeneralCategory::PrivateUse => "Private Use",
-            GeneralCategory::Unassigned => "Unassigned",
-        }
     }
 }
 
@@ -361,22 +311,9 @@ impl GeneralCategory {
 }
 
 
-impl Default for GeneralCategory {
-    fn default() -> Self {
-        GeneralCategory::Unassigned
-    }
-}
-
-
-impl fmt::Display for GeneralCategory {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.human_name())
-    }
-}
-
-
 #[cfg(test)]
 mod tests {
+    use unic_char_property::EnumeratedCharProperty;
     use super::GeneralCategory as GC;
     use std::char;
 
@@ -443,7 +380,7 @@ mod tests {
     #[test]
     fn test_bmp_edge() {
         // 0xFEFF ZERO WIDTH NO-BREAK SPACE (or) BYTE ORDER MARK
-        let bom = char::from_u32(0xFEFF).unwrap();
+        let bom = '\u{FEFF}';
         assert_eq!(GC::of(bom), GC::Format);
         // 0xFFFC OBJECT REPLACEMENT CHARACTER
         assert_eq!(GC::of('￼'), GC::OtherSymbol);
