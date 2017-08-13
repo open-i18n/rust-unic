@@ -369,6 +369,14 @@ macro_rules! __char_property_internal {
                 }
             }
 
+            fn long_name(&self) -> &'static str {
+                "FIXME"
+            }
+
+            fn human_name(&self) -> &'static str {
+                "FIXME"
+            }
+
             fn all_values() -> &'static [$name] {
                 const VALUES: &[$name] = &[
                     $($name::$variant,)+

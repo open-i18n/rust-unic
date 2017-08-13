@@ -116,6 +116,14 @@ impl EnumeratedCharProperty for GeneralCategory {
     fn abbr_name(&self) -> &'static str {
         self.abbr_name()
     }
+
+    fn long_name(&self) -> &'static str {
+        self.long_name()
+    }
+
+    fn human_name(&self) -> &'static str {
+        self.human_name()
+    }
 }
 
 
@@ -164,86 +172,148 @@ impl GeneralCategory {
 
     /// Exhaustive list of all `GeneralCategory` property values.
     pub fn all_values() -> &'static [GeneralCategory] {
-        use GeneralCategory::*;
         const ALL_VALUES: &[GeneralCategory] = &[
-            UppercaseLetter,
-            LowercaseLetter,
-            TitlecaseLetter,
-            ModifierLetter,
-            OtherLetter,
-            NonspacingMark,
-            SpacingMark,
-            EnclosingMark,
-            DecimalNumber,
-            LetterNumber,
-            OtherNumber,
-            ConnectorPunctuation,
-            DashPunctuation,
-            OpenPunctuation,
-            ClosePunctuation,
-            InitialPunctuation,
-            FinalPunctuation,
-            OtherPunctuation,
-            MathSymbol,
-            CurrencySymbol,
-            ModifierSymbol,
-            OtherSymbol,
-            SpaceSeparator,
-            LineSeparator,
-            ParagraphSeparator,
-            Control,
-            Format,
-            Surrogate,
-            PrivateUse,
-            Unassigned,
+            GeneralCategory::UppercaseLetter,
+            GeneralCategory::LowercaseLetter,
+            GeneralCategory::TitlecaseLetter,
+            GeneralCategory::ModifierLetter,
+            GeneralCategory::OtherLetter,
+            GeneralCategory::NonspacingMark,
+            GeneralCategory::SpacingMark,
+            GeneralCategory::EnclosingMark,
+            GeneralCategory::DecimalNumber,
+            GeneralCategory::LetterNumber,
+            GeneralCategory::OtherNumber,
+            GeneralCategory::ConnectorPunctuation,
+            GeneralCategory::DashPunctuation,
+            GeneralCategory::OpenPunctuation,
+            GeneralCategory::ClosePunctuation,
+            GeneralCategory::InitialPunctuation,
+            GeneralCategory::FinalPunctuation,
+            GeneralCategory::OtherPunctuation,
+            GeneralCategory::MathSymbol,
+            GeneralCategory::CurrencySymbol,
+            GeneralCategory::ModifierSymbol,
+            GeneralCategory::OtherSymbol,
+            GeneralCategory::SpaceSeparator,
+            GeneralCategory::LineSeparator,
+            GeneralCategory::ParagraphSeparator,
+            GeneralCategory::Control,
+            GeneralCategory::Format,
+            GeneralCategory::Surrogate,
+            GeneralCategory::PrivateUse,
+            GeneralCategory::Unassigned,
         ];
         ALL_VALUES
     }
 
-    /// Abbreviated name of the *General_Category* property value.
-    ///
-    /// <http://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#General_Category>
+    /// The *abbreviated name* of the property value.
     pub fn abbr_name(&self) -> &'static str {
-        use GeneralCategory::*;
         match *self {
-            UppercaseLetter => "Lu",
-            LowercaseLetter => "Ll",
-            TitlecaseLetter => "Lt",
-            ModifierLetter => "Lm",
-            OtherLetter => "Lo",
-            NonspacingMark => "Mn",
-            SpacingMark => "Mc",
-            EnclosingMark => "Me",
-            DecimalNumber => "Nd",
-            LetterNumber => "Nl",
-            OtherNumber => "No",
-            ConnectorPunctuation => "Pc",
-            DashPunctuation => "Pd",
-            OpenPunctuation => "Ps",
-            ClosePunctuation => "Pe",
-            InitialPunctuation => "Pi",
-            FinalPunctuation => "Pf",
-            OtherPunctuation => "Po",
-            MathSymbol => "Sm",
-            CurrencySymbol => "Sc",
-            ModifierSymbol => "Sk",
-            OtherSymbol => "So",
-            SpaceSeparator => "Zs",
-            LineSeparator => "Zl",
-            ParagraphSeparator => "Zp",
-            Control => "Cc",
-            Format => "Cf",
-            Surrogate => "Cs",
-            PrivateUse => "Co",
-            Unassigned => "Cn",
+            GeneralCategory::UppercaseLetter => "Lu",
+            GeneralCategory::LowercaseLetter => "Ll",
+            GeneralCategory::TitlecaseLetter => "Lt",
+            GeneralCategory::ModifierLetter => "Lm",
+            GeneralCategory::OtherLetter => "Lo",
+            GeneralCategory::NonspacingMark => "Mn",
+            GeneralCategory::SpacingMark => "Mc",
+            GeneralCategory::EnclosingMark => "Me",
+            GeneralCategory::DecimalNumber => "Nd",
+            GeneralCategory::LetterNumber => "Nl",
+            GeneralCategory::OtherNumber => "No",
+            GeneralCategory::ConnectorPunctuation => "Pc",
+            GeneralCategory::DashPunctuation => "Pd",
+            GeneralCategory::OpenPunctuation => "Ps",
+            GeneralCategory::ClosePunctuation => "Pe",
+            GeneralCategory::InitialPunctuation => "Pi",
+            GeneralCategory::FinalPunctuation => "Pf",
+            GeneralCategory::OtherPunctuation => "Po",
+            GeneralCategory::MathSymbol => "Sm",
+            GeneralCategory::CurrencySymbol => "Sc",
+            GeneralCategory::ModifierSymbol => "Sk",
+            GeneralCategory::OtherSymbol => "So",
+            GeneralCategory::SpaceSeparator => "Zs",
+            GeneralCategory::LineSeparator => "Zl",
+            GeneralCategory::ParagraphSeparator => "Zp",
+            GeneralCategory::Control => "Cc",
+            GeneralCategory::Format => "Cf",
+            GeneralCategory::Surrogate => "Cs",
+            GeneralCategory::PrivateUse => "Co",
+            GeneralCategory::Unassigned => "Cn",
         }
     }
 
-    /// Human-readable description of the property value.
-    // TODO: Needs to be improved by returning long-name with underscores replaced by space.
+    /// The *long name* of the property value.
+    pub fn long_name(&self) -> &'static str {
+        match *self {
+            GeneralCategory::UppercaseLetter => "Uppercase_Letter",
+            GeneralCategory::LowercaseLetter => "Lowercase_Letter",
+            GeneralCategory::TitlecaseLetter => "Titlecase_Letter",
+            GeneralCategory::ModifierLetter => "Modifier_Letter",
+            GeneralCategory::OtherLetter => "Other_Letter",
+            GeneralCategory::NonspacingMark => "Nonspacing_Mark",
+            GeneralCategory::SpacingMark => "Spacing_Mark",
+            GeneralCategory::EnclosingMark => "Enclosing_Mark",
+            GeneralCategory::DecimalNumber => "Decimal_Number",
+            GeneralCategory::LetterNumber => "Letter_Number",
+            GeneralCategory::OtherNumber => "Other_Number",
+            GeneralCategory::ConnectorPunctuation => "Connector_Punctuation",
+            GeneralCategory::DashPunctuation => "Dash_Punctuation",
+            GeneralCategory::OpenPunctuation => "Open_Punctuation",
+            GeneralCategory::ClosePunctuation => "Close_Punctuation",
+            GeneralCategory::InitialPunctuation => "Initial_Punctuation",
+            GeneralCategory::FinalPunctuation => "Final_Punctuation",
+            GeneralCategory::OtherPunctuation => "Other_Punctuation",
+            GeneralCategory::MathSymbol => "Math_Symbol",
+            GeneralCategory::CurrencySymbol => "Currency_Symbol",
+            GeneralCategory::ModifierSymbol => "Modifier_Symbol",
+            GeneralCategory::OtherSymbol => "Other_Symbol",
+            GeneralCategory::SpaceSeparator => "Space_Separator",
+            GeneralCategory::LineSeparator => "Line_Separator",
+            GeneralCategory::ParagraphSeparator => "Paragraph_Separator",
+            GeneralCategory::Control => "Control",
+            GeneralCategory::Format => "Format",
+            GeneralCategory::Surrogate => "Surrogate",
+            GeneralCategory::PrivateUse => "Private_Use",
+            GeneralCategory::Unassigned => "Unassigned",
+        }
+    }
+
+    /// The *human-readable name* of the property value.
     #[inline]
-    pub fn display(&self) -> String {
-        format!("{:?}", self).to_owned()
+    pub fn human_name(&self) -> &'static str {
+        match *self {
+            GeneralCategory::UppercaseLetter => "Uppercase Letter",
+            GeneralCategory::LowercaseLetter => "Lowercase Letter",
+            GeneralCategory::TitlecaseLetter => "Titlecase Letter",
+            GeneralCategory::ModifierLetter => "Modifier Letter",
+            GeneralCategory::OtherLetter => "Other Letter",
+            GeneralCategory::NonspacingMark => "Nonspacing Mark",
+            GeneralCategory::SpacingMark => "Spacing Mark",
+            GeneralCategory::EnclosingMark => "Enclosing Mark",
+            GeneralCategory::DecimalNumber => "Decimal Number",
+            GeneralCategory::LetterNumber => "Letter Number",
+            GeneralCategory::OtherNumber => "Other Number",
+            GeneralCategory::ConnectorPunctuation => "Connector Punctuation",
+            GeneralCategory::DashPunctuation => "Dash Punctuation",
+            GeneralCategory::OpenPunctuation => "Open Punctuation",
+            GeneralCategory::ClosePunctuation => "Close Punctuation",
+            GeneralCategory::InitialPunctuation => "Initial Punctuation",
+            GeneralCategory::FinalPunctuation => "Final Punctuation",
+            GeneralCategory::OtherPunctuation => "Other Punctuation",
+            GeneralCategory::MathSymbol => "Math Symbol",
+            GeneralCategory::CurrencySymbol => "Currency Symbol",
+            GeneralCategory::ModifierSymbol => "Modifier Symbol",
+            GeneralCategory::OtherSymbol => "Other Symbol",
+            GeneralCategory::SpaceSeparator => "Space Separator",
+            GeneralCategory::LineSeparator => "Line Separator",
+            GeneralCategory::ParagraphSeparator => "Paragraph Separator",
+            GeneralCategory::Control => "Control",
+            GeneralCategory::Format => "Format",
+            GeneralCategory::Surrogate => "Surrogate",
+            GeneralCategory::PrivateUse => "Private Use",
+            GeneralCategory::Unassigned => "Unassigned",
+        }
     }
 }
 
@@ -300,7 +370,7 @@ impl Default for GeneralCategory {
 
 impl fmt::Display for GeneralCategory {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.display())
+        write!(f, "{}", self.human_name())
     }
 }
 
@@ -405,15 +475,26 @@ mod tests {
     }
 
     #[test]
-    fn test_display() {
-        //assert_eq!(format!("{}", GC::UppercaseLetter), "Uppercase Letter");
-        assert_eq!(format!("{}", GC::UppercaseLetter), "UppercaseLetter");
-        assert_eq!(format!("{}", GC::Unassigned), "Unassigned");
+    fn test_abbr_name() {
+        assert_eq!(GC::UppercaseLetter.abbr_name(), "Lu");
+        assert_eq!(GC::Unassigned.abbr_name(), "Cn");
     }
 
     #[test]
-    fn test_abbr_name() {
-        use super::abbr_names::*;
-        assert_eq!(Lu.abbr_name(), "Lu");
+    fn test_long_name() {
+        assert_eq!(GC::UppercaseLetter.long_name(), "Uppercase_Letter");
+        assert_eq!(GC::Unassigned.long_name(), "Unassigned");
+    }
+
+    #[test]
+    fn test_human_name() {
+        assert_eq!(GC::UppercaseLetter.human_name(), "Uppercase Letter");
+        assert_eq!(GC::Unassigned.human_name(), "Unassigned");
+    }
+
+    #[test]
+    fn test_display() {
+        assert_eq!(format!("{}", GC::UppercaseLetter), "Uppercase Letter");
+        assert_eq!(format!("{}", GC::Unassigned), "Unassigned");
     }
 }

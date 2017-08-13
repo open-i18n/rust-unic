@@ -28,8 +28,15 @@ pub trait EnumeratedCharProperty: Sized + CharProperty {
     /// Exhaustive list of all property values.
     fn all_values() -> &'static [Self];
 
-    /// Get *abbreviated name* of the property value
+    /// The *abbreviated name* of the property value.
     fn abbr_name(&self) -> &'static str;
+
+    /// The *long name* of the property value.
+    fn long_name(&self) -> &'static str;
+
+    /// The *human-readable name* of the property value.
+    fn human_name(&self) -> &'static str;
+
 }
 
 
@@ -45,6 +52,6 @@ impl NumericCharPropertyValue for u8 {}
 ///
 /// Examples: *Numeric_Value*, *Canonical_Combining_Class*
 pub trait NumericCharProperty<Value: NumericCharPropertyValue>: CharProperty {
-    /// Get numeric value for character property value
+    /// The numeric value for the property value.
     fn number(&self) -> Value;
 }
