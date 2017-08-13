@@ -29,7 +29,6 @@
 ///         RustName {
 ///             abbr => AbbrName,
 ///             long => Long_Name,
-///             // human is optional and may be included on _all_ traits or left off of _all_ traits
 ///             human => "&'static str that is a nicer presentation of the name",
 ///         }
 ///     }
@@ -53,6 +52,7 @@
 ///
 /// - Implements the `CharProperty` trait and appropriate range trait
 /// - Implements `FromStr` accepting either the abbr or long name, ascii case insensitive
+/// - Implements `Display` using the `human` string
 /// - Populates the module `abbr_names` with `pub use` bindings of variants to their abbr names
 /// - Populates the module `long_names` with `pub use` bindings of variants to their long names
 /// - Maintains all documentation comments and other `#[attributes]` as would be expected
