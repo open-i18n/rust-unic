@@ -216,19 +216,90 @@ impl CompleteCharProperty for BidiClass {
 
 
 impl Default for BidiClass {
+    #[inline]
     fn default() -> Self {
         BidiClass::LeftToRight
     }
 }
 
 
-use self::abbr_names::*;
+mod data {
+    use super::abbr_names::*;
+    pub const BIDI_CLASS_TABLE: &'static [(char, char, super::BidiClass)] =
+        include!("tables/bidi_class_values.rsv");
+}
 
-const BIDI_CLASS_TABLE: &'static [(char, char, BidiClass)] =
-    include!("tables/bidi_class_values.rsv");
 
-/// Represents the **Category** of the Unicode character property `Bidi_Class`,
-/// as demonstrated under "Table 4. Bidirectional Character Types".
+impl BidiClass {
+    /// Find the character *Bidi_Class* property value.
+    pub fn of(ch: char) -> BidiClass {
+        // UCD/extracted/DerivedBidiClass.txt: "All code points not explicitly listed
+        // for Bidi_Class have the value Left_To_Right (L)."
+        *data::BIDI_CLASS_TABLE.find_or(ch, &Default::default())
+    }
+
+    /// If the `BidiClass` has strong or explicit Left-to-Right direction.
+    #[inline]
+    pub fn category(&self) -> BidiClassCategory {
+        match *self {
+            BidiClass::LeftToRight | BidiClass::RightToLeft | BidiClass::ArabicLetter => {
+                BidiClassCategory::Strong
+            }
+
+            BidiClass::EuropeanNumber |
+            BidiClass::EuropeanSeparator |
+            BidiClass::EuropeanTerminator |
+            BidiClass::ArabicNumber |
+            BidiClass::CommonSeparator |
+            BidiClass::NonspacingMark |
+            BidiClass::BoundaryNeutral => BidiClassCategory::Weak,
+
+            BidiClass::ParagraphSeparator |
+            BidiClass::SegmentSeparator |
+            BidiClass::WhiteSpace |
+            BidiClass::OtherNeutral => BidiClassCategory::Neutral,
+
+            BidiClass::LeftToRightEmbedding |
+            BidiClass::LeftToRightOverride |
+            BidiClass::RightToLeftEmbedding |
+            BidiClass::RightToLeftOverride |
+            BidiClass::PopDirectionalFormat |
+            BidiClass::LeftToRightIsolate |
+            BidiClass::RightToLeftIsolate |
+            BidiClass::FirstStrongIsolate |
+            BidiClass::PopDirectionalIsolate => BidiClassCategory::ExplicitFormatting,
+        }
+    }
+
+    /// If the `BidiClass` has strong or explicit Left-to-Right direction.
+    #[inline]
+    pub fn is_ltr(&self) -> bool {
+        match *self {
+            BidiClass::LeftToRight |
+            BidiClass::LeftToRightEmbedding |
+            BidiClass::LeftToRightOverride |
+            BidiClass::LeftToRightIsolate => true,
+            _ => false,
+        }
+    }
+
+    /// If the `BidiClass` has strong or explicit Right-To-Left direction.
+    #[inline]
+    pub fn is_rtl(&self) -> bool {
+        match *self {
+            BidiClass::RightToLeft |
+            BidiClass::ArabicLetter |
+            BidiClass::RightToLeftEmbedding |
+            BidiClass::RightToLeftOverride |
+            BidiClass::RightToLeftIsolate => true,
+            _ => false,
+        }
+    }
+}
+
+
+/// Represents **Category** of Unicode character `Bidi_Class` property, as demostrated under "Table
+/// 4. Bidirectional Character Types".
 ///
 /// * <http://www.unicode.org/reports/tr9/#Table_Bidirectional_Character_Types>
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -244,46 +315,6 @@ pub enum BidiClassCategory {
 
     /// Everything else.
     Neutral,
-}
-
-impl BidiClass {
-    /// Find the character *Bidi_Class* property value.
-    pub fn of(ch: char) -> BidiClass {
-        // UCD/extracted/DerivedBidiClass.txt: "All code points not explicitly listed
-        // for Bidi_Class have the value Left_To_Right (L)."
-        *BIDI_CLASS_TABLE.find_or(ch, &Default::default())
-    }
-
-    /// If the `BidiClass` has strong or explicit Left-to-Right direction.
-    #[inline]
-    pub fn category(&self) -> BidiClassCategory {
-        match *self {
-            L | R | AL => BidiClassCategory::Strong,
-            EN | ES | ET | AN | CS | NSM | BN => BidiClassCategory::Weak,
-            B | S | WS | ON => BidiClassCategory::Neutral,
-            LRE | LRO | RLE | RLO | PDF | LRI | RLI | FSI | PDI => {
-                BidiClassCategory::ExplicitFormatting
-            }
-        }
-    }
-
-    /// If the `BidiClass` has strong or explicit Left-to-Right direction.
-    #[inline]
-    pub fn is_ltr(&self) -> bool {
-        match *self {
-            L | LRE | LRO | LRI => true,
-            _ => false,
-        }
-    }
-
-    /// If the `BidiClass` has strong or explicit Right-To-Left direction.
-    #[inline]
-    pub fn is_rtl(&self) -> bool {
-        match *self {
-            AL | R | RLE | RLO | RLI => true,
-            _ => false,
-        }
-    }
 }
 
 

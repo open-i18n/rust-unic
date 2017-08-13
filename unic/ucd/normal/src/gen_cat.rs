@@ -39,7 +39,6 @@ pub use self::mark::is_combining_mark;
 #[cfg(test)]
 mod tests {
     use std::char;
-
     use super::*;
 
     #[test]

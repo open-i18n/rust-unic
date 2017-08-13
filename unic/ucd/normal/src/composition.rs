@@ -12,34 +12,36 @@
 
 use unic_utils::CharDataTable;
 
-use decomposition_type::DecompositionType;
+pub mod data {
+    use DecompositionType;
+    use decomposition_type::long_names::*;
 
-// == Canonical Composition (C) ==
-const CANONICAL_COMPOSITION_MAPPING: &'static [(char, &'static [(char, char)])] =
-    include!("tables/canonical_composition_mapping.rsv");
+    pub const CANONICAL_COMPOSITION_MAPPING: &'static [(char, &'static [(char, char)])] =
+        include!("tables/canonical_composition_mapping.rsv");
+
+    pub const CANONICAL_DECOMPOSITION_MAPPING: &'static [(char, &'static [char])] =
+        include!("tables/canonical_decomposition_mapping.rsv");
+
+    pub const COMPATIBILITY_DECOMPOSITION_MAPPING: &'static [(
+        char,
+        (DecompositionType, &'static [char]),
+    )] = include!("tables/compatibility_decomposition_mapping.rsv");
+}
+
 
 /// Canonical Composition of the character.
 pub fn canonical_composition(c: char) -> Option<&'static ([(char, char)])> {
-    CANONICAL_COMPOSITION_MAPPING.find(c).map(|it| *it)
+    data::CANONICAL_COMPOSITION_MAPPING.find(c).map(|it| *it)
 }
-
-// == Canonical Decomposition (D) ==
-const CANONICAL_DECOMPOSITION_MAPPING: &'static [(char, &'static [char])] =
-    include!("tables/canonical_decomposition_mapping.rsv");
 
 /// Canonical Decomposition of the character.
 pub fn canonical_decomposition(c: char) -> Option<&'static [char]> {
-    CANONICAL_DECOMPOSITION_MAPPING.find(c).map(|it| *it)
+    data::CANONICAL_DECOMPOSITION_MAPPING.find(c).map(|it| *it)
 }
-
-// == Compatibility Decomposition (KD) ==
-use decomposition_type::long_names::*;
-pub const COMPATIBILITY_DECOMPOSITION_MAPPING: &'static [(
-    char,
-    (DecompositionType, &'static [char]),
-)] = include!("tables/compatibility_decomposition_mapping.rsv");
 
 /// Compatibility Decomposition of the character.
 pub fn compatibility_decomposition(c: char) -> Option<&'static [char]> {
-    COMPATIBILITY_DECOMPOSITION_MAPPING.find(c).map(|it| it.1)
+    data::COMPATIBILITY_DECOMPOSITION_MAPPING
+        .find(c)
+        .map(|it| it.1)
 }
