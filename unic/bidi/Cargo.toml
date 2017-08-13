@@ -29,4 +29,5 @@ unic-ucd-bidi = { path = "../ucd/bidi/", version = "0.5.0" }
 
 [dev-dependencies]
 serde_test = ">=0.8, <2.0"
+unic-char-property = { path = "../char/property/", version = "0.5.0" }
 unic-ucd-core = { path = "../ucd/core/", version = "0.5.0" }

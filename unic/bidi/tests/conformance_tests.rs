@@ -13,6 +13,7 @@
 
 
 extern crate unic_bidi;
+extern crate unic_char_property;
 
 
 use unic_bidi::{format_chars, level, BidiClass, BidiInfo, Level};
@@ -279,33 +280,9 @@ fn gen_char_from_bidi_class_abbr(bidi_class_abbr: &str) -> char {
 
 #[test]
 fn test_gen_char_from_bidi_class() {
-    use self::bidi_class::abbr_names::*;
+    use unic_char_property::EnumeratedCharProperty;
 
-    for &class in &[
-        AL,
-        AN,
-        B,
-        BN,
-        CS,
-        EN,
-        ES,
-        ET,
-        FSI,
-        L,
-        LRE,
-        LRI,
-        LRO,
-        NSM,
-        ON,
-        PDF,
-        PDI,
-        R,
-        RLE,
-        RLI,
-        RLO,
-        S,
-        WS,
-    ] {
+    for &class in BidiClass::all_values() {
         let bidi_class_abbr = class.abbr_name();
         let sample_char = gen_char_from_bidi_class_abbr(bidi_class_abbr);
         assert_eq!(BidiClass::of(sample_char), class);
