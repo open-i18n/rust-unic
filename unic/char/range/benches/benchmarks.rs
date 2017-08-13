@@ -13,7 +13,7 @@ fn forward_iteration(b: &mut test::Bencher) {
 
 #[bench]
 fn forward_iteration_baseline(b: &mut test::Bencher) {
-    b.iter(|| (0..0x110000).filter_map(char::from_u32).count())
+    b.iter(|| (0..0x11_0000).filter_map(char::from_u32).count())
 }
 
 #[bench]
@@ -23,7 +23,7 @@ fn reverse_iteration(b: &mut test::Bencher) {
 
 #[bench]
 fn reverse_iteration_baseline(b: &mut test::Bencher) {
-    b.iter(|| (0..0x110000).rev().filter_map(char::from_u32).count())
+    b.iter(|| (0..0x11_0000).rev().filter_map(char::from_u32).count())
 }
 
 #[bench]

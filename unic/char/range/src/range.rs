@@ -7,15 +7,20 @@ use CharIter;
 /// The most idiomatic way to construct this range is through the use of the `chars!` macro:
 ///
 /// ```
-/// # #[macro_use] extern crate unic_char_range;
-/// # use unic_char_range::*;
+/// #[macro_use] extern crate unic_char_range;
+/// use unic_char_range::CharRange;
+///
 /// # fn main() {
 /// assert_eq!(chars!('a'..='z'), CharRange::closed('a', 'z'));
 /// assert_eq!(chars!('a'..'z'), CharRange::open_right('a', 'z'));
 /// assert_eq!(chars!(..), CharRange::all());
 /// # }
 /// ```
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+///
+/// If constructed in reverse order, such that `self.high` is ordered before `self.low`,
+/// the range is empty. If you want to iterate in decreasing order, use `.iter().rev()`.
+/// All empty ranges are considered equal no matter the internal state.
+#[derive(Copy, Clone, Debug, Eq)]
 pub struct CharRange {
     /// The lowest character in this range (inclusive).
     pub low: char,
@@ -48,8 +53,6 @@ impl CharRange {
 
     /// Construct a half open (right) range of characters.
     ///
-    /// If `stop` is ordered before `start`, the resulting range will be empty.
-    ///
     /// # Example
     ///
     /// ```
@@ -66,8 +69,6 @@ impl CharRange {
     }
 
     /// Construct a half open (left) range of characters.
-    ///
-    /// If `stop` is ordered before `start`, the resulting range will be empty.
     ///
     /// # Example
     ///
@@ -86,8 +87,6 @@ impl CharRange {
 
     /// Construct a fully open range of characters.
     ///
-    /// If `stop` is ordered before `start`, the resulting range will be empty.
-    ///
     /// # Example
     ///
     /// ```
@@ -105,8 +104,6 @@ impl CharRange {
     }
 
     /// Construct a range of characters from bounds.
-    ///
-    /// If `stop` is ordered before `start`, the resulting range will be empty.
     pub fn bound(start: Bound<char>, stop: Bound<char>) -> CharRange {
         let start = if start == Bound::Unbounded {
             Bound::Included('\0')
@@ -156,6 +153,11 @@ impl CharRange {
         self.iter().len()
     }
 
+    /// Is this range empty?
+    pub fn is_empty(&self) -> bool {
+        self.low > self.high
+    }
+
     /// Create an iterator over this range.
     pub fn iter(&self) -> CharIter {
         (*self).into()
@@ -168,5 +170,11 @@ impl IntoIterator for CharRange {
 
     fn into_iter(self) -> CharIter {
         self.iter()
+    }
+}
+
+impl PartialEq<CharRange> for CharRange {
+    fn eq(&self, other: &CharRange) -> bool {
+        (self.is_empty() && other.is_empty()) || (self.low == other.low && self.high == other.high)
     }
 }

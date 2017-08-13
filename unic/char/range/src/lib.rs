@@ -5,8 +5,8 @@
 //! # Examples
 //!
 //! ```
-//! # #[macro_use] extern crate unic_char_range;
-//! # use unic_char_range::*;
+//! #[macro_use] extern crate unic_char_range;
+//!
 //! # fn main() {
 //! for character in chars!('a'..='z') {
 //!     // character is each character in the lowercase english alphabet in order
@@ -27,9 +27,9 @@
 //! - `fused`: impl the [`FusedIterator`] contract
 //! - `trusted-len`: impl the [`TrustedLen`] contract
 //!
-//! [is_empty](https://doc.rust-lang.org/std/iter/trait.ExactSizeIterator.html#method.is_empty)
-//! [`FusedIterator`](https://doc.rust-lang.org/std/iter/trait.FusedIterator.html)
-//! [`TrustedLen`](https://doc.rust-lang.org/std/iter/trait.TrustedLen.html)
+//! [is_empty]: https://doc.rust-lang.org/std/iter/trait.ExactSizeIterator.html#method.is_empty
+//! [`FusedIterator`]: https://doc.rust-lang.org/std/iter/trait.FusedIterator.html
+//! [`TrustedLen`]: https://doc.rust-lang.org/std/iter/trait.TrustedLen.html
 //!
 #![forbid(bad_style, missing_debug_implementations, unconditional_recursion)]
 #![deny(missing_docs, unsafe_code, unused, future_incompatible)]
