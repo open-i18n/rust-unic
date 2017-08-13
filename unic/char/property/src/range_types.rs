@@ -9,7 +9,7 @@
 // except according to those terms.
 
 
-//! Taxonomy and contracts for character property types: property range.
+//! Character Property Range types.
 
 
 use super::CharProperty;

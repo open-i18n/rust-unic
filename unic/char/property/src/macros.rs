@@ -111,6 +111,7 @@ macro_rules! char_property {
 }
 
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! __char_property_internal {
     // == Queue => Buffer == //
