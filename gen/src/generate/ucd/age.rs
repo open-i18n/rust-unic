@@ -74,7 +74,7 @@ impl FromStr for AgeData {
                     age_data.insert(
                         char,
                         format!(
-                            "Assigned(UnicodeVersion {{ major: {}, minor: {}, micro: {} }})",
+                            "UnicodeVersion {{ major: {}, minor: {}, micro: {} }}",
                             major,
                             minor,
                             micro,

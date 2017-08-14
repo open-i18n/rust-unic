@@ -43,4 +43,9 @@ mod range_types;
 
 
 pub use self::property::{CharProperty, PartialCharProperty, TotalCharProperty};
-pub use self::range_types::{EnumeratedCharProperty, NumericCharProperty, NumericCharPropertyValue};
+pub use self::range_types::{
+    CustomCharProperty,
+    EnumeratedCharProperty,
+    NumericCharProperty,
+    NumericCharPropertyValue,
+};

@@ -54,3 +54,16 @@ pub trait NumericCharProperty<Value: NumericCharPropertyValue>: CharProperty {
     /// The numeric value for the property value.
     fn number(&self) -> Value;
 }
+
+
+// == Custom Types ==
+
+/// A Character Property with custom values.
+///
+/// Custom values means any non-enumerated, non-numeric value.
+///
+/// Examples: *Age* property that returns a `UnicodeVersion` value.
+pub trait CustomCharProperty<Value>: CharProperty {
+    /// The actual (inner) value for the property value.
+    fn actual(&self) -> Value;
+}
