@@ -67,7 +67,7 @@ fn test_decomposition_type_conformance() {
                     .unwrap_or(low);
                 low..(high + 1)
             };
-            let exp_dt = Some(get_dt_from_name(fields[1]));
+            let exp_dt = Some(fields[1].parse().expect("Invalid Decomposition Type"));
 
             for codepoint in input_range {
                 // TODO: We should be safe to use from_u32_unsafe
@@ -124,29 +124,5 @@ fn test_decomposition_type_conformance() {
             failures.len() - 1,
             failures[failures.len() - 1],
         );
-    }
-}
-
-fn get_dt_from_name(name: &str) -> DT {
-    match name {
-        "Canonical" | "Can" => DT::Canonical,
-        "Compat" | "Com" => DT::Compat,
-        "Circle" | "Enc" => DT::Circle,
-        "Final" | "Fin" => DT::Final,
-        "Font" => DT::Font,
-        "Fraction" | "Fra" => DT::Fraction,
-        "Initial" | "Init" => DT::Initial,
-        "Isolated" | "Iso" => DT::Isolated,
-        "Medial" | "Med" => DT::Medial,
-        "Narrow" | "Nar" => DT::Narrow,
-        "Nobreak" | "Nb" => DT::Nobreak,
-        "None" => DT::None,
-        "Small" | "Sml" => DT::Small,
-        "Square" | "Sqr" => DT::Square,
-        "Sub" => DT::Sub,
-        "Super" | "Sup" => DT::Super,
-        "Vertical" | "Vert" => DT::Vertical,
-        "Wide" => DT::Wide,
-        &_ => panic!("Invalid Decomposition_Type name: {}", name),
     }
 }

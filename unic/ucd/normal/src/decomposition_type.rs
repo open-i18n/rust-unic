@@ -12,55 +12,147 @@
 
 //! Accessor for *Decomposition_Type* (dt) property
 
-use std::fmt;
-
 use unic_utils::CharDataTable;
-use unic_char_property::{CharProperty, EnumeratedCharProperty, PartialCharProperty};
+use unic_char_property::PartialCharProperty;
 
 use composition::{canonical_decomposition, COMPATIBILITY_DECOMPOSITION_MAPPING};
 use hangul;
 
+char_property! {
+    /// Represents the Unicode character
+    /// [*Decomposition_Type*](http://www.unicode.org/reports/tr44/#Decomposition_Type) property.
+    ///
+    /// * <http://www.unicode.org/reports/tr44/#Character_Decomposition_Mappings>
+    pub enum DecompositionType {
+        abbr => "dt";
+        long => "Decomposition_Type";
+        human => "Decomposition Type";
 
-/// Represents the Unicode character
-/// [*Decomposition_Type*](http://www.unicode.org/reports/tr44/#Decomposition_Type) property.
-///
-/// * <http://www.unicode.org/reports/tr44/#Character_Decomposition_Mappings>
-#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
-#[allow(missing_docs)]
-pub enum DecompositionType {
-    Canonical,
-    Compat,
-    Circle,
-    Final,
-    Font,
-    Fraction,
-    Initial,
-    Isolated,
-    Medial,
-    Narrow,
-    Nobreak,
-    None,
-    Small,
-    Square,
-    Sub,
-    Super,
-    Vertical,
-    Wide,
-}
+        #[allow(missing_docs)]
+        Canonical {
+            abbr => Can,
+            long => Canonical,
+            human => "Canonical",
+        }
 
+        /// Otherwise unspecified compatibility character
+        Compat {
+            abbr => Com,
+            long => Compat,
+            human => "Unspecified",
+        }
 
-impl CharProperty for DecompositionType {
-    fn prop_abbr_name() -> &'static str {
-        "dt"
+        /// Encircled form
+        Circle {
+            abbr => Enc,
+            long => Circle,
+            human => "Encircled",
+        }
+
+        /// Final presentation form (Arabic)
+        Final {
+            abbr => Fin,
+            long => Final,
+            human => "Arabic Final",
+        }
+
+        /// Font variant (for example, a blackletter form)
+        Font {
+            abbr => Font,
+            long => Font,
+            human => "Font Variant",
+        }
+
+        /// Vulgar fraction form
+        Fraction {
+            abbr => Fra,
+            long => Fraction,
+            human => "Vulgar Fraction",
+        }
+
+        /// Initial presentation form (Arabic)
+        Initial {
+            abbr => Init,
+            long => Initial,
+            human => "Arabic Initial",
+        }
+
+        /// Isolated presentation form (Arabic)
+        Isolated {
+            abbr => Iso,
+            long => Isolated,
+            human => "Arabic Isolated",
+        }
+
+        /// Medial presentation form (Arabic)
+        Medial {
+            abbr => Med,
+            long => Medial,
+            human => "Arabic Medial",
+        }
+
+        /// Narrow (or hankaku) compatibility character
+        Narrow {
+            abbr => Nar,
+            long => Narrow,
+            human => "Narrow",
+        }
+
+        /// No-break version of a space or hyphen
+        NoBreak {
+            abbr => Nb,
+            long => Nobreak,
+            human => "No-Break",
+        }
+
+        /// Small variant form (CNS compatibility)
+        Small {
+            abbr => Sml,
+            long => Small,
+            human => "Small",
+        }
+
+        /// CJK squared font variant
+        Square {
+            abbr => Sqr,
+            long => Square,
+            human => "CJK Squared",
+        }
+
+        /// Subscript form
+        Sub {
+            abbr => Sub,
+            long => Sub,
+            human => "Subscript",
+        }
+
+        /// Superscript form
+        Super {
+            abbr => Sup,
+            long => Super,
+            human => "Superscript",
+        }
+
+        /// Vertical layout presentation form
+        Vertical {
+            abbr => Vert,
+            long => Vertical,
+            human => "Vertical Layout",
+        }
+
+        /// Wide (or zenkaku) compatibility character
+        Wide {
+            abbr => Wide,
+            long => Wide,
+            human => "Wide",
+        }
     }
 
-    fn prop_long_name() -> &'static str {
-        "Decomposition_Type"
-    }
+    #[allow(missing_docs)]
+    pub mod abbr_names for abbr;
 
-    fn prop_human_name() -> &'static str {
-        "Decomposition Type"
-    }
+    #[allow(missing_docs)]
+    pub mod long_names for long;
 }
 
 
@@ -71,169 +163,21 @@ impl PartialCharProperty for DecompositionType {
 }
 
 
-impl EnumeratedCharProperty for DecompositionType {
-    fn all_values() -> &'static [Self] {
-        Self::all_values()
-    }
-
-    fn abbr_name(&self) -> &'static str {
-        self.abbr_name()
-    }
-
-    fn long_name(&self) -> &'static str {
-        self.long_name()
-    }
-
-    fn human_name(&self) -> &'static str {
-        self.human_name()
-    }
-}
-
-
-pub mod abbr_names {
-    pub use DecompositionType::Canonical as Can;
-    pub use DecompositionType::Compat as Com;
-    pub use DecompositionType::Circle as Enc;
-    pub use DecompositionType::Final as Fin;
-    pub use DecompositionType::Font;
-    pub use DecompositionType::Fraction as Fra;
-    pub use DecompositionType::Initial as Init;
-    pub use DecompositionType::Isolated as Iso;
-    pub use DecompositionType::Medial as Med;
-    pub use DecompositionType::Narrow as Nar;
-    pub use DecompositionType::Nobreak as Nb;
-    pub use DecompositionType::None;
-    pub use DecompositionType::Small as Sml;
-    pub use DecompositionType::Square as Sqr;
-    pub use DecompositionType::Sub;
-    pub use DecompositionType::Super as Sup;
-    pub use DecompositionType::Vertical as Vert;
-    pub use DecompositionType::Wide;
-}
-
-
-use self::DecompositionType::*;
-
-
 impl DecompositionType {
     /// Find the DecompositionType of a single char.
     pub fn of(ch: char) -> Option<DecompositionType> {
         // First, check for Hangul Syllables and other canonical decompositions
         if hangul::is_syllable(ch) || canonical_decomposition(ch).is_some() {
-            return Some(Canonical);
+            return Some(DecompositionType::Canonical);
         }
         COMPATIBILITY_DECOMPOSITION_MAPPING.find(ch).map(|it| it.0)
-    }
-
-    /// Exhaustive list of all `DecompositionType` property values.
-    pub fn all_values() -> &'static [DecompositionType] {
-        use DecompositionType::*;
-        const ALL_VALUES: &[DecompositionType] = &[
-            Canonical,
-            Compat,
-            Circle,
-            Final,
-            Font,
-            Fraction,
-            Initial,
-            Isolated,
-            Medial,
-            Narrow,
-            Nobreak,
-            None,
-            Small,
-            Square,
-            Sub,
-            Super,
-            Vertical,
-            Wide,
-        ];
-        ALL_VALUES
-    }
-
-    /// The *abbreviated name* of the property value.
-    pub fn abbr_name(&self) -> &'static str {
-        match *self {
-            DecompositionType::Canonical => "Can",
-            DecompositionType::Compat => "Com",
-            DecompositionType::Circle => "Enc",
-            DecompositionType::Final => "Fin",
-            DecompositionType::Font => "Font",
-            DecompositionType::Fraction => "Fra",
-            DecompositionType::Initial => "Init",
-            DecompositionType::Isolated => "Iso",
-            DecompositionType::Medial => "Med",
-            DecompositionType::Narrow => "Nar",
-            DecompositionType::Nobreak => "Nb",
-            DecompositionType::None => "None",
-            DecompositionType::Small => "Sml",
-            DecompositionType::Square => "Sqr",
-            DecompositionType::Sub => "Sub",
-            DecompositionType::Super => "Sup",
-            DecompositionType::Vertical => "Vert",
-            DecompositionType::Wide => "Wide",
-        }
-    }
-
-    /// The *long name* of the property value.
-    pub fn long_name(&self) -> &'static str {
-        match *self {
-            DecompositionType::Canonical => "Canonical",
-            DecompositionType::Compat => "Compat",
-            DecompositionType::Circle => "Circle",
-            DecompositionType::Final => "Final",
-            DecompositionType::Font => "Font",
-            DecompositionType::Fraction => "Fraction",
-            DecompositionType::Initial => "Initial",
-            DecompositionType::Isolated => "Isolated",
-            DecompositionType::Medial => "Medial",
-            DecompositionType::Narrow => "Narrow",
-            DecompositionType::Nobreak => "Nobreak",
-            DecompositionType::None => "None",
-            DecompositionType::Small => "Small",
-            DecompositionType::Square => "Square",
-            DecompositionType::Sub => "Sub",
-            DecompositionType::Super => "Super",
-            DecompositionType::Vertical => "Vertical",
-            DecompositionType::Wide => "Wide",
-        }
-    }
-
-    /// The *human-readable name* of the property value.
-    pub fn human_name(&self) -> &'static str {
-        match *self {
-            DecompositionType::Canonical => "Canonical",
-            DecompositionType::Compat => "Compat",
-            DecompositionType::Circle => "Circle",
-            DecompositionType::Final => "Final",
-            DecompositionType::Font => "Font",
-            DecompositionType::Fraction => "Fraction",
-            DecompositionType::Initial => "Initial",
-            DecompositionType::Isolated => "Isolated",
-            DecompositionType::Medial => "Medial",
-            DecompositionType::Narrow => "Narrow",
-            DecompositionType::Nobreak => "No-Break",
-            DecompositionType::None => "None",
-            DecompositionType::Small => "Small",
-            DecompositionType::Square => "Square",
-            DecompositionType::Sub => "Sub",
-            DecompositionType::Super => "Super",
-            DecompositionType::Vertical => "Vertical",
-            DecompositionType::Wide => "Wide",
-        }
-    }
-}
-
-
-impl fmt::Display for DecompositionType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.human_name())
     }
 }
 
 
 #[cfg(test)]
 mod tests {
+    use unic_char_property::EnumeratedCharProperty;
     use super::DecompositionType as DT;
 
     #[test]
@@ -248,7 +192,7 @@ mod tests {
     #[test]
     fn test_bmp() {
         // Compatibility
-        assert_eq!(DT::of('\u{a0}'), Some(DT::Nobreak));
+        assert_eq!(DT::of('\u{a0}'), Some(DT::NoBreak));
         assert_eq!(DT::of('\u{a8}'), Some(DT::Compat));
         assert_eq!(DT::of('\u{aa}'), Some(DT::Super));
         assert_eq!(DT::of('\u{af}'), Some(DT::Compat));
@@ -364,19 +308,19 @@ mod tests {
     #[test]
     fn test_abbr_name() {
         assert_eq!(DT::Canonical.abbr_name(), "Can");
-        assert_eq!(DT::Nobreak.abbr_name(), "Nb");
+        assert_eq!(DT::NoBreak.abbr_name(), "Nb");
     }
 
     #[test]
     fn test_long_name() {
         assert_eq!(DT::Canonical.long_name(), "Canonical");
-        assert_eq!(DT::Nobreak.long_name(), "Nobreak");
+        assert_eq!(DT::NoBreak.long_name(), "Nobreak");
     }
 
     #[test]
     fn test_human_name() {
         assert_eq!(DT::Canonical.human_name(), "Canonical");
-        assert_eq!(DT::Nobreak.human_name(), "No-Break");
+        assert_eq!(DT::NoBreak.human_name(), "No-Break");
     }
 
     #[test]

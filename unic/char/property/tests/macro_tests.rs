@@ -13,49 +13,39 @@
 extern crate unic_char_property;
 
 
-use unic_char_property::{CharProperty, PartialCharProperty};
+use unic_char_property::PartialCharProperty;
 
 
 char_property! {
     pub enum MyProp {
+        abbr => "mp";
+        long => "My_Prop";
+        human => "My Property";
+
         /// Required
-        AbbrVariant {
-            abbr => AV,
+        Variant1 {
+            abbr => V1,
+            long => Variant_1,
+            human => "Variant 1",
         }
+
         /// Required
-        LongVariant {
-            abbr => LV,
-            long => Long_Variant,
+        Variant2 {
+            abbr => V2,
+            long => Variant_2,
+            human => "Variant 2",
         }
+
         /// Required
-        DisplayVariant {
-            abbr => DV,
-            display => "The one and only DISPLAY VARIANT!",
-        }
-        /// Required
-        EmptyVariant {
-            abbr => EV,
+        Variant3 {
+            abbr => V3,
+            long => Variant_3,
+            human => "Variant 3",
         }
     }
 
-    pub mod abbr_names for abbr;
-    pub mod long_names for long;
-}
-
-
-// TODO: Impl by char_property!()
-impl CharProperty for MyProp {
-    fn prop_abbr_name() -> &'static str {
-        "myprop"
-    }
-
-    fn prop_long_name() -> &'static str {
-        "MyProp"
-    }
-
-    fn prop_human_name() -> &'static str {
-        "MyProp"
-    }
+    pub mod abbr for abbr;
+    pub mod long for long;
 }
 
 
@@ -70,33 +60,33 @@ impl PartialCharProperty for MyProp {
 fn basic_macro_use() {
     use unic_char_property::EnumeratedCharProperty;
 
-    assert_eq!(MyProp::AbbrVariant, abbr_names::AV);
-    assert_eq!(MyProp::LongVariant, abbr_names::LV);
-    assert_eq!(MyProp::DisplayVariant, abbr_names::DV);
-    assert_eq!(MyProp::EmptyVariant, abbr_names::EV);
+    assert_eq!(MyProp::Variant1, abbr::V1);
+    assert_eq!(MyProp::Variant2, abbr::V2);
+    assert_eq!(MyProp::Variant3, abbr::V3);
 
-    assert_eq!(MyProp::LongVariant, long_names::Long_Variant);
+    assert_eq!(MyProp::Variant1, long::Variant_1);
+    assert_eq!(MyProp::Variant2, long::Variant_2);
+    assert_eq!(MyProp::Variant3, long::Variant_3);
 
-    assert_eq!(MyProp::AbbrVariant.abbr_name(), "AV");
-    assert_eq!(MyProp::LongVariant.abbr_name(), "LV");
-    assert_eq!(MyProp::DisplayVariant.abbr_name(), "DV");
-    assert_eq!(MyProp::EmptyVariant.abbr_name(), "EV");
+    assert_eq!(MyProp::Variant1.abbr_name(), "V1");
+    assert_eq!(MyProp::Variant2.abbr_name(), "V2");
+    assert_eq!(MyProp::Variant3.abbr_name(), "V3");
 
-    assert_eq!(format!("{}", MyProp::AbbrVariant), "AV");
-    assert_eq!(format!("{}", MyProp::LongVariant), "Long Variant");
-    assert_eq!(
-        format!("{}", MyProp::DisplayVariant),
-        "The one and only DISPLAY VARIANT!"
-    );
-    assert_eq!(format!("{}", MyProp::EmptyVariant), "EV");
+    assert_eq!(MyProp::Variant1.long_name(), "Variant_1");
+    assert_eq!(MyProp::Variant2.long_name(), "Variant_2");
+    assert_eq!(MyProp::Variant3.long_name(), "Variant_3");
+
+    assert_eq!(MyProp::Variant1.human_name(), "Variant 1");
+    assert_eq!(MyProp::Variant2.human_name(), "Variant 2");
+    assert_eq!(MyProp::Variant3.human_name(), "Variant 3");
 }
 
 #[test]
 fn fromstr_ignores_case() {
-    use abbr_names::LV;
+    use abbr::V1;
 
-    assert_eq!("long_variant".parse(), Ok(LV));
-    assert_eq!("lOnG_vArIaNt".parse(), Ok(LV));
-    assert_eq!("LoNg_VaRiAnT".parse(), Ok(LV));
-    assert_eq!("LONG_VARIANT".parse(), Ok(LV));
+    assert_eq!("variant_1".parse(), Ok(V1));
+    assert_eq!("VaRiAnT_1".parse(), Ok(V1));
+    assert_eq!("vArIaNt_1".parse(), Ok(V1));
+    assert_eq!("VARIANT_1".parse(), Ok(V1));
 }

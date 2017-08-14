@@ -33,7 +33,7 @@ pub fn canonical_decomposition(c: char) -> Option<&'static [char]> {
 }
 
 // == Compatibility Decomposition (KD) ==
-use DecompositionType::*;
+use decomposition_type::long_names::*;
 pub const COMPATIBILITY_DECOMPOSITION_MAPPING: &'static [(
     char,
     (DecompositionType, &'static [char]),

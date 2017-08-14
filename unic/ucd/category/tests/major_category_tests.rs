@@ -9,9 +9,11 @@
 // except according to those terms.
 
 
+extern crate unic_char_property;
 extern crate unic_ucd_category;
 
 
+use unic_char_property::EnumeratedCharProperty;
 use unic_ucd_category::GeneralCategory;
 
 
