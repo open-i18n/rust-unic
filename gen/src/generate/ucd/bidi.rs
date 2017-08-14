@@ -9,7 +9,7 @@
 // except according to those terms.
 
 use std::char;
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::Display;
 use std::fs::File;
 use std::io::{self, Write};
@@ -18,14 +18,17 @@ use std::path::Path;
 use super::{UnicodeData, UnicodeDataEntry, UnicodeVersion};
 
 use generate::PREAMBLE;
-use generate::tables::ToRangeCharTable;
+use generate::tables::{ToRangeCharSet, ToRangeCharTable};
+
+
+// == Bidi_Class ==
 
 #[derive(Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
-struct BidiData<'a>(BTreeMap<char, &'a str>);
+struct BidiClassData<'a>(BTreeMap<char, &'a str>);
 
-impl<'a> BidiData<'a> {
+impl<'a> BidiClassData<'a> {
     fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
-        let BidiData(ref map) = *self;
+        let BidiClassData(ref map) = *self;
         let mut file = File::create(dir.as_ref().join("bidi_class_values.rsv"))?;
         writeln!(
             file,
@@ -37,7 +40,7 @@ impl<'a> BidiData<'a> {
     }
 }
 
-impl<'a, I> From<I> for BidiData<'a>
+impl<'a, I> From<I> for BidiClassData<'a>
 where
     I: Iterator<Item = &'a UnicodeDataEntry>,
 {
@@ -74,7 +77,37 @@ where
             }
         }
 
-        BidiData(map)
+        BidiClassData(map)
+    }
+}
+
+
+// == Bidi_Mirrored ==
+
+struct BidiMirroredData(BTreeSet<char>);
+
+impl BidiMirroredData {
+    fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
+        let mut file = File::create(dir.as_ref().join("bidi_mirrored.rsv"))?;
+        writeln!(file, "{}\n{}", PREAMBLE, self.0.to_range_char_set())
+    }
+}
+
+impl<'a, I> From<I> for BidiMirroredData
+where
+    I: Iterator<Item = &'a UnicodeDataEntry>,
+{
+    fn from(it: I) -> Self {
+        let mut set = BTreeSet::new();
+
+        #[cfg_attr(rustfmt, rustfmt_skip)]
+        for &UnicodeDataEntry { character, bidi_mirrored, .. } in it {
+            if bidi_mirrored {
+                set.insert(character);
+            }
+        }
+
+        BidiMirroredData(set)
     }
 }
 
@@ -87,6 +120,7 @@ pub fn generate<P: AsRef<Path>>(
     println!("> unic::ucd::bidi::tables::unicode_version");
     version.emit(&dir)?;
     println!("> unic::ucd::bidi::tables::bidi_class_values");
-    BidiData::from(data.iter()).emit(dir)?;
+    BidiClassData::from(data.iter()).emit(&dir)?;
+    BidiMirroredData::from(data.iter()).emit(&dir)?;
     Ok(())
 }

@@ -18,7 +18,7 @@ use std::str::FromStr;
 use super::{UnicodeData, UnicodeDataEntry, UnicodeVersion};
 
 use generate::PREAMBLE;
-use generate::tables::{ToRangeCharSet, ToRangeCharTable, ToDirectCharTable};
+use generate::tables::{ToDirectCharTable, ToRangeCharSet, ToRangeCharTable};
 use generate::capitalize;
 
 use regex::Regex;
