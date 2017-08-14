@@ -13,7 +13,7 @@ use std::fmt;
 
 pub use unic_ucd_core::UnicodeVersion;
 use unic_utils::CharDataTable;
-use unic_char_property::{CharProperty, CompleteCharProperty};
+use unic_char_property::{CharProperty, TotalCharProperty};
 
 
 /// Represents values of the Unicode character property
@@ -57,7 +57,7 @@ impl CharProperty for Age {
 }
 
 
-impl CompleteCharProperty for Age {
+impl TotalCharProperty for Age {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }

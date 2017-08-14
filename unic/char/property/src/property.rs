@@ -45,14 +45,14 @@ pub trait PartialCharProperty: Copy {
 // See: <https://github.com/rust-lang/rust/issues/43777>
 // See: <https://github.com/rust-lang/rust/issues/43784>
 // TODO: Drop extra super-traits after the bugs are fixed.
-//pub trait CompleteCharProperty: PartialCharProperty + Default {
-pub trait CompleteCharProperty: PartialCharProperty + Copy + Default {
+//pub trait TotalCharProperty: PartialCharProperty + Default {
+pub trait TotalCharProperty: PartialCharProperty + Copy + Default {
     /// The property value for the character.
     fn of(ch: char) -> Self;
 }
 
-impl<T: CompleteCharProperty> PartialCharProperty for T {
+impl<T: TotalCharProperty> PartialCharProperty for T {
     fn of(ch: char) -> Option<Self> {
-        Some(<Self as CompleteCharProperty>::of(ch))
+        Some(<Self as TotalCharProperty>::of(ch))
     }
 }

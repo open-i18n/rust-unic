@@ -11,7 +11,7 @@
 
 
 use unic_utils::CharDataTable;
-use unic_char_property::CompleteCharProperty;
+use unic_char_property::TotalCharProperty;
 
 
 char_property! {
@@ -208,7 +208,7 @@ char_property! {
 }
 
 
-impl CompleteCharProperty for BidiClass {
+impl TotalCharProperty for BidiClass {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }

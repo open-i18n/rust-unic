@@ -40,7 +40,7 @@
 ///     pub mod long_names for long;
 /// }
 ///
-/// // We also need to impl `PartialCharProperty` or `CompleteCharProperty` manually.
+/// // We also need to impl `PartialCharProperty` or `TotalCharProperty` manually.
 /// # impl unic_char_property::PartialCharProperty for MyProp {
 /// #     fn of(_: char) -> Option<Self> { None }
 /// # }
