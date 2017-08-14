@@ -15,7 +15,7 @@
 use unic_utils::CharDataTable;
 use unic_char_property::PartialCharProperty;
 
-use composition::{canonical_decomposition, COMPATIBILITY_DECOMPOSITION_MAPPING};
+use composition::{canonical_decomposition, data};
 use hangul;
 
 char_property! {
@@ -164,13 +164,15 @@ impl PartialCharProperty for DecompositionType {
 
 
 impl DecompositionType {
-    /// Find the DecompositionType of a single char.
+    /// Find the DecompositionType of the character.
     pub fn of(ch: char) -> Option<DecompositionType> {
         // First, check for Hangul Syllables and other canonical decompositions
         if hangul::is_syllable(ch) || canonical_decomposition(ch).is_some() {
             return Some(DecompositionType::Canonical);
         }
-        COMPATIBILITY_DECOMPOSITION_MAPPING.find(ch).map(|it| it.0)
+        data::COMPATIBILITY_DECOMPOSITION_MAPPING
+            .find(ch)
+            .map(|it| it.0)
     }
 }
 
