@@ -105,14 +105,6 @@ char_property! {
             human => "No-Break",
         }
 
-        // TODO: Is this used?
-        #[allow(missing_docs)]
-        None {
-            abbr => None,
-            long => None,
-            human => "None",
-        }
-
         /// Small variant form (CNS compatibility)
         Small {
             abbr => Sml,
@@ -124,7 +116,7 @@ char_property! {
         Square {
             abbr => Sqr,
             long => Square,
-            human => "Squared",
+            human => "CJK Squared",
         }
 
         /// Subscript form
