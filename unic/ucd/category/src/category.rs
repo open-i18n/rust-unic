@@ -10,7 +10,7 @@
 
 
 use unic_utils::CharDataTable;
-use unic_char_property::CompleteCharProperty;
+use unic_char_property::TotalCharProperty;
 
 char_property! {
     /// Represents the Unicode Character
@@ -240,7 +240,7 @@ char_property! {
 }
 
 
-impl CompleteCharProperty for GeneralCategory {
+impl TotalCharProperty for GeneralCategory {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }

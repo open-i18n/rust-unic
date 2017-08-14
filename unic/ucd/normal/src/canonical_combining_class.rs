@@ -18,7 +18,7 @@
 use std::fmt;
 
 use unic_utils::CharDataTable;
-use unic_char_property::{CharProperty, CompleteCharProperty, NumericCharProperty};
+use unic_char_property::{CharProperty, NumericCharProperty, TotalCharProperty};
 
 
 /// Represents *Canonical_Combining_Class* property of a Unicode character.
@@ -43,7 +43,7 @@ impl CharProperty for CanonicalCombiningClass {
 }
 
 
-impl CompleteCharProperty for CanonicalCombiningClass {
+impl TotalCharProperty for CanonicalCombiningClass {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }
