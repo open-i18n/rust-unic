@@ -53,7 +53,7 @@ impl TotalCharProperty for CanonicalCombiningClass {
 impl NumericCharProperty<u8> for CanonicalCombiningClass {
     /// Get numeric value for character property value
     fn number(&self) -> u8 {
-        self.number()
+        Self::number(self)
     }
 }
 

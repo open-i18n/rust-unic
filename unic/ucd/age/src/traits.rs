@@ -15,12 +15,12 @@ use super::Age;
 /// Methods for character age property.
 pub trait CharAge {
     /// Get `Age` of the character.
-    fn age(self) -> Age;
+    fn age(self) -> Option<Age>;
 }
 
 impl CharAge for char {
     #[inline]
-    fn age(self) -> Age {
+    fn age(self) -> Option<Age> {
         Age::of(self)
     }
 }
@@ -30,33 +30,33 @@ impl CharAge for char {
 mod tests {
     use unic_ucd_core::UnicodeVersion;
 
-    use super::{Age, CharAge};
+    use super::CharAge;
 
     #[test]
     fn test_char_age() {
         assert_eq!(
-            '\u{0000}'.age(),
-            Age::Assigned(UnicodeVersion {
+            '\u{0000}'.age().unwrap().actual(),
+            UnicodeVersion {
                 major: 1,
                 minor: 1,
                 micro: 0,
-            })
+            }
         );
         assert_eq!(
-            '\u{0041}'.age(),
-            Age::Assigned(UnicodeVersion {
+            '\u{0041}'.age().unwrap().actual(),
+            UnicodeVersion {
                 major: 1,
                 minor: 1,
                 micro: 0,
-            })
+            }
         );
         assert_eq!(
-            '\u{10ffff}'.age(),
-            Age::Assigned(UnicodeVersion {
+            '\u{10ffff}'.age().unwrap().actual(),
+            UnicodeVersion {
                 major: 2,
                 minor: 0,
                 micro: 0,
-            })
+            }
         );
     }
 }

@@ -157,17 +157,17 @@ fn main() {
 
     // Age
 
-    assert_eq!(Age::of('A'), Age::Assigned(UnicodeVersion { major: 1, minor: 1, micro: 0 }));
-    assert_eq!(Age::of('\u{A0000}'), Age::Unassigned);
+    assert_eq!(Age::of('A').unwrap().actual(), UnicodeVersion { major: 1, minor: 1, micro: 0 });
+    assert_eq!(Age::of('\u{A0000}'), None);
     assert_eq!(
-        Age::of('\u{10FFFF}'),
-        Age::Assigned(UnicodeVersion { major: 2, minor: 0, micro: 0 })
+        Age::of('\u{10FFFF}').unwrap().actual(),
+        UnicodeVersion { major: 2, minor: 0, micro: 0 }
     );
 
-    if let Some(uni_ver) = '🦊'.age().assigned() {
-        assert_eq!(uni_ver.major, 9);
-        assert_eq!(uni_ver.minor, 0);
-        assert_eq!(uni_ver.micro, 0);
+    if let Some(age) = '🦊'.age() {
+        assert_eq!(age.actual().major, 9);
+        assert_eq!(age.actual().minor, 0);
+        assert_eq!(age.actual().micro, 0);
     }
 
     // Bidi

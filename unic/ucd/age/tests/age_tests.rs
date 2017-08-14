@@ -13,27 +13,29 @@ extern crate unic_ucd_age;
 extern crate unic_ucd_core;
 extern crate unic_utils;
 
+
 use unic_ucd_age::{Age, UnicodeVersion, UNICODE_VERSION};
 use unic_utils::iter_all_chars;
+
 
 /// Character *assignement* values always have Unicode Micro (Update) Version value of zero (`0`).
 #[test]
 fn test_assigned_age_micro_value() {
     for ch in iter_all_chars() {
-        if let Some(uni_ver) = Age::of(ch).assigned() {
-            assert_eq!(uni_ver.micro, 0);
+        if let Some(age) = Age::of(ch) {
+            assert_eq!(age.actual().micro, 0);
         }
     }
 }
 
-/// The *earliest* value for this property is `UnicodeVersion { major: 1, minor: 1, micro: 0 }`,
-/// because of the massive changes for the merger of the Unicode Stanrda with ISO 10646.
+/// The *earliest* (largest) value for this property is `UnicodeVersion { major: 1, minor: 1, micro:
+/// 0 }`, because of the massive changes for the merger of the Unicode Standard with ISO 10646.
 #[test]
 fn test_earliest_assigned_age() {
     for ch in iter_all_chars() {
-        if let Some(uni_ver) = Age::of(ch).assigned() {
+        if let Some(age) = Age::of(ch) {
             assert!(
-                uni_ver >= UnicodeVersion {
+                age.actual() >= UnicodeVersion {
                     major: 1,
                     minor: 1,
                     micro: 0,
@@ -43,13 +45,13 @@ fn test_earliest_assigned_age() {
     }
 }
 
-/// The *latest* value for this property is always equal to or less than `UNICODE_VERSION`. (Only
-/// not equal when `UNICODE_VERSION` has non-zero *micro* value.)
+/// The *latest* (smallest) value for this property is always equal to or greater than
+/// `UNICODE_VERSION`. (Only not equal when `UNICODE_VERSION` has non-zero *micro* value.)
 #[test]
 fn test_latest_assigned_age() {
     for ch in iter_all_chars() {
-        if let Some(uni_ver) = Age::of(ch).assigned() {
-            assert!(uni_ver <= UNICODE_VERSION);
+        if let Some(age) = Age::of(ch) {
+            assert!(age.actual() <= UNICODE_VERSION);
         }
     }
 }
