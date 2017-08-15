@@ -1,0 +1,41 @@
+// Copyright 2017 The UNIC Project Developers.
+//
+// See the COPYRIGHT file at the top-level directory of this distribution.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+
+use std::fmt;
+
+use unic_utils::CharDataTable;
+
+
+#[derive(Copy, Clone, Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
+pub struct Name {
+    pieces: &'static [&'static str],
+}
+
+impl Name {
+    pub fn of(ch: char) -> Option<Name> {
+        data::NAMES.find(ch).map(|&pieces| Name { pieces })
+    }
+
+    pub fn to_string(&self) -> String {
+        self.pieces.join(" ")
+    }
+}
+
+impl fmt::Display for Name {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.to_string())
+    }
+}
+
+mod data {
+    include!("tables/name_values.rs");
+    pub const NAMES: &[(char, &[&str])] = include!("tables/name_map.rsv");
+}
