@@ -39,3 +39,19 @@ mod data {
     include!("tables/name_values.rs");
     pub const NAMES: &[(char, &[&str])] = include!("tables/name_map.rsv");
 }
+
+
+#[cfg(test)]
+mod test {
+    use super::Name;
+    #[test]
+    fn basic_tests() {
+        assert_eq!(
+            Name::of('A').expect("No name for A").to_string(),
+            "LATIN CAPITAL LETTER A"
+        );
+        assert_eq!(Name::of('\u{10FFFF}'), None);
+
+        assert!(Name::of('A') < Name::of('B'));
+    }
+}
