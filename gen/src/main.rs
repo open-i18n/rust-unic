@@ -69,9 +69,7 @@ fn main() {
 
     if generate {
         if components.contains(&"idna") {
-            // generate::idna::generate().expect("Failed to generate Idna tables");
-            use std::io::Write;
-            writeln!(std::io::stderr(), "Use Python generation for idna").unwrap();
+             generate::idna::generate().expect("Failed to generate Idna tables");
         }
         if components.contains(&"ucd") {
             generate::ucd::generate().expect("Failed to generate UCD tables");
