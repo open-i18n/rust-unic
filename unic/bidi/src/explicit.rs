@@ -43,7 +43,6 @@ pub fn compute(
 
     for (i, c) in text.char_indices() {
         match original_classes[i] {
-
             // Rules X2-X5c
             RLE | LRE | RLO | LRO | RLI | LRI | FSI => {
                 let last_level = stack.last().level;

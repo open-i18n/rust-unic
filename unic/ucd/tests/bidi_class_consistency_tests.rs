@@ -31,7 +31,6 @@ use unic_utils::iter_all_chars;
 fn test_from_bidi_class() {
     for cp in iter_all_chars() {
         match BC::of(cp) {
-
             // == Strong ==
 
             // <http://www.unicode.org/reports/tr9/#L>

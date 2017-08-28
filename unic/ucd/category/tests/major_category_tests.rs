@@ -29,7 +29,6 @@ fn test_general_category_major_groups() {
                 "GC: `{:?}`",
                 gc
             );
-
         } else if gc.is_letter() {
             assert!(
                 !gc.is_mark() && !gc.is_number() && !gc.is_punctuation() && !gc.is_symbol() &&
@@ -37,7 +36,6 @@ fn test_general_category_major_groups() {
                 "GC: `{:?}`",
                 gc
             );
-
         } else if gc.is_mark() {
             assert!(
                 !gc.is_number() && !gc.is_punctuation() && !gc.is_symbol() && !gc.is_separator() &&
@@ -45,30 +43,24 @@ fn test_general_category_major_groups() {
                 "GC: `{:?}`",
                 gc
             );
-
         } else if gc.is_number() {
             assert!(
                 !gc.is_punctuation() && !gc.is_symbol() && !gc.is_separator() && !gc.is_other(),
                 "GC: `{:?}`",
                 gc
             );
-
         } else if gc.is_punctuation() {
             assert!(
                 !gc.is_symbol() && !gc.is_separator() && !gc.is_other(),
                 "GC: `{:?}`",
                 gc
             );
-
         } else if gc.is_symbol() {
             assert!(!gc.is_separator() && !gc.is_other(), "GC: `{:?}`", gc);
-
         } else if gc.is_separator() {
             assert!(!gc.is_other(), "GC: `{:?}`", gc);
-
         } else {
             assert!(gc.is_other(), "GC: `{:?}`", gc);
-
         }
     }
 }
