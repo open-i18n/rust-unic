@@ -736,7 +736,6 @@ mod tests {
 
     #[test]
     fn test_reordered_levels() {
-
         // BidiTest:946 (LRI PDI)
         let text = "\u{2067}\u{2069}";
         assert_eq!(

@@ -101,7 +101,6 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
                 }
                 _ => {}
             }
-
         }
 
         // RTL label

@@ -33,7 +33,12 @@ impl<'a> NameData<'a> {
         let mut file = File::create(dir.as_ref().join("name_values.rs"))?;
         writeln!(file, "{}", PREAMBLE)?;
         for part in parts.iter() {
-            writeln!(file, "const {}: &str = \"{}\";", part.replace('-', "_"), part)?;
+            writeln!(
+                file,
+                "const {}: &str = \"{}\";",
+                part.replace('-', "_"),
+                part
+            )?;
         }
 
         let mut file = File::create(dir.as_ref().join("name_map.rsv"))?;
@@ -45,7 +50,8 @@ impl<'a> NameData<'a> {
                 write!(
                     f,
                     "&[{}]",
-                    record.pieces
+                    record
+                        .pieces
                         .iter()
                         .map(|s| s.replace('-', "_"))
                         .collect::<Vec<_>>()

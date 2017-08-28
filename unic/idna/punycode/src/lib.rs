@@ -121,7 +121,7 @@ pub fn decode(input: &str) -> Option<Vec<char>> {
             weight *= BASE - t;
             k += BASE;
             byte = match iter.next() {
-                None => return None,  // End of input before the end of this delta
+                None => return None, // End of input before the end of this delta
                 Some(byte) => byte,
             };
         }
@@ -233,10 +233,9 @@ pub fn encode(input: &[char]) -> Option<String> {
 
 #[inline]
 fn value_to_digit(value: u32) -> char {
-    #[cfg_attr(clippy, allow(char_lit_as_u8))]
     match value {
-        0...25 => (value as u8 + 'a' as u8) as char,  // a..z
-        26...35 => (value as u8 - 26 + '0' as u8) as char,  // 0..9
-        _ => panic!(),
+        0...25 => (value as u8 + b'a') as char, // a..=z
+        26...35 => (value as u8 - 26 + b'0') as char, // 0..=9
+        _ => panic!("Value larger than BASE: {}", value),
     }
 }
