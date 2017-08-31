@@ -19,6 +19,7 @@
 //! * <http://www.unicode.org/reports/tr46/#IDNA_Mapping_Table>
 
 extern crate unic_ucd_core;
+extern crate unic_utils;
 
 
 mod mapping;

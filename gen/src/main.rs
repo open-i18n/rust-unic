@@ -69,7 +69,7 @@ fn main() {
 
     if generate {
         if components.contains(&"idna") {
-             generate::idna::generate().expect("Failed to generate Idna tables");
+            generate::idna::generate().expect("Failed to generate Idna tables");
         }
         if components.contains(&"ucd") {
             generate::ucd::generate().expect("Failed to generate UCD tables");
