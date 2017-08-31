@@ -60,6 +60,8 @@ pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv
 /// for more information.
 pub fn compose(a: char, b: char) -> Option<char> {
     hangul::compose(a, b).or_else(|| {
-        canonical_composition(a).and_then(|table| table.find(b).cloned())
+        canonical_composition(a).and_then(|table| {
+            CharDataTable::<&'static char>::find(&table, b).cloned()
+        })
     })
 }
