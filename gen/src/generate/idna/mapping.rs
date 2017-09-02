@@ -65,11 +65,11 @@ impl IdnaMapping {
                 },
             )?;
             if let Some(ref chars) = line.mapping {
-                write!(file, "(&[")?;
+                write!(file, "(\"")?;
                 for char in chars.iter() {
-                    write!(file, "'{}',", char.escape_unicode())?;
+                    write!(file, "{}", char.escape_unicode())?;
                 }
-                write!(file, "])")?;
+                write!(file, "\")")?;
             }
             writeln!(file, "),")?;
         }
@@ -124,6 +124,13 @@ impl FromStr for IdnaMapping {
                             .map(|u| char::from_u32(u).unwrap())
                             .collect::<Vec<_>>()
                             .into_boxed_slice()
+                    }).or_else(|| {
+                        // ZERO WIDTH NON-JOINER & ZERO WIDTH JOINER have a zero-length deviation
+                        if matches!(&capture[3], "deviation" | "mapping") {
+                            Some(vec![].into_boxed_slice())
+                        } else {
+                            None
+                        }
                     }),
                     idna_2008_status: capture.get(5).map(|m| m.as_str().to_owned()),
                 })

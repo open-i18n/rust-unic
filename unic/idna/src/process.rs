@@ -28,9 +28,9 @@ fn map_char(codepoint: char, flags: Flags, output: &mut String, errors: &mut Vec
     match *Mapping::of(codepoint) {
         Mapping::Valid => output.push(codepoint),
         Mapping::Ignored => {}
-        Mapping::Mapped(ref slice) => output.push_str(slice.value()),
-        Mapping::Deviation(ref slice) => if flags.transitional_processing {
-            output.push_str(slice.value())
+        Mapping::Mapped(slice) => output.push_str(slice),
+        Mapping::Deviation(slice) => if flags.transitional_processing {
+            output.push_str(slice)
         } else {
             output.push(codepoint)
         },
@@ -44,11 +44,11 @@ fn map_char(codepoint: char, flags: Flags, output: &mut String, errors: &mut Vec
             }
             output.push(codepoint)
         }
-        Mapping::DisallowedStd3Mapped(ref slice) => {
+        Mapping::DisallowedStd3Mapped(slice) => {
             if flags.use_std3_ascii_rules {
                 errors.push(Error::DissallowedMappedInStd3);
             }
-            output.push_str(slice.value())
+            output.push_str(slice)
         }
     }
 }

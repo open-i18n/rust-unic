@@ -8,8 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![allow(dead_code)] // until full integration
-
 #[macro_use]
 extern crate clap;
 
@@ -17,7 +15,6 @@ extern crate futures;
 extern crate hyper;
 extern crate tokio_core;
 
-extern crate serde;
 #[macro_use]
 extern crate serde_derive;
 extern crate toml;
@@ -33,7 +30,7 @@ mod download;
 mod generate;
 
 /// Validate component target names passed in
-#[cfg_attr(rustfmt, allow(needless_pass_by_value))]
+#[cfg_attr(feature = "cargo-clippy", allow(needless_pass_by_value))]
 // This signature is enforced by clap
 fn validate_component_name(name: String) -> Result<(), String> {
     if matches!(name.as_str(), "idna" | "ucd" | "normal") {
@@ -69,9 +66,7 @@ fn main() {
 
     if generate {
         if components.contains(&"idna") {
-            // generate::idna::generate().expect("Failed to generate Idna tables");
-            use std::io::Write;
-            writeln!(std::io::stderr(), "Use Python generation for idna").unwrap();
+            generate::idna::generate().expect("Failed to generate Idna tables");
         }
         if components.contains(&"ucd") {
             generate::ucd::generate().expect("Failed to generate UCD tables");

@@ -50,13 +50,13 @@ where
             (0xFB50, 0xFDCF, "AL"),
             (0xFDF0, 0xFDFF, "AL"),
             (0xFE70, 0xFEFF, "AL"),
-            (0x1EE00, 0x1EEFF, "AL"),
+            (0x1_EE00, 0x1_EEFF, "AL"),
             (0x0590, 0x05FF, "R"),
             (0x07C0, 0x089F, "R"),
             (0xFB1D, 0xFB4F, "R"),
-            (0x10800, 0x10FFF, "R"),
-            (0x1E800, 0x1EDFF, "R"),
-            (0x1EF00, 0x1EFFF, "R"),
+            (0x1_0800, 0x1_0FFF, "R"),
+            (0x1_E800, 0x1_EDFF, "R"),
+            (0x1_EF00, 0x1_EFFF, "R"),
             (0x20A0, 0x20CF, "ET"),
         ];
         let mut map = BTreeMap::<char, &str>::new();

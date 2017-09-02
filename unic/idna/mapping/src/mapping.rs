@@ -10,7 +10,7 @@
 // except according to those terms.
 
 
-use std::cmp::Ordering;
+use unic_utils::CharDataTable;
 
 
 /// Represents the IDNA Mapping status of the Unicode character.
@@ -24,10 +24,10 @@ pub enum Mapping {
     Ignored,
 
     /// Replaced in the string.
-    Mapped(StringTableSlice),
+    Mapped(&'static str),
 
     /// Valid if *Nontransitional Processing*, or Mapped if Transitional Processing.
-    Deviation(StringTableSlice),
+    Deviation(&'static str),
 
     /// Not allowed, result in error.
     Disallowed,
@@ -36,53 +36,23 @@ pub enum Mapping {
     DisallowedStd3Valid,
 
     /// Disallowed if *UseSTD3ASCIIRules* flag is set, Mapped otherwise.
-    DisallowedStd3Mapped(StringTableSlice),
-}
-
-struct Range {
-    from: char,
-    to: char,
-    mapping: Mapping,
+    DisallowedStd3Mapped(&'static str),
 }
 
 
 use self::Mapping::*;
 
 #[cfg_attr(feature = "cargo-clippy", allow(unreadable_literal))]
-const MAP: &'static [Range] = include!("tables/idna_map.rsv");
-const MAP_STRING: &'static str = include!("tables/idna_map_string.rsv");
+const MAPPING: &[(char, char, Mapping)] = include!("tables/idna_mapping.rsv");
 
 
 impl Mapping {
     /// Get Mapping status of the character.
     pub fn of(ch: char) -> &'static Mapping {
-        let r = MAP.binary_search_by(|range| if ch > range.to {
-            Ordering::Less
-        } else if ch < range.from {
-            Ordering::Greater
-        } else {
-            Ordering::Equal
-        });
-        r.ok().map(|i| &MAP[i].mapping).unwrap()
+        MAPPING.find(ch).expect("Table is missing value")
     }
 }
 
-
-/// String target value of *mapped* mapping statuses.
-#[derive(Debug, PartialEq, Eq)]
-pub struct StringTableSlice {
-    byte_start: u16,
-    byte_len: u16,
-}
-
-impl StringTableSlice {
-    /// Return the string value.
-    pub fn value(&self) -> &'static str {
-        let start = self.byte_start as usize;
-        let len = self.byte_len as usize;
-        &MAP_STRING[start..(start + len)]
-    }
-}
 
 #[cfg(test)]
 mod tests {
@@ -94,28 +64,10 @@ mod tests {
 
         assert_eq!(*Mapping::of('\u{0}'), DisallowedStd3Valid);
         assert_eq!(*Mapping::of('-'), Valid);
-        assert_eq!(
-            *Mapping::of('A'),
-            Mapped(StringTableSlice {
-                byte_start: 0,
-                byte_len: 1,
-            })
-        );
+        assert_eq!(*Mapping::of('A'), Mapped("a"));
         assert_eq!(*Mapping::of('\u{80}'), Disallowed);
-        assert_eq!(
-            *Mapping::of('\u{a0}'),
-            DisallowedStd3Mapped(StringTableSlice {
-                byte_start: 26,
-                byte_len: 1,
-            })
-        );
+        assert_eq!(*Mapping::of('\u{a0}'), DisallowedStd3Mapped(" "));
         assert_eq!(*Mapping::of('\u{ad}'), Ignored);
-        assert_eq!(
-            *Mapping::of('\u{200c}'),
-            Deviation(StringTableSlice {
-                byte_start: 0,
-                byte_len: 0,
-            })
-        );
+        assert_eq!(*Mapping::of('\u{200c}'), Deviation(""));
     }
 }

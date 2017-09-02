@@ -156,7 +156,7 @@ impl FromStr for CompositionExclusions {
             let low = u32::from_str_radix(&capture[1], 16).unwrap();
             let high = capture
                 .get(2)
-                .map_or(low, |m| u32::from_str_radix(&m.as_str(), 16).unwrap());
+                .map_or(low, |m| u32::from_str_radix(m.as_str(), 16).unwrap());
             for point in low..(high + 1) {
                 if let Some(char) = char::from_u32(point) {
                     exclusions.insert(char);

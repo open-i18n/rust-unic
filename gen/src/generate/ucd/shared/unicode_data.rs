@@ -223,7 +223,7 @@ impl FromStr for UnicodeData {
         // @CAD97 picked one quarter of the full range because doubling capacity as needed
         // will never go out of the required range and this is a much smaller required allocation
         // for the near future -- for the next 4000 characters assigned.
-        let mut entries = Vec::with_capacity(0x44000);
+        let mut entries = Vec::with_capacity(0x4_4000);
         let mut start = None;
 
         for capture in REGEX.captures_iter(str) {
