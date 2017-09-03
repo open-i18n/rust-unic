@@ -9,28 +9,11 @@
 // except according to those terms.
 
 use std::collections::BTreeMap;
-use std::fmt;
+use std::fmt::{self, Write};
 
 use super::DisplayWrapper;
 
-/// A simple binary search array slice.
-///
-/// Output format:
-///
-/// ```text
-/// &[
-///     ('char', Value),
-///     ('char', Value),
-/// ]
-/// ```
-///
-/// Where
-///
-/// - `'char'` is a `char::escape_unicode` literal for the character
-/// - `Value` is the result of running `display_fn` over the associated value
-///
-/// It is guaranteed that the `'char'` of one entry will always be ordered before the `'char'` of
-/// the next range (such that the array slice is fit for a binary search).
+/// Create the source for a `CharDataTable`, using direct mappings from char to values
 pub trait ToSingleBSearchMap<T> {
     /// Convert this mapping to a `String`.
     fn to_single_bsearch_map<F>(&self, display_fn: F) -> String
@@ -44,17 +27,18 @@ impl<T> ToSingleBSearchMap<T> for BTreeMap<char, T> {
         F: Fn(&T, &mut fmt::Formatter) -> fmt::Result,
     {
         let entries = self.iter();
-        let mut out = String::from("&[\n");
+        let mut out = String::from("CharDataTable::Direct(&[\n");
 
         for (char, property) in entries {
-            out.push_str(&format!(
-                "    ('{}', {}),\n",
+            writeln!(
+                out,
+                "    ('{}', {}),",
                 char.escape_unicode(),
-                DisplayWrapper(property, &display_fn),
-            ));
+                DisplayWrapper(property, &display_fn)
+            ).expect("`String` `Write` failed");
         }
 
-        out.push_str("]");
+        out.push_str("])");
         out
     }
 }
@@ -77,14 +61,14 @@ mod test {
         assert_eq!(
             map.to_single_bsearch_map(Display::fmt),
             "\
-&[
+CharDataTable::Direct(&[
     ('\\u{61}', A),
     ('\\u{62}', B),
     ('\\u{63}', C),
     ('\\u{78}', X),
     ('\\u{79}', Y),
     ('\\u{7a}', Z),
-]"
+])"
         );
     }
 }

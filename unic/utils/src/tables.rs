@@ -10,20 +10,32 @@ pub enum CharDataTable<V: 'static> {
     #[doc(hidden)] Range(&'static [(CharRange, V)]),
 }
 
+impl<V> CharDataTable<V> {
+    /// Does this table contain a mapping for a character?
+    pub fn contains(&self, needle: char) -> bool {
+        match *self {
+            CharDataTable::Direct(table) => table
+                .binary_search_by_key(&needle, |&(k, _)| k)
+                .is_ok(),
+            CharDataTable::Range(table) => table
+                .binary_search_by(|&(range, _)| range.cmp(needle))
+                .is_ok(),
+        }
+    }
+}
+
 impl<V: Copy> CharDataTable<V> {
     /// Find the associated data for a character in this table.
     pub fn find(&self, needle: char) -> Option<V> {
         match *self {
-            CharDataTable::Direct(table) => {
-                table.binary_search_by_key(&needle, |&(k, _)| k)
-                    .map(|idx| table[idx].1)
-                    .ok()
-            }
-            CharDataTable::Range(table) => {
-                table.binary_search_by(|&(range, _)| range.cmp(needle))
-                    .map(|idx| table[idx].1)
-                    .ok()
-            }
+            CharDataTable::Direct(table) => table
+                .binary_search_by_key(&needle, |&(k, _)| k)
+                .map(|idx| table[idx].1)
+                .ok(),
+            CharDataTable::Range(table) => table
+                .binary_search_by(|&(range, _)| range.cmp(needle))
+                .map(|idx| table[idx].1)
+                .ok(),
         }
     }
 }

@@ -9,26 +9,9 @@
 // except according to those terms.
 
 use std::collections::BTreeSet;
+use std::fmt::Write;
 
-/// A simple range-collapsing binary search array slice.
-///
-/// Output format:
-///
-/// ```text
-/// &[
-///     ('low', 'high'),
-///     ('low', 'high'),
-/// ]
-/// ```
-///
-/// Where
-///
-/// - `'low'` is a `char::escape_unicode` literal for the lowest character in the range
-/// - `'high'` is a `char::escape_unicode` literal for the highest character in the range
-///
-/// It is guaranteed that the `'high'` of one range will always be ordered before the `'low'` of
-/// the next range (such that the array slice is fit for a binary search). The ranges
-/// represented by `'low'` and `'high'` are inclusive on both ends.
+/// Create the source for a `CharDataTable` mapping to `()` for set inclusion of `char`.
 pub trait ToBSearchSet {
     /// Convert this set to a `String`
     fn to_bsearch_set(&self) -> String;
@@ -37,37 +20,35 @@ pub trait ToBSearchSet {
 impl ToBSearchSet for BTreeSet<char> {
     fn to_bsearch_set(&self) -> String {
         let mut entries = self.iter();
-        let mut out = String::from("&[\n");
+        let mut out = String::from("CharDataTable::Range(&[\n");
 
-        let first = entries.next();
-        if first.is_none() {
-            return out + "]";
-        }
+        if let Some(&low) = entries.next() {
+            let (mut low, mut high) = (low, low);
 
-        let mut low = first.unwrap();
-        let mut high = low;
+            let append_entry = |out: &mut String, low: char, high: char| {
+                writeln!(
+                    out,
+                    "    (chars!('{}'..='{}'), ()),",
+                    low.escape_unicode(),
+                    high.escape_unicode(),
+                ).expect("`String` `Write` failed");
+            };
 
-        let append_duple = |out: &mut String, a: char, b: char| {
-            out.push_str(&format!(
-                "    ('{}', '{}'),\n",
-                a.escape_unicode(),
-                b.escape_unicode(),
-            ));
-        };
-
-        for char in entries {
-            if (*char as u32) > (*high as u32 + 1) {
-                append_duple(&mut out, *low, *high);
-                low = char;
-                high = char;
-            } else {
-                assert_eq!(*char as u32, *high as u32 + 1);
-                high = char;
+            for &char in entries {
+                if (char as u32) > (high as u32 + 1) {
+                    append_entry(&mut out, low, high);
+                    low = char;
+                    high = char;
+                } else {
+                    assert_eq!(char as u32, high as u32 + 1);
+                    high = char;
+                }
             }
+
+            append_entry(&mut out, low, high);
         }
 
-        append_duple(&mut out, *low, *high);
-        out.push_str("]");
+        out.push_str("])");
         out
     }
 }
@@ -91,10 +72,10 @@ mod test {
         assert_eq!(
             set.to_bsearch_set(),
             "\
-&[
-    ('\\u{61}', '\\u{66}'),
-    ('\\u{78}', '\\u{7a}'),
-]"
+CharDataTable::Range(&[
+    (chars!('\\u{61}'..='\\u{66}'), ()),
+    (chars!('\\u{78}'..='\\u{7a}'), ()),
+])"
         );
     }
 }
