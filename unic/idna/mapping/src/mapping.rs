@@ -10,9 +10,6 @@
 // except according to those terms.
 
 
-use unic_utils::CharDataTable;
-
-
 /// Represents the IDNA Mapping status of the Unicode character.
 #[repr(u8)]
 #[derive(Debug, PartialEq, Eq)]
@@ -39,17 +36,19 @@ pub enum Mapping {
     DisallowedStd3Mapped(&'static str),
 }
 
+mod data {
+    use super::Mapping::*;
+    use unic_utils::CharDataTable;
 
-use self::Mapping::*;
-
-#[cfg_attr(feature = "cargo-clippy", allow(unreadable_literal))]
-const MAPPING: &[(char, char, Mapping)] = include!("tables/idna_mapping.rsv");
+    #[cfg_attr(feature = "cargo-clippy", allow(unreadable_literal))]
+    pub const MAPPING: CharDataTable<super::Mapping> = include!("tables/idna_mapping.rsv");
+}
 
 
 impl Mapping {
     /// Get Mapping status of the character.
     pub fn of(ch: char) -> &'static Mapping {
-        MAPPING.find(ch).expect("Table is missing value")
+        data::MAPPING.find(ch).expect("Table is missing value")
     }
 }
 

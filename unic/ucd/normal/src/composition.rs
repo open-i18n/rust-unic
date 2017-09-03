@@ -15,28 +15,27 @@ use unic_utils::CharDataTable;
 pub mod data {
     use DecompositionType;
     use decomposition_type::long_names::*;
+    use unic_utils::CharDataTable;
 
-    pub const CANONICAL_COMPOSITION_MAPPING: &'static [(char, &'static [(char, char)])] =
+    pub const CANONICAL_COMPOSITION_MAPPING: CharDataTable<CharDataTable<char>> =
         include!("tables/canonical_composition_mapping.rsv");
 
-    pub const CANONICAL_DECOMPOSITION_MAPPING: &'static [(char, &'static [char])] =
+    pub const CANONICAL_DECOMPOSITION_MAPPING: CharDataTable<&[char]> =
         include!("tables/canonical_decomposition_mapping.rsv");
 
-    pub const COMPATIBILITY_DECOMPOSITION_MAPPING: &'static [(
-        char,
-        (DecompositionType, &'static [char]),
-    )] = include!("tables/compatibility_decomposition_mapping.rsv");
+    pub const COMPATIBILITY_DECOMPOSITION_MAPPING: CharDataTable<(DecompositionType, &[char])> =
+        include!("tables/compatibility_decomposition_mapping.rsv");
 }
 
 
 /// Canonical Composition of the character.
-pub fn canonical_composition(c: char) -> Option<&'static ([(char, char)])> {
-    data::CANONICAL_COMPOSITION_MAPPING.find(c).map(|it| *it)
+pub fn canonical_composition(c: char) -> Option<CharDataTable<char>> {
+    data::CANONICAL_COMPOSITION_MAPPING.find(c)
 }
 
 /// Canonical Decomposition of the character.
 pub fn canonical_decomposition(c: char) -> Option<&'static [char]> {
-    data::CANONICAL_DECOMPOSITION_MAPPING.find(c).map(|it| *it)
+    data::CANONICAL_DECOMPOSITION_MAPPING.find(c)
 }
 
 /// Compatibility Decomposition of the character.

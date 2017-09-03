@@ -10,7 +10,6 @@
 // except according to those terms.
 
 
-use unic_utils::CharDataTable;
 use unic_char_property::TotalCharProperty;
 
 
@@ -215,6 +214,8 @@ impl TotalCharProperty for BidiClass {
 }
 
 
+// UCD/extracted/DerivedBidiClass.txt:
+// "All code points not explicitly listed for Bidi_Class have the value Left_To_Right (L)."
 impl Default for BidiClass {
     #[inline]
     fn default() -> Self {
@@ -225,7 +226,8 @@ impl Default for BidiClass {
 
 mod data {
     use super::abbr_names::*;
-    pub const BIDI_CLASS_TABLE: &'static [(char, char, super::BidiClass)] =
+    use unic_utils::CharDataTable;
+    pub const BIDI_CLASS_TABLE: CharDataTable<super::BidiClass> =
         include!("tables/bidi_class_values.rsv");
 }
 
@@ -233,9 +235,7 @@ mod data {
 impl BidiClass {
     /// Find the character *Bidi_Class* property value.
     pub fn of(ch: char) -> BidiClass {
-        // UCD/extracted/DerivedBidiClass.txt: "All code points not explicitly listed
-        // for Bidi_Class have the value Left_To_Right (L)."
-        *data::BIDI_CLASS_TABLE.find_or(ch, &Default::default())
+        data::BIDI_CLASS_TABLE.find_defaulting(ch)
     }
 
     /// If the `BidiClass` has strong or explicit Left-to-Right direction.

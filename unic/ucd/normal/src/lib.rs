@@ -30,6 +30,8 @@
 
 #[macro_use]
 extern crate unic_char_property;
+#[macro_use]
+extern crate unic_char_range;
 extern crate unic_ucd_core;
 extern crate unic_utils;
 
@@ -49,7 +51,6 @@ pub use decomposition::{decompose_canonical, decompose_compatible};
 pub use decomposition_type::DecompositionType;
 
 use unic_ucd_core::UnicodeVersion;
-use unic_utils::CharDataTable;
 
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data
@@ -60,8 +61,6 @@ pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv
 /// for more information.
 pub fn compose(a: char, b: char) -> Option<char> {
     hangul::compose(a, b).or_else(|| {
-        canonical_composition(a).and_then(|table| {
-            CharDataTable::<&'static char>::find(&table, b).cloned()
-        })
+        canonical_composition(a).and_then(|table| table.find(b))
     })
 }

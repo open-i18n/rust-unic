@@ -41,6 +41,8 @@ extern crate matches;
 
 #[macro_use]
 extern crate unic_char_property;
+#[macro_use]
+extern crate unic_char_range;
 extern crate unic_ucd_core;
 extern crate unic_utils;
 

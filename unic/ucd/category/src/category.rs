@@ -9,7 +9,6 @@
 // except according to those terms.
 
 
-use unic_utils::CharDataTable;
 use unic_char_property::TotalCharProperty;
 
 char_property! {
@@ -256,7 +255,8 @@ impl Default for GeneralCategory {
 
 mod data {
     use super::abbr_names::*;
-    pub const GENERAL_CATEGORY_TABLE: &'static [(char, char, super::GeneralCategory)] =
+    use unic_utils::CharDataTable;
+    pub const GENERAL_CATEGORY_TABLE: CharDataTable<super::GeneralCategory> =
         include!("tables/general_category.rsv");
 }
 
@@ -265,7 +265,7 @@ mod data {
 impl GeneralCategory {
     /// Find the `GeneralCategory` of a single char.
     pub fn of(ch: char) -> GeneralCategory {
-        *data::GENERAL_CATEGORY_TABLE.find_or(ch, &GeneralCategory::Unassigned)
+        data::GENERAL_CATEGORY_TABLE.find_defaulting(ch)
     }
 }
 

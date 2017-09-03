@@ -5,6 +5,7 @@ use unic_char_range::CharRange;
 /// A mapping from characters to some associated data.
 ///
 /// For the set case, use `()` as the associated value.
+#[derive(Copy, Clone, Debug)]
 pub enum CharDataTable<V: 'static> {
     #[doc(hidden)] Direct(&'static [(char, V)]),
     #[doc(hidden)] Range(&'static [(CharRange, V)]),

@@ -11,8 +11,6 @@
 
 use std::fmt;
 
-use unic_utils::CharDataTable;
-
 
 #[derive(Copy, Clone, Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct Name {
@@ -21,7 +19,7 @@ pub struct Name {
 
 impl Name {
     pub fn of(ch: char) -> Option<Name> {
-        data::NAMES.find(ch).map(|&pieces| Name { pieces })
+        data::NAMES.find(ch).map(|pieces| Name { pieces })
     }
 
     pub fn to_string(&self) -> String {
@@ -36,8 +34,9 @@ impl fmt::Display for Name {
 }
 
 mod data {
+    use unic_utils::CharDataTable;
     include!("tables/name_values.rs");
-    pub const NAMES: &[(char, &[&str])] = include!("tables/name_map.rsv");
+    pub const NAMES: CharDataTable<&[&str]> = include!("tables/name_map.rsv");
 }
 
 

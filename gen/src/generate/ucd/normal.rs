@@ -178,7 +178,7 @@ impl CanonicalCompositionData {
             "{}\n{}",
             PREAMBLE,
             self.0.to_single_bsearch_map(|val, f| {
-                write!(f, "&[")?;
+                write!(f, "CharDataTable::Direct(&[")?;
                 for pair in val.iter() {
                     write!(
                         f,
@@ -187,7 +187,7 @@ impl CanonicalCompositionData {
                         pair.1.escape_unicode(),
                     )?;
                 }
-                write!(f, "]")
+                write!(f, "])")
             }),
         )
     }
