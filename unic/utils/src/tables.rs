@@ -21,9 +21,9 @@ impl<V> CharDataTable<V> {
     /// Does this table contain a mapping for a character?
     pub fn contains(&self, needle: char) -> bool {
         match *self {
-            CharDataTable::Direct(table) => table
-                .binary_search_by_key(&needle, |&(k, _)| k)
-                .is_ok(),
+            CharDataTable::Direct(table) => {
+                table.binary_search_by_key(&needle, |&(k, _)| k).is_ok()
+            }
             CharDataTable::Range(table) => table
                 .binary_search_by(|&(range, _)| range.cmp(needle))
                 .is_ok(),
@@ -62,25 +62,21 @@ impl<'a, V: Copy> Iterator for CharDataTableIter<'a, V> {
 
     fn next(&mut self) -> Option<Self::Item> {
         match *self.0 {
-            CharDataTable::Direct(arr) => {
-                if self.1 >= arr.len() {
-                    None
-                } else {
-                    let idx = self.1;
-                    self.1 += 1;
-                    let (ch, v) = arr[idx];
-                    Some((chars!(ch..=ch), v))
-                }
-            }
-            CharDataTable::Range(arr) => {
-                if self.1 >= arr.len() {
-                    None
-                } else {
-                    let idx = self.1;
-                    self.1 += 1;
-                    Some(arr[idx])
-                }
-            }
+            CharDataTable::Direct(arr) => if self.1 >= arr.len() {
+                None
+            } else {
+                let idx = self.1;
+                self.1 += 1;
+                let (ch, v) = arr[idx];
+                Some((chars!(ch..=ch), v))
+            },
+            CharDataTable::Range(arr) => if self.1 >= arr.len() {
+                None
+            } else {
+                let idx = self.1;
+                self.1 += 1;
+                Some(arr[idx])
+            },
         }
     }
 }

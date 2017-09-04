@@ -158,9 +158,9 @@ impl CharRange {
     /// but may arbitrarily be `Less` or `Greater`.
     pub fn cmp(&self, ch: char) -> Ordering {
         debug_assert!(!self.is_empty(), "Cannot compare empty range's ordering");
-        if self.low < ch {
+        if self.high < ch {
             Ordering::Less
-        } else if self.high > ch {
+        } else if self.low > ch {
             Ordering::Greater
         } else {
             Ordering::Equal

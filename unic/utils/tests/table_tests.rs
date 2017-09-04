@@ -5,9 +5,11 @@ use unic_utils::CharDataTable;
 
 #[test]
 fn range_value_table() {
-    const TABLE: CharDataTable<u32> = CharDataTable::Range(
-        &[(chars!('a'..='g'), 1), (chars!('j'..='q'), 2), (chars!('w'..='z'), 3)]
-    );
+    const TABLE: CharDataTable<u32> = CharDataTable::Range(&[
+        (chars!('a'..='g'), 1),
+        (chars!('j'..='q'), 2),
+        (chars!('w'..='z'), 3),
+    ]);
     for ch in chars!('a'..='g') {
         assert_eq!(TABLE.find(ch), Some(1));
         assert_eq!(TABLE.find_defaulting(ch), 1);
