@@ -12,7 +12,7 @@
 
 /// Represents the IDNA Mapping status of the Unicode character.
 #[repr(u8)]
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Mapping {
     /// Valid, and not modified.
     Valid,
@@ -47,7 +47,7 @@ mod data {
 
 impl Mapping {
     /// Get Mapping status of the character.
-    pub fn of(ch: char) -> &'static Mapping {
+    pub fn of(ch: char) -> Mapping {
         data::MAPPING.find(ch).expect("Table is missing value")
     }
 }
@@ -61,12 +61,12 @@ mod tests {
     fn test_mapping() {
         use Mapping::*;
 
-        assert_eq!(*Mapping::of('\u{0}'), DisallowedStd3Valid);
-        assert_eq!(*Mapping::of('-'), Valid);
-        assert_eq!(*Mapping::of('A'), Mapped("a"));
-        assert_eq!(*Mapping::of('\u{80}'), Disallowed);
-        assert_eq!(*Mapping::of('\u{a0}'), DisallowedStd3Mapped(" "));
-        assert_eq!(*Mapping::of('\u{ad}'), Ignored);
-        assert_eq!(*Mapping::of('\u{200c}'), Deviation(""));
+        assert_eq!(Mapping::of('\u{0}'), DisallowedStd3Valid);
+        assert_eq!(Mapping::of('-'), Valid);
+        assert_eq!(Mapping::of('A'), Mapped("a"));
+        assert_eq!(Mapping::of('\u{80}'), Disallowed);
+        assert_eq!(Mapping::of('\u{a0}'), DisallowedStd3Mapped(" "));
+        assert_eq!(Mapping::of('\u{ad}'), Ignored);
+        assert_eq!(Mapping::of('\u{200c}'), Deviation(""));
     }
 }

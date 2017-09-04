@@ -11,6 +11,12 @@ pub enum CharDataTable<V: 'static> {
     #[doc(hidden)] Range(&'static [(CharRange, V)]),
 }
 
+impl<V> Default for CharDataTable<V> {
+    fn default() -> Self {
+        CharDataTable::Direct(&[])
+    }
+}
+
 impl<V> CharDataTable<V> {
     /// Does this table contain a mapping for a character?
     pub fn contains(&self, needle: char) -> bool {
@@ -45,5 +51,43 @@ impl<V: Copy + Default> CharDataTable<V> {
     /// Find the associated data for a character in this table, or the default value if not entered.
     pub fn find_defaulting(&self, needle: char) -> V {
         self.find(needle).unwrap_or_else(Default::default)
+    }
+}
+
+/// Iterator for `CharDataTable`. Iterates over pairs `(CharRange, V)`.
+pub struct CharDataTableIter<'a, V: 'static>(&'a CharDataTable<V>, usize);
+
+impl<'a, V: Copy> Iterator for CharDataTableIter<'a, V> {
+    type Item = (CharRange, V);
+
+    fn next(&mut self) -> Option<Self::Item> {
+        match *self.0 {
+            CharDataTable::Direct(arr) => {
+                if self.1 >= arr.len() {
+                    None
+                } else {
+                    let idx = self.1;
+                    self.1 += 1;
+                    let (ch, v) = arr[idx];
+                    Some((chars!(ch..=ch), v))
+                }
+            }
+            CharDataTable::Range(arr) => {
+                if self.1 >= arr.len() {
+                    None
+                } else {
+                    let idx = self.1;
+                    self.1 += 1;
+                    Some(arr[idx])
+                }
+            }
+        }
+    }
+}
+
+impl<V> CharDataTable<V> {
+    /// Iterate over the entries in this table. Yields pairs `(CharRange, V)`.
+    pub fn iter(&self) -> CharDataTableIter<V> {
+        CharDataTableIter(&self, 0)
     }
 }

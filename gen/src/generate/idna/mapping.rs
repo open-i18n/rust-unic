@@ -9,6 +9,7 @@
 // except according to those terms.
 
 use std::char;
+use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::{self, Read, Write};
 use std::path::Path;
@@ -16,65 +17,47 @@ use std::str::FromStr;
 
 use super::UnicodeVersion;
 
+use generate::PREAMBLE;
+use generate::char_property::ToRangeBSearchMap;
+
 use regex::Regex;
 
-#[derive(Clone, Debug, PartialEq, Eq, Hash)]
-struct IdnaDataLine {
-    low: char,
-    high: char,
-
-    /// valid, ignored, mapped, deviation, disallowed,
-    /// disallowed_STD3_valid, or disallowed_STD3_mapped
-    status: String,
-
-    /// Only present if the status is ignored, mapped, deviation, or disallowed_STD3_mapped.
-    mapping: Option<Box<[char]>>,
-
-    /// There are two values: NV8 and XV8.
-    /// NV8 is only present if the status is valid but the character is excluded
-    /// by IDNA2008 from all domain names for all versions of Unicode.
-    /// XV8 is present when the character is excluded
-    /// by IDNA2008 for the current version of Unicode.
-    /// These are not normative values.
-    idna_2008_status: Option<String>,
+#[derive(Clone, Debug, Eq, PartialEq)]
+struct IdnaMappingEntry {
+    /// Valid, Ignored, Mapped, Deviation, Disallowed,
+    /// DisallowedStd3Valid, or DisallowedStd3Mapped
+    status: &'static str,
+    /// Only present if status is Mapped, Deviation, or DisallowedStd3Mapped.
+    mapping: Option<String>,
+    // idna_2008_status unused
 }
 
-#[derive(Debug, PartialEq, Eq, Hash)]
-struct IdnaMapping(Box<[IdnaDataLine]>);
+#[derive(Clone, Debug, Eq, PartialEq)]
+struct IdnaMapping(BTreeMap<char, IdnaMappingEntry>);
 
 impl IdnaMapping {
     fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
         let mut file = File::create(dir.as_ref().join("idna_mapping.rsv"))?;
-        let IdnaMapping(ref lines) = *self;
-        writeln!(file, "&[")?;
-        for line in lines.iter() {
-            write!(
-                file,
-                "    ('{}', '{}', {}",
-                line.low.escape_unicode(),
-                line.high.escape_unicode(),
-                match line.status.as_str() {
-                    "valid" => "Valid",
-                    "ignored" => "Ignored",
-                    "mapped" => "Mapped",
-                    "deviation" => "Deviation",
-                    "disallowed" => "Disallowed",
-                    "disallowed_STD3_valid" => "DisallowedStd3Valid",
-                    "disallowed_STD3_mapped" => "DisallowedStd3Mapped",
-                    _ => unreachable!(),
-                },
-            )?;
-            if let Some(ref chars) = line.mapping {
-                write!(file, "(\"")?;
-                for char in chars.iter() {
-                    write!(file, "{}", char.escape_unicode())?;
+        #[cfg_attr(rustfmt, rustfmt_skip)] // rustfmt wants to linebreak the matches! macro
+        writeln!(
+            file,
+            "{}\n{}",
+            PREAMBLE,
+            self.0.to_range_bsearch_map(|entry, f| {
+                write!(f, "{}", entry.status)?;
+                if matches!(entry.status, "Mapped" | "Deviation" | "DisallowedStd3Mapped") {
+                    // TODO: use str::escape_unicode when stable
+                    write!(f, "(\"")?;
+                    if let Some(ref s) = entry.mapping {
+                        for ch in s.chars() {
+                            write!(f, "{}", ch.escape_unicode())?;
+                        }
+                    }
+                    write!(f, "\")")?;
                 }
-                write!(file, "\")")?;
-            }
-            writeln!(file, "),")?;
-        }
-        writeln!(file, "]")?;
-        Ok(())
+                Ok(())
+            })
+        )
     }
 }
 
@@ -104,40 +87,42 @@ impl FromStr for IdnaMapping {
             ).unwrap();
         }
 
-        // Initial capacity is an estimate of the number of data lines.
-        let mut entries = Vec::with_capacity(0x2200);
+        let mut entries = BTreeMap::new();
 
         for capture in REGEX.captures_iter(str) {
             if let Some(low) = char::from_u32(u32::from_str_radix(&capture[1], 16).unwrap()) {
-                entries.push(IdnaDataLine {
-                    low,
-                    high: capture
-                        .get(2)
-                        .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
-                        .map(|u| char::from_u32(u).unwrap())
-                        .unwrap_or(low),
-                    status: capture[3].to_owned(),
+                let high = capture
+                    .get(2)
+                    .map(|m| u32::from_str_radix(m.as_str(), 16).unwrap())
+                    .map(|u| char::from_u32(u).unwrap())
+                    .unwrap_or(low);
+                let entry = IdnaMappingEntry {
+                    status: match &capture[3] {
+                        "valid" => "Valid",
+                        "ignored" => "Ignored",
+                        "mapped" => "Mapped",
+                        "deviation" => "Deviation",
+                        "disallowed" => "Disallowed",
+                        "disallowed_STD3_valid" => "DisallowedStd3Valid",
+                        "disallowed_STD3_mapped" => "DisallowedStd3Mapped",
+                        s => panic!("Invalid Idna Mapping status {:?}", s),
+                    },
                     mapping: capture.get(4).map(|m| {
                         m.as_str()
                             .split(' ')
                             .map(|s| u32::from_str_radix(s, 16).unwrap())
                             .map(|u| char::from_u32(u).unwrap())
-                            .collect::<Vec<_>>()
-                            .into_boxed_slice()
-                    }).or_else(|| {
-                        // ZERO WIDTH NON-JOINER & ZERO WIDTH JOINER have a zero-length deviation
-                        if matches!(&capture[3], "deviation" | "mapping") {
-                            Some(vec![].into_boxed_slice())
-                        } else {
-                            None
-                        }
+                            .collect::<String>()
                     }),
-                    idna_2008_status: capture.get(5).map(|m| m.as_str().to_owned()),
-                })
+                };
+                for ch in chars!(low..high) {
+                    entries.insert(ch, entry.clone());
+                }
+                entries.insert(high, entry);
             }
         }
 
-        Ok(IdnaMapping(entries.into_boxed_slice()))
+        Ok(IdnaMapping(entries))
     }
 }
 

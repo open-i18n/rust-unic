@@ -83,12 +83,12 @@ fn test_composition_exclusions() {
     for char in battery.iter() {
         let decomposition = canonical_decomposition(*char).unwrap();
         assert!(!canonical_composition(decomposition[0])
-            .unwrap_or(&[])
+            .unwrap_or_else(Default::default)
             .iter()
-            .any(|&(follow, _)| follow == decomposition[1]));
+            .any(|(follow, _)| follow.low == decomposition[1]));
         assert!(!canonical_composition(decomposition[0])
-            .unwrap_or(&[])
+            .unwrap_or_else(Default::default)
             .iter()
-            .any(|&(_, ref result)| battery.contains(result)));
+            .any(|(_, ref result)| battery.contains(result)));
     }
 }

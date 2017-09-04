@@ -25,7 +25,7 @@ pub static PUNYCODE_PREFIX: &'static str = "xn--";
 
 
 fn map_char(codepoint: char, flags: Flags, output: &mut String, errors: &mut Vec<Error>) {
-    match *Mapping::of(codepoint) {
+    match Mapping::of(codepoint) {
         Mapping::Valid => output.push(codepoint),
         Mapping::Ignored => {}
         Mapping::Mapped(slice) => output.push_str(slice),
@@ -191,7 +191,7 @@ fn validate(label: &str, is_bidi_domain: bool, flags: Flags, errors: &mut Vec<Er
         errors.push(Error::ValidityCriteria);
     }
     // V6: Check against Mapping Table
-    else if label.chars().any(|c| match *Mapping::of(c) {
+    else if label.chars().any(|c| match Mapping::of(c) {
         Mapping::Valid => false,
         Mapping::Deviation(_) => flags.transitional_processing,
         Mapping::DisallowedStd3Valid => flags.use_std3_ascii_rules,
