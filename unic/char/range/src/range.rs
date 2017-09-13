@@ -1,4 +1,5 @@
 use std::char;
+use std::cmp::Ordering;
 use std::collections::Bound;
 use CharIter;
 
@@ -146,6 +147,25 @@ impl CharRange {
     /// ```
     pub fn contains(&self, ch: char) -> bool {
         self.low <= ch && ch <= self.high
+    }
+
+    /// Determine the ordering of this range and a character.
+    ///
+    /// # Panics
+    ///
+    /// Panics if the range is empty. This fn may be adjusted in the future to not panic
+    /// in optimized builds. Even if so, an empty range will never compare as `Ordering::Equal`.
+    ///
+    pub fn cmp(&self, ch: char) -> Ordering {
+        // possible optimization: only assert this in debug builds
+        assert!(!self.is_empty(), "Cannot compare empty range's ordering");
+        if self.high < ch {
+            Ordering::Less
+        } else if self.low > ch {
+            Ordering::Greater
+        } else {
+            Ordering::Equal
+        }
     }
 
     /// How many characters are in this range?

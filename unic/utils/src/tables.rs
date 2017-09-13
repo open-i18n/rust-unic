@@ -1,56 +1,89 @@
-//! Trait and impls for character data tables used in UNIC.
+//! Character data tables used in UNIC.
 
-use std::cmp;
+use unic_char_range::CharRange;
 
-/// A table from characters to data associated with those characters.
-pub trait CharDataTable<V> {
+/// A mapping from characters to some associated data.
+///
+/// For the set case, use `()` as the associated value.
+#[derive(Copy, Clone, Debug)]
+pub enum CharDataTable<V: 'static> {
+    #[doc(hidden)] Direct(&'static [(char, V)]),
+    #[doc(hidden)] Range(&'static [(CharRange, V)]),
+}
+
+impl<V> Default for CharDataTable<V> {
+    fn default() -> Self {
+        CharDataTable::Direct(&[])
+    }
+}
+
+impl<V> CharDataTable<V> {
+    /// Does this table contain a mapping for a character?
+    pub fn contains(&self, needle: char) -> bool {
+        match *self {
+            CharDataTable::Direct(table) => {
+                table.binary_search_by_key(&needle, |&(k, _)| k).is_ok()
+            }
+            CharDataTable::Range(table) => table
+                .binary_search_by(|&(range, _)| range.cmp(needle))
+                .is_ok(),
+        }
+    }
+}
+
+impl<V: Copy> CharDataTable<V> {
     /// Find the associated data for a character in this table.
-    fn find(&self, needle: char) -> Option<V>;
-
-    /// Find the associated data for a character in this table or use a provided default.
-    fn find_or(&self, needle: char, default: V) -> V {
-        self.find(needle).unwrap_or(default)
-    }
-
-    /// Find the associated data for a character in this table or generate a default.
-    fn find_or_else<F>(&self, needle: char, f: F) -> V
-    where
-        F: FnOnce() -> V,
-    {
-        self.find(needle).unwrap_or_else(f)
+    pub fn find(&self, needle: char) -> Option<V> {
+        match *self {
+            CharDataTable::Direct(table) => table
+                .binary_search_by_key(&needle, |&(k, _)| k)
+                .map(|idx| table[idx].1)
+                .ok(),
+            CharDataTable::Range(table) => table
+                .binary_search_by(|&(range, _)| range.cmp(needle))
+                .map(|idx| table[idx].1)
+                .ok(),
+        }
     }
 }
 
-impl<'a, V> CharDataTable<&'a V> for &'a [(char, V)] {
-    fn find(&self, needle: char) -> Option<&'a V> {
-        self.binary_search_by_key(&needle, |&(k, _)| k)
-            .map(|idx| &self[idx].1)
-            .ok()
+impl<V: Copy + Default> CharDataTable<V> {
+    /// Find the associated data for a character in this table, or the default value if not entered.
+    pub fn find_or_default(&self, needle: char) -> V {
+        self.find(needle).unwrap_or_else(Default::default)
     }
 }
 
-impl<'a, V> CharDataTable<&'a V> for &'a [(char, char, V)] {
-    fn find(&self, needle: char) -> Option<&'a V> {
-        self.binary_search_by(|&(low, high, _)| if low > needle {
-            cmp::Ordering::Greater
-        } else if high < needle {
-            cmp::Ordering::Less
-        } else {
-            cmp::Ordering::Equal
-        }).map(|idx| &self[idx].2)
-            .ok()
+/// Iterator for `CharDataTable`. Iterates over pairs `(CharRange, V)`.
+pub struct CharDataTableIter<'a, V: 'static>(&'a CharDataTable<V>, usize);
+
+impl<'a, V: Copy> Iterator for CharDataTableIter<'a, V> {
+    type Item = (CharRange, V);
+
+    fn next(&mut self) -> Option<Self::Item> {
+        match *self.0 {
+            CharDataTable::Direct(arr) => if self.1 >= arr.len() {
+                None
+            } else {
+                let idx = self.1;
+                self.1 += 1;
+                let (ch, v) = arr[idx];
+                Some((chars!(ch..=ch), v))
+            },
+            CharDataTable::Range(arr) => if self.1 >= arr.len() {
+                None
+            } else {
+                let idx = self.1;
+                self.1 += 1;
+                Some(arr[idx])
+            },
+        }
     }
 }
 
-impl CharDataTable<()> for &'static [(char, char)] {
-    fn find(&self, needle: char) -> Option<()> {
-        self.binary_search_by(|&(low, high)| if low > needle {
-            cmp::Ordering::Greater
-        } else if high < needle {
-            cmp::Ordering::Less
-        } else {
-            cmp::Ordering::Equal
-        }).map(|_| ())
-            .ok()
+impl<V> CharDataTable<V> {
+    /// Iterate over the entries in this table. Yields pairs `(CharRange, V)`.
+    pub fn iter(&self) -> CharDataTableIter<V> {
+        CharDataTableIter(&self, 0)
     }
 }

@@ -17,7 +17,6 @@
 
 use std::fmt;
 
-use unic_utils::CharDataTable;
 use unic_char_property::{CharProperty, NumericCharProperty, TotalCharProperty};
 
 
@@ -117,7 +116,8 @@ pub mod values {
 
 mod data {
     use super::CanonicalCombiningClass;
-    pub const CANONICAL_COMBINING_CLASS_VALUES: &'static [(char, char, CanonicalCombiningClass)] =
+    use unic_utils::CharDataTable;
+    pub const CANONICAL_COMBINING_CLASS_VALUES: CharDataTable<CanonicalCombiningClass> =
         include!("tables/canonical_combining_class_values.rsv");
 }
 
@@ -125,7 +125,7 @@ mod data {
 impl CanonicalCombiningClass {
     /// Find the character *Canonical_Combining_Class* property value.
     pub fn of(ch: char) -> CanonicalCombiningClass {
-        *data::CANONICAL_COMBINING_CLASS_VALUES.find_or(ch, &CanonicalCombiningClass(0))
+        data::CANONICAL_COMBINING_CLASS_VALUES.find_or_default(ch)
     }
 
     /// Human-readable description of the property value.

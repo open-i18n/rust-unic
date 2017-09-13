@@ -13,7 +13,6 @@ use std::fmt;
 use std::cmp;
 
 pub use unic_ucd_core::UnicodeVersion;
-use unic_utils::CharDataTable;
 use unic_char_property::{CharProperty, CustomCharProperty, PartialCharProperty};
 
 
@@ -75,15 +74,15 @@ impl CustomCharProperty<UnicodeVersion> for Age {
 
 mod data {
     use super::UnicodeVersion;
-    pub const AGE_TABLE: &'static [(char, char, UnicodeVersion)] =
-        include!("tables/age_values.rsv");
+    use unic_utils::CharDataTable;
+    pub const AGE_TABLE: CharDataTable<UnicodeVersion> = include!("tables/age_values.rsv");
 }
 
 
 impl Age {
     /// Find the character *Age* property value.
     pub fn of(ch: char) -> Option<Age> {
-        data::AGE_TABLE.find(ch).map(|uv| Age(*uv))
+        data::AGE_TABLE.find(ch).map(Age)
     }
 
     /// Return the `UnicodeVersion` value of the age.

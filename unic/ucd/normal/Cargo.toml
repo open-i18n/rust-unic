@@ -16,6 +16,7 @@ travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
 [dependencies]
 unic-char-property = { path = "../../char/property/", version = "0.5.0" }
+unic-char-range = { path = "../../char/range", version = "0.5.0" }
 unic-ucd-category = { path = "../category/", version = "0.5.0", optional = true }
 unic-ucd-core = { path = "../core/", version = "0.5.0" }
 unic-utils = { path = "../../utils/", version = "0.5.0" }

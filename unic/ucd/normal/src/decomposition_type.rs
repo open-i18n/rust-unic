@@ -12,7 +12,6 @@
 
 //! Accessor for *Decomposition_Type* (dt) property
 
-use unic_utils::CharDataTable;
 use unic_char_property::PartialCharProperty;
 
 use composition::{canonical_decomposition, data};

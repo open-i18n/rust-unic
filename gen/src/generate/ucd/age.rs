@@ -19,7 +19,7 @@ use std::str::FromStr;
 use super::{UnicodeData, UnicodeVersion};
 
 use generate::PREAMBLE;
-use generate::char_property::ToRangeBSearchMap;
+use generate::tables::ToRangeCharTable;
 
 use regex::Regex;
 
@@ -34,7 +34,7 @@ impl AgeData {
             file,
             "{}\n{}",
             PREAMBLE,
-            map.to_range_bsearch_map(Display::fmt)
+            map.to_range_char_table(Display::fmt)
         )?;
         Ok(())
     }

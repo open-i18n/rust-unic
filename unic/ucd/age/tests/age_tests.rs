@@ -10,7 +10,6 @@
 
 
 extern crate unic_ucd_age;
-extern crate unic_ucd_core;
 extern crate unic_utils;
 
 

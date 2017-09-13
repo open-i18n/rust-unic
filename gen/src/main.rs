@@ -9,6 +9,9 @@
 // except according to those terms.
 
 #[macro_use]
+extern crate unic_char_range;
+
+#[macro_use]
 extern crate clap;
 
 extern crate futures;

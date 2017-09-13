@@ -17,6 +17,10 @@
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
 
 
+#[macro_use]
+extern crate unic_char_range;
+
+
 /// UNIC component version.
 pub const PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
