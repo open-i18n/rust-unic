@@ -14,15 +14,15 @@ use std::fmt::{self, Write};
 use super::DisplayWrapper;
 
 /// Create the source for a `CharDataTable`, using direct mappings from char to values
-pub trait ToSingleBSearchMap<T> {
+pub trait ToDirectCharTable<T> {
     /// Convert this mapping to a `String`.
-    fn to_single_bsearch_map<F>(&self, display_fn: F) -> String
+    fn to_direct_char_table<F>(&self, display_fn: F) -> String
     where
         F: Fn(&T, &mut fmt::Formatter) -> fmt::Result;
 }
 
-impl<T> ToSingleBSearchMap<T> for BTreeMap<char, T> {
-    fn to_single_bsearch_map<F>(&self, display_fn: F) -> String
+impl<T> ToDirectCharTable<T> for BTreeMap<char, T> {
+    fn to_direct_char_table<F>(&self, display_fn: F) -> String
     where
         F: Fn(&T, &mut fmt::Formatter) -> fmt::Result,
     {
@@ -47,7 +47,7 @@ impl<T> ToSingleBSearchMap<T> for BTreeMap<char, T> {
 mod test {
     use std::collections::BTreeMap;
     use std::fmt::Display;
-    use super::ToSingleBSearchMap;
+    use super::ToDirectCharTable;
 
     #[test]
     fn simple_single_bsearch_map() {
@@ -59,7 +59,7 @@ mod test {
         map.insert('y', "Y");
         map.insert('x', "X");
         assert_eq!(
-            map.to_single_bsearch_map(Display::fmt),
+            map.to_direct_char_table(Display::fmt),
             "\
 CharDataTable::Direct(&[
     ('\\u{61}', A),

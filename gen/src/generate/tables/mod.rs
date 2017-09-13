@@ -8,15 +8,15 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-mod bsearch_range_map;
-mod bsearch_set;
-mod bsearch_single_map;
+mod range;
+mod set;
+mod direct;
 
 use std::fmt;
 
-pub use self::bsearch_range_map::ToRangeBSearchMap;
-pub use self::bsearch_set::ToBSearchSet;
-pub use self::bsearch_single_map::ToSingleBSearchMap;
+pub use self::range::ToRangeCharTable;
+pub use self::set::ToRangeCharSet;
+pub use self::direct::ToDirectCharTable;
 
 #[derive(Debug)]
 struct DisplayWrapper<'a, T: 'a, F: 'a>(&'a T, &'a F)

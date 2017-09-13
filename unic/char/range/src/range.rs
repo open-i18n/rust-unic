@@ -153,11 +153,12 @@ impl CharRange {
     ///
     /// # Panics
     ///
-    /// Panics at runtime _in debug builds only_ if the range is empty.
-    /// In release builds, the ordering will never be `Equal`,
-    /// but may arbitrarily be `Less` or `Greater`.
+    /// Panics if the range is empty. This fn may be adjusted in the future to not panic
+    /// in optimized builds. Even if so, an empty range will never compare as `Ordering::Equal`.
+    ///
     pub fn cmp(&self, ch: char) -> Ordering {
-        debug_assert!(!self.is_empty(), "Cannot compare empty range's ordering");
+        // possible optimization: only assert this in debug builds
+        assert!(!self.is_empty(), "Cannot compare empty range's ordering");
         if self.high < ch {
             Ordering::Less
         } else if self.low > ch {

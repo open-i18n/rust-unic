@@ -12,22 +12,22 @@ fn range_value_table() {
     ]);
     for ch in chars!('a'..='g') {
         assert_eq!(TABLE.find(ch), Some(1));
-        assert_eq!(TABLE.find_defaulting(ch), 1);
+        assert_eq!(TABLE.find_or_default(ch), 1);
     }
     for ch in chars!('h'..='i') {
         assert_eq!(TABLE.find(ch), None);
-        assert_eq!(TABLE.find_defaulting(ch), 0);
+        assert_eq!(TABLE.find_or_default(ch), 0);
     }
     for ch in chars!('j'..='q') {
         assert_eq!(TABLE.find(ch), Some(2));
-        assert_eq!(TABLE.find_defaulting(ch), 2);
+        assert_eq!(TABLE.find_or_default(ch), 2);
     }
     for ch in chars!('r'..='v') {
         assert_eq!(TABLE.find(ch), None);
-        assert_eq!(TABLE.find_defaulting(ch), 0);
+        assert_eq!(TABLE.find_or_default(ch), 0);
     }
     for ch in chars!('x'..='z') {
         assert_eq!(TABLE.find(ch), Some(3));
-        assert_eq!(TABLE.find_defaulting(ch), 3);
+        assert_eq!(TABLE.find_or_default(ch), 3);
     }
 }

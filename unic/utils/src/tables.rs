@@ -49,7 +49,7 @@ impl<V: Copy> CharDataTable<V> {
 
 impl<V: Copy + Default> CharDataTable<V> {
     /// Find the associated data for a character in this table, or the default value if not entered.
-    pub fn find_defaulting(&self, needle: char) -> V {
+    pub fn find_or_default(&self, needle: char) -> V {
         self.find(needle).unwrap_or_else(Default::default)
     }
 }

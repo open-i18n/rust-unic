@@ -12,13 +12,13 @@ use std::collections::BTreeSet;
 use std::fmt::Write;
 
 /// Create the source for a `CharDataTable` mapping to `()` for set inclusion of `char`.
-pub trait ToBSearchSet {
+pub trait ToRangeCharSet {
     /// Convert this set to a `String`
-    fn to_bsearch_set(&self) -> String;
+    fn to_range_char_set(&self) -> String;
 }
 
-impl ToBSearchSet for BTreeSet<char> {
-    fn to_bsearch_set(&self) -> String {
+impl ToRangeCharSet for BTreeSet<char> {
+    fn to_range_char_set(&self) -> String {
         let mut entries = self.iter();
         let mut out = String::from("CharDataTable::Range(&[\n");
 
@@ -70,7 +70,7 @@ mod test {
         set.insert('x');
         set.insert('z');
         assert_eq!(
-            set.to_bsearch_set(),
+            set.to_range_char_set(),
             "\
 CharDataTable::Range(&[
     (chars!('\\u{61}'..='\\u{66}'), ()),

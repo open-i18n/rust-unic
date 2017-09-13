@@ -17,7 +17,7 @@ use std::path::Path;
 use super::{UnicodeData, UnicodeDataEntry, UnicodeVersion};
 
 use generate::PREAMBLE;
-use generate::char_property::ToSingleBSearchMap;
+use generate::tables::ToDirectCharTable;
 
 #[derive(Clone, Default, Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
 struct NameRecord<'a> {
@@ -46,7 +46,7 @@ impl<'a> NameData<'a> {
             file,
             "{}\n{}",
             PREAMBLE,
-            map.to_single_bsearch_map(|record, f| {
+            map.to_direct_char_table(|record, f| {
                 write!(
                     f,
                     "&[{}]",

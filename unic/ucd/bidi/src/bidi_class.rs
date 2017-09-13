@@ -214,8 +214,8 @@ impl TotalCharProperty for BidiClass {
 }
 
 
-// UCD/extracted/DerivedBidiClass.txt:
-// "All code points not explicitly listed for Bidi_Class have the value Left_To_Right (L)."
+/// UCD/extracted/DerivedBidiClass.txt:
+/// "All code points not explicitly listed for `Bidi_Class` have the value `Left_To_Right` (`L`)."
 impl Default for BidiClass {
     #[inline]
     fn default() -> Self {
@@ -235,7 +235,7 @@ mod data {
 impl BidiClass {
     /// Find the character *Bidi_Class* property value.
     pub fn of(ch: char) -> BidiClass {
-        data::BIDI_CLASS_TABLE.find_defaulting(ch)
+        data::BIDI_CLASS_TABLE.find_or_default(ch)
     }
 
     /// If the `BidiClass` has strong or explicit Left-to-Right direction.

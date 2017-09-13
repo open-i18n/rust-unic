@@ -18,7 +18,7 @@ use std::path::Path;
 use super::{UnicodeData, UnicodeDataEntry, UnicodeVersion};
 
 use generate::PREAMBLE;
-use generate::char_property::ToRangeBSearchMap;
+use generate::tables::ToRangeCharTable;
 
 #[derive(Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 struct CategoryData<'a>(BTreeMap<char, &'a str>);
@@ -31,7 +31,7 @@ impl<'a> CategoryData<'a> {
             file,
             "{}\n{}",
             PREAMBLE,
-            map.to_range_bsearch_map(Display::fmt)
+            map.to_range_char_table(Display::fmt)
         )?;
         Ok(())
     }

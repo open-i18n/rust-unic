@@ -14,15 +14,15 @@ use std::fmt::{self, Write};
 use super::DisplayWrapper;
 
 /// Create the source for a `CharDataTable`, using `CharRange`s to deduplicate data.
-pub trait ToRangeBSearchMap<T: Eq> {
+pub trait ToRangeCharTable<T: Eq> {
     /// Convert this mapping to a `String`.
-    fn to_range_bsearch_map<F>(&self, display_fn: F) -> String
+    fn to_range_char_table<F>(&self, display_fn: F) -> String
     where
         F: Fn(&T, &mut fmt::Formatter) -> fmt::Result;
 }
 
-impl<T: Eq> ToRangeBSearchMap<T> for BTreeMap<char, T> {
-    fn to_range_bsearch_map<F>(&self, display_fn: F) -> String
+impl<T: Eq> ToRangeCharTable<T> for BTreeMap<char, T> {
+    fn to_range_char_table<F>(&self, display_fn: F) -> String
     where
         F: Fn(&T, &mut fmt::Formatter) -> fmt::Result,
     {
@@ -66,7 +66,7 @@ impl<T: Eq> ToRangeBSearchMap<T> for BTreeMap<char, T> {
 mod test {
     use std::collections::BTreeMap;
     use std::fmt::Display;
-    use super::ToRangeBSearchMap;
+    use super::ToRangeCharTable;
 
     #[test]
     fn simple_range_bsearch_map() {
@@ -81,7 +81,7 @@ mod test {
         map.insert('x', "High");
         map.insert('z', "High");
         assert_eq!(
-            map.to_range_bsearch_map(Display::fmt),
+            map.to_range_char_table(Display::fmt),
             "\
 CharDataTable::Range(&[
     (chars!('\\u{61}'..='\\u{63}'), Low),

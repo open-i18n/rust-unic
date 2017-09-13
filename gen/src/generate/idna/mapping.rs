@@ -18,7 +18,7 @@ use std::str::FromStr;
 use super::UnicodeVersion;
 
 use generate::PREAMBLE;
-use generate::char_property::ToRangeBSearchMap;
+use generate::tables::ToRangeCharTable;
 
 use regex::Regex;
 
@@ -43,7 +43,7 @@ impl IdnaMapping {
             file,
             "{}\n{}",
             PREAMBLE,
-            self.0.to_range_bsearch_map(|entry, f| {
+            self.0.to_range_char_table(|entry, f| {
                 write!(f, "{}", entry.status)?;
                 if matches!(entry.status, "Mapped" | "Deviation" | "DisallowedStd3Mapped") {
                     // TODO: use str::escape_unicode when stable

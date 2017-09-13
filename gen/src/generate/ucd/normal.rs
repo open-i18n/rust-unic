@@ -18,7 +18,7 @@ use std::str::FromStr;
 use super::{UnicodeData, UnicodeDataEntry, UnicodeVersion};
 
 use generate::PREAMBLE;
-use generate::char_property::{ToBSearchSet, ToRangeBSearchMap, ToSingleBSearchMap};
+use generate::tables::{ToRangeCharSet, ToRangeCharTable, ToDirectCharTable};
 use generate::capitalize;
 
 use regex::Regex;
@@ -28,7 +28,7 @@ struct GeneralCategoryMarkData(BTreeSet<char>);
 impl GeneralCategoryMarkData {
     fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
         let mut file = File::create(dir.as_ref().join("general_category_mark.rsv"))?;
-        writeln!(file, "{}\n{}", PREAMBLE, self.0.to_bsearch_set())
+        writeln!(file, "{}\n{}", PREAMBLE, self.0.to_range_char_set())
     }
 }
 
@@ -60,7 +60,7 @@ impl CanonicalCombiningClassData {
             "{}\n{}",
             PREAMBLE,
             self.0
-                .to_range_bsearch_map(|val, f| { write!(f, "CanonicalCombiningClass({})", val) })
+                .to_range_char_table(|val, f| { write!(f, "CanonicalCombiningClass({})", val) })
         )
     }
 }
@@ -92,7 +92,7 @@ impl<'a> CanonicalDecompositionData<'a> {
             file,
             "{}\n{}",
             PREAMBLE,
-            self.0.to_single_bsearch_map(|val, f| {
+            self.0.to_direct_char_table(|val, f| {
                 write!(f, "&[")?;
                 for char in val.iter() {
                     write!(f, "'{}',", char.escape_unicode())?;
@@ -177,7 +177,7 @@ impl CanonicalCompositionData {
             file,
             "{}\n{}",
             PREAMBLE,
-            self.0.to_single_bsearch_map(|val, f| {
+            self.0.to_direct_char_table(|val, f| {
                 write!(f, "CharDataTable::Direct(&[")?;
                 for pair in val.iter() {
                     write!(
@@ -231,7 +231,7 @@ impl<'a> CompatibilityDecompositionData<'a> {
             file,
             "{}\n{}",
             PREAMBLE,
-            self.0.to_single_bsearch_map(|val, f| {
+            self.0.to_direct_char_table(|val, f| {
                 write!(f, "({}, &[", capitalize(&val.0.to_lowercase()))?;
                 for char in val.1.iter() {
                     write!(f, "'{}',", char.escape_unicode()).unwrap();
