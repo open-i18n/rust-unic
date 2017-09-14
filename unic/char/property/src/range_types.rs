@@ -39,6 +39,44 @@ pub trait EnumeratedCharProperty: Sized + CharProperty {
 }
 
 
+// == Binary Types ==
+
+/// A Character Property with binary values.
+///
+/// Examples: *Alphabetic*, *Bidi_Mirrored*, *White_Space*
+pub trait BinaryCharProperty: CharProperty {
+    /// The boolean value of the property value.
+    fn bool(&self) -> bool;
+
+    /// The *abbreviated name* of the property value.
+    fn abbr_name(&self) -> &'static str {
+        if self.bool() {
+            "Y"
+        } else {
+            "N"
+        }
+    }
+
+    /// The *long name* of the property value.
+    fn long_name(&self) -> &'static str {
+        if self.bool() {
+            "Yes"
+        } else {
+            "No"
+        }
+    }
+
+    /// The *human-readable name* of the property value.
+    fn human_name(&self) -> &'static str {
+        if self.bool() {
+            "Yes"
+        } else {
+            "No"
+        }
+    }
+}
+
+
 // == Numeric Types ==
 
 /// Marker for numeric types accepted by `NumericCharProperty`.
@@ -50,9 +88,10 @@ impl NumericCharPropertyValue for u8 {}
 /// A Character Property with numeric values.
 ///
 /// Examples: *Numeric_Value*, *Canonical_Combining_Class*
-pub trait NumericCharProperty<Value: NumericCharPropertyValue>: CharProperty {
+pub trait NumericCharProperty<NumericValue: NumericCharPropertyValue>
+    : CharProperty {
     /// The numeric value for the property value.
-    fn number(&self) -> Value;
+    fn number(&self) -> NumericValue;
 }
 
 

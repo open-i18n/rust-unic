@@ -9,10 +9,12 @@
 // except according to those terms.
 
 
-use super::{BidiClass, BidiClassCategory};
+use super::{is_bidi_mirrored, BidiClass, BidiClassCategory, BidiMirrored};
 
 
-/// Methods for bidi properties of character types.
+// == Bidi_Class ==
+
+/// Methods for Bidi_Class character property.
 pub trait CharBidiClass {
     /// Get `BidiClass` of the character.
     fn bidi_class(self) -> BidiClass;
@@ -23,6 +25,7 @@ pub trait CharBidiClass {
     /// Whether the character has *right-to-left* (RTL) bidi directionality.
     fn is_rtl(self) -> bool;
 }
+
 
 impl CharBidiClass for char {
     #[inline]
@@ -42,7 +45,7 @@ impl CharBidiClass for char {
 }
 
 
-/// Methods for bidi properties of string types.
+/// Methods for Bidi_Class character properties of string types.
 pub trait StrBidiClass {
     /// Whether the string has any *explicit* bidi formatting character.
     fn has_bidi_explicit(&self) -> bool;
@@ -74,43 +77,98 @@ impl StrBidiClass for str {
 }
 
 
+// == Bidi_Mirrored ==
+
+/// Methods for Bidi_Mirrored character property.
+pub trait CharBidiMirrored {
+    /// Get `BidiMirrored` of the character.
+    fn bidi_mirrored(self) -> BidiMirrored;
+
+    /// Boolean value of `BidiMirrored` of the character.
+    fn is_bidi_mirrored(self) -> bool;
+}
+
+
+impl CharBidiMirrored for char {
+    #[inline]
+    fn bidi_mirrored(self) -> BidiMirrored {
+        BidiMirrored::of(self)
+    }
+
+    #[inline]
+    fn is_bidi_mirrored(self) -> bool {
+        is_bidi_mirrored(self)
+    }
+}
+
+
+/// Methods for Bidi_Mirrored character properties of string types.
+pub trait StrBidiMirrored {
+    /// Whether the string has any *Bidi_Mirrored* character.
+    fn has_bidi_mirrored(&self) -> bool;
+}
+
+impl StrBidiMirrored for str {
+    #[inline]
+    fn has_bidi_mirrored(&self) -> bool {
+        self.chars().any(|ch| ch.is_bidi_mirrored())
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     #[test]
-    fn test_bidi_char() {
-        use super::{BidiClass, BidiClassCategory, CharBidiClass};
+    fn test_char_bidi() {
+        use super::{BidiClass, BidiClassCategory, CharBidiClass, CharBidiMirrored};
+
+        let ch = '\u{0028}'; // U+0028 LEFT PARENTHESIS "("
+        assert_eq!(ch.bidi_class(), BidiClass::OtherNeutral);
+        assert_eq!(ch.bidi_class().category(), BidiClassCategory::Neutral);
+        assert!(!ch.is_ltr());
+        assert!(!ch.is_rtl());
+        assert!(ch.bidi_mirrored().bool());
+        assert!(ch.is_bidi_mirrored());
 
         let ch = '\u{0041}'; // U+0041 LATIN CAPITAL LETTER A "A"
         assert_eq!(ch.bidi_class(), BidiClass::LeftToRight);
         assert_eq!(ch.bidi_class().category(), BidiClassCategory::Strong);
         assert!(ch.is_ltr());
         assert!(!ch.is_rtl());
+        assert!(!ch.bidi_mirrored().bool());
+        assert!(!ch.is_bidi_mirrored());
 
         let ch = '\u{05D0}'; // U+05D0 HEBREW LETTER ALEF "א"
         assert_eq!(ch.bidi_class(), BidiClass::RightToLeft);
         assert_eq!(ch.bidi_class().category(), BidiClassCategory::Strong);
         assert!(!ch.is_ltr());
         assert!(ch.is_rtl());
+        assert!(!ch.bidi_mirrored().bool());
+        assert!(!ch.is_bidi_mirrored());
 
         let ch = '\u{0627}'; // U+0627 ARABIC LETTER ALEF "ا"
         assert_eq!(ch.bidi_class(), BidiClass::ArabicLetter);
         assert_eq!(ch.bidi_class().category(), BidiClassCategory::Strong);
         assert!(!ch.is_ltr());
         assert!(ch.is_rtl());
+        assert!(!ch.bidi_mirrored().bool());
+        assert!(!ch.is_bidi_mirrored());
     }
 
     #[test]
-    fn test_bidi_str() {
-        use super::StrBidiClass;
+    fn test_str_bidi() {
+        use super::{StrBidiClass, StrBidiMirrored};
 
         let text = "";
         assert!(!text.has_bidi_explicit());
         assert!(!text.has_ltr());
         assert!(!text.has_rtl());
+        assert!(!text.has_bidi_mirrored());
 
-        let text = "\u{0041}\u{05D0}\u{0627}";
+        let text = "[\u{0041}\u{05D0}\u{0627}]";
         assert!(!text.has_bidi_explicit());
         assert!(text.has_ltr());
         assert!(text.has_rtl());
+        assert!(text.has_bidi_mirrored());
     }
 }

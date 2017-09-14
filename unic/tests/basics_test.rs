@@ -16,7 +16,16 @@ extern crate unic;
 
 use unic::bidi::BidiInfo;
 use unic::normal::StrNormalForm;
-use unic::ucd::{Age, BidiClass, CharAge, CharBidiClass, StrBidiClass, UnicodeVersion};
+use unic::ucd::{
+    Age,
+    BidiClass,
+    CharAge,
+    CharBidiClass,
+    CharBidiMirrored,
+    StrBidiClass,
+    StrBidiMirrored,
+    UnicodeVersion,
+};
 use unic::ucd::normal::compose;
 
 #[cfg_attr(rustfmt, rustfmt_skip)]
@@ -81,6 +90,10 @@ fn test_sample() {
             "א",
         ]
     );
+
+    assert_eq!(text.has_bidi_mirrored(), false);
+    assert_eq!('/'.is_bidi_mirrored(), false);
+    assert_eq!('['.is_bidi_mirrored(), true);
 
     // Normalization
 

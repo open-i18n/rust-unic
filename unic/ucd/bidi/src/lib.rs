@@ -27,13 +27,14 @@ extern crate unic_ucd_core;
 extern crate unic_utils;
 
 
-/// Unicode *Bidi_Class* Character Property.
 pub mod bidi_class;
+pub mod bidi_mirrored;
 
 mod traits;
 
 pub use bidi_class::{BidiClass, BidiClassCategory};
-pub use traits::{CharBidiClass, StrBidiClass};
+pub use bidi_mirrored::{is_bidi_mirrored, BidiMirrored};
+pub use traits::{CharBidiClass, CharBidiMirrored, StrBidiClass, StrBidiMirrored};
 
 use unic_ucd_core::UnicodeVersion;
 

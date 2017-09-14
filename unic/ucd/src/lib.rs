@@ -42,6 +42,13 @@ pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
 
 
 pub use age::{Age, CharAge};
-pub use bidi::{BidiClass, CharBidiClass, StrBidiClass};
+pub use bidi::{
+    is_bidi_mirrored,
+    BidiClass,
+    CharBidiClass,
+    CharBidiMirrored,
+    StrBidiClass,
+    StrBidiMirrored,
+};
 pub use core::UnicodeVersion;
 pub use normal::CanonicalCombiningClass;
