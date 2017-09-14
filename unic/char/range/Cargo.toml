@@ -4,9 +4,9 @@ version = "0.5.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
-keywords = ["text", "unicode", "iteration"]
 description = "UNIC - Unicode Characters - Character Range and Iteration"
-categories = ["text-processing"]
+keywords = ["text", "unicode", "iteration"]
+categories = ["internationalization", "text-processing"]
 
 # No tests/benches that depends on /data/
 exclude = []

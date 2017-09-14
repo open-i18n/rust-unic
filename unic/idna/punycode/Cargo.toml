@@ -4,9 +4,9 @@ version = "0.5.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
-keywords = ["text", "unicode", "idna", "punycode"]
 description = "UNIC - Implementation of Punycode (RFC 3492) algorithm"
-categories = ["text-processing", "parsing", "rendering"]
+keywords = ["text", "unicode", "idna", "punycode"]
+categories = ["internationalization", "text-processing", "parsing", "rendering"]
 readme = "README.md"
 
 # No tests/benches that depends on /data/

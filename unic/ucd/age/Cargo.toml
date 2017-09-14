@@ -4,9 +4,9 @@ version = "0.5.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
-keywords = ["text", "unicode", "character-property", "age"]
 description = "UNIC - Unicode Character Database - Age"
-categories = ["text-processing", "parsing", "rendering"]
+keywords = ["text", "unicode", "character-property", "age"]
+categories = ["internationalization", "text-processing", "parsing", "rendering"]
 
 # No tests/benches that depends on /data/
 exclude = []
