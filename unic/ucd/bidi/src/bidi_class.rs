@@ -10,6 +10,9 @@
 // except according to those terms.
 
 
+//! Unicode *Bidi_Class* Character Property.
+
+
 use unic_char_property::TotalCharProperty;
 
 
