@@ -48,13 +48,38 @@
 /// # fn main() {}
 /// ```
 ///
+/// # Syntax (Binary Property)
+///
+// No compile because the included file does not exist
+/// ```ignore
+/// #[macro_use] extern crate unic_char_property;
+///
+/// // First we define the type itself.
+/// char_property! {
+///     /// This is the newtype used for the character property.
+///     pub struct MyProp(bool) {
+///         abbr => "AbbrPropName";
+///         long => "Long_Property_Name";
+///         human => "Human-Readable Property Name";
+///     }
+///
+///     /// Unlike an enumerated property, a binary property will handle the table for you.
+///     /// This requires `unic_utils` to be in scope.
+///     mod data = "path/to/table.rsv";
+/// }
+/// ```
+///
 /// # Effect
 ///
 /// - Implements the `CharProperty` trait and appropriate range trait
 /// - Implements `FromStr` accepting either the abbr or long name, ascii case insensitive
+/// - Implements `From` to/from the wrapped type
+///   (newtypes only)
 /// - Implements `Display` using the `human` string
 /// - Populates the module `abbr_names` with `pub use` bindings of variants to their abbr names
+///   (Enumerated properties only)
 /// - Populates the module `long_names` with `pub use` bindings of variants to their long names
+///   (Enumerated properties only)
 /// - Maintains all documentation comments and other `#[attributes]` as would be expected
 ///   (with some limitations, listed below)
 ///
@@ -70,6 +95,9 @@
 // TODO: Once adopting 1.20, fix the macro to work with zero attributes on variants (see above)
 #[macro_export]
 macro_rules! char_property {
+
+    // == Enumerated Property == //
+
     (
         $(#[$name_meta:meta])* pub enum $name:ident {
             abbr => $abbr_name:expr;
@@ -164,6 +192,61 @@ macro_rules! char_property {
         impl ::std::fmt::Display for $name {
             fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
                 $crate::EnumeratedCharProperty::human_name(self).fmt(f)
+            }
+        }
+    };
+
+    // == Binary Property == //
+
+    (
+        $(#[$name_meta:meta])* pub struct $name:ident(bool) {
+            abbr => $abbr_name:expr;
+            long => $long_name:expr;
+            human => $human_name:expr;
+        }
+
+        $(#[$data_mod_meta:meta])* mod $data_mod:ident = $data_path:expr;
+    ) => {
+        $(#[$name_meta])*
+        #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)]
+        pub struct $name(bool);
+
+        $(#[$data_mod_meta])*
+        mod $data_mod {
+            use super::unic_utils::CharDataTable;
+            pub const TABLE: CharDataTable<()> = include!($data_path);
+        }
+
+        impl $name {
+            pub fn of(ch: char) -> Self { $name(data::TABLE.contains(ch)) }
+            pub fn bool(&self) -> bool { self.0 }
+        }
+
+        impl From<bool> for $name {
+            fn from(b: bool) -> Self { $name(b) }
+        }
+
+        impl From<$name> for bool {
+            fn from(prop: $name) -> bool { prop.bool() }
+        }
+
+        impl $crate::CharProperty for $name {
+            fn prop_abbr_name() -> &'static str { $abbr_name }
+            fn prop_long_name() -> &'static str { $long_name }
+            fn prop_human_name() -> &'static str { $human_name }
+        }
+
+        impl $crate::BinaryCharProperty for $name {
+            fn bool(&self) -> bool { self.bool() }
+        }
+
+        impl $crate::TotalCharProperty for $name {
+            fn of(ch: char) -> Self { Self::of(ch) }
+        }
+
+        impl ::std::fmt::Display for $name {
+            fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                $crate::BinaryCharProperty::human_name(self).fmt(f)
             }
         }
     };
