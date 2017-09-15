@@ -1,0 +1,28 @@
+[ucd]
+version = "10.0.0"
+base_url = "http://www.unicode.org/Public/{version}/ucd/"
+
+[ucd.resources]
+"DerivedAge.txt"                = "DerivedAge.txt"
+"DerivedCoreProperties.txt"     = "DerivedCoreProperties.txt"
+"DerivedNormalizationProps.txt" = "DerivedNormalizationProps.txt"
+"PropList.txt"                  = "PropList.txt"
+"ReadMe.txt"                    = "ReadMe.txt"
+"UnicodeData.txt"               = "UnicodeData.txt"
+
+[ucd.test_resources]
+"BidiCharacterTest.txt"         = "BidiCharacterTest.txt"
+"BidiTest.txt"                  = "BidiTest.txt"
+"DecompositionTypeTest.txt"     = "extracted/DerivedDecompositionType.txt"
+"NormalizationTest.txt"         = "NormalizationTest.txt"
+
+[idna]
+version = "10.0.0"
+base_url = "http://www.unicode.org/Public/idna/{version}/"
+
+[idna.resources]
+"ReadMe.txt"            = "ReadMe.txt"
+"IdnaMappingTable.txt"  = "IdnaMappingTable.txt"
+
+[idna.test_resources]
+"IdnaTest.txt"          = "IdnaTest.txt"
