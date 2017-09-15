@@ -41,7 +41,7 @@ mod data {
     use unic_utils::CharDataTable;
 
     #[cfg_attr(feature = "cargo-clippy", allow(unreadable_literal))]
-    pub const MAPPING: CharDataTable<super::Mapping> = include!("tables/idna_mapping.rsv");
+    pub const MAPPING: CharDataTable<super::Mapping> = include!("../tables/idna_mapping.rsv");
 }
 
 

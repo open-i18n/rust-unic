@@ -257,7 +257,7 @@ mod data {
     use super::abbr_names::*;
     use unic_utils::CharDataTable;
     pub const GENERAL_CATEGORY_TABLE: CharDataTable<super::GeneralCategory> =
-        include!("tables/general_category.rsv");
+        include!("../tables/general_category.rsv");
 }
 
 

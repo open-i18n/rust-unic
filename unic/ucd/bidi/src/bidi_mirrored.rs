@@ -19,7 +19,7 @@ use std::fmt;
 
 mod data {
     use unic_utils::CharDataTable;
-    pub const BIDI_MIRRORED_TABLE: CharDataTable<()> = include!("tables/bidi_mirrored.rsv");
+    pub const BIDI_MIRRORED_TABLE: CharDataTable<()> = include!("../tables/bidi_mirrored.rsv");
 }
 
 

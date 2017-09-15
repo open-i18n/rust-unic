@@ -33,7 +33,7 @@ pub use mapping::Mapping;
 
 
 /// The version of [Unicode IDNA Compatibility Processing](http://www.unicode.org/reports/tr46/)
-pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv");
+pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");
 
 /// UNIC component version.
 pub const PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");

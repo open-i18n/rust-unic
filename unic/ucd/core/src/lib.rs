@@ -35,7 +35,7 @@ pub struct UnicodeVersion {
 }
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data
-pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv");
+pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");
 
 impl UnicodeVersion {
     /// Human-readable description of the Age property value.
