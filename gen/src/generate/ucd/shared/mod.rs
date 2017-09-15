@@ -9,6 +9,7 @@
 // except according to those terms.
 
 pub mod derived_core_properties;
+pub mod prop_list;
 pub mod unicode_data;
 pub mod version;
 

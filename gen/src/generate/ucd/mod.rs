@@ -31,6 +31,8 @@ pub fn generate() -> io::Result<()> {
     let unicode_data = shared::unicode_data::read_unicode_data()?;
     println!(">>> Loading UCD DerivedCoreProperties");
     let _derived_core_properties = shared::derived_core_properties::read_derived_core_properties()?;
+    println!(">>> Loading UCD PropList");
+    let _prop_list = shared::prop_list::read_prop_list()?;
 
     let path = Path::new("unic/ucd/core/src/tables");
     let _ = fs::remove_dir_all(path);
