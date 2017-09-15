@@ -23,3 +23,24 @@ char_property! {
     }
     mod data = "ascii_char_table.rsv";
 }
+
+#[test]
+fn basic_macro_use() {
+    assert_eq!(MyProp(true), true.into());
+    assert_eq!(MyProp(false), false.into());
+    assert_eq!(true, MyProp(true).into());
+    assert_eq!(false, MyProp(false).into());
+
+    assert_eq!("y".parse(), Ok(MyProp(true)));
+    assert_eq!("yes".parse(), Ok(MyProp(true)));
+    assert_eq!("t".parse(), Ok(MyProp(true)));
+    assert_eq!("true".parse(), Ok(MyProp(true)));
+
+    assert_eq!("N".parse(), Ok(MyProp(false)));
+    assert_eq!("NO".parse(), Ok(MyProp(false)));
+    assert_eq!("F".parse(), Ok(MyProp(false)));
+    assert_eq!("FALSE".parse(), Ok(MyProp(false)));
+
+    assert_eq!(MyProp(true).bool(), MyProp(true).into());
+    assert_eq!(MyProp(false).bool(), MyProp(false).into());
+}
