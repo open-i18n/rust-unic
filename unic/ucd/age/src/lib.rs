@@ -39,4 +39,4 @@ pub use traits::CharAge;
 
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data
-pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv");
+pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

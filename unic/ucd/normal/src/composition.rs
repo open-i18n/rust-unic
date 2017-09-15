@@ -18,13 +18,13 @@ pub mod data {
     use unic_utils::CharDataTable;
 
     pub const CANONICAL_COMPOSITION_MAPPING: CharDataTable<CharDataTable<char>> =
-        include!("tables/canonical_composition_mapping.rsv");
+        include!("../tables/canonical_composition_mapping.rsv");
 
     pub const CANONICAL_DECOMPOSITION_MAPPING: CharDataTable<&[char]> =
-        include!("tables/canonical_decomposition_mapping.rsv");
+        include!("../tables/canonical_decomposition_mapping.rsv");
 
     pub const COMPATIBILITY_DECOMPOSITION_MAPPING: CharDataTable<(DecompositionType, &[char])> =
-        include!("tables/compatibility_decomposition_mapping.rsv");
+        include!("../tables/compatibility_decomposition_mapping.rsv");
 }
 
 

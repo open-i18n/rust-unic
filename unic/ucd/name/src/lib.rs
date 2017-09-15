@@ -18,4 +18,4 @@ use unic_ucd_core::UnicodeVersion;
 pub use name::Name;
 
 
-pub const UNICODE_VERSION: UnicodeVersion = include!("tables/unicode_version.rsv");
+pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");
