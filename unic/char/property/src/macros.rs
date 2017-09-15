@@ -138,8 +138,8 @@ macro_rules! char_property {
 
         char_property! {
             __impl FromStr for $name;
-            $( stringify!($abbr) => $name::$variant;
-               stringify!($long) => $name::$variant; )*
+            $( $abbr => $name::$variant;
+               $long => $name::$variant; )*
         }
 
         char_property! { __impl CharProperty for $name; $abbr_name; $long_name; $human_name; }
@@ -198,8 +198,8 @@ macro_rules! char_property {
 
         char_property! {
             __impl FromStr for $name;
-            "y" => $name(true); "yes" => $name(true); "t" => $name(true); "true" => $name(true);
-            "n" => $name(false); "no" => $name(false); "f" => $name(false); "false" => $name(false);
+            y => $name(true); yes => $name(true); t => $name(true); true => $name(true);
+            n => $name(false); no => $name(false); f => $name(false); false => $name(false);
         }
 
         char_property! { __impl CharProperty for $name; $abbr_name; $long_name; $human_name; }
@@ -229,15 +229,19 @@ macro_rules! char_property {
 
     (
         __impl FromStr for $name:ident;
-        $($repr:expr => $value:expr;)*
+        $($id:ident => $value:expr;)*
     ) => {
         #[allow(unreachable_patterns)]
         impl ::std::str::FromStr for $name {
             type Err = ();
             fn from_str(s: &str) -> Result<Self, Self::Err> {
                 match s {
-                    $( $repr => Ok($value), )*
-                    $( s if ::std::ascii::AsciiExt::eq_ignore_ascii_case(s, $repr) => Ok($value), )*
+                    // This stringify! should be moved out of this block to the call site. See the
+                    // test failure https://travis-ci.org/behnam/rust-unic/builds/275758001 for why
+                    // this is done here. This can be reverted at 1.20 adoption time.
+                    $( stringify!($id) => Ok($value), )*
+                    $( s if ::std::ascii::AsciiExt::eq_ignore_ascii_case(s, stringify!($id))
+                         => Ok($value), )*
                     _ => Err(()),
                 }
             }
