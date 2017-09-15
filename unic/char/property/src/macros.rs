@@ -136,62 +136,28 @@ macro_rules! char_property {
             $( pub use super::$name::$variant as $long; )*
         }
 
-        #[allow(unreachable_patterns)]
-        impl ::std::str::FromStr for $name {
-            type Err = ();
-            fn from_str(s: &str) -> Result<Self, Self::Err> {
-                match s {
-                    $(
-                        stringify!($abbr) => Ok($name::$variant),
-                        stringify!($long) => Ok($name::$variant),
-                    )*
-                    $(
-                        str if ::std::ascii::AsciiExt::eq_ignore_ascii_case(str, stringify!($abbr))
-                            => Ok($name::$variant),
-                        str if ::std::ascii::AsciiExt::eq_ignore_ascii_case(str, stringify!($long))
-                            => Ok($name::$variant),
-                    )*
-                    _ => Err(()),
-                }
-            }
+        char_property! {
+            __impl FromStr for $name;
+            $( stringify!($abbr) => $name::$variant;
+               stringify!($long) => $name::$variant; )*
         }
 
-        impl $crate::CharProperty for $name {
-            fn prop_abbr_name() -> &'static str { $abbr_name }
-            fn prop_long_name() -> &'static str { $long_name }
-            fn prop_human_name() -> &'static str { $human_name }
-        }
+        char_property! { __impl CharProperty for $name; $abbr_name; $long_name; $human_name; }
+        char_property! { __impl Display for $name by EnumeratedCharProperty }
 
         impl $crate::EnumeratedCharProperty for $name {
             fn all_values() -> &'static [$name] {
-                const VALUES: &[$name] = &[
-                    $($name::$variant,)+
-                ];
+                const VALUES: &[$name] = &[ $($name::$variant,)+ ];
                 VALUES
             }
-
             fn abbr_name(&self) -> &'static str {
-                match *self {
-                    $( $name::$variant => stringify!($abbr), )*
-                }
+                match *self { $( $name::$variant => stringify!($abbr), )* }
             }
-
             fn long_name(&self) -> &'static str {
-                match *self {
-                    $( $name::$variant => stringify!($long), )*
-                }
+                match *self { $( $name::$variant => stringify!($long), )* }
             }
-
             fn human_name(&self) -> &'static str {
-                match *self {
-                    $( $name::$variant => $human, )*
-                }
-            }
-        }
-
-        impl ::std::fmt::Display for $name {
-            fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-                $crate::EnumeratedCharProperty::human_name(self).fmt(f)
+                match *self { $( $name::$variant => $human, )* }
             }
         }
     };
@@ -230,11 +196,14 @@ macro_rules! char_property {
             fn from(prop: $name) -> bool { prop.bool() }
         }
 
-        impl $crate::CharProperty for $name {
-            fn prop_abbr_name() -> &'static str { $abbr_name }
-            fn prop_long_name() -> &'static str { $long_name }
-            fn prop_human_name() -> &'static str { $human_name }
+        char_property! {
+            __impl FromStr for $name;
+            "y" => $name(true); "yes" => $name(true); "t" => $name(true); "true" => $name(true);
+            "n" => $name(false); "no" => $name(false); "f" => $name(false); "false" => $name(false);
         }
+
+        char_property! { __impl CharProperty for $name; $abbr_name; $long_name; $human_name; }
+        char_property! { __impl Display for $name by BinaryCharProperty }
 
         impl $crate::BinaryCharProperty for $name {
             fn bool(&self) -> bool { self.bool() }
@@ -243,10 +212,42 @@ macro_rules! char_property {
         impl $crate::TotalCharProperty for $name {
             fn of(ch: char) -> Self { Self::of(ch) }
         }
+    };
 
+    // == Shared == //
+
+    (
+        __impl CharProperty for $name:ident;
+        $abbr:expr; $long:expr; $human:expr;
+    ) => {
+        impl $crate::CharProperty for $name {
+            fn prop_abbr_name() -> &'static str { $abbr }
+            fn prop_long_name() -> &'static str { $long }
+            fn prop_human_name() -> &'static str { $human }
+        }
+    };
+
+    (
+        __impl FromStr for $name:ident;
+        $($repr:expr => $value:expr;)*
+    ) => {
+        #[allow(unreachable_patterns)]
+        impl ::std::str::FromStr for $name {
+            type Err = ();
+            fn from_str(s: &str) -> Result<Self, Self::Err> {
+                match s {
+                    $( $repr => Ok($value), )*
+                    $( s if ::std::ascii::AsciiExt::eq_ignore_ascii_case(s, $repr) => Ok($value), )*
+                    _ => Err(()),
+                }
+            }
+        }
+    };
+
+    ( __impl Display for $name:ident by $trait:ident ) => {
         impl ::std::fmt::Display for $name {
             fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-                $crate::BinaryCharProperty::human_name(self).fmt(f)
+                $crate::$trait::human_name(self).fmt(f)
             }
         }
     };
