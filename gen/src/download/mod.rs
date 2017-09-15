@@ -29,7 +29,6 @@
 mod client;
 
 use std::collections::HashMap;
-use std::error::Error;
 use std::path::PathBuf;
 use std::fs;
 
@@ -53,12 +52,9 @@ struct DataSource {
 ///
 /// # Panics
 ///
-/// Panics if the config file is badly formatted.
-///
-/// # Errors
-///
-/// Returns a boxed error when something goes wrong during download or a write error occurs.
-pub fn download(active_sources: &Vec<&str>) -> Result<(), Box<Error>> {
+/// Panics if the config file is badly formatted, when something goes wrong during download, or a
+/// write error occurs.
+pub fn download(active_sources: &Vec<&str>) {
     let config: Config =
         toml::from_str(include_str!("config.toml")).expect("Failed to parse config file");
 
@@ -81,13 +77,11 @@ pub fn download(active_sources: &Vec<&str>) -> Result<(), Box<Error>> {
     }
 
     println!("Cleaning destination directories...");
-    for path in downloads.iter().map(DownloadPath::dest) {
-        let _ = fs::remove_file(path);  // ignore errors
-        fs::create_dir_all(path.parent().unwrap())?;
+    for path in downloads.iter().map(|dp| dp.dest.clone()) {
+        let _ = fs::remove_file(&path); // ignore errors
+        fs::create_dir_all(path.parent().unwrap()).unwrap();
     }
 
     println!("Downloading {} files...", downloads.len());
-    client::download_all(downloads.into_iter())?;
-
-    Ok(())
+    client::download_all(downloads.into_iter()).unwrap();
 }

@@ -8,6 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+
 #[macro_use]
 extern crate unic_char_range;
 
@@ -29,8 +30,14 @@ extern crate lazy_static;
 extern crate matches;
 extern crate regex;
 
+
 mod download;
-mod generate;
+mod reader;
+mod writer;
+
+
+use std::io::Write;
+
 
 /// Validate component target names passed in
 #[cfg_attr(feature = "cargo-clippy", allow(needless_pass_by_value))]
@@ -64,23 +71,22 @@ fn main() {
     let generate = matches.is_present("generate");
 
     if download {
-        download::download(&components).expect("Failed to download data");
+        download::download(&components);
     }
 
     if generate {
         if components.contains(&"idna") {
-            generate::idna::generate().expect("Failed to generate Idna tables");
+            writer::idna::generate();
         }
         if components.contains(&"ucd") {
-            generate::ucd::generate().expect("Failed to generate UCD tables");
+            writer::ucd::generate();
         }
         if components.contains(&"normal") {
-            generate::normal::generate().expect("Failed to generate normal tables");
+            writer::normal::generate();
         }
     }
 
     if !download && !generate {
-        use std::io::Write;
         writeln!(
             std::io::stderr(),
             "{}\n\n\
