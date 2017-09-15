@@ -8,5 +8,19 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+pub mod derived_core_properties;
 pub mod unicode_data;
 pub mod version;
+
+use regex::Regex;
+
+lazy_static! {
+    static ref BINARY_PROPERTIES_REGEX: Regex = Regex::new(
+        r"(?xm)^
+          ([[:xdigit:]]{4,6})        # low
+          (?:..([[:xdigit:]]{4,6}))? # high
+          \s+;\s+
+          (\w+)                      # property
+         ",
+    ).unwrap();
+}

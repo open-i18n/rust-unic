@@ -16,7 +16,7 @@ use std::io::{self, Read, Write};
 use std::path::Path;
 use std::str::FromStr;
 
-use super::{UnicodeData, UnicodeVersion};
+use super::UnicodeVersion;
 
 use generate::PREAMBLE;
 use generate::tables::ToRangeCharTable;
@@ -89,11 +89,7 @@ impl FromStr for AgeData {
 }
 
 /// Generate tables for the ucd-age crate
-pub fn generate<P: AsRef<Path>>(
-    dir: P,
-    version: &UnicodeVersion,
-    _: &UnicodeData,
-) -> io::Result<()> {
+pub fn generate<P: AsRef<Path>>(dir: P, version: &UnicodeVersion) -> io::Result<()> {
     println!("> unic::ucd::age::tables::unicode_version");
     version.emit(&dir)?;
     println!(">>> Loading UCD DerivedAge");

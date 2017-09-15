@@ -6,6 +6,10 @@ url = "http://www.unicode.org/Public/{version}/ucd/DerivedAge.txt"
 dest = "data/ucd/DerivedAge.txt"
 
 [[ucd.resources]]
+url = "http://www.unicode.org/Public/{version}/ucd/DerivedCoreProperties.txt"
+dest = "data/ucd/DerivedCoreProperties.txt"
+
+[[ucd.resources]]
 url = "http://www.unicode.org/Public/{version}/ucd/DerivedNormalizationProps.txt"
 dest = "data/ucd/DerivedNormalizationProps.txt"
 

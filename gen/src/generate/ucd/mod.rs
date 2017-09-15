@@ -29,16 +29,18 @@ pub fn generate() -> io::Result<()> {
     let ucd_version = shared::version::read_unicode_version()?;
     println!(">>> Loading UCD UnicodeData");
     let unicode_data = shared::unicode_data::read_unicode_data()?;
+    println!(">>> Loading UCD DerivedCoreProperties");
+    let _derived_core_properties = shared::derived_core_properties::read_derived_core_properties()?;
 
     let path = Path::new("unic/ucd/core/src/tables");
     let _ = fs::remove_dir_all(path);
     fs::create_dir_all(path)?;
-    core::generate(path, &ucd_version, &unicode_data)?;
+    core::generate(path, &ucd_version)?;
 
     let path = Path::new("unic/ucd/age/src/tables");
     let _ = fs::remove_dir_all(path);
     fs::create_dir_all(path)?;
-    age::generate(path, &ucd_version, &unicode_data)?;
+    age::generate(path, &ucd_version)?;
 
     let path = Path::new("unic/ucd/bidi/src/tables");
     let _ = fs::remove_dir_all(path);
