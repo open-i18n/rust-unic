@@ -18,6 +18,10 @@ url = "http://www.unicode.org/Public/{version}/ucd/UnicodeData.txt"
 dest = "data/ucd/UnicodeData.txt"
 
 [[ucd.resources]]
+url = "http://www.unicode.org/Public/{version}/ucd/PropList.txt"
+dest = "data/ucd/PropList.txt"
+
+[[ucd.resources]]
 url = "http://www.unicode.org/Public/{version}/ucd/BidiCharacterTest.txt"
 dest = "data/ucd/test/BidiCharacterTest.txt"
 
