@@ -11,5 +11,9 @@ categories = ["internationalization", "text-processing", "parsing"]
 # No tests/benches that depends on /data/
 exclude = []
 
+[dev-dependencies]
+unic-utils = { path = "../../utils/", version = "0.5.0" }
+unic-char-range = { path = "../range/", version = "0.5.0" }
+
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
