@@ -34,32 +34,32 @@ pub fn generate() -> io::Result<()> {
     println!(">>> Loading UCD PropList");
     let _prop_list = shared::prop_list::read_prop_list()?;
 
-    let path = Path::new("unic/ucd/core/src/tables");
+    let path = Path::new("unic/ucd/core/tables");
     let _ = fs::remove_dir_all(path);
     fs::create_dir_all(path)?;
     core::generate(path, &ucd_version)?;
 
-    let path = Path::new("unic/ucd/age/src/tables");
+    let path = Path::new("unic/ucd/age/tables");
     let _ = fs::remove_dir_all(path);
     fs::create_dir_all(path)?;
     age::generate(path, &ucd_version)?;
 
-    let path = Path::new("unic/ucd/bidi/src/tables");
+    let path = Path::new("unic/ucd/bidi/tables");
     let _ = fs::remove_dir_all(path);
     fs::create_dir_all(path)?;
     bidi::generate(path, &ucd_version, &unicode_data)?;
 
-    let path = Path::new("unic/ucd/category/src/tables");
+    let path = Path::new("unic/ucd/category/tables");
     let _ = fs::remove_dir_all(path);
     fs::create_dir_all(path)?;
     category::generate(path, &ucd_version, &unicode_data)?;
 
-    let path = Path::new("unic/ucd/name/src/tables");
+    let path = Path::new("unic/ucd/name/tables");
     let _ = fs::remove_dir_all(path);
     fs::create_dir_all(path)?;
     name::generate(path, &ucd_version, &unicode_data)?;
 
-    let path = Path::new("unic/ucd/normal/src/tables");
+    let path = Path::new("unic/ucd/normal/tables");
     let _ = fs::remove_dir_all(path);
     fs::create_dir_all(path)?;
     normal::generate(path, &ucd_version, &unicode_data)?;
