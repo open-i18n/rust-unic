@@ -30,7 +30,7 @@ impl<'a> NameData<'a> {
     fn emit<P: AsRef<Path>>(&self, dir: P) -> io::Result<()> {
         let (parts, map) = (&self.0, &self.1);
 
-        let mut file = File::create(dir.as_ref().join("name_values.rs"))?;
+        let mut file = File::create(dir.as_ref().join("name_values.rsd"))?;
         writeln!(file, "{}", PREAMBLE)?;
         for part in parts.iter() {
             writeln!(
