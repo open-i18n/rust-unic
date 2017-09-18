@@ -10,9 +10,13 @@
 
 
 //! Character Property Range types.
+//!
+//! NOTE: At the moment, it is not possible to define a marker for all character property range types
+//! and enforce their implementation from `CharProperty`.  We need to fix this whenever the compiler
+//! becomes able to do to so.
 
 
-use super::CharProperty;
+use super::property::CharProperty;
 
 
 // == Enumerated/Catalog Types ==
