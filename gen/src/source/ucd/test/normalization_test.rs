@@ -12,7 +12,7 @@
 use std::char;
 use std::str::FromStr;
 
-use reader::utils::read;
+use source::utils::read;
 
 use regex::Regex;
 

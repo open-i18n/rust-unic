@@ -11,8 +11,8 @@
 
 use std::path::Path;
 
-use reader::idna::readme::UNICODE_VERSION;
-use reader::idna::idna_mapping_table::IDNA_MAPPING;
+use source::idna::readme::UNICODE_VERSION;
+use source::idna::idna_mapping_table::IDNA_MAPPING;
 
 use writer::common::emit_unicode_version;
 use writer::utils::tables::ToRangeCharTable;

@@ -9,8 +9,8 @@
 // except according to those terms.
 
 
-use reader::common::UnicodeVersion;
-use reader::utils::read;
+use source::common::UnicodeVersion;
+use source::utils::read;
 
 
 lazy_static! {

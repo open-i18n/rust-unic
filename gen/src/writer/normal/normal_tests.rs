@@ -12,7 +12,7 @@
 use std::fmt::Write;
 use std::path::Path;
 
-use reader::ucd::test::normalization_test::NORMALIZATION_TESTS;
+use source::ucd::test::normalization_test::NORMALIZATION_TESTS;
 
 use writer::utils::write;
 

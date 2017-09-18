@@ -14,8 +14,8 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::Write;
 use std::path::Path;
 
-use reader::ucd::unicode_data::{UnicodeDataEntry, UNICODE_DATA};
-use reader::ucd::readme::UNICODE_VERSION;
+use source::ucd::unicode_data::{UnicodeDataEntry, UNICODE_DATA};
+use source::ucd::readme::UNICODE_VERSION;
 
 use writer::utils::tables::ToDirectCharTable;
 use writer::common::emit_unicode_version;

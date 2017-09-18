@@ -12,9 +12,9 @@ use std::char;
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
 
-use reader::ucd::unicode_data::UNICODE_DATA;
-use reader::ucd::derived_normalization_props::COMPOSITION_EXCLUSIONS;
-use reader::ucd::readme::UNICODE_VERSION;
+use source::ucd::unicode_data::UNICODE_DATA;
+use source::ucd::derived_normalization_props::COMPOSITION_EXCLUSIONS;
+use source::ucd::readme::UNICODE_VERSION;
 
 use writer::utils::{capitalize, write};
 use writer::utils::tables::{ToDirectCharTable, ToRangeCharSet, ToRangeCharTable};

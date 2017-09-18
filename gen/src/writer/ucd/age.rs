@@ -12,8 +12,8 @@
 use std::fmt::Display;
 use std::path::Path;
 
-use reader::ucd::derived_age::AGE_DATA;
-use reader::ucd::readme::UNICODE_VERSION;
+use source::ucd::derived_age::AGE_DATA;
+use source::ucd::readme::UNICODE_VERSION;
 
 use writer::utils::tables::ToRangeCharTable;
 use writer::utils::write;

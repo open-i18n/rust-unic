@@ -11,7 +11,7 @@
 
 use std::path::Path;
 
-use reader::ucd::readme::UNICODE_VERSION;
+use source::ucd::readme::UNICODE_VERSION;
 
 use writer::common::emit_unicode_version;
 

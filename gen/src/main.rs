@@ -32,7 +32,7 @@ extern crate regex;
 
 
 mod download;
-mod reader;
+mod source;
 mod writer;
 
 
