@@ -9,7 +9,14 @@
 // except according to those terms.
 
 
-use super::{is_bidi_mirrored, BidiClass, BidiClassCategory, BidiMirrored};
+use super::{
+    is_bidi_control,
+    is_bidi_mirrored,
+    BidiClass,
+    BidiClassCategory,
+    BidiControl,
+    BidiMirrored,
+};
 
 
 // == Bidi_Class ==
@@ -116,59 +123,100 @@ impl StrBidiMirrored for str {
 }
 
 
+// == Bidi_Control ==
+
+/// Methods for Bidi_Control character property.
+pub trait CharBidiControl {
+    /// Get `BidiControl` of the character.
+    fn bidi_control(self) -> BidiControl;
+
+    /// Boolean value of `BidiControl` of the character.
+    fn is_bidi_control(self) -> bool;
+}
+
+
+impl CharBidiControl for char {
+    #[inline]
+    fn bidi_control(self) -> BidiControl {
+        BidiControl::of(self)
+    }
+
+    #[inline]
+    fn is_bidi_control(self) -> bool {
+        is_bidi_control(self)
+    }
+}
+
+
+/// Methods for Bidi_Control character properties of string types.
+pub trait StrBidiControl {
+    /// Whether the string has any *Bidi_Control* character.
+    fn has_bidi_control(&self) -> bool;
+}
+
+impl StrBidiControl for str {
+    #[inline]
+    fn has_bidi_control(&self) -> bool {
+        self.chars().any(|ch| ch.is_bidi_control())
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     #[test]
     fn test_char_bidi() {
-        use super::{BidiClass, BidiClassCategory, CharBidiClass, CharBidiMirrored};
+        use super::{BidiClass, BidiClassCategory, CharBidiClass, CharBidiControl, CharBidiMirrored};
 
         let ch = '\u{0028}'; // U+0028 LEFT PARENTHESIS "("
         assert_eq!(ch.bidi_class(), BidiClass::OtherNeutral);
         assert_eq!(ch.bidi_class().category(), BidiClassCategory::Neutral);
         assert!(!ch.is_ltr());
         assert!(!ch.is_rtl());
-        assert!(ch.bidi_mirrored().bool());
         assert!(ch.is_bidi_mirrored());
+        assert!(!ch.is_bidi_control());
 
         let ch = '\u{0041}'; // U+0041 LATIN CAPITAL LETTER A "A"
         assert_eq!(ch.bidi_class(), BidiClass::LeftToRight);
         assert_eq!(ch.bidi_class().category(), BidiClassCategory::Strong);
         assert!(ch.is_ltr());
         assert!(!ch.is_rtl());
-        assert!(!ch.bidi_mirrored().bool());
         assert!(!ch.is_bidi_mirrored());
+        assert!(!ch.is_bidi_control());
 
         let ch = '\u{05D0}'; // U+05D0 HEBREW LETTER ALEF "א"
         assert_eq!(ch.bidi_class(), BidiClass::RightToLeft);
         assert_eq!(ch.bidi_class().category(), BidiClassCategory::Strong);
         assert!(!ch.is_ltr());
         assert!(ch.is_rtl());
-        assert!(!ch.bidi_mirrored().bool());
         assert!(!ch.is_bidi_mirrored());
+        assert!(!ch.is_bidi_control());
 
         let ch = '\u{0627}'; // U+0627 ARABIC LETTER ALEF "ا"
         assert_eq!(ch.bidi_class(), BidiClass::ArabicLetter);
         assert_eq!(ch.bidi_class().category(), BidiClassCategory::Strong);
         assert!(!ch.is_ltr());
         assert!(ch.is_rtl());
-        assert!(!ch.bidi_mirrored().bool());
         assert!(!ch.is_bidi_mirrored());
+        assert!(!ch.is_bidi_control());
     }
 
     #[test]
     fn test_str_bidi() {
-        use super::{StrBidiClass, StrBidiMirrored};
+        use super::{StrBidiClass, StrBidiControl, StrBidiMirrored};
 
         let text = "";
         assert!(!text.has_bidi_explicit());
         assert!(!text.has_ltr());
         assert!(!text.has_rtl());
         assert!(!text.has_bidi_mirrored());
+        assert!(!text.has_bidi_control());
 
-        let text = "[\u{0041}\u{05D0}\u{0627}]";
+        let text = "[\u{0041}\u{05D0}\u{0627}\u{200e}]";
         assert!(!text.has_bidi_explicit());
         assert!(text.has_ltr());
         assert!(text.has_rtl());
         assert!(text.has_bidi_mirrored());
+        assert!(text.has_bidi_control());
     }
 }

@@ -33,7 +33,7 @@ pub struct DerivedCoreProperties {
     /// _Equivalent to `gc=Ll + Other_Lowercase`_
     ///
     /// [Unicode]: http://unicode.org/reports/tr41/tr41-21.html#Unicode
-    lowercase: BTreeSet<char>,
+    pub lowercase: BTreeSet<char>,
 
     /// Characters with the `Uppercase` property. For more information,
     /// see _Chapter 4, Character Properties_ in ***[Unicode]***.
@@ -41,7 +41,7 @@ pub struct DerivedCoreProperties {
     /// _Equivalent to `gc=Lu + Other_Uppercase`_
     ///
     /// [Unicode]: http://unicode.org/reports/tr41/tr41-21.html#Unicode
-    uppercase: BTreeSet<char>,
+    pub uppercase: BTreeSet<char>,
 
     /// Characters wich are considered to be either uppercase, lowercase, or titlecase characters.
     /// This property is not identical to the `Changes_When_Casemapped_ property.
@@ -50,7 +50,7 @@ pub struct DerivedCoreProperties {
     /// _Equivalent to `Lowercase + Uppercase + gc=Lt`
     ///
     /// [Unicode]: http://unicode.org/reports/tr41/tr41-21.html#Unicode
-    cased: BTreeSet<char>,
+    pub cased: BTreeSet<char>,
 
     /// Characters which are ignored for casing purposes.
     /// For more information, see D125 in _§3.13 Default Case Algorithms_ in ***[Unicode]***.
@@ -58,7 +58,7 @@ pub struct DerivedCoreProperties {
     /// _Equivalent to `gc=Mn|Me|Cf|Lm|Sk + Word_Break=MidLetter|MidNumLet|Single_Quote`_
     ///
     /// [Unicode]: http://unicode.org/reports/tr41/tr41-21.html#Unicode
-    case_ignorable: BTreeSet<char>,
+    pub case_ignorable: BTreeSet<char>,
 
     /// Characters whose normalized forms are not stable under a `toLowercase` mapping.
     /// For more information, see D125 in _§3.13 Default Case Algorithms_ in ***[Unicode]***.
@@ -66,7 +66,7 @@ pub struct DerivedCoreProperties {
     /// _Equivalent to `toLowercase(toNFD(X)) != toNFD(X)`_
     ///
     /// [Unicode]: http://unicode.org/reports/tr41/tr41-21.html#Unicode
-    changes_when_lowercased: BTreeSet<char>,
+    pub changes_when_lowercased: BTreeSet<char>,
 
     /// Characters whose normalized forms are not stable under a `toUppercase` mapping.
     /// For more information, see D125 in _§3.13 Default Case Algorithms_ in ***[Unicode]***.
@@ -74,7 +74,7 @@ pub struct DerivedCoreProperties {
     /// _Equivalent to `toUppercase(toNFD(X)) != toNFD(X)`_
     ///
     /// [Unicode]: http://unicode.org/reports/tr41/tr41-21.html#Unicode
-    changes_when_uppercased: BTreeSet<char>,
+    pub changes_when_uppercased: BTreeSet<char>,
 
     /// Characters whose normalized forms are not stable under a `toTitlecase` mapping.
     /// For more information, see D125 in _§3.13 Default Case Algorithms_ in ***[Unicode]***.
@@ -82,7 +82,7 @@ pub struct DerivedCoreProperties {
     /// _Equivalent to `toTitlecase(toNFD(X)) != toNFD(X)`_
     ///
     /// [Unicode]: http://unicode.org/reports/tr41/tr41-21.html#Unicode
-    changes_when_titlecased: BTreeSet<char>,
+    pub changes_when_titlecased: BTreeSet<char>,
 
     /// Characters whose normalized forms are not stable under case folding.
     /// For more information, see D125 in _§3.13 Default Case Algorithms_ in ***[Unicode]***.
@@ -90,7 +90,7 @@ pub struct DerivedCoreProperties {
     /// _Equivalent to `toCasefold(toNFD(X)) != toNFD(X)`_
     ///
     /// [Unicode]: http://unicode.org/reports/tr41/tr41-21.html#Unicode
-    changes_when_casefolded: BTreeSet<char>,
+    pub changes_when_casefolded: BTreeSet<char>,
 
     /// Characters which may change when they undergo case mapping.
     /// For more information, see D125 in _§3.13 Default Case Algorithms_ in ***[Unicode]***.
@@ -99,7 +99,7 @@ pub struct DerivedCoreProperties {
     /// `Changes_When_Lowercased(X) || Changes_When_Uppercased(X) || Changes_When_Titlecased(X)`_
     ///
     /// [Unicode]: http://unicode.org/reports/tr41/tr41-21.html#Unicode
-    changes_when_casemapped: BTreeSet<char>,
+    pub changes_when_casemapped: BTreeSet<char>,
 
     /// Characters with the `Alphabetic` property. For more information,
     /// see _Chapter 4, Character Properties_ in ***[Unicode]***.
@@ -107,7 +107,7 @@ pub struct DerivedCoreProperties {
     /// _Equivalent to `Lowercase + uppercase + gc=Lt|Lm|Lo|Nl + Other_Alphabetic`_
     ///
     /// [Unicode]: http://unicode.org/reports/tr41/tr41-21.html#Unicode
-    alphabetic: BTreeSet<char>,
+    pub alphabetic: BTreeSet<char>,
 
     /// For programmatic determination of default ignorable code points.
     /// New characters that should be ignored in rendering (unless explicitly supported)
@@ -127,7 +127,7 @@ pub struct DerivedCoreProperties {
     ///
     /// [Display of Unsupported Characters]: http://www.unicode.org/faq/unsup_char.html
     /// [Unicode]: http://unicode.org/reports/tr41/tr41-21.html#Unicode
-    default_ignorable_code_point: BTreeSet<char>,
+    pub default_ignorable_code_point: BTreeSet<char>,
 
     /// Property used together with the definition of Standard Korean Syllable Block
     /// to define "Grapheme base". See D58 in _Chapter 3, Conformance_ in ***[Unicode]***.
@@ -140,7 +140,7 @@ pub struct DerivedCoreProperties {
     /// which is itself represented by a sequence of conjoining jamos.
     ///
     /// [Unicode]: http://unicode.org/reports/tr41/tr41-21.html#Unicode
-    grapheme_base: BTreeSet<char>,
+    pub grapheme_base: BTreeSet<char>,
 
     /// Property used to define "Grapheme extender".
     /// See D59 in _Chapter 3, Conformance_ in ***[Unicode]***.
@@ -151,7 +151,7 @@ pub struct DerivedCoreProperties {
     /// is equivalent to the set of characters for which `Grapheme_Cluster_Break=Extend`.
     ///
     /// [Unicode]: http://unicode.org/reports/tr41/tr41-21.html#Unicode
-    grapheme_extend: BTreeSet<char>,
+    pub grapheme_extend: BTreeSet<char>,
 
     // Grapheme_Link is deprecated
     /// Characters with the `Math` property. For more information,
@@ -160,31 +160,31 @@ pub struct DerivedCoreProperties {
     /// _Equivalent to `gc=Sm + Other_Math`_
     ///
     /// [Unicode]: http://unicode.org/reports/tr41/tr41-21.html#Unicode
-    math: BTreeSet<char>,
+    pub math: BTreeSet<char>,
 
     /// Used to determine programming identifiers, as described in
     /// [Unicode Standard Annex #31, "Unicode Identifier and Pattern Syntax"][UAX31]
     ///
     /// [UAX31]: http://unicode.org/reports/tr41/tr41-21.html#UAX31
-    id_start: BTreeSet<char>,
+    pub id_start: BTreeSet<char>,
 
     /// Used to determine programming identifiers, as described in
     /// [Unicode Standard Annex #31, "Unicode Identifier and Pattern Syntax"][UAX31]
     ///
     /// [UAX31]: http://unicode.org/reports/tr41/tr41-21.html#UAX31
-    id_continue: BTreeSet<char>,
+    pub id_continue: BTreeSet<char>,
 
     /// Used to determine programming identifiers, as described in
     /// [Unicode Standard Annex #31, "Unicode Identifier and Pattern Syntax"][UAX31]
     ///
     /// [UAX31]: http://unicode.org/reports/tr41/tr41-21.html#UAX31
-    xid_start: BTreeSet<char>,
+    pub xid_start: BTreeSet<char>,
 
     /// Used to determine programming identifiers, as described in
     /// [Unicode Standard Annex #31, "Unicode Identifier and Pattern Syntax"][UAX31]
     ///
     /// [UAX31]: http://unicode.org/reports/tr41/tr41-21.html#UAX31
-    xid_continue: BTreeSet<char>,
+    pub xid_continue: BTreeSet<char>,
 }
 
 impl FromStr for DerivedCoreProperties {

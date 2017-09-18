@@ -30,7 +30,9 @@ const BIDI_TEXTS: &[&str] = &[
 
 fn bench_bidi_info_new(b: &mut Bencher, texts: &[&str]) {
     for text in texts {
-        b.iter(|| { BidiInfo::new(text, None); });
+        b.iter(|| {
+            BidiInfo::new(text, None);
+        });
     }
 }
 

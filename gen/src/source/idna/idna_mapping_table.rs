@@ -26,7 +26,9 @@ lazy_static! {
 
 
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub struct IdnaMapping(pub BTreeMap<char, IdnaMappingEntry>);
+pub struct IdnaMapping {
+    pub map: BTreeMap<char, IdnaMappingEntry>,
+}
 
 
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -68,7 +70,7 @@ impl FromStr for IdnaMapping {
             ).unwrap();
         }
 
-        let mut entries = BTreeMap::new();
+        let mut map = BTreeMap::new();
 
         for capture in REGEX.captures_iter(str) {
             if let Some(low) = char::from_u32(u32::from_str_radix(&capture[1], 16).unwrap()) {
@@ -97,12 +99,12 @@ impl FromStr for IdnaMapping {
                     }),
                 };
                 for ch in chars!(low..high) {
-                    entries.insert(ch, entry.clone());
+                    map.insert(ch, entry.clone());
                 }
-                entries.insert(high, entry);
+                map.insert(high, entry);
             }
         }
 
-        Ok(IdnaMapping(entries))
+        Ok(IdnaMapping { map })
     }
 }

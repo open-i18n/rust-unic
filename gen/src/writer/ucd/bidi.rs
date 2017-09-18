@@ -15,6 +15,7 @@ use std::fmt::Display;
 use std::path::Path;
 
 use source::ucd::unicode_data::UNICODE_DATA;
+use source::ucd::prop_list::PROP_LIST;
 use source::ucd::readme::UNICODE_VERSION;
 
 use writer::utils::tables::{ToRangeCharSet, ToRangeCharTable};
@@ -26,6 +27,7 @@ pub fn generate(dir: &Path) {
     emit_unicode_version(&dir, &UNICODE_VERSION);
     emit_bidi_class(&dir);
     emit_bidi_mirrored(&dir);
+    emit_bidi_control(&dir);
 }
 
 
@@ -81,4 +83,12 @@ fn emit_bidi_mirrored(dir: &Path) {
         .collect();
 
     write(&dir, "bidi_mirrored.rsv", &set.to_range_char_set());
+}
+
+fn emit_bidi_control(dir: &Path) {
+    write(
+        &dir,
+        "bidi_control.rsv",
+        &PROP_LIST.bidi_control.to_range_char_set(),
+    );
 }

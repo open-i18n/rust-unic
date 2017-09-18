@@ -46,8 +46,10 @@ pub use bidi::{
     is_bidi_mirrored,
     BidiClass,
     CharBidiClass,
+    CharBidiControl,
     CharBidiMirrored,
     StrBidiClass,
+    StrBidiControl,
     StrBidiMirrored,
 };
 pub use core::UnicodeVersion;
