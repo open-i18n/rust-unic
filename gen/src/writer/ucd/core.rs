@@ -13,9 +13,9 @@ use std::path::Path;
 
 use reader::ucd::readme::UNICODE_VERSION;
 
-use writer::common::unicode_version;
+use writer::common::emit_unicode_version;
 
 
 pub fn generate(dir: &Path) {
-    unicode_version::emit(&dir, &UNICODE_VERSION);
+    emit_unicode_version(&dir, &UNICODE_VERSION);
 }

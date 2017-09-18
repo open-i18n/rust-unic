@@ -231,7 +231,7 @@ mod data {
     use super::abbr_names::*;
     use unic_utils::CharDataTable;
     pub const BIDI_CLASS_TABLE: CharDataTable<super::BidiClass> =
-        include!("../tables/bidi_class_values.rsv");
+        include!("../tables/bidi_class.rsv");
 }
 
 

@@ -18,13 +18,13 @@ use reader::ucd::unicode_data::{UnicodeDataEntry, UNICODE_DATA};
 use reader::ucd::readme::UNICODE_VERSION;
 
 use writer::utils::tables::ToDirectCharTable;
-use writer::common::unicode_version;
+use writer::common::emit_unicode_version;
 use writer::utils::write;
 
 
 pub fn generate(dir: &Path) {
-    unicode_version::emit(&dir, &UNICODE_VERSION);
-    name_data_emit(&dir);
+    emit_unicode_version(&dir, &UNICODE_VERSION);
+    emit_name_tables(&dir);
 }
 
 
@@ -34,7 +34,7 @@ struct NameRecord<'a> {
 }
 
 
-fn name_data_emit(dir: &Path) {
+fn emit_name_tables(dir: &Path) {
     let mut all_pieces: BTreeSet<&str> = BTreeSet::default();
     let mut map: BTreeMap<char, NameRecord> = BTreeMap::default();
 

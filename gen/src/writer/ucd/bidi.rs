@@ -18,14 +18,14 @@ use reader::ucd::unicode_data::UNICODE_DATA;
 use reader::ucd::readme::UNICODE_VERSION;
 
 use writer::utils::tables::{ToRangeCharSet, ToRangeCharTable};
-use writer::common::unicode_version;
+use writer::common::emit_unicode_version;
 use writer::utils::write;
 
 
 pub fn generate(dir: &Path) {
-    unicode_version::emit(&dir, &UNICODE_VERSION);
-    bidi_class_emit(&dir);
-    bidi_mirrored_emit(&dir);
+    emit_unicode_version(&dir, &UNICODE_VERSION);
+    emit_bidi_class(&dir);
+    emit_bidi_mirrored(&dir);
 }
 
 
@@ -49,7 +49,7 @@ const BIDI_CLASS_DEFAULTS: &[(u32, u32, &str)] = &[
 ];
 
 
-fn bidi_class_emit(dir: &Path) {
+fn emit_bidi_class(dir: &Path) {
     let mut map: BTreeMap<char, &str> = UNICODE_DATA
         .entries
         .iter()
@@ -66,13 +66,13 @@ fn bidi_class_emit(dir: &Path) {
 
     write(
         &dir,
-        "bidi_class_values.rsv",
+        "bidi_class.rsv",
         &map.to_range_char_table(Display::fmt),
     );
 }
 
 
-fn bidi_mirrored_emit(dir: &Path) {
+fn emit_bidi_mirrored(dir: &Path) {
     let set: BTreeSet<char> = UNICODE_DATA
         .entries
         .iter()

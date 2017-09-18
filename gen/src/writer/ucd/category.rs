@@ -18,17 +18,17 @@ use reader::ucd::unicode_data::UNICODE_DATA;
 use reader::ucd::readme::UNICODE_VERSION;
 
 use writer::utils::tables::ToRangeCharTable;
-use writer::common::unicode_version;
+use writer::common::emit_unicode_version;
 use writer::utils::write;
 
 
 pub fn generate(dir: &Path) {
-    unicode_version::emit(&dir, &UNICODE_VERSION);
-    category_data_emit(dir);
+    emit_unicode_version(&dir, &UNICODE_VERSION);
+    emit_general_category(dir);
 }
 
 
-fn category_data_emit(dir: &Path) {
+fn emit_general_category(dir: &Path) {
     let map: BTreeMap<char, &str> = UNICODE_DATA
         .entries
         .iter()

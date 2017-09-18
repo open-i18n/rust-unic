@@ -11,13 +11,21 @@
 
 use std::path::Path;
 
+use reader::idna::readme::UNICODE_VERSION;
 use reader::idna::idna_mapping_table::IDNA_MAPPING;
 
+use writer::common::emit_unicode_version;
 use writer::utils::tables::ToRangeCharTable;
 use writer::utils::write;
 
 
-pub fn emit(dir: &Path) {
+pub fn generate(dir: &Path) {
+    emit_unicode_version(&dir, &UNICODE_VERSION);
+    emit_idna_mapping(&dir);
+}
+
+
+pub fn emit_idna_mapping(dir: &Path) {
     let contents: String = IDNA_MAPPING.0.to_range_char_table(|entry, f| {
         write!(f, "{}", entry.status)?;
         if matches!(

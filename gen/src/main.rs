@@ -75,14 +75,14 @@ fn main() {
     }
 
     if generate {
-        if components.contains(&"idna") {
-            writer::idna::generate();
-        }
         if components.contains(&"ucd") {
             writer::ucd::generate();
         }
         if components.contains(&"normal") {
             writer::normal::generate();
+        }
+        if components.contains(&"idna") {
+            writer::idna::generate();
         }
     }
 

@@ -9,17 +9,12 @@
 // except according to those terms.
 
 
-mod idna_mapping;
+mod mapping;
 
-use reader::idna::readme::UNICODE_VERSION;
 
 use writer::utils::clean_dir;
-use writer::common::unicode_version;
 
 
 pub fn generate() {
-    let dir = clean_dir("unic/idna/mapping/tables");
-
-    unicode_version::emit(&dir, &UNICODE_VERSION);
-    idna_mapping::emit(&dir);
+    mapping::generate(&clean_dir("unic/idna/mapping/tables"));
 }

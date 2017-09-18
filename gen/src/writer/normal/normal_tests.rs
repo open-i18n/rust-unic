@@ -18,11 +18,11 @@ use writer::utils::write;
 
 
 pub fn generate(dir: &Path) {
-    normalization_test_emit(&dir);
+    emit_conformance_tests_data(&dir);
 }
 
 
-fn normalization_test_emit(dir: &Path) {
+fn emit_conformance_tests_data(dir: &Path) {
     let mut contents = "&[\n".to_owned();
     for test in NORMALIZATION_TESTS.0.iter() {
         contents.push_str("    (\"");

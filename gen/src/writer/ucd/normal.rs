@@ -18,20 +18,20 @@ use reader::ucd::readme::UNICODE_VERSION;
 
 use writer::utils::{capitalize, write};
 use writer::utils::tables::{ToDirectCharTable, ToRangeCharSet, ToRangeCharTable};
-use writer::common::unicode_version;
+use writer::common::emit_unicode_version;
 
 
 pub fn generate(dir: &Path) {
-    unicode_version::emit(&dir, &UNICODE_VERSION);
-    general_category_mark_data_emit(dir);
-    canonical_combining_class_data_emit(dir);
-    canonical_decomposition_data_emit(dir);
-    canonical_composition_data_emit(dir);
-    compatibility_decomposition_data_emit(dir);
+    emit_unicode_version(&dir, &UNICODE_VERSION);
+    emit_general_category_mark(dir);
+    emit_canonical_combining_class(dir);
+    emit_canonical_decomposition_mapping(dir);
+    emit_canonical_composition_mapping(dir);
+    emit_compatibility_decomposition_mapping(dir);
 }
 
 
-fn general_category_mark_data_emit(dir: &Path) {
+fn emit_general_category_mark(dir: &Path) {
     let set: BTreeSet<char> = UNICODE_DATA
         .entries
         .iter()
@@ -45,7 +45,7 @@ fn general_category_mark_data_emit(dir: &Path) {
 }
 
 
-fn canonical_combining_class_data_emit(dir: &Path) {
+fn emit_canonical_combining_class(dir: &Path) {
     let map: BTreeMap<char, u8> = UNICODE_DATA
         .entries
         .iter()
@@ -78,7 +78,7 @@ fn decomposition_map<'a>() -> &'a BTreeMap<char, Box<[char]>> {
 }
 
 
-fn canonical_decomposition_data_emit(dir: &Path) {
+fn emit_canonical_decomposition_mapping(dir: &Path) {
     write(
         dir,
         "canonical_decomposition_mapping.rsv",
@@ -93,7 +93,7 @@ fn canonical_decomposition_data_emit(dir: &Path) {
 }
 
 
-fn canonical_composition_data_emit(dir: &Path) {
+fn emit_canonical_composition_mapping(dir: &Path) {
     let mut map: BTreeMap<char, Vec<(char, char)>> = BTreeMap::default();
 
     for (composed, decomposed) in decomposition_map() {
@@ -134,7 +134,7 @@ fn canonical_composition_data_emit(dir: &Path) {
 }
 
 
-fn compatibility_decomposition_data_emit(dir: &Path) {
+fn emit_compatibility_decomposition_mapping(dir: &Path) {
     let map: BTreeMap<char, (&str, &[char])> = UNICODE_DATA
         .entries
         .iter()

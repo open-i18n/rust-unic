@@ -17,16 +17,16 @@ use reader::ucd::readme::UNICODE_VERSION;
 
 use writer::utils::tables::ToRangeCharTable;
 use writer::utils::write;
-use writer::common::unicode_version;
+use writer::common::emit_unicode_version;
 
 
 pub fn generate(dir: &Path) {
-    unicode_version::emit(&dir, &UNICODE_VERSION);
-    age_value_emit(&dir);
+    emit_unicode_version(&dir, &UNICODE_VERSION);
+    emit_age_values(&dir);
 }
 
 
-pub fn age_value_emit(dir: &Path) {
+pub fn emit_age_values(dir: &Path) {
     write(
         &dir,
         "age_values.rsv",
