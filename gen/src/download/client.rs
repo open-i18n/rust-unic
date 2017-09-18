@@ -11,7 +11,7 @@
 use std::error::Error;
 use std::fs::{self, File};
 use std::io::Write;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 use futures::{Future, Stream};
 use futures::future::join_all;
@@ -23,14 +23,9 @@ use tokio_core::reactor::Core;
 pub struct DownloadPath {
     /// A `http://` string indicating the location of the resource
     pub url: String,
+
     /// The path to the location where the file should be saved
     pub dest: PathBuf,
-}
-
-impl DownloadPath {
-    pub fn dest(&self) -> &Path {
-        &self.dest
-    }
 }
 
 /// Concurrently download all files as indicated by the iterator of `DownloadPath`s.
