@@ -22,10 +22,10 @@ use writer::utils::clean_dir;
 
 
 pub fn generate() {
-    core::generate(&clean_dir("unic/ucd/core/tables"));
     age::generate(&clean_dir("unic/ucd/age/tables"));
     bidi::generate(&clean_dir("unic/ucd/bidi/tables"));
     category::generate(&clean_dir("unic/ucd/category/tables"));
+    core::generate(&clean_dir("unic/ucd/core/tables"));
     name::generate(&clean_dir("unic/ucd/name/tables"));
     normal::generate(&clean_dir("unic/ucd/normal/tables"));
 }

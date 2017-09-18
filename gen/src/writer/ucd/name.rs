@@ -21,68 +21,58 @@ use writer::ucd::unicode_version;
 use writer::utils::write;
 
 
-#[derive(Clone, Default, Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
+pub fn generate(dir: &Path) {
+    unicode_version::emit(&dir);
+    name_data_emit(&dir);
+}
+
+
+#[derive(Clone, Debug)]
 struct NameRecord<'a> {
     pieces: Vec<&'a str>,
 }
 
-struct NameData<'a>(BTreeSet<&'a str>, BTreeMap<char, NameRecord<'a>>);
 
-impl<'a> NameData<'a> {
-    fn emit(&self, dir: &Path) {
-        let (parts, map) = (&self.0, &self.1);
+fn name_data_emit(dir: &Path) {
+    let mut all_pieces: BTreeSet<&str> = BTreeSet::default();
+    let mut map: BTreeMap<char, NameRecord> = BTreeMap::default();
 
-        let mut contents = String::new();
-        for part in parts.iter() {
-            writeln!(
-                contents,
-                "const {}: &str = \"{}\";",
-                part.replace('-', "_"),
-                part
-            ).unwrap();
+    for &UnicodeDataEntry {
+        character,
+        ref name,
+        ..
+    } in UNICODE_DATA.0.iter()
+    {
+        if name.starts_with('<') {
+            continue;
         }
-        write(&dir, "name_values.rsd", &contents);
-
-        let contents = map.to_direct_char_table(|record, f| {
-            write!(
-                f,
-                "&[{}]",
-                record
-                    .pieces
-                    .iter()
-                    .map(|s| s.replace('-', "_"))
-                    .collect::<Vec<_>>()
-                    .join(", ")
-            )
-        });
-        write(&dir, "name_map.rsv", &contents);
+        let pieces = name.split_whitespace().collect::<Vec<_>>();
+        all_pieces.extend(pieces.iter());
+        map.insert(character, NameRecord { pieces });
     }
-}
 
-impl<'a, I> From<I> for NameData<'a>
-where
-    I: Iterator<Item = &'a UnicodeDataEntry>,
-{
-    fn from(it: I) -> Self {
-        let mut all_pieces = BTreeSet::default();
-        let mut map = BTreeMap::default();
-
-        #[cfg_attr(rustfmt, rustfmt_skip)]
-        for &UnicodeDataEntry { character, ref name, .. } in it {
-            if name.starts_with('<') {
-                continue;
-            }
-            let pieces = name.split_whitespace().collect::<Vec<_>>();
-            all_pieces.extend(pieces.iter());
-            map.insert(character, NameRecord { pieces });
-        }
-
-        NameData(all_pieces, map)
+    let mut values_content = String::new();
+    for piece in all_pieces.iter() {
+        writeln!(
+            values_content,
+            "const {}: &str = \"{}\";",
+            piece.replace('-', "_"),
+            piece
+        ).unwrap();
     }
-}
+    write(&dir, "name_values.rsd", &values_content);
 
-
-pub fn generate(dir: &Path) {
-    unicode_version::emit(&dir);
-    NameData::from(UNICODE_DATA.0.iter()).emit(dir);
+    let map_content = map.to_direct_char_table(|record, f| {
+        write!(
+            f,
+            "&[{}]",
+            record
+                .pieces
+                .iter()
+                .map(|s| s.replace('-', "_"))
+                .collect::<Vec<_>>()
+                .join(", ")
+        )
+    });
+    write(&dir, "name_map.rsv", &map_content);
 }

@@ -17,37 +17,42 @@ use reader::ucd::test::normalization_test::NORMALIZATION_TESTS;
 use writer::utils::write;
 
 
+pub fn generate(dir: &Path) {
+    normalization_test_emit(&dir);
+}
+
+
 fn normalization_test_emit(dir: &Path) {
-    let mut contents = String::new();
-    writeln!(contents, "&[").unwrap();
+    let mut contents = "&[".to_owned();
     for test in NORMALIZATION_TESTS.0.iter() {
-        write!(contents, "    (\"").unwrap();
+        contents.push_str("    (\"");
+
         for char in test.source.iter() {
             write!(contents, "{}", char.escape_unicode()).unwrap();
         }
-        write!(contents, "\", \"").unwrap();
+        contents.push_str("\", \"");
+
         for char in test.nfc.iter() {
             write!(contents, "{}", char.escape_unicode()).unwrap();
         }
-        write!(contents, "\", \"").unwrap();
+        contents.push_str("\", \"");
+
         for char in test.nfd.iter() {
             write!(contents, "{}", char.escape_unicode()).unwrap();
         }
-        write!(contents, "\", \"").unwrap();
+        contents.push_str("\", \"");
+
         for char in test.nfkc.iter() {
             write!(contents, "{}", char.escape_unicode()).unwrap();
         }
-        write!(contents, "\", \"").unwrap();
+        contents.push_str("\", \"");
+
         for char in test.nfkd.iter() {
             write!(contents, "{}", char.escape_unicode()).unwrap();
         }
-        writeln!(contents, "\"),").unwrap();
+        contents.push_str("\"),\n");
     }
-    write!(contents, "]").unwrap();
+    contents.push_str("]");
 
     write(&dir, "conformance_tests_data.rsv", &contents);
-}
-
-pub fn generate(dir: &Path) {
-    normalization_test_emit(&dir);
 }

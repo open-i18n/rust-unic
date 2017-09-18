@@ -20,6 +20,20 @@ use writer::utils::tables::{ToDirectCharTable, ToRangeCharSet, ToRangeCharTable}
 use writer::ucd::unicode_version;
 
 
+pub fn generate(dir: &Path) {
+    unicode_version::emit(dir);
+
+    GeneralCategoryMarkData::from(UNICODE_DATA.0.iter()).emit(dir);
+    CanonicalCombiningClassData::from(UNICODE_DATA.0.iter()).emit(dir);
+
+    let decomposition = CanonicalDecompositionData::from(UNICODE_DATA.0.iter());
+    decomposition.emit(dir);
+
+    CanonicalCompositionData::from(&decomposition, &COMPOSITION_EXCLUSIONS).emit(dir);
+    CompatibilityDecompositionData::from(UNICODE_DATA.0.iter()).emit(dir);
+}
+
+
 struct GeneralCategoryMarkData(BTreeSet<char>);
 
 impl GeneralCategoryMarkData {
@@ -202,18 +216,4 @@ where
 
         CompatibilityDecompositionData(map)
     }
-}
-
-
-pub fn generate(dir: &Path) {
-    unicode_version::emit(dir);
-
-    GeneralCategoryMarkData::from(UNICODE_DATA.0.iter()).emit(dir);
-    CanonicalCombiningClassData::from(UNICODE_DATA.0.iter()).emit(dir);
-
-    let decomposition = CanonicalDecompositionData::from(UNICODE_DATA.0.iter());
-    decomposition.emit(dir);
-
-    CanonicalCompositionData::from(&decomposition, &COMPOSITION_EXCLUSIONS).emit(dir);
-    CompatibilityDecompositionData::from(UNICODE_DATA.0.iter()).emit(dir);
 }

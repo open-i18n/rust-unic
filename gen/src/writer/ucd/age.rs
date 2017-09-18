@@ -26,6 +26,9 @@ pub fn generate(dir: &Path) {
 
 
 pub fn age_value_emit(dir: &Path) {
-    let contents: String = AGE_DATA.0.to_range_char_table(Display::fmt);
-    write(&dir, "age_values.rsv", &contents);
+    write(
+        &dir,
+        "age_values.rsv",
+        &AGE_DATA.0.to_range_char_table(Display::fmt),
+    );
 }

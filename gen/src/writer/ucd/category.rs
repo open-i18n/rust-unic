@@ -14,41 +14,29 @@ use std::collections::BTreeMap;
 use std::fmt::Display;
 use std::path::Path;
 
-use reader::ucd::unicode_data::{UnicodeDataEntry, UNICODE_DATA};
+use reader::ucd::unicode_data::UNICODE_DATA;
 
 use writer::utils::tables::ToRangeCharTable;
 use writer::ucd::unicode_version;
 use writer::utils::write;
 
 
-#[derive(Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
-struct CategoryData<'a>(BTreeMap<char, &'a str>);
-
-impl<'a> CategoryData<'a> {
-    fn emit(&self, dir: &Path) {
-        let CategoryData(ref map) = *self;
-        let contents = map.to_range_char_table(Display::fmt);
-        write(&dir, "general_category.rsv", &contents);
-    }
-}
-
-impl<'a, I> From<I> for CategoryData<'a>
-where
-    I: Iterator<Item = &'a UnicodeDataEntry>,
-{
-    fn from(it: I) -> Self {
-        let mut map = BTreeMap::<char, &str>::new();
-
-        #[cfg_attr(rustfmt, rustfmt_skip)]
-        for &UnicodeDataEntry { character, ref general_category, .. } in it {
-            map.insert(character, general_category);
-        }
-
-        CategoryData(map)
-    }
-}
-
 pub fn generate(dir: &Path) {
     unicode_version::emit(&dir);
-    CategoryData::from(UNICODE_DATA.0.iter()).emit(dir);
+    category_data_emit(dir);
+}
+
+
+fn category_data_emit(dir: &Path) {
+    let map: BTreeMap<char, &str> = UNICODE_DATA
+        .0
+        .iter()
+        .map(|x| (x.character, x.general_category.as_str()))
+        .collect();
+
+    write(
+        &dir,
+        "general_category.rsv",
+        &map.to_range_char_table(Display::fmt),
+    );
 }

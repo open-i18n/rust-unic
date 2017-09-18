@@ -17,11 +17,14 @@ use writer::utils::write;
 
 
 pub fn emit(dir: &Path) {
-    let contents = format!(
-        "UnicodeVersion {{ major: {}, minor: {}, micro: {} }}",
-        UNICODE_VERSION.0,
-        UNICODE_VERSION.1,
-        UNICODE_VERSION.2,
+    write(
+        dir,
+        "unicode_version.rsv",
+        &format!(
+            "UnicodeVersion {{ major: {}, minor: {}, micro: {} }}",
+            UNICODE_VERSION.0,
+            UNICODE_VERSION.1,
+            UNICODE_VERSION.2,
+        ),
     );
-    write(dir, "unicode_version.rsv", &contents);
 }
