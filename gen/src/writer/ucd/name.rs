@@ -41,7 +41,7 @@ fn name_data_emit(dir: &Path) {
         character,
         ref name,
         ..
-    } in UNICODE_DATA.0.iter()
+    } in UNICODE_DATA.entries.iter()
     {
         if name.starts_with('<') {
             continue;

@@ -184,7 +184,9 @@ pub struct UnicodeDataEntry {
 
 
 #[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
-pub struct UnicodeData(pub Box<[UnicodeDataEntry]>);
+pub struct UnicodeData {
+    pub entries: Box<[UnicodeDataEntry]>,
+}
 
 
 impl FromStr for UnicodeData {
@@ -293,7 +295,9 @@ impl FromStr for UnicodeData {
             }
         }
 
-        Ok(UnicodeData(entries.into_boxed_slice()))
+        Ok(UnicodeData {
+            entries: entries.into_boxed_slice(),
+        })
     }
 }
 
@@ -313,8 +317,8 @@ mod test {
              1B042;HENTAIGANA LETTER SA-7;Lo;0;L;;;;;N;;;;;\n\
              "
                 .parse(),
-            Ok(UnicodeData(
-                vec![
+            Ok(UnicodeData {
+                entries: vec![
                     UnicodeDataEntry {
                         character: '\u{1F35}',
                         name: "GREEK SMALL LETTER IOTA WITH DASIA AND OXIA".to_owned(),
@@ -407,8 +411,8 @@ mod test {
                         simple_lowercase_mapping: None,
                         simple_titlecase_mapping: None,
                     },
-                ].into_boxed_slice()
-            ))
+                ].into_boxed_slice(),
+            })
         );
     }
 }

@@ -25,7 +25,9 @@ lazy_static! {
 }
 
 
-pub struct CompositionExclusions(pub BTreeSet<char>);
+pub struct CompositionExclusions {
+    pub set: BTreeSet<char>,
+}
 
 impl FromStr for CompositionExclusions {
     type Err = ();
@@ -55,6 +57,6 @@ impl FromStr for CompositionExclusions {
             }
         }
 
-        Ok(CompositionExclusions(exclusions))
+        Ok(CompositionExclusions { set: exclusions })
     }
 }

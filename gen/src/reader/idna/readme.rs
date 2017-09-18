@@ -23,11 +23,12 @@ lazy_static! {
 }
 
 
-pub struct UnicodeVersion(
-    pub u16, // major
-    pub u16, // minor
-    pub u16, // micro
-);
+pub struct UnicodeVersion {
+    pub major: u16,
+    pub minor: u16,
+    pub micro: u16,
+}
+
 
 impl FromStr for UnicodeVersion {
     type Err = ();
@@ -40,11 +41,11 @@ impl FromStr for UnicodeVersion {
         REGEX
             .captures(str)
             .map(|m| {
-                UnicodeVersion(
-                    m[1].parse().unwrap(),
-                    m[2].parse().unwrap(),
-                    m[3].parse().unwrap(),
-                )
+                UnicodeVersion {
+                    major: m[1].parse().unwrap(),
+                    minor: m[2].parse().unwrap(),
+                    micro: m[3].parse().unwrap(),
+                }
             })
             .ok_or(())
     }

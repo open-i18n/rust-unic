@@ -26,7 +26,9 @@ lazy_static! {
 
 
 #[derive(Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
-pub struct AgeData(pub BTreeMap<char, String>);
+pub struct AgeData {
+    pub map: BTreeMap<char, String>,
+}
 
 
 impl FromStr for AgeData {
@@ -46,7 +48,7 @@ impl FromStr for AgeData {
             ).unwrap();
         }
 
-        let mut age_data = BTreeMap::default();
+        let mut map = BTreeMap::default();
         for capture in REGEX.captures_iter(str) {
             let start = u32::from_str_radix(&capture[1], 16).unwrap();
             let end = capture
@@ -60,7 +62,7 @@ impl FromStr for AgeData {
 
             for point in start..(end + 1) {
                 if let Some(char) = char::from_u32(point) {
-                    age_data.insert(
+                    map.insert(
                         char,
                         format!(
                             "UnicodeVersion {{ major: {}, minor: {}, micro: {} }}",
@@ -73,6 +75,6 @@ impl FromStr for AgeData {
             }
         }
 
-        Ok(AgeData(age_data))
+        Ok(AgeData { map })
     }
 }

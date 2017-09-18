@@ -29,6 +29,6 @@ pub fn age_value_emit(dir: &Path) {
     write(
         &dir,
         "age_values.rsv",
-        &AGE_DATA.0.to_range_char_table(Display::fmt),
+        &AGE_DATA.map.to_range_char_table(Display::fmt),
     );
 }

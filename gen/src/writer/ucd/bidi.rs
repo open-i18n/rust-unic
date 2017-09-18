@@ -50,7 +50,7 @@ const BIDI_CLASS_DEFAULTS: &[(u32, u32, &str)] = &[
 
 fn bidi_class_emit(dir: &Path) {
     let mut map: BTreeMap<char, &str> = UNICODE_DATA
-        .0
+        .entries
         .iter()
         .map(|x| (x.character, x.bidi_class.as_str()))
         .collect();
@@ -73,7 +73,7 @@ fn bidi_class_emit(dir: &Path) {
 
 fn bidi_mirrored_emit(dir: &Path) {
     let set: BTreeSet<char> = UNICODE_DATA
-        .0
+        .entries
         .iter()
         .filter(|x| x.bidi_mirrored)
         .map(|x| x.character)

@@ -22,9 +22,9 @@ pub fn emit(dir: &Path) {
         "unicode_version.rsv",
         &format!(
             "UnicodeVersion {{ major: {}, minor: {}, micro: {} }}",
-            UNICODE_VERSION.0,
-            UNICODE_VERSION.1,
-            UNICODE_VERSION.2,
+            UNICODE_VERSION.major,
+            UNICODE_VERSION.minor,
+            UNICODE_VERSION.micro,
         ),
     );
 }

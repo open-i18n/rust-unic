@@ -29,7 +29,7 @@ pub fn generate(dir: &Path) {
 
 fn category_data_emit(dir: &Path) {
     let map: BTreeMap<char, &str> = UNICODE_DATA
-        .0
+        .entries
         .iter()
         .map(|x| (x.character, x.general_category.as_str()))
         .collect();

@@ -23,14 +23,14 @@ use writer::ucd::unicode_version;
 pub fn generate(dir: &Path) {
     unicode_version::emit(dir);
 
-    GeneralCategoryMarkData::from(UNICODE_DATA.0.iter()).emit(dir);
-    CanonicalCombiningClassData::from(UNICODE_DATA.0.iter()).emit(dir);
+    GeneralCategoryMarkData::from(UNICODE_DATA.entries.iter()).emit(dir);
+    CanonicalCombiningClassData::from(UNICODE_DATA.entries.iter()).emit(dir);
 
-    let decomposition = CanonicalDecompositionData::from(UNICODE_DATA.0.iter());
+    let decomposition = CanonicalDecompositionData::from(UNICODE_DATA.entries.iter());
     decomposition.emit(dir);
 
     CanonicalCompositionData::from(&decomposition, &COMPOSITION_EXCLUSIONS).emit(dir);
-    CompatibilityDecompositionData::from(UNICODE_DATA.0.iter()).emit(dir);
+    CompatibilityDecompositionData::from(UNICODE_DATA.entries.iter()).emit(dir);
 }
 
 
@@ -160,7 +160,7 @@ impl CanonicalCompositionData {
                 continue;
             }
             assert_eq!(decomposed.len(), 2);
-            if exclusions.0.contains(&composed) {
+            if exclusions.set.contains(&composed) {
                 continue;
             }
             let lead = decomposed[0];
