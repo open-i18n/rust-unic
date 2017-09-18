@@ -84,6 +84,9 @@ fn main() {
         if components.contains(&"idna") {
             writer::idna::generate();
         }
+        if components.contains(&"emoji") {
+            writer::emoji::generate();
+        }
     }
 
     if !download && !generate {

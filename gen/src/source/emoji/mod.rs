@@ -9,10 +9,4 @@
 // except according to those terms.
 
 
-pub mod emoji;
-pub mod idna;
-pub mod normal;
-pub mod ucd;
-
-mod common;
-mod utils;
+pub mod emoji_data;

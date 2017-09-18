@@ -10,6 +10,8 @@
 
 
 pub mod common;
+pub mod emoji;
 pub mod idna;
 pub mod ucd;
-pub mod utils;
+
+mod utils;
