@@ -21,8 +21,10 @@ use unic::ucd::{
     BidiClass,
     CharAge,
     CharBidiClass,
+    CharBidiControl,
     CharBidiMirrored,
     StrBidiClass,
+    StrBidiControl,
     StrBidiMirrored,
     UnicodeVersion,
 };
@@ -92,8 +94,10 @@ fn test_sample() {
     );
 
     assert_eq!(text.has_bidi_mirrored(), false);
+    assert_eq!(text.has_bidi_control(), false);
     assert_eq!('/'.is_bidi_mirrored(), false);
     assert_eq!('['.is_bidi_mirrored(), true);
+    assert_eq!('\u{200e}'.is_bidi_control(), true);
 
     // Normalization
 

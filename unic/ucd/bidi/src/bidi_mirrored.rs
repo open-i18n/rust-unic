@@ -43,7 +43,7 @@ pub struct BidiMirrored(bool);
 
 impl BidiMirrored {
     /// Boolean value of this character property.
-    pub fn bool(&self) -> bool {
+    pub fn is_mirrored(&self) -> bool {
         self.0
     }
 }
@@ -74,14 +74,14 @@ impl TotalCharProperty for BidiMirrored {
 impl BinaryCharProperty for BidiMirrored {
     #[inline]
     fn bool(&self) -> bool {
-        self.bool()
+        self.is_mirrored()
     }
 }
 
 
 impl convert::From<BidiMirrored> for bool {
     fn from(bidi_m: BidiMirrored) -> bool {
-        bidi_m.bool()
+        bidi_m.is_mirrored()
     }
 }
 
