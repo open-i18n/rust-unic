@@ -24,7 +24,7 @@ pub fn generate(dir: &Path) {
 
 fn emit_conformance_tests_data(dir: &Path) {
     let mut contents = "&[\n".to_owned();
-    for test in NORMALIZATION_TESTS.0.iter() {
+    for test in NORMALIZATION_TESTS.entries.iter() {
         contents.push_str("    (\"");
 
         for char in test.source.iter() {

@@ -24,7 +24,9 @@ lazy_static! {
 }
 
 
-pub struct NormalizationTests(pub Box<[NormalizationTest]>);
+pub struct NormalizationTests {
+    pub entries: Box<[NormalizationTest]>,
+}
 
 
 pub struct NormalizationTest {
@@ -90,6 +92,8 @@ impl FromStr for NormalizationTests {
             })
         }
 
-        Ok(NormalizationTests(tests.into_boxed_slice()))
+        Ok(NormalizationTests {
+            entries: tests.into_boxed_slice(),
+        })
     }
 }

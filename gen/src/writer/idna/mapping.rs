@@ -26,7 +26,7 @@ pub fn generate(dir: &Path) {
 
 
 pub fn emit_idna_mapping(dir: &Path) {
-    let contents: String = IDNA_MAPPING.0.to_range_char_table(|entry, f| {
+    let contents: String = IDNA_MAPPING.map.to_range_char_table(|entry, f| {
         write!(f, "{}", entry.status)?;
         if matches!(
             entry.status,
