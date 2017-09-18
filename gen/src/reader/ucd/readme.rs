@@ -9,10 +9,7 @@
 // except according to those terms.
 
 
-use std::str::FromStr;
-
-use regex::Regex;
-
+use reader::common::UnicodeVersion;
 use reader::utils::read;
 
 
@@ -20,33 +17,4 @@ lazy_static! {
     pub static ref UNICODE_VERSION: UnicodeVersion = {
         read("data/ucd/ReadMe.txt").parse().unwrap()
     };
-}
-
-
-pub struct UnicodeVersion {
-    pub major: u16,
-    pub minor: u16,
-    pub micro: u16,
-}
-
-
-impl FromStr for UnicodeVersion {
-    type Err = ();
-
-    fn from_str(str: &str) -> Result<Self, Self::Err> {
-        lazy_static! {
-            static ref REGEX: Regex = Regex::new(r"for Version (\d+).(\d+).(\d+)").unwrap();
-        }
-
-        REGEX
-            .captures(str)
-            .map(|m| {
-                UnicodeVersion {
-                    major: m[1].parse().unwrap(),
-                    minor: m[2].parse().unwrap(),
-                    micro: m[3].parse().unwrap(),
-                }
-            })
-            .ok_or(())
-    }
 }

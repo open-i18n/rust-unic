@@ -13,14 +13,15 @@ use std::fmt::Display;
 use std::path::Path;
 
 use reader::ucd::derived_age::AGE_DATA;
+use reader::ucd::readme::UNICODE_VERSION;
 
 use writer::utils::tables::ToRangeCharTable;
 use writer::utils::write;
-use writer::ucd::unicode_version;
+use writer::common::unicode_version;
 
 
 pub fn generate(dir: &Path) {
-    unicode_version::emit(&dir);
+    unicode_version::emit(&dir, &UNICODE_VERSION);
     age_value_emit(&dir);
 }
 

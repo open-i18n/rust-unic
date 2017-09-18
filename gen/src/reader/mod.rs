@@ -9,6 +9,7 @@
 // except according to those terms.
 
 
+pub mod common;
 pub mod idna;
 pub mod ucd;
 pub mod utils;

@@ -13,4 +13,5 @@ pub mod idna;
 pub mod normal;
 pub mod ucd;
 
+mod common;
 mod utils;

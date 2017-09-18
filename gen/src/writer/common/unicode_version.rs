@@ -11,20 +11,20 @@
 
 use std::path::Path;
 
-use reader::idna::readme::UNICODE_VERSION;
+use reader::common::UnicodeVersion;
 
 use writer::utils::write;
 
 
-pub fn emit(dir: &Path) {
+pub fn emit(dir: &Path, unicode_version: &UnicodeVersion) {
     write(
         dir,
         "unicode_version.rsv",
         &format!(
             "UnicodeVersion {{ major: {}, minor: {}, micro: {} }}",
-            UNICODE_VERSION.major,
-            UNICODE_VERSION.minor,
-            UNICODE_VERSION.micro,
+            unicode_version.major,
+            unicode_version.minor,
+            unicode_version.micro,
         ),
     );
 }

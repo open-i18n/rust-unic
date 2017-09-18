@@ -10,14 +10,16 @@
 
 
 mod idna_mapping;
-mod unicode_version;
+
+use reader::idna::readme::UNICODE_VERSION;
 
 use writer::utils::clean_dir;
+use writer::common::unicode_version;
 
 
 pub fn generate() {
     let dir = clean_dir("unic/idna/mapping/tables");
 
-    unicode_version::emit(&dir);
+    unicode_version::emit(&dir, &UNICODE_VERSION);
     idna_mapping::emit(&dir);
 }

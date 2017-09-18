@@ -23,7 +23,7 @@ pub fn generate(dir: &Path) {
 
 
 fn normalization_test_emit(dir: &Path) {
-    let mut contents = "&[".to_owned();
+    let mut contents = "&[\n".to_owned();
     for test in NORMALIZATION_TESTS.0.iter() {
         contents.push_str("    (\"");
 

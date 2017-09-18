@@ -9,22 +9,4 @@
 // except according to those terms.
 
 
-use std::path::Path;
-
-use reader::ucd::readme::UNICODE_VERSION;
-
-use writer::utils::write;
-
-
-pub fn emit(dir: &Path) {
-    write(
-        dir,
-        "unicode_version.rsv",
-        &format!(
-            "UnicodeVersion {{ major: {}, minor: {}, micro: {} }}",
-            UNICODE_VERSION.major,
-            UNICODE_VERSION.minor,
-            UNICODE_VERSION.micro,
-        ),
-    );
-}
+pub mod unicode_version;

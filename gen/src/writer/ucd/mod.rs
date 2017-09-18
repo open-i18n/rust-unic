@@ -15,7 +15,6 @@ mod category;
 mod core;
 mod name;
 mod normal;
-mod unicode_version;
 
 
 use writer::utils::clean_dir;

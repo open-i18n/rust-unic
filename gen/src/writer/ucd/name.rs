@@ -15,14 +15,15 @@ use std::fmt::Write;
 use std::path::Path;
 
 use reader::ucd::unicode_data::{UnicodeDataEntry, UNICODE_DATA};
+use reader::ucd::readme::UNICODE_VERSION;
 
 use writer::utils::tables::ToDirectCharTable;
-use writer::ucd::unicode_version;
+use writer::common::unicode_version;
 use writer::utils::write;
 
 
 pub fn generate(dir: &Path) {
-    unicode_version::emit(&dir);
+    unicode_version::emit(&dir, &UNICODE_VERSION);
     name_data_emit(&dir);
 }
 

@@ -14,14 +14,15 @@ use std::path::Path;
 
 use reader::ucd::unicode_data::{UnicodeDataEntry, UNICODE_DATA};
 use reader::ucd::derived_normalization_props::{CompositionExclusions, COMPOSITION_EXCLUSIONS};
+use reader::ucd::readme::UNICODE_VERSION;
 
 use writer::utils::{capitalize, write};
 use writer::utils::tables::{ToDirectCharTable, ToRangeCharSet, ToRangeCharTable};
-use writer::ucd::unicode_version;
+use writer::common::unicode_version;
 
 
 pub fn generate(dir: &Path) {
-    unicode_version::emit(dir);
+    unicode_version::emit(&dir, &UNICODE_VERSION);
 
     GeneralCategoryMarkData::from(UNICODE_DATA.entries.iter()).emit(dir);
     CanonicalCombiningClassData::from(UNICODE_DATA.entries.iter()).emit(dir);
