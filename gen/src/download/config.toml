@@ -1,6 +1,10 @@
 [ucd]
 version = "10.0.0"
 base_url = "http://www.unicode.org/Public/{version}/ucd/"
+specs = [
+    "http://unicode.org/reports/tr44/",
+    "http://unicode.org/reports/tr38/",
+]
 
 [ucd.resources]
 "DerivedAge.txt"                = "DerivedAge.txt"
@@ -16,9 +20,13 @@ base_url = "http://www.unicode.org/Public/{version}/ucd/"
 "DecompositionTypeTest.txt"     = "extracted/DerivedDecompositionType.txt"
 "NormalizationTest.txt"         = "NormalizationTest.txt"
 
+
 [idna]
 version = "10.0.0"
 base_url = "http://www.unicode.org/Public/idna/{version}/"
+specs = [
+    "http://www.unicode.org/reports/tr46/",
+]
 
 [idna.resources]
 "ReadMe.txt"            = "ReadMe.txt"
@@ -26,3 +34,21 @@ base_url = "http://www.unicode.org/Public/idna/{version}/"
 
 [idna.test_resources]
 "IdnaTest.txt"          = "IdnaTest.txt"
+
+
+[emoji]
+version = "5.0"
+base_url = "http://www.unicode.org/Public/emoji/{version}/"
+specs = [
+    "http://www.unicode.org/reports/tr51/",
+]
+
+[emoji.resources]
+"ReadMe.txt"                    = "ReadMe.txt"
+"emoji-data.txt"                = "emoji-data.txt"
+"emoji-sequences.txt"           = "emoji-sequences.txt"
+"emoji-variation-sequences.txt" = "emoji-variation-sequences.txt"
+"emoji-zwj-sequences.txt"       = "emoji-zwj-sequences.txt"
+
+[emoji.test_resources]
+"emoji-test.txt"                = "emoji-test.txt"

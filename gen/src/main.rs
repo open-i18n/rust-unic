@@ -43,7 +43,7 @@ use std::io::Write;
 #[cfg_attr(feature = "cargo-clippy", allow(needless_pass_by_value))]
 // This signature is enforced by clap
 fn validate_component_name(name: String) -> Result<(), String> {
-    if matches!(name.as_str(), "idna" | "ucd" | "normal") {
+    if matches!(name.as_str(), "idna" | "ucd" | "normal" | "emoji") {
         Ok(())
     } else {
         Err(format!(
