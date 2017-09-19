@@ -112,24 +112,4 @@ mod tests {
         assert_eq!(is_bidi_mirrored('\u{10fffe}'), false);
         assert_eq!(is_bidi_mirrored('\u{10ffff}'), false);
     }
-
-    #[test]
-    fn test_display() {
-        use super::BidiMirrored;
-        use unic_char_property::BinaryCharProperty;
-
-        assert_eq!(BidiMirrored::of('\u{0027}').abbr_name(), "N");
-        assert_eq!(BidiMirrored::of('\u{0028}').abbr_name(), "Y");
-        assert_eq!(BidiMirrored::of('\u{0029}').long_name(), "Yes");
-        assert_eq!(BidiMirrored::of('\u{002a}').long_name(), "No");
-    }
-
-    #[test]
-    fn test_convert_to_bool() {
-        use super::BidiMirrored;
-
-        if BidiMirrored::of('[').into() {
-            assert!(true);
-        }
-    }
 }

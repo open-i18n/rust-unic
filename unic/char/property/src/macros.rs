@@ -50,7 +50,7 @@
 ///
 /// # Syntax (Binary Property)
 ///
-// No compile because the included file does not exist
+// Disable compile because the included file does not exist
 /// ```ignore
 /// #[macro_use] extern crate unic_char_property;
 ///
@@ -95,7 +95,7 @@
 /// On 1.20 or higher, one or more may be used, and the restriction can be relaxed back to
 /// the intended zero or more by replacing `$(#[$variant_meta:meta])+` with
 /// `$(#[$variant_meta:meta])*` and `$(#[$variant_meta])+` with `$(#[$variant_meta])*`.
-// TODO: Once adopting 1.20, fix the macro to work with zero attributes on variants (see above)
+// TODO: Once adopting 1.20, fix the macro to work with zero attributes on variants (see above).
 #[macro_export]
 macro_rules! char_property {
 
@@ -119,6 +119,7 @@ macro_rules! char_property {
 
         $(#[$abbr_mod_meta:meta])* pub mod $abbr_mod:ident for abbr;
         $(#[$long_mod_meta:meta])* pub mod $long_mod:ident for long;
+
     ) => {
         $(#[$name_meta])*
         #[allow(bad_style)]
@@ -140,13 +141,22 @@ macro_rules! char_property {
         }
 
         char_property! {
-            __impl FromStr for $name;
-            $( $abbr => $name::$variant;
-               $long => $name::$variant; )*
+            __impl FromStr for $name; $(
+                $abbr => $name::$variant;
+                $long => $name::$variant;
+            )*
         }
 
-        char_property! { __impl CharProperty for $name; $abbr_name; $long_name; $human_name; }
-        char_property! { __impl Display for $name by EnumeratedCharProperty }
+        char_property! {
+            __impl CharProperty for $name;
+            $abbr_name;
+            $long_name;
+            $human_name;
+        }
+
+        char_property! {
+            __impl Display for $name by EnumeratedCharProperty
+        }
 
         impl $crate::EnumeratedCharProperty for $name {
             fn all_values() -> &'static [$name] {
@@ -211,12 +221,28 @@ macro_rules! char_property {
 
         char_property! {
             __impl FromStr for $name;
-            y => $name(true); yes => $name(true); t => $name(true); true => $name(true);
-            n => $name(false); no => $name(false); f => $name(false); false => $name(false);
+            // Yes
+            y => $name(true);
+            yes => $name(true);
+            t => $name(true);
+            true => $name(true);
+            // No
+            n => $name(false);
+            no => $name(false);
+            f => $name(false);
+            false => $name(false);
         }
 
-        char_property! { __impl CharProperty for $name; $abbr_name; $long_name; $human_name; }
-        char_property! { __impl Display for $name by BinaryCharProperty }
+        char_property! {
+            __impl CharProperty for $name;
+            $abbr_name;
+            $long_name;
+            $human_name;
+        }
+
+        char_property! {
+            __impl Display for $name by BinaryCharProperty
+        }
 
         impl $crate::BinaryCharProperty for $name {
             fn bool(&self) -> bool { self.bool() }
