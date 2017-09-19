@@ -16,12 +16,17 @@ extern crate unic_char_range;
 extern crate unic_utils;
 
 char_property! {
+    /// This is a test property.
     pub struct MyProp(bool) {
         abbr => "mp";
         long => "My_Prop";
         human => "My Property";
+
+        data_table_path => "tables/ascii_char_table.rsv";
     }
-    mod data = "ascii_char_table.rsv";
+
+    /// This is the shorthand function.
+    pub fn is_my_prop(char) -> bool;
 }
 
 #[test]

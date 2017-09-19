@@ -13,100 +13,25 @@
 //! Unicode *Bidi_Mirrored* Character Property.
 
 
-use std::convert;
-use std::fmt;
+use unic_utils;
 
 
-mod data {
-    use unic_utils::CharDataTable;
-    pub const BIDI_MIRRORED_TABLE: CharDataTable<()> = include!("../tables/bidi_mirrored.rsv");
-}
+char_property! {
+    /// Represents values of the Unicode character property
+    /// [*Bidi_Mirrored*](http://www.unicode.org/reports/tr44/#Bidi_Mirrored).
+    ///
+    /// The value is `true` if the character is a "mirrored" character in bidirectional text,
+    /// `false` otherwise.
+    pub struct BidiMirrored(bool) {
+        abbr => "Bidi_M";
+        long => "Bidi_Mirrored";
+        human => "Bidi Mirrored";
 
-
-/// Return whether the given character gets mirrored in Right-to-Left text (`Bidi_Mirrored`).
-pub fn is_bidi_mirrored(ch: char) -> bool {
-    BidiMirrored::of(ch).into()
-}
-
-
-use unic_char_property::{BinaryCharProperty, CharProperty, TotalCharProperty};
-
-
-/// Represents values of the Unicode character property
-/// [*Bidi_Mirrored*](http://www.unicode.org/reports/tr44/#Bidi_Mirrored).
-///
-/// The value is `true` if the character is a "mirrored" character in bidirectional text, `false`
-/// otherwise.
-#[derive(Clone, Copy, Debug, Hash, Eq, PartialEq, Ord, PartialOrd)]
-pub struct BidiMirrored(bool);
-
-
-impl BidiMirrored {
-    /// Boolean value of this character property.
-    pub fn is_mirrored(&self) -> bool {
-        self.0
-    }
-}
-
-
-impl CharProperty for BidiMirrored {
-    fn prop_abbr_name() -> &'static str {
-        "Bidi_M"
+        data_table_path => "../tables/bidi_mirrored.rsv";
     }
 
-    fn prop_long_name() -> &'static str {
-        "Bidi_Mirrored"
-    }
-
-    fn prop_human_name() -> &'static str {
-        "Bidi Mirrored"
-    }
-}
-
-
-impl TotalCharProperty for BidiMirrored {
-    fn of(ch: char) -> Self {
-        Self::of(ch)
-    }
-}
-
-
-impl BinaryCharProperty for BidiMirrored {
-    #[inline]
-    fn bool(&self) -> bool {
-        self.is_mirrored()
-    }
-}
-
-
-impl convert::From<BidiMirrored> for bool {
-    fn from(bidi_m: BidiMirrored) -> bool {
-        bidi_m.is_mirrored()
-    }
-}
-
-impl Default for BidiMirrored {
-    #[inline]
-    fn default() -> Self {
-        BidiMirrored(false)
-    }
-}
-
-
-// NOTE: This cannot be generalized at the moment and needs to be implemented for concrete types
-// individually. See <https://users.rust-lang.org/t/12884>.
-impl fmt::Display for BidiMirrored {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.human_name())
-    }
-}
-
-
-impl BidiMirrored {
-    /// Find the character *BidiMirrored* property value.
-    pub fn of(ch: char) -> Self {
-        BidiMirrored(data::BIDI_MIRRORED_TABLE.contains(ch))
-    }
+    /// Return whether the given character gets mirrored in Right-to-Left text (`Bidi_Mirrored`).
+    pub fn is_bidi_mirrored(char) -> bool;
 }
 
 

@@ -61,11 +61,14 @@
 ///         abbr => "AbbrPropName";
 ///         long => "Long_Property_Name";
 ///         human => "Human-Readable Property Name";
-///     }
 ///
-///     /// Unlike an enumerated property, a binary property will handle the table for you.
-///     /// This requires `unic_utils` to be in scope.
-///     mod data = "path/to/table.rsv";
+///         // Unlike an enumerated property, a binary property will handle the table for you.
+///         // This requires `unic_utils` to be in scope.
+///         data_table_path => "../tables/prop_values.rsv";
+///     }
+/// 
+///     /// A function that returns whether the given character has the property or not.
+///     pub fn is_prop(char) -> bool;
 /// }
 /// ```
 ///
@@ -169,22 +172,32 @@ macro_rules! char_property {
             abbr => $abbr_name:expr;
             long => $long_name:expr;
             human => $human_name:expr;
+
+            data_table_path => $data_path:expr;
         }
 
-        $(#[$data_mod_meta:meta])* mod $data_mod:ident = $data_path:expr;
+        $(#[$shorthand_meta:meta])*
+        pub fn $shorthand_name:ident(char) -> bool;
     ) => {
         $(#[$name_meta])*
         #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)]
         pub struct $name(bool);
 
-        $(#[$data_mod_meta])*
-        mod $data_mod {
+        mod data {
             use super::unic_utils::CharDataTable;
             pub const TABLE: CharDataTable<()> = include!($data_path);
         }
 
+        /// Get boolean property value of the character.
+        pub fn $shorthand_name(ch: char) -> bool {
+            $name::of(ch).into()
+        }
+
         impl $name {
+            /// Get (struct) property value of the character.
             pub fn of(ch: char) -> Self { $name(data::TABLE.contains(ch)) }
+
+            /// Get boolean property value of the character.
             pub fn bool(&self) -> bool { self.0 }
         }
 
