@@ -18,10 +18,28 @@ extern crate unic;
 
 #[test]
 fn test_unicode_version_against_rust_core() {
-    // Disabled because of the type change coming to std::char::UNICODE_VERSION.
-    //
-    // See <https://github.com/rust-lang/rust/pull/42998>
-    //
-    // TODO: Enable test after <https://github.com/rust-lang/rust/pull/42998> is closed.
-    //assert!(std::char::UNICODE_VERSION <= unic::UNICODE_VERSION.into());
+    assert!(std::char::UNICODE_VERSION.major <= unic::UNICODE_VERSION.major as u32);
+    if std::char::UNICODE_VERSION.major == unic::UNICODE_VERSION.major as u32 {
+        assert!(std::char::UNICODE_VERSION.minor <= unic::UNICODE_VERSION.minor as u32);
+        if std::char::UNICODE_VERSION.minor == unic::UNICODE_VERSION.minor as u32 {
+            assert!(std::char::UNICODE_VERSION.micro <= unic::UNICODE_VERSION.micro as u32);
+        }
+    }
 }
+
+/* TODO: Enable after `std::char::UnicodeVersion` becomes accessible.
+#[test]
+fn test_unicode_version_against_rust_core_2() {
+    fn check(unicode_version: std::char::UnicodeVersion) {
+        assert!(unicode_version.major <= unic::UNICODE_VERSION.major as u32);
+        if unicode_version.major == unic::UNICODE_VERSION.major as u32 {
+            assert!(unicode_version.minor <= unic::UNICODE_VERSION.minor as u32);
+            if unicode_version.minor == unic::UNICODE_VERSION.minor as u32 {
+                assert!(unicode_version.micro <= unic::UNICODE_VERSION.micro as u32);
+            }
+        }
+    }
+    
+    check(std::char::UNICODE_VERSION);
+}
+*/

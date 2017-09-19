@@ -11,6 +11,7 @@
 
 #![forbid(unsafe_code, missing_docs, unconditional_recursion)]
 
+
 //! # UNIC — UCD — Core
 //!
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
@@ -34,8 +35,10 @@ pub struct UnicodeVersion {
     pub micro: u16,
 }
 
+
 /// The [Unicode version](http://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");
+
 
 impl UnicodeVersion {
     /// Human-readable description of the Age property value.
@@ -45,27 +48,35 @@ impl UnicodeVersion {
     }
 }
 
+
 impl fmt::Display for UnicodeVersion {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", self.display())
     }
 }
 
+
+/// NOTE: (T, T, T) is the type of Rust's internal UNICODE_VERSION until Rust 1.20.
 impl<T: Into<u16>> From<(T, T, T)> for UnicodeVersion {
-    fn from(t: (T, T, T)) -> UnicodeVersion {
+    fn from(value: (T, T, T)) -> UnicodeVersion {
         UnicodeVersion {
-            major: t.0.into(),
-            minor: t.1.into(),
-            micro: t.2.into(),
+            major: value.0.into(),
+            minor: value.1.into(),
+            micro: value.2.into(),
         }
     }
 }
 
+
+/// NOTE: (T, T, T) is the type of Rust's internal UNICODE_VERSION until Rust 1.20.
 impl<T: From<u16>> Into<(T, T, T)> for UnicodeVersion {
     fn into(self) -> (T, T, T) {
         (self.major.into(), self.minor.into(), self.micro.into())
     }
 }
+
+
+// TODO: Add conversion to/from `std::char::UnicodeVersion` whenever it becomes accessible.
 
 
 #[cfg(test)]
