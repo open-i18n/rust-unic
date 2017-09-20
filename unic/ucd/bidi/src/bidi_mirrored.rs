@@ -13,9 +13,6 @@
 //! Unicode *Bidi_Mirrored* Character Property.
 
 
-use unic_utils;
-
-
 char_property! {
     /// Represents values of the Unicode character property
     /// [*Bidi_Mirrored*](http://www.unicode.org/reports/tr44/#Bidi_Mirrored).

@@ -50,11 +50,10 @@
 ///
 /// # Syntax (Binary Property)
 ///
-// Disable compile because the included file does not exist
-/// ```ignore
+/// ```
 /// #[macro_use] extern crate unic_char_property;
+/// # #[macro_use] extern crate unic_char_range;
 ///
-/// // First we define the type itself.
 /// char_property! {
 ///     /// This is the newtype used for the character property.
 ///     pub struct MyProp(bool) {
@@ -63,21 +62,21 @@
 ///         human => "Human-Readable Property Name";
 ///
 ///         // Unlike an enumerated property, a binary property will handle the table for you.
-///         // This requires `unic_utils` to be in scope.
-///         data_table_path => "../tables/prop_values.rsv";
+///         data_table_path => "../tables/property_table.rsv";
 ///     }
 /// 
 ///     /// A function that returns whether the given character has the property or not.
 ///     pub fn is_prop(char) -> bool;
 /// }
+///
+/// // You may also want to create a trait for easy access to the properties you define.
+/// # fn main() {}
 /// ```
 ///
 /// # Effect
 ///
 /// - Implements the `CharProperty` trait and appropriate range trait
 /// - Implements `FromStr` accepting either the abbr or long name, ascii case insensitive
-/// - Implements `From` to/from the wrapped type
-///   (newtypes only)
 /// - Implements `Display` using the `human` string
 /// - Populates the module `abbr_names` with `pub use` bindings of variants to their abbr names
 ///   (Enumerated properties only)
@@ -186,37 +185,28 @@ macro_rules! char_property {
             data_table_path => $data_path:expr;
         }
 
-        $(#[$shorthand_meta:meta])*
-        pub fn $shorthand_name:ident(char) -> bool;
+        $(#[$is_fn_meta:meta])*
+        pub fn $is_fn:ident(char) -> bool;
     ) => {
         $(#[$name_meta])*
         #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)]
         pub struct $name(bool);
 
-        mod data {
-            use super::unic_utils::CharDataTable;
-            pub const TABLE: CharDataTable<()> = include!($data_path);
-        }
-
         /// Get boolean property value of the character.
-        pub fn $shorthand_name(ch: char) -> bool {
-            $name::of(ch).into()
+        pub fn $is_fn(ch: char) -> bool {
+            $name::of(ch).as_bool()
         }
 
         impl $name {
             /// Get (struct) property value of the character.
-            pub fn of(ch: char) -> Self { $name(data::TABLE.contains(ch)) }
+            pub fn of(ch: char) -> Self {
+               use $crate::unic_utils::CharDataTable;
+               const TABLE: CharDataTable<()> = include!($data_path);
+               $name(TABLE.contains(ch))
+            }
 
             /// Get boolean property value of the character.
-            pub fn bool(&self) -> bool { self.0 }
-        }
-
-        impl From<bool> for $name {
-            fn from(b: bool) -> Self { $name(b) }
-        }
-
-        impl From<$name> for bool {
-            fn from(prop: $name) -> bool { prop.bool() }
+            pub fn as_bool(&self) -> bool { self.0 }
         }
 
         char_property! {
@@ -245,7 +235,7 @@ macro_rules! char_property {
         }
 
         impl $crate::BinaryCharProperty for $name {
-            fn bool(&self) -> bool { self.bool() }
+            fn bool(&self) -> bool { self.as_bool() }
         }
 
         impl $crate::TotalCharProperty for $name {

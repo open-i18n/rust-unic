@@ -15,8 +15,6 @@ extern crate unic_char_property;
 #[macro_use]
 extern crate unic_char_range;
 
-extern crate unic_utils;
-
 
 char_property! {
     /// This is a test property.
@@ -25,23 +23,11 @@ char_property! {
         long => "My_Prop";
         human => "My Property";
 
-        data_table_path => "tables/ascii_char_table.rsv";
+        data_table_path => "../tables/property_table.rsv";
     }
 
     /// This is the shorthand function.
     pub fn is_my_prop(char) -> bool;
-}
-
-#[test]
-fn test_from_into_bool() {
-    assert_eq!(MyProp(true), true.into());
-    assert_eq!(MyProp(false), false.into());
-
-    assert_eq!(true, MyProp(true).into());
-    assert_eq!(false, MyProp(false).into());
-
-    assert_eq!(MyProp(true).bool(), MyProp(true).into());
-    assert_eq!(MyProp(false).bool(), MyProp(false).into());
 }
 
 #[test]
