@@ -54,5 +54,5 @@ fn emit_conformance_tests_data(dir: &Path) {
     }
     contents.push_str("]");
 
-    write(&dir, "conformance_tests_data.rsv", &contents);
+    write(dir, "conformance_tests_data.rsv", &contents);
 }

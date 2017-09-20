@@ -20,7 +20,7 @@ use writer::utils::write;
 
 
 pub fn generate(dir: &Path) {
-    emit_unicode_version(&dir, &UNICODE_VERSION);
+    emit_unicode_version(dir, &UNICODE_VERSION);
     emit_idna_mapping(&dir);
 }
 
@@ -44,5 +44,5 @@ pub fn emit_idna_mapping(dir: &Path) {
         Ok(())
     });
 
-    write(&dir, "idna_mapping.rsv", &contents);
+    write(dir, "idna_mapping.rsv", &contents);
 }

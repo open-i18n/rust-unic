@@ -17,5 +17,5 @@ use writer::common::emit_unicode_version;
 
 
 pub fn generate(dir: &Path) {
-    emit_unicode_version(&dir, &UNICODE_VERSION);
+    emit_unicode_version(dir, &UNICODE_VERSION);
 }

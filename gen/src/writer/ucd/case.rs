@@ -20,7 +20,7 @@ use writer::utils::write;
 
 
 pub fn generate(dir: &Path) {
-    emit_unicode_version(&dir, &UNICODE_VERSION);
+    emit_unicode_version(dir, &UNICODE_VERSION);
     emit_lowercase(&dir);
     emit_uppercase(&dir);
     emit_cased(&dir);
@@ -34,7 +34,7 @@ pub fn generate(dir: &Path) {
 
 fn emit_lowercase(dir: &Path) {
     write(
-        &dir,
+        dir,
         "lowercase.rsv",
         &DERIVED_CORE_PROPERTIES.lowercase.to_range_char_set(),
     );
@@ -42,7 +42,7 @@ fn emit_lowercase(dir: &Path) {
 
 fn emit_uppercase(dir: &Path) {
     write(
-        &dir,
+        dir,
         "uppercase.rsv",
         &DERIVED_CORE_PROPERTIES.uppercase.to_range_char_set(),
     );
@@ -50,7 +50,7 @@ fn emit_uppercase(dir: &Path) {
 
 fn emit_cased(dir: &Path) {
     write(
-        &dir,
+        dir,
         "cased.rsv",
         &DERIVED_CORE_PROPERTIES.cased.to_range_char_set(),
     );
@@ -58,7 +58,7 @@ fn emit_cased(dir: &Path) {
 
 fn emit_case_ignorable(dir: &Path) {
     write(
-        &dir,
+        dir,
         "case_ignorable.rsv",
         &DERIVED_CORE_PROPERTIES.case_ignorable.to_range_char_set(),
     );
@@ -66,7 +66,7 @@ fn emit_case_ignorable(dir: &Path) {
 
 fn emit_changes_when_lowercased(dir: &Path) {
     write(
-        &dir,
+        dir,
         "changes_when_lowercased.rsv",
         &DERIVED_CORE_PROPERTIES
             .changes_when_lowercased
@@ -76,7 +76,7 @@ fn emit_changes_when_lowercased(dir: &Path) {
 
 fn emit_changes_when_uppercased(dir: &Path) {
     write(
-        &dir,
+        dir,
         "changes_when_uppercased.rsv",
         &DERIVED_CORE_PROPERTIES
             .changes_when_uppercased
@@ -86,7 +86,7 @@ fn emit_changes_when_uppercased(dir: &Path) {
 
 fn emit_changes_when_titlecased(dir: &Path) {
     write(
-        &dir,
+        dir,
         "changes_when_titlecased.rsv",
         &DERIVED_CORE_PROPERTIES
             .changes_when_titlecased
@@ -96,7 +96,7 @@ fn emit_changes_when_titlecased(dir: &Path) {
 
 fn emit_changes_when_casefolded(dir: &Path) {
     write(
-        &dir,
+        dir,
         "changes_when_casefolded.rsv",
         &DERIVED_CORE_PROPERTIES
             .changes_when_casefolded
@@ -106,7 +106,7 @@ fn emit_changes_when_casefolded(dir: &Path) {
 
 fn emit_changes_when_casemapped(dir: &Path) {
     write(
-        &dir,
+        dir,
         "changes_when_casemapped.rsv",
         &DERIVED_CORE_PROPERTIES
             .changes_when_casemapped

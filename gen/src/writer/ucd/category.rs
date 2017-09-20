@@ -23,7 +23,7 @@ use writer::utils::write;
 
 
 pub fn generate(dir: &Path) {
-    emit_unicode_version(&dir, &UNICODE_VERSION);
+    emit_unicode_version(dir, &UNICODE_VERSION);
     emit_general_category(dir);
 }
 
@@ -36,7 +36,7 @@ fn emit_general_category(dir: &Path) {
         .collect();
 
     write(
-        &dir,
+        dir,
         "general_category.rsv",
         &map.to_range_char_table(Display::fmt),
     );
