@@ -26,6 +26,7 @@ char_property! {
         data_table_path => "../tables/bidi_control.rsv";
     }
 
+    /// Is this character a bidirectional control character?
     pub fn is_bidi_control(char) -> bool;
 }
 

@@ -192,7 +192,7 @@ macro_rules! char_property {
         #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)]
         pub struct $name(bool);
 
-        /// Get boolean property value of the character.
+        $(#[$is_fn_meta])*
         pub fn $is_fn(ch: char) -> bool {
             $name::of(ch).as_bool()
         }
