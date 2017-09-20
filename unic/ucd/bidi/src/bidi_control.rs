@@ -13,99 +13,22 @@
 //! Unicode *Bidi_Control* Character Property.
 
 
-use std::convert;
-use std::fmt;
+char_property! {
+    /// Represents values of the Unicode character property
+    /// [*Bidi_Control*](http://www.unicode.org/reports/tr44/#Bidi_Control).
+    ///
+    /// The value is `true` if the character is a Bidirectional control character, `false`
+    /// otherwise.
+    pub struct BidiControl(bool) {
+        abbr => "Bidi_C";
+        long => "Bidi_Control";
+        human => "Bidi Control";
 
-
-mod data {
-    use unic_utils::CharDataTable;
-    pub const BIDI_CONTROL_TABLE: CharDataTable<()> = include!("../tables/bidi_control.rsv");
-}
-
-
-/// Return whether the given character gets control in Right-to-Left text (`Bidi_Control`).
-pub fn is_bidi_control(ch: char) -> bool {
-    BidiControl::of(ch).into()
-}
-
-
-use unic_char_property::{BinaryCharProperty, CharProperty, TotalCharProperty};
-
-
-/// Represents values of the Unicode character property
-/// [*Bidi_Control*](http://www.unicode.org/reports/tr44/#Bidi_Control).
-///
-/// The value is `true` if the character is a "bidi control character", `false` otherwise.
-#[derive(Clone, Copy, Debug, Hash, Eq, PartialEq, Ord, PartialOrd)]
-pub struct BidiControl(bool);
-
-
-impl BidiControl {
-    /// Boolean value of this character property.
-    pub fn is_control(&self) -> bool {
-        self.0
-    }
-}
-
-
-impl CharProperty for BidiControl {
-    fn prop_abbr_name() -> &'static str {
-        "Bidi_C"
+        data_table_path => "../tables/bidi_control.rsv";
     }
 
-    fn prop_long_name() -> &'static str {
-        "Bidi_Control"
-    }
-
-    fn prop_human_name() -> &'static str {
-        "Bidi Control"
-    }
-}
-
-
-impl TotalCharProperty for BidiControl {
-    fn of(ch: char) -> Self {
-        Self::of(ch)
-    }
-}
-
-
-impl BinaryCharProperty for BidiControl {
-    #[inline]
-    fn bool(&self) -> bool {
-        self.is_control()
-    }
-}
-
-
-impl convert::From<BidiControl> for bool {
-    fn from(bidi_m: BidiControl) -> bool {
-        bidi_m.bool()
-    }
-}
-
-impl Default for BidiControl {
-    #[inline]
-    fn default() -> Self {
-        BidiControl(false)
-    }
-}
-
-
-// NOTE: This cannot be generalized at the moment and needs to be implemented for concrete types
-// individually. See <https://users.rust-lang.org/t/12884>.
-impl fmt::Display for BidiControl {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.human_name())
-    }
-}
-
-
-impl BidiControl {
-    /// Find the character *BidiControl* property value.
-    pub fn of(ch: char) -> Self {
-        BidiControl(data::BIDI_CONTROL_TABLE.contains(ch))
-    }
+    /// Return `true` if the character is a Bidirectional control character, `false` otherwise.
+    pub fn is_bidi_control(char) -> bool;
 }
 
 
@@ -179,25 +102,5 @@ mod tests {
         assert_eq!(is_bidi_control('\u{100001}'), false);
         assert_eq!(is_bidi_control('\u{10fffe}'), false);
         assert_eq!(is_bidi_control('\u{10ffff}'), false);
-    }
-
-    #[test]
-    fn test_display() {
-        use super::BidiControl;
-        use unic_char_property::BinaryCharProperty;
-
-        assert_eq!(BidiControl::of('\u{200d}').abbr_name(), "N");
-        assert_eq!(BidiControl::of('\u{200e}').abbr_name(), "Y");
-        assert_eq!(BidiControl::of('\u{200f}').long_name(), "Yes");
-        assert_eq!(BidiControl::of('\u{2010}').long_name(), "No");
-    }
-
-    #[test]
-    fn test_convert_to_bool() {
-        use super::BidiControl;
-
-        if BidiControl::of('\u{200e}').into() {
-            assert!(true);
-        }
     }
 }

@@ -27,6 +27,11 @@
 //! * [UCD's PropertyAliases.txt](http://www.unicode.org/Public/UCD/latest/ucd/PropertyAliases.txt).
 
 
+#[doc(hidden)]
+#[allow(unused)] // used by char_property macro
+pub extern crate unic_utils;
+
+
 /// UNIC component version.
 pub const PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");
 

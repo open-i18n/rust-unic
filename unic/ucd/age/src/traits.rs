@@ -33,7 +33,7 @@ mod tests {
     use super::CharAge;
 
     #[test]
-    fn test_char_age() {
+    fn test_char_trait() {
         assert_eq!(
             '\u{0000}'.age().unwrap().actual(),
             UnicodeVersion {

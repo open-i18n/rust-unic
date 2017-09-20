@@ -9,6 +9,10 @@
 // except according to those terms.
 
 
+// We have not used DERIVED_CORE_PROPERTIES yet. Drop when it's used.
+#![allow(dead_code)]
+
+
 use std::char;
 use std::collections::BTreeSet;
 use std::str::FromStr;
