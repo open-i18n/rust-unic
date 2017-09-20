@@ -321,6 +321,68 @@ pub enum BidiClassCategory {
 }
 
 
+/// Methods for Bidi_Class character property.
+pub trait CharBidiClass {
+    /// Get `BidiClass` of the character.
+    fn bidi_class(self) -> BidiClass;
+
+    /// Whether the character has *left-to-right* (LTR) bidi directionality.
+    fn is_ltr(self) -> bool;
+
+    /// Whether the character has *right-to-left* (RTL) bidi directionality.
+    fn is_rtl(self) -> bool;
+}
+
+impl CharBidiClass for char {
+    #[inline]
+    fn bidi_class(self) -> BidiClass {
+        BidiClass::of(self)
+    }
+
+    #[inline]
+    fn is_ltr(self) -> bool {
+        BidiClass::of(self).is_ltr()
+    }
+
+    #[inline]
+    fn is_rtl(self) -> bool {
+        BidiClass::of(self).is_rtl()
+    }
+}
+
+
+/// Methods for Bidi_Class character properties of string types.
+pub trait StrBidiClass {
+    /// Whether the string has any *explicit* bidi formatting character.
+    fn has_bidi_explicit(&self) -> bool;
+
+    /// Whether the string has any character with *left-to-right* (LTR) bidi directionality.
+    fn has_ltr(&self) -> bool;
+
+    /// Whether the string has any character with *right-to-left* (RTL) bidi directionality.
+    fn has_rtl(&self) -> bool;
+}
+
+impl StrBidiClass for str {
+    #[inline]
+    fn has_bidi_explicit(&self) -> bool {
+        self.chars().any(|ch| {
+            ch.bidi_class().category() == BidiClassCategory::ExplicitFormatting
+        })
+    }
+
+    #[inline]
+    fn has_ltr(&self) -> bool {
+        self.chars().any(|ch| ch.is_rtl())
+    }
+
+    #[inline]
+    fn has_rtl(&self) -> bool {
+        self.chars().any(|ch| ch.is_rtl())
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     use unic_char_property::EnumeratedCharProperty;
@@ -432,5 +494,49 @@ mod tests {
         assert_eq!(format!("{}", R), "Right-to-Left");
         assert_eq!(format!("{}", AL), "Right-to-Left Arabic");
         assert_eq!(format!("{}", FSI), "First Strong Isolate");
+    }
+
+    #[test]
+    fn test_char_trait() {
+        use super::{BidiClass, BidiClassCategory, CharBidiClass};
+
+        let ch = '\u{0028}'; // U+0028 LEFT PARENTHESIS "("
+        assert_eq!(ch.bidi_class(), BidiClass::OtherNeutral);
+        assert_eq!(ch.bidi_class().category(), BidiClassCategory::Neutral);
+        assert!(!ch.is_ltr());
+        assert!(!ch.is_rtl());
+
+        let ch = '\u{0041}'; // U+0041 LATIN CAPITAL LETTER A "A"
+        assert_eq!(ch.bidi_class(), BidiClass::LeftToRight);
+        assert_eq!(ch.bidi_class().category(), BidiClassCategory::Strong);
+        assert!(ch.is_ltr());
+        assert!(!ch.is_rtl());
+
+        let ch = '\u{05D0}'; // U+05D0 HEBREW LETTER ALEF "א"
+        assert_eq!(ch.bidi_class(), BidiClass::RightToLeft);
+        assert_eq!(ch.bidi_class().category(), BidiClassCategory::Strong);
+        assert!(!ch.is_ltr());
+        assert!(ch.is_rtl());
+
+        let ch = '\u{0627}'; // U+0627 ARABIC LETTER ALEF "ا"
+        assert_eq!(ch.bidi_class(), BidiClass::ArabicLetter);
+        assert_eq!(ch.bidi_class().category(), BidiClassCategory::Strong);
+        assert!(!ch.is_ltr());
+        assert!(ch.is_rtl());
+    }
+
+    #[test]
+    fn test_str_trait() {
+        use super::StrBidiClass;
+
+        let text = "";
+        assert!(!text.has_bidi_explicit());
+        assert!(!text.has_ltr());
+        assert!(!text.has_rtl());
+
+        let text = "[\u{0041}\u{05D0}\u{0627}\u{200e}]";
+        assert!(!text.has_bidi_explicit());
+        assert!(text.has_ltr());
+        assert!(text.has_rtl());
     }
 }

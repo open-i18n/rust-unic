@@ -50,7 +50,8 @@
 ///
 /// # Syntax (Binary Property)
 ///
-/// ```
+// rustc:1.17.0 cannot find data_table_path, so ignore this test for now.
+/// ```ignore
 /// #[macro_use] extern crate unic_char_property;
 /// # #[macro_use] extern crate unic_char_range;
 ///
@@ -62,9 +63,9 @@
 ///         human => "Human-Readable Property Name";
 ///
 ///         // Unlike an enumerated property, a binary property will handle the table for you.
-///         data_table_path => "../tables/property_table.rsv";
+///         data_table_path => "../tests/tables/property_table.rsv";
 ///     }
-/// 
+///
 ///     /// A function that returns whether the given character has the property or not.
 ///     pub fn is_prop(char) -> bool;
 /// }
@@ -101,7 +102,8 @@ macro_rules! char_property {
     // == Enumerated Property == //
 
     (
-        $(#[$name_meta:meta])* pub enum $name:ident {
+        $(#[$name_meta:meta])*
+        pub enum $name:ident {
             abbr => $abbr_name:expr;
             long => $long_name:expr;
             human => $human_name:expr;
@@ -116,8 +118,11 @@ macro_rules! char_property {
             )*
         }
 
-        $(#[$abbr_mod_meta:meta])* pub mod $abbr_mod:ident for abbr;
-        $(#[$long_mod_meta:meta])* pub mod $long_mod:ident for long;
+        $(#[$abbr_mod_meta:meta])*
+        pub mod $abbr_mod:ident for abbr;
+
+        $(#[$long_mod_meta:meta])*
+        pub mod $long_mod:ident for long;
 
     ) => {
         $(#[$name_meta])*
@@ -140,7 +145,8 @@ macro_rules! char_property {
         }
 
         char_property! {
-            __impl FromStr for $name; $(
+            __impl FromStr for $name;
+            $(
                 $abbr => $name::$variant;
                 $long => $name::$variant;
             )*
@@ -177,7 +183,8 @@ macro_rules! char_property {
     // == Binary Property == //
 
     (
-        $(#[$name_meta:meta])* pub struct $name:ident(bool) {
+        $(#[$name_meta:meta])*
+        pub struct $name:ident(bool) {
             abbr => $abbr_name:expr;
             long => $long_name:expr;
             human => $human_name:expr;
@@ -187,6 +194,7 @@ macro_rules! char_property {
 
         $(#[$is_fn_meta:meta])*
         pub fn $is_fn:ident(char) -> bool;
+
     ) => {
         $(#[$name_meta])*
         #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)]
@@ -200,9 +208,9 @@ macro_rules! char_property {
         impl $name {
             /// Get (struct) property value of the character.
             pub fn of(ch: char) -> Self {
-               use $crate::unic_utils::CharDataTable;
-               const TABLE: CharDataTable<()> = include!($data_path);
-               $name(TABLE.contains(ch))
+                use $crate::unic_utils::CharDataTable;
+                const TABLE: CharDataTable<()> = include!($data_path);
+                $name(TABLE.contains(ch))
             }
 
             /// Get boolean property value of the character.
@@ -230,16 +238,20 @@ macro_rules! char_property {
             $human_name;
         }
 
-        char_property! {
-            __impl Display for $name by BinaryCharProperty
+        impl $crate::TotalCharProperty for $name {
+            fn of(ch: char) -> Self { Self::of(ch) }
         }
 
         impl $crate::BinaryCharProperty for $name {
             fn bool(&self) -> bool { self.as_bool() }
         }
 
-        impl $crate::TotalCharProperty for $name {
-            fn of(ch: char) -> Self { Self::of(ch) }
+        impl From<$name> for bool {
+            fn from(prop: $name) -> bool { prop.as_bool() }
+        }
+
+        char_property! {
+            __impl Display for $name by BinaryCharProperty
         }
     };
 
@@ -247,7 +259,9 @@ macro_rules! char_property {
 
     (
         __impl CharProperty for $name:ident;
-        $abbr:expr; $long:expr; $human:expr;
+        $abbr:expr;
+        $long:expr;
+        $human:expr;
     ) => {
         impl $crate::CharProperty for $name {
             fn prop_abbr_name() -> &'static str { $abbr }
@@ -258,7 +272,7 @@ macro_rules! char_property {
 
     (
         __impl FromStr for $name:ident;
-        $($id:ident => $value:expr;)*
+        $( $id:ident => $value:expr; )*
     ) => {
         #[allow(unreachable_patterns)]
         impl ::std::str::FromStr for $name {

@@ -39,7 +39,7 @@ fn test_unicode_version_against_rust_core_2() {
             }
         }
     }
-    
+
     check(std::char::UNICODE_VERSION);
 }
 */

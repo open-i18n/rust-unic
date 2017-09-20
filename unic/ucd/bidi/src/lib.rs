@@ -21,8 +21,10 @@
 
 #[macro_use]
 extern crate unic_char_property;
+
 #[macro_use]
 extern crate unic_char_range;
+
 extern crate unic_ucd_core;
 extern crate unic_utils;
 
@@ -31,19 +33,10 @@ pub mod bidi_class;
 pub mod bidi_control;
 pub mod bidi_mirrored;
 
-mod traits;
 
-pub use bidi_class::{BidiClass, BidiClassCategory};
+pub use bidi_class::{BidiClass, BidiClassCategory, CharBidiClass, StrBidiClass};
 pub use bidi_control::{is_bidi_control, BidiControl};
 pub use bidi_mirrored::{is_bidi_mirrored, BidiMirrored};
-pub use traits::{
-    CharBidiClass,
-    CharBidiControl,
-    CharBidiMirrored,
-    StrBidiClass,
-    StrBidiControl,
-    StrBidiMirrored,
-};
 
 use unic_ucd_core::UnicodeVersion;
 

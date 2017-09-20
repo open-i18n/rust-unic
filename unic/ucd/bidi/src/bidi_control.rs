@@ -17,16 +17,17 @@ char_property! {
     /// Represents values of the Unicode character property
     /// [*Bidi_Control*](http://www.unicode.org/reports/tr44/#Bidi_Control).
     ///
-    /// The value is `true` if the character is a Bidirectional control character,
-    /// `false` otherwise.
+    /// The value is `true` if the character is a Bidirectional control character, `false`
+    /// otherwise.
     pub struct BidiControl(bool) {
         abbr => "Bidi_C";
         long => "Bidi_Control";
         human => "Bidi Control";
+
         data_table_path => "../tables/bidi_control.rsv";
     }
 
-    /// Is this character a bidirectional control character?
+    /// Return `true` if the character is a Bidirectional control character, `false` otherwise.
     pub fn is_bidi_control(char) -> bool;
 }
 

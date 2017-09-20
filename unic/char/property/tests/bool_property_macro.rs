@@ -23,11 +23,29 @@ char_property! {
         long => "My_Prop";
         human => "My Property";
 
-        data_table_path => "../tables/property_table.rsv";
+        data_table_path => "tables/property_table.rsv";
     }
 
     /// This is the shorthand function.
     pub fn is_my_prop(char) -> bool;
+}
+
+#[test]
+fn test_basics() {
+    assert_eq!(MyProp::of('\u{0000}').as_bool(), false);
+    assert_eq!(MyProp::of('\u{0065}').as_bool(), true);
+
+    assert_eq!(is_my_prop('\u{0000}'), false);
+    assert_eq!(is_my_prop('\u{0065}'), true);
+}
+
+#[test]
+fn test_into_bool() {
+    assert!(if MyProp::of('\u{0065}').into() {
+        true
+    } else {
+        false
+    });
 }
 
 #[test]
@@ -43,19 +61,8 @@ fn test_from_str() {
     assert_eq!("FALSE".parse(), Ok(MyProp(false)));
 }
 
-
 #[test]
 fn test_display() {
-    assert_eq!("y".parse(), Ok(MyProp(true)));
-    assert_eq!("yes".parse(), Ok(MyProp(true)));
-    assert_eq!("t".parse(), Ok(MyProp(true)));
-    assert_eq!("true".parse(), Ok(MyProp(true)));
-
-    assert_eq!("N".parse(), Ok(MyProp(false)));
-    assert_eq!("NO".parse(), Ok(MyProp(false)));
-    assert_eq!("F".parse(), Ok(MyProp(false)));
-    assert_eq!("FALSE".parse(), Ok(MyProp(false)));
-
     use unic_char_property::BinaryCharProperty;
 
     assert_eq!(MyProp::of('\u{0000}').abbr_name(), "N");
