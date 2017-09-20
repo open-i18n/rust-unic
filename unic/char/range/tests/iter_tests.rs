@@ -33,6 +33,13 @@ fn iter_all_chars_mixed_next_back() {
 }
 
 #[test]
+fn iter_all_chars_into_iter() {
+    for _ch in CharRange::all() {
+        // nothing
+    }
+}
+
+#[test]
 fn iter_fused() {
     let mut iter = CharRange::all().iter();
     let mut fused = all_chars().fuse();

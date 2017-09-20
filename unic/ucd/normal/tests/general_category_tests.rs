@@ -15,12 +15,13 @@
 
 extern crate unic_ucd_category;
 extern crate unic_ucd_normal;
-extern crate unic_utils;
+extern crate unic_char_range;
 
+
+use unic_char_range::CharRange;
 
 use self::unic_ucd_category::GeneralCategory as GC;
 use self::unic_ucd_normal::is_combining_mark;
-use self::unic_utils::iter_all_chars;
 
 
 /// `normal::is_combining_mark` and `GeneralCategory::is_mark()` are expected to return the same
@@ -30,7 +31,7 @@ use self::unic_utils::iter_all_chars;
 /// implementation.
 #[test]
 fn test_local_is_mark_against_ucd_category() {
-    for cp in iter_all_chars() {
+    for cp in CharRange::all() {
         assert_eq!(GC::of(cp).is_mark(), is_combining_mark(cp));
     }
 }

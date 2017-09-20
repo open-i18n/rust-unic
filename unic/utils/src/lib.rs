@@ -31,9 +31,7 @@ pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
 pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
 
 
-pub mod codepoints;
 pub mod tables;
 
 
-pub use codepoints::iter_all_chars;
 pub use tables::CharDataTable;
