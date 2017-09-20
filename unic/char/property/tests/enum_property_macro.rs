@@ -57,7 +57,7 @@ impl PartialCharProperty for MyProp {
 
 
 #[test]
-fn basic_macro_use() {
+fn test_basic_macro_use() {
     use unic_char_property::EnumeratedCharProperty;
 
     assert_eq!(MyProp::Variant1, abbr::V1);
@@ -82,7 +82,7 @@ fn basic_macro_use() {
 }
 
 #[test]
-fn fromstr_ignores_case() {
+fn test_fromstr_ignores_case() {
     use abbr::V1;
 
     assert_eq!("variant_1".parse(), Ok(V1));

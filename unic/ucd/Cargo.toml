@@ -25,4 +25,5 @@ unic-ucd-normal = { path = "normal/", version = "0.5.0", features = ["unic-ucd-c
 
 [dev-dependencies]
 unic-utils = { path = "../utils/", version = "0.5.0" }
+unic-char-range = { path = "../char/range/", version = "0.5.0" }
 matches = "0.1"

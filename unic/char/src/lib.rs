@@ -9,13 +9,12 @@
 // except according to those terms.
 
 
-#![forbid(missing_docs)]
-#![deny(unsafe_code)]
-
 //! # UNIC — Utilities
 //!
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
 
+#![forbid(missing_docs)]
+#![deny(unsafe_code)]
 
 pub extern crate unic_char_property as property;
 

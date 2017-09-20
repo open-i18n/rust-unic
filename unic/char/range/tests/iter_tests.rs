@@ -1,7 +1,21 @@
+// Copyright 2017 The UNIC Project Developers.
+//
+// See the COPYRIGHT file at the top-level directory of this distribution.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+
 extern crate unic_char_range;
 
+
 use std::{char, vec, u32};
+
 use unic_char_range::CharRange;
+
 
 fn all_chars() -> vec::IntoIter<char> {
     (u32::MIN..u32::MAX)
@@ -12,17 +26,17 @@ fn all_chars() -> vec::IntoIter<char> {
 }
 
 #[test]
-fn iter_all_chars() {
+fn test_iter_all_chars() {
     assert!(CharRange::all().iter().eq(all_chars()))
 }
 
 #[test]
-fn iter_all_chars_rev() {
+fn test_iter_all_chars_rev() {
     assert!(CharRange::all().iter().rev().eq(all_chars().rev()))
 }
 
 #[test]
-fn iter_all_chars_mixed_next_back() {
+fn test_iter_all_chars_mixed_next_back() {
     let mut custom = CharRange::all().iter();
     let mut simple = all_chars();
     while let Some(custom_char) = custom.next() {
@@ -33,7 +47,14 @@ fn iter_all_chars_mixed_next_back() {
 }
 
 #[test]
-fn iter_fused() {
+fn test_iter_all_chars_into_iter() {
+    for _ch in CharRange::all() {
+        // nothing
+    }
+}
+
+#[test]
+fn test_iter_fused() {
     let mut iter = CharRange::all().iter();
     let mut fused = all_chars().fuse();
     assert!(iter.by_ref().eq(fused.by_ref()));
@@ -43,7 +64,7 @@ fn iter_fused() {
 }
 
 #[test]
-fn iter_exact_trusted_len() {
+fn test_iter_exact_trusted_len() {
     fn assert_presents_right_len<I: ExactSizeIterator>(iter: &I, len: usize) {
         assert_eq!(iter.len(), len);
         assert_eq!(iter.size_hint(), (len, Some(len)));

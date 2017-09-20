@@ -19,7 +19,7 @@ use rustc_serialize::json::{self, Json};
 
 
 #[test]
-pub fn test_punycode_js_data() {
+fn test_punycode_js_data() {
     let tests = match Json::from_str(include_str!(
         "../../../../data/punycode/test/punycode.js_data.json"
     )).unwrap()
