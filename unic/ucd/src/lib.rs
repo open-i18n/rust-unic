@@ -21,6 +21,7 @@
 
 pub extern crate unic_ucd_age as age;
 pub extern crate unic_ucd_bidi as bidi;
+pub extern crate unic_ucd_case as case;
 pub extern crate unic_ucd_category as category;
 pub extern crate unic_ucd_core as core;
 pub extern crate unic_ucd_name as name;
@@ -46,6 +47,27 @@ pub use core::UnicodeVersion;
 pub use age::{Age, CharAge};
 
 pub use bidi::{is_bidi_mirrored, BidiClass, CharBidiClass, StrBidiClass};
+
+pub use case::{
+    changes_when_casefolded,
+    changes_when_casemapped,
+    changes_when_lowercased,
+    changes_when_titlecased,
+    changes_when_uppercased,
+    is_case_ignorable,
+    is_cased,
+    is_lowercase,
+    is_uppercase,
+    CaseIgnorable,
+    Cased,
+    ChangesWhenCasefolded,
+    ChangesWhenCasemapped,
+    ChangesWhenLowercased,
+    ChangesWhenTitlecased,
+    ChangesWhenUppercased,
+    Lowercase,
+    Uppercase,
+};
 
 pub use category::GeneralCategory;
 

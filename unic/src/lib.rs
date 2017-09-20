@@ -36,28 +36,30 @@
 //!
 //! use unic::bidi::BidiInfo;
 //! use unic::normal::StrNormalForm;
-//! use unic::ucd::{Age, BidiClass, CharAge, CharBidiClass, StrBidiClass, UnicodeVersion};
+//! use unic::ucd::{Age, BidiClass, CharAge, CharBidiClass, StrBidiClass, UnicodeVersion, is_cased};
 //! use unic::ucd::normal::compose;
-//!
-//! fn main() {
-//!
+//! 
+//! #[cfg_attr(rustfmt, rustfmt_skip)]
+//! #[test]
+//! fn test_sample() {
+//! 
 //!     // Age
-//!
+//! 
 //!     assert_eq!(Age::of('A').unwrap().actual(), UnicodeVersion { major: 1, minor: 1, micro: 0 });
 //!     assert_eq!(Age::of('\u{A0000}'), None);
 //!     assert_eq!(
 //!         Age::of('\u{10FFFF}').unwrap().actual(),
 //!         UnicodeVersion { major: 2, minor: 0, micro: 0 }
 //!     );
-//!
+//! 
 //!     if let Some(age) = '🦊'.age() {
 //!         assert_eq!(age.actual().major, 9);
 //!         assert_eq!(age.actual().minor, 0);
 //!         assert_eq!(age.actual().micro, 0);
 //!     }
-//!
+//! 
 //!     // Bidi
-//!
+//! 
 //!     let text = concat![
 //!         "א",
 //!         "ב",
@@ -66,26 +68,26 @@
 //!         "b",
 //!         "c",
 //!     ];
-//!
+//! 
 //!     assert!(!text.has_bidi_explicit());
 //!     assert!(text.has_rtl());
 //!     assert!(text.has_ltr());
-//!
+//! 
 //!     assert_eq!(text.chars().nth(0).unwrap().bidi_class(), BidiClass::RightToLeft);
 //!     assert!(!text.chars().nth(0).unwrap().is_ltr());
 //!     assert!(text.chars().nth(0).unwrap().is_rtl());
-//!
+//! 
 //!     assert_eq!(text.chars().nth(3).unwrap().bidi_class(), BidiClass::LeftToRight);
 //!     assert!(text.chars().nth(3).unwrap().is_ltr());
 //!     assert!(!text.chars().nth(3).unwrap().is_rtl());
-//!
-//!     let bidi_info = BidiInfo::new(&text, None);
+//! 
+//!     let bidi_info = BidiInfo::new(text, None);
 //!     assert_eq!(bidi_info.paragraphs.len(), 1);
-//!
+//! 
 //!     let para = &bidi_info.paragraphs[0];
 //!     assert_eq!(para.level.number(), 1);
 //!     assert_eq!(para.level.is_rtl(), true);
-//!
+//! 
 //!     let line = para.range.clone();
 //!     let display = bidi_info.reorder_line(para, line);
 //!     assert_eq!(
@@ -99,14 +101,20 @@
 //!             "א",
 //!         ]
 //!     );
-//!
+//! 
+//!     // Case
+//! 
+//!     assert_eq!(is_cased('A'), true);
+//!     assert_eq!(is_cased('א'), false);
+//! 
 //!     // Normalization
-//!
-//!     assert_eq!(compose('A', '\u{30a}'), Some('Å'));
-//!
+//! 
+//!     assert_eq!(compose('A', '\u{030A}'), Some('Å'));
+//! 
 //!     let s = "ÅΩ";
 //!     let c = s.nfc().collect::<String>();
 //!     assert_eq!(c, "ÅΩ");
+//! 
 //! }
 //! ```
 

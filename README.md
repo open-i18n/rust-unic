@@ -150,10 +150,12 @@ extern crate unic;
 
 use unic::bidi::BidiInfo;
 use unic::normal::StrNormalForm;
-use unic::ucd::{Age, BidiClass, CharAge, CharBidiClass, StrBidiClass, UnicodeVersion};
+use unic::ucd::{Age, BidiClass, CharAge, CharBidiClass, StrBidiClass, UnicodeVersion, is_cased};
 use unic::ucd::normal::compose;
 
-fn main() {
+#[cfg_attr(rustfmt, rustfmt_skip)]
+#[test]
+fn test_sample() {
 
     // Age
 
@@ -193,7 +195,7 @@ fn main() {
     assert!(text.chars().nth(3).unwrap().is_ltr());
     assert!(!text.chars().nth(3).unwrap().is_rtl());
 
-    let bidi_info = BidiInfo::new(&text, None);
+    let bidi_info = BidiInfo::new(text, None);
     assert_eq!(bidi_info.paragraphs.len(), 1);
 
     let para = &bidi_info.paragraphs[0];
@@ -214,9 +216,14 @@ fn main() {
         ]
     );
 
+    // Case
+
+    assert_eq!(is_cased('A'), true);
+    assert_eq!(is_cased('א'), false);
+
     // Normalization
 
-    assert_eq!(compose('A', '\u{30a}'), Some('Å'));
+    assert_eq!(compose('A', '\u{030A}'), Some('Å'));
 
     let s = "ÅΩ";
     let c = s.nfc().collect::<String>();

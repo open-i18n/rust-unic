@@ -16,7 +16,7 @@ extern crate unic;
 
 use unic::bidi::BidiInfo;
 use unic::normal::StrNormalForm;
-use unic::ucd::{Age, BidiClass, CharAge, CharBidiClass, StrBidiClass, UnicodeVersion};
+use unic::ucd::{Age, BidiClass, CharAge, CharBidiClass, StrBidiClass, UnicodeVersion, is_cased};
 use unic::ucd::normal::compose;
 
 #[cfg_attr(rustfmt, rustfmt_skip)]
@@ -81,6 +81,11 @@ fn test_sample() {
             "א",
         ]
     );
+
+    // Case
+
+    assert_eq!(is_cased('A'), true);
+    assert_eq!(is_cased('א'), false);
 
     // Normalization
 

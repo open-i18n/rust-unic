@@ -9,10 +9,6 @@
 // except according to those terms.
 
 
-// We have not used DERIVED_CORE_PROPERTIES yet. Drop when it's used.
-#![allow(dead_code)]
-
-
 use std::char;
 use std::collections::BTreeSet;
 use std::str::FromStr;
@@ -207,8 +203,6 @@ impl FromStr for DerivedCoreProperties {
             let range = chars!(low..=high);
 
             match &capture[3] {
-                "Math" => props.math.extend(range),
-                "Alphabetic" => props.alphabetic.extend(range),
                 "Lowercase" => props.lowercase.extend(range),
                 "Uppercase" => props.uppercase.extend(range),
                 "Cased" => props.cased.extend(range),
@@ -218,14 +212,16 @@ impl FromStr for DerivedCoreProperties {
                 "Changes_When_Titlecased" => props.changes_when_titlecased.extend(range),
                 "Changes_When_Casefolded" => props.changes_when_casefolded.extend(range),
                 "Changes_When_Casemapped" => props.changes_when_casemapped.extend(range),
-                "ID_Start" => props.id_start.extend(range),
-                "ID_Continue" => props.id_continue.extend(range),
-                "XID_Start" => props.xid_start.extend(range),
-                "XID_Continue" => props.xid_continue.extend(range),
+                "Alphabetic" => props.alphabetic.extend(range),
                 "Default_Ignorable_Code_Point" => props.default_ignorable_code_point.extend(range),
                 "Grapheme_Extend" => props.grapheme_extend.extend(range),
                 "Grapheme_Base" => props.grapheme_base.extend(range),
                 "Grapheme_Link" => { /* ignored */ }
+                "Math" => props.math.extend(range),
+                "ID_Start" => props.id_start.extend(range),
+                "ID_Continue" => props.id_continue.extend(range),
+                "XID_Start" => props.xid_start.extend(range),
+                "XID_Continue" => props.xid_continue.extend(range),
                 prop => panic!("Unsupported DerivedCoreProperty `{}`", prop),
             }
         }

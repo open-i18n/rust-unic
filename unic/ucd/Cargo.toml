@@ -18,6 +18,7 @@ travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 [dependencies]
 unic-ucd-age = { path = "age/", version = "0.5.0" }
 unic-ucd-bidi = { path = "bidi/", version = "0.5.0" }
+unic-ucd-case = { path = "case/", version = "0.5.0" }
 unic-ucd-category = { path = "category/", version = "0.5.0" }
 unic-ucd-core = { path = "core/", version = "0.5.0" }
 unic-ucd-name = { path = "name/", version = "0.5.0" }
