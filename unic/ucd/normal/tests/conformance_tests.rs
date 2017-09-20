@@ -9,9 +9,8 @@
 // except according to those terms.
 
 
-extern crate unic_ucd_normal;
-extern crate unic_utils;
 extern crate unic_char_range;
+extern crate unic_ucd_normal;
 
 
 use unic_ucd_normal::DecompositionType as DT;

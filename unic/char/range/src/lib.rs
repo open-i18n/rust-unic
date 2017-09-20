@@ -1,3 +1,14 @@
+// Copyright 2017 The UNIC Project Developers.
+//
+// See the COPYRIGHT file at the top-level directory of this distribution.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
+
 //! # Unic - Char - Range
 //!
 //! A simple way to control iteration over a range of characters.
@@ -31,16 +42,19 @@
 //! [`FusedIterator`]: https://doc.rust-lang.org/std/iter/trait.FusedIterator.html
 //! [`TrustedLen`]: https://doc.rust-lang.org/std/iter/trait.TrustedLen.html
 //!
+
 #![forbid(bad_style, missing_debug_implementations, unconditional_recursion)]
 #![deny(missing_docs, unsafe_code, unused, future_incompatible)]
 #![cfg_attr(feature = "exact-size-is-empty", feature(exact_size_is_empty))]
 #![cfg_attr(feature = "fused", feature(fused))]
 #![cfg_attr(feature = "trusted-len", feature(trusted_len))]
 
+
 mod macros;
 mod range;
 mod iter;
 mod step;
+
 
 pub use range::CharRange;
 pub use iter::CharIter;

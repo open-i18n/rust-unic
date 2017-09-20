@@ -13,9 +13,9 @@
 #![cfg(not(feature = "unic-ucd-category"))]
 
 
+extern crate unic_char_range;
 extern crate unic_ucd_category;
 extern crate unic_ucd_normal;
-extern crate unic_char_range;
 
 
 use unic_char_range::CharRange;

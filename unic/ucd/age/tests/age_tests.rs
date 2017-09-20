@@ -9,8 +9,8 @@
 // except according to those terms.
 
 
-extern crate unic_ucd_age;
 extern crate unic_char_range;
+extern crate unic_ucd_age;
 
 
 use unic_ucd_age::{Age, UnicodeVersion, UNICODE_VERSION};

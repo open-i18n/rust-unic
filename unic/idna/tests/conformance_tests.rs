@@ -13,7 +13,7 @@ use std::char;
 
 
 #[test]
-pub fn test_idn_test_data() {
+fn test_idn_test_data() {
     // Source: http://www.unicode.org/Public/idna/latest/IdnaTest.txt
     for (line_idx, line) in include_str!("../../../data/idna/test/IdnaTest.txt")
         .lines()
