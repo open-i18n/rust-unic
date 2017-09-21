@@ -123,6 +123,7 @@
 
 pub extern crate unic_bidi as bidi;
 pub extern crate unic_char as char;
+pub extern crate unic_emoji as emoji;
 pub extern crate unic_idna as idna;
 pub extern crate unic_normal as normal;
 pub extern crate unic_segment as segment;

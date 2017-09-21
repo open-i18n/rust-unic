@@ -9,8 +9,8 @@
 // except according to those terms.
 
 
-extern crate unic_ucd_segment;
 extern crate unic_char_property;
+extern crate unic_ucd_segment;
 
 
 use unic_char_property::tables::CharDataTable;
