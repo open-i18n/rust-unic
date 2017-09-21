@@ -17,7 +17,7 @@
 //!
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
 //!
-//! Accessor for `Bidi_Class` property from Unicode Character Database (UCD)
+//! Accessor for Bidirection character properties from Unicode Character Database (UCD)
 
 #[macro_use]
 extern crate unic_char_property;
