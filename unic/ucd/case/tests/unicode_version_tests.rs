@@ -9,13 +9,14 @@
 // except according to those terms.
 
 
-use std::path::Path;
-
-use source::ucd::readme::UNICODE_VERSION;
-
-use writer::common::emit_unicode_version;
+extern crate unic_ucd_case;
+extern crate unic_ucd_core;
 
 
-pub fn generate(dir: &Path) {
-    emit_unicode_version(dir, &UNICODE_VERSION);
+#[test]
+fn test_version_against_ucd_core() {
+    assert_eq!(
+        unic_ucd_case::UNICODE_VERSION,
+        unic_ucd_core::UNICODE_VERSION
+    );
 }

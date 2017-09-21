@@ -24,10 +24,10 @@ use writer::utils::write;
 
 
 pub fn generate(dir: &Path) {
-    emit_unicode_version(&dir, &UNICODE_VERSION);
-    emit_bidi_class(&dir);
-    emit_bidi_mirrored(&dir);
-    emit_bidi_control(&dir);
+    emit_unicode_version(dir, &UNICODE_VERSION);
+    emit_bidi_class(dir);
+    emit_bidi_mirrored(dir);
+    emit_bidi_control(dir);
 }
 
 
@@ -67,7 +67,7 @@ fn emit_bidi_class(dir: &Path) {
     }
 
     write(
-        &dir,
+        dir,
         "bidi_class.rsv",
         &map.to_range_char_table(Display::fmt),
     );
@@ -82,12 +82,12 @@ fn emit_bidi_mirrored(dir: &Path) {
         .map(|x| x.character)
         .collect();
 
-    write(&dir, "bidi_mirrored.rsv", &set.to_range_char_set());
+    write(dir, "bidi_mirrored.rsv", &set.to_range_char_set());
 }
 
 fn emit_bidi_control(dir: &Path) {
     write(
-        &dir,
+        dir,
         "bidi_control.rsv",
         &PROP_LIST.bidi_control.to_range_char_set(),
     );

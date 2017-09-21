@@ -22,7 +22,7 @@ use writer::common::emit_unicode_version;
 
 
 pub fn generate(dir: &Path) {
-    emit_unicode_version(&dir, &UNICODE_VERSION);
+    emit_unicode_version(dir, &UNICODE_VERSION);
     emit_general_category_mark(dir);
     emit_canonical_combining_class(dir);
     emit_canonical_decomposition_mapping(dir);

@@ -23,8 +23,8 @@ use writer::utils::write;
 
 
 pub fn generate(dir: &Path) {
-    emit_unicode_version(&dir, &UNICODE_VERSION);
-    emit_name_tables(&dir);
+    emit_unicode_version(dir, &UNICODE_VERSION);
+    emit_name_tables(dir);
 }
 
 
@@ -56,10 +56,10 @@ fn emit_name_tables(dir: &Path) {
             piece
         ).unwrap();
     }
-    write(&dir, "name_values.rsd", &values_contents);
+    write(dir, "name_values.rsd", &values_contents);
 
     write(
-        &dir,
+        dir,
         "name_map.rsv",
         &map.to_direct_char_table(|record, f| {
             write!(

@@ -21,14 +21,14 @@ use writer::common::emit_unicode_version;
 
 
 pub fn generate(dir: &Path) {
-    emit_unicode_version(&dir, &UNICODE_VERSION);
-    emit_age_values(&dir);
+    emit_unicode_version(dir, &UNICODE_VERSION);
+    emit_age_values(dir);
 }
 
 
 pub fn emit_age_values(dir: &Path) {
     write(
-        &dir,
+        dir,
         "age_values.rsv",
         &AGE_DATA.map.to_range_char_table(Display::fmt),
     );
