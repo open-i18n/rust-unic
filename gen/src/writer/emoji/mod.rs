@@ -9,10 +9,12 @@
 // except according to those terms.
 
 
-pub mod emoji;
-pub mod idna;
-pub mod normal;
-pub mod ucd;
+mod char;
 
-mod common;
-mod utils;
+
+use writer::utils::clean_dir;
+
+
+pub fn generate() {
+    char::generate(&clean_dir("unic/emoji/char/tables"));
+}

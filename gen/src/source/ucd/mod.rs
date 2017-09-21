@@ -23,7 +23,7 @@ use regex::Regex;
 
 
 lazy_static! {
-    static ref BINARY_PROPERTIES_REGEX: Regex = Regex::new(
+    pub static ref BINARY_PROPERTIES_REGEX: Regex = Regex::new(
         r"(?xm)^
           ([[:xdigit:]]{4,6})        # low
           (?:..([[:xdigit:]]{4,6}))? # high
