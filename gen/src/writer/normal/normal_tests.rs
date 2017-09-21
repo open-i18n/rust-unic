@@ -18,7 +18,7 @@ use writer::utils::write;
 
 
 pub fn generate(dir: &Path) {
-    emit_conformance_tests_data(&dir);
+    emit_conformance_tests_data(dir);
 }
 
 

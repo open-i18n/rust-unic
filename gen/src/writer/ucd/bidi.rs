@@ -25,9 +25,9 @@ use writer::utils::write;
 
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
-    emit_bidi_class(&dir);
-    emit_bidi_mirrored(&dir);
-    emit_bidi_control(&dir);
+    emit_bidi_class(dir);
+    emit_bidi_mirrored(dir);
+    emit_bidi_control(dir);
 }
 
 

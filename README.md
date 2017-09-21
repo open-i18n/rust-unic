@@ -153,9 +153,7 @@ use unic::normal::StrNormalForm;
 use unic::ucd::{Age, BidiClass, CharAge, CharBidiClass, StrBidiClass, UnicodeVersion, is_cased};
 use unic::ucd::normal::compose;
 
-#[cfg_attr(rustfmt, rustfmt_skip)]
-#[test]
-fn test_sample() {
+fn main() {
 
     // Age
 

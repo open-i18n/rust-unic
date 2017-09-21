@@ -1,4 +1,3 @@
-// Copyright 2015 The Servo Project Developers.
 // Copyright 2017 The UNIC Project Developers.
 //
 // See the COPYRIGHT file at the top-level directory of this distribution.

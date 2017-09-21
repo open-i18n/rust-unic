@@ -16,6 +16,7 @@
 #![forbid(missing_docs)]
 #![deny(unsafe_code)]
 
+
 pub extern crate unic_char_property as property;
 
 

@@ -16,7 +16,7 @@ extern crate unic;
 
 use unic::bidi::BidiInfo;
 use unic::normal::StrNormalForm;
-use unic::ucd::{Age, BidiClass, CharAge, CharBidiClass, StrBidiClass, UnicodeVersion, is_cased};
+use unic::ucd::{is_cased, Age, BidiClass, CharAge, CharBidiClass, StrBidiClass, UnicodeVersion};
 use unic::ucd::normal::compose;
 
 #[cfg_attr(rustfmt, rustfmt_skip)]

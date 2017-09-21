@@ -24,7 +24,7 @@ use writer::utils::write;
 
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
-    emit_name_tables(&dir);
+    emit_name_tables(dir);
 }
 
 

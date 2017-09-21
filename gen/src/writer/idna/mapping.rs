@@ -21,7 +21,7 @@ use writer::utils::write;
 
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
-    emit_idna_mapping(&dir);
+    emit_idna_mapping(dir);
 }
 
 

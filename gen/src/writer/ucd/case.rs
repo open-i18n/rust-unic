@@ -21,15 +21,15 @@ use writer::utils::write;
 
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
-    emit_lowercase(&dir);
-    emit_uppercase(&dir);
-    emit_cased(&dir);
-    emit_case_ignorable(&dir);
-    emit_changes_when_lowercased(&dir);
-    emit_changes_when_uppercased(&dir);
-    emit_changes_when_titlecased(&dir);
-    emit_changes_when_casefolded(&dir);
-    emit_changes_when_casemapped(&dir);
+    emit_lowercase(dir);
+    emit_uppercase(dir);
+    emit_cased(dir);
+    emit_case_ignorable(dir);
+    emit_changes_when_lowercased(dir);
+    emit_changes_when_uppercased(dir);
+    emit_changes_when_titlecased(dir);
+    emit_changes_when_casefolded(dir);
+    emit_changes_when_casemapped(dir);
 }
 
 fn emit_lowercase(dir: &Path) {

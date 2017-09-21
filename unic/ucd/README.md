@@ -18,14 +18,14 @@ Here's a list of components (available or planned) for this super-crate:
   [Unicode Version](http://www.unicode.org/versions/).
 
 - [X] `age`: Character Age property.
-- [ ] `name`: Character Name property.
-- [x] `category`: Character General_Category property.
+- [X] `name`: Character Name property.
+- [X] `category`: Character General_Category property.
 
 - [ ] `block`: Character Block properties
 - [ ] `script`: Character Script properties.
 
-- [x] `normal`: Normalization properties.
-- [ ] `case`: Character case properties.
+- [X] `normal`: Character Normalization properties.
+- [X] `case`: Character case properties.
 - [ ] `grapheme`: Character grapheme properties.
 - [ ] `numeric`: Character numeric properties.
 
