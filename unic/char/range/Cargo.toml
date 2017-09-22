@@ -1,6 +1,6 @@
 [package]
 name = "unic-char-range"
-version = "0.5.0"
+version = "0.6.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"

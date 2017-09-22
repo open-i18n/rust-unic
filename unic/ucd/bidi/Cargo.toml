@@ -1,6 +1,6 @@
 [package]
 name = "unic-ucd-bidi"
-version = "0.5.0"
+version = "0.6.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
@@ -15,7 +15,7 @@ exclude = []
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
 [dependencies]
-unic-char-property = { path = "../../char/property/", version = "0.5.0" }
-unic-char-range = { path = "../../char/range", version = "0.5.0" }
-unic-ucd-core = { path = "../core/", version = "0.5.0" }
-unic-utils = { path = "../../utils/", version = "0.5.0" }
+unic-char-property = { path = "../../char/property/", version = "0.6.0" }
+unic-char-range = { path = "../../char/range", version = "0.6.0" }
+unic-ucd-core = { path = "../core/", version = "0.6.0" }
+unic-utils = { path = "../../utils/", version = "0.6.0" }
