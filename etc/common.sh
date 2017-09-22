@@ -22,11 +22,16 @@ set -e
 
 # List of components, in order of dependency
 export COMPONENTS="
+    unic/char/range
     unic/utils
+    unic/char/property
+    unic/char
     unic/ucd/core
     unic/ucd/age
     unic/ucd/bidi
+    unic/ucd/case
     unic/ucd/category
+    unic/ucd/name
     unic/ucd/normal
     unic/ucd
     unic/bidi
