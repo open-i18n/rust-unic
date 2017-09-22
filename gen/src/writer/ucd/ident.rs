@@ -9,6 +9,7 @@
 // except according to those terms.
 
 
+use std::collections::BTreeSet;
 use std::path::Path;
 
 use source::ucd::derived_core_properties::DERIVED_CORE_PROPERTIES;
@@ -39,10 +40,20 @@ fn emit_id_start(dir: &Path) {
 }
 
 fn emit_id_continue(dir: &Path) {
+    assert!(
+        BTreeSet::intersection(
+            &DERIVED_CORE_PROPERTIES.id_start,
+            &DERIVED_CORE_PROPERTIES.id_continue,
+        ).eq(DERIVED_CORE_PROPERTIES.id_start.iter())
+    );
+    let continue_not_start: BTreeSet<_> = BTreeSet::difference(
+        &DERIVED_CORE_PROPERTIES.id_continue,
+        &DERIVED_CORE_PROPERTIES.id_start,
+    ).cloned().collect();
     write(
         dir,
         "id_continue.rsv",
-        &DERIVED_CORE_PROPERTIES.id_continue.to_range_char_set(),
+        &continue_not_start.to_range_char_set(),
     );
 }
 
@@ -55,10 +66,20 @@ fn emit_xid_start(dir: &Path) {
 }
 
 fn emit_xid_continue(dir: &Path) {
+    assert!(
+        BTreeSet::intersection(
+            &DERIVED_CORE_PROPERTIES.xid_start,
+            &DERIVED_CORE_PROPERTIES.xid_continue,
+        ).eq(DERIVED_CORE_PROPERTIES.xid_start.iter())
+    );
+    let continue_not_start: BTreeSet<_> = BTreeSet::difference(
+        &DERIVED_CORE_PROPERTIES.xid_continue,
+        &DERIVED_CORE_PROPERTIES.xid_start,
+    ).cloned().collect();
     write(
         dir,
         "xid_continue.rsv",
-        &DERIVED_CORE_PROPERTIES.xid_continue.to_range_char_set(),
+        &continue_not_start.to_range_char_set(),
     );
 }
 
