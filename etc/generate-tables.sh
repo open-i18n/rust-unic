@@ -10,13 +10,6 @@
 # option. This file may not be copied, modified, or distributed
 # except according to those terms.
 
-# Since `cargo publish --all` does not exist yet, we use this dumb alternative
-# solution for now.
-#
-# Main downside of this approch is that there are separate `target/`
-# directories used for each component, increasing the test and publish process
-# time.
-
 set -e
 
 
@@ -25,10 +18,5 @@ ROOT="$DIR/.."
 . "$DIR/common.sh"
 
 
-- cargo clean --verbose
-
-for component in $COMPONENTS; do
-    - cd "$ROOT/$component"
-    - cargo clippy --verbose
-    - cd "$ROOT"
-done
+cd $ROOT
+- cargo run --package=unic-gen

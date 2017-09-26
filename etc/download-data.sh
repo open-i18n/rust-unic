@@ -10,4 +10,13 @@
 # option. This file may not be copied, modified, or distributed
 # except according to those terms.
 
-cargo run --release --package=unic-gen -- --download --generate idna ucd normal
+set -e
+
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ROOT="$DIR/.."
+. "$DIR/common.sh"
+
+
+cd $ROOT
+- cargo run --package=unic-data

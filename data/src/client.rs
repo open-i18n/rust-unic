@@ -8,27 +8,20 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+
 use std::error::Error;
-use std::fs::{self, File};
+use std::fs::File;
 use std::io::Write;
-use std::path::PathBuf;
 
 use futures::{Future, Stream};
 use futures::future::join_all;
 use hyper::{Client, Uri};
 use tokio_core::reactor::Core;
 
-/// A mapping between a server resource and a local location.
-#[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
-pub struct DownloadPath {
-    /// A `http://` string indicating the location of the resource
-    pub url: String,
+use config::DownloadMap;
 
-    /// The path to the location where the file should be saved
-    pub dest: PathBuf,
-}
 
-/// Concurrently download all files as indicated by the iterator of `DownloadPath`s.
+/// Concurrently download all files as indicated by `DownloadMap`s.
 ///
 /// Returns once all jobs are finished.
 ///
@@ -39,23 +32,16 @@ pub struct DownloadPath {
 /// # Errors
 ///
 /// If a error occurs while downloading or writing the files
-#[cfg_attr(rustfmt, rustfmt_skip)]
-// rustfmt takes unbearably long for this fn on my machine
-pub fn download_all<I>(paths: I) -> Result<(), Box<Error>>
-where
-    I: Iterator<Item = DownloadPath>,
-{
+pub fn download_all(download_paths: &[DownloadMap]) -> Result<(), Box<Error>> {
     let mut core = Core::new()?;
     let client = Client::new(&core.handle());
 
-    let jobs = paths.map(move |path| {
+    let jobs = download_paths.iter().map(move |path| {
         path.url
             .parse::<Uri>()
             .map(|uri| {
                 client.get(uri).and_then(move |res| {
-                    fs::create_dir_all(path.dest.parent().unwrap())
-                        .expect("Failed to create directory");
-                    File::create(path.dest)
+                    File::create(&path.dest)
                         .map(move |mut file| {
                             res.body()
                                 .for_each(move |chunk| file.write_all(&chunk).map_err(From::from))
