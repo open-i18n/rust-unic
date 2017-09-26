@@ -45,10 +45,10 @@ fn main() {
         (@arg components: ...  {validate_component_name} "Components to generate tables for")
     ).get_matches();
 
-    let components: Vec<_> = match matches.values_of("components") {
-        Some(s) => s.collect(),
-        None => vec![],
-    };
+    let components: Vec<_> = matches
+        .values_of("components")
+        .unwrap_or_default()
+        .collect();
 
     if components.is_empty() || components.contains(&"ucd") {
         writer::ucd::generate();

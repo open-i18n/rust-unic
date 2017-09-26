@@ -52,18 +52,19 @@ pub fn get_download_maps(sources: &Vec<&str>) -> Vec<DownloadMap> {
     let config: Config = toml::from_str(CONFIG_TOML).expect("Failed to parse sources.toml file");
 
     for (source, info) in config {
-        if !sources.is_empty() && !sources.contains(&source.as_str()) {
-            continue;
-        }
-        for (name, url_path) in &info.resources {
-            let dest: PathBuf = ["data", &source, &name].iter().collect();
-            let url = format!("{}{}", info.base_url, url_path).replace("{version}", &info.version);
-            maps.push(DownloadMap { url, dest });
-        }
-        for (name, url_path) in &info.test_resources {
-            let dest: PathBuf = ["data", &source, "test", &name].iter().collect();
-            let url = format!("{}{}", info.base_url, url_path).replace("{version}", &info.version);
-            maps.push(DownloadMap { url, dest });
+        if sources.is_empty() || sources.contains(&source.as_str()) {
+            for (name, url_path) in &info.resources {
+                let dest: PathBuf = ["data", &source, &name].iter().collect();
+                let url =
+                    format!("{}{}", info.base_url, url_path).replace("{version}", &info.version);
+                maps.push(DownloadMap { url, dest });
+            }
+            for (name, url_path) in &info.test_resources {
+                let dest: PathBuf = ["data", &source, "test", &name].iter().collect();
+                let url =
+                    format!("{}{}", info.base_url, url_path).replace("{version}", &info.version);
+                maps.push(DownloadMap { url, dest });
+            }
         }
     }
 
