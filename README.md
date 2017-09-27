@@ -88,10 +88,10 @@ this crate.
 -   [`unic::ucd`](unic/ucd): Unicode Character Database.
     [![Crates.io](https://img.shields.io/crates/v/unic-ucd.svg)](https://crates.io/crates/unic-ucd/)
 
--   [`unic::bidi`](unic/bidi): Unicode Bidirectional Algorithm (USA\#9).
+-   [`unic::bidi`](unic/bidi): Unicode Bidirectional Algorithm (UAX\#9).
     [![Crates.io](https://img.shields.io/crates/v/unic-bidi.svg)](https://crates.io/crates/unic-bidi/)
 
--   [`unic::normal`](unic/normal): Unicode Normalization Forms (USA\#15).
+-   [`unic::normal`](unic/normal): Unicode Normalization Forms (UAX\#15).
     [![Crates.io](https://img.shields.io/crates/v/unic-normal.svg)](https://crates.io/crates/unic-normal/)
 
 -   [`unic::idna`](unic/idna): Unicode IDNA Compatibility Processing
