@@ -64,8 +64,8 @@ fn test_from_bidi_class() {
             // <http://www.unicode.org/reports/tr9/#ET>
             BC::EuropeanTerminator => {
                 assert!(
-                    GC::of(cp).is_symbol() ||
-                        matches!(GC::of(cp), GC::Unassigned | GC::OtherPunctuation)
+                    GC::of(cp).is_symbol()
+                        || matches!(GC::of(cp), GC::Unassigned | GC::OtherPunctuation)
                 );
             }
 
@@ -121,11 +121,11 @@ fn test_from_bidi_class() {
             BC::OtherNeutral => {
                 assert!(!matches!(
                     GC::of(cp),
-                    GC::UppercaseLetter | GC::LowercaseLetter | GC::TitlecaseLetter |
-                        GC::OtherLetter | GC::NonspacingMark | GC::SpacingMark |
-                        GC::EnclosingMark | GC::DecimalNumber |
-                        GC::SpaceSeparator | GC::LineSeparator |
-                        GC::ParagraphSeparator
+                    GC::UppercaseLetter | GC::LowercaseLetter | GC::TitlecaseLetter
+                        | GC::OtherLetter | GC::NonspacingMark | GC::SpacingMark
+                        | GC::EnclosingMark | GC::DecimalNumber
+                        | GC::SpaceSeparator | GC::LineSeparator
+                        | GC::ParagraphSeparator
                 ));
             }
 
