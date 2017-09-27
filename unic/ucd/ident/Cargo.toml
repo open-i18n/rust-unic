@@ -1,0 +1,32 @@
+[package]
+name = "unic-ucd-ident"
+version = "0.6.0"
+authors = ["The UNIC Project Developers"]
+repository = "https://github.com/behnam/rust-unic/"
+license = "MIT/Apache-2.0"
+description = "UNIC - Unicode Character Database - Identifier Properties"
+keywords = ["text", "unicode", "character-property"]
+categories = ["text-processing", "parsing"]
+
+exclude = [
+    "tests/lexical_class_tests",
+]
+
+[features]
+default = [ "xid" ]
+pattern = []
+xid = []
+id = []
+
+[badges]
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }
+
+[dependencies]
+unic-char-property = { path = "../../char/property/", version = "0.6.0" }
+unic-char-range = { path = "../../char/range", version = "0.6.0" }
+unic-ucd-core = { path = "../core/", version = "0.6.0" }
+
+[dev-dependencies]
+unic-ucd-category = { path = "../category/", version = "0.6.0" }
+regex = "0.2"
+matches = "0.1"

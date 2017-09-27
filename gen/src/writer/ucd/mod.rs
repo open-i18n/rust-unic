@@ -16,6 +16,7 @@ mod category;
 mod core;
 mod name;
 mod normal;
+mod ident;
 
 
 use writer::utils::clean_dir;
@@ -29,4 +30,5 @@ pub fn generate() {
     core::generate(&clean_dir("unic/ucd/core/tables"));
     name::generate(&clean_dir("unic/ucd/name/tables"));
     normal::generate(&clean_dir("unic/ucd/normal/tables"));
+    ident::generate(&clean_dir("unic/ucd/ident/tables"));
 }
