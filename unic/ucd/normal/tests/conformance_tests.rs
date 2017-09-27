@@ -9,12 +9,13 @@
 // except according to those terms.
 
 
+#[macro_use]
 extern crate unic_char_range;
+
 extern crate unic_ucd_normal;
 
 
 use unic_ucd_normal::DecompositionType as DT;
-use unic_char_range::CharRange;
 use std::collections::HashSet as Set;
 use std::{char, u32};
 
@@ -35,7 +36,7 @@ struct Fail {
 fn test_decomposition_type_conformance() {
     let mut passed_num: u32 = 0;
     let mut failures: Vec<Fail> = Vec::new();
-    let mut to_consider: Set<char> = CharRange::all().iter().collect();
+    let mut to_consider: Set<char> = chars!(..).iter().collect();
 
     for (line_idx, line) in DT_TEST_DATA.lines().enumerate() {
         // Remove comments and trailing whitespace

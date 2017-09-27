@@ -22,9 +22,9 @@
 //!
 //! -   [`ucd`](/unic-ucd): Unicode Character Database.
 //!
-//! -   [`bidi`](/unic-bidi): Unicode Bidirectional Algorithm (USA\#9).
+//! -   [`bidi`](/unic-bidi): Unicode Bidirectional Algorithm (UAX\#9).
 //!
-//! -   [`normal`](/unic-normal): Unicode Normalization Forms (USA\#15).
+//! -   [`normal`](/unic-normal): Unicode Normalization Forms (UAX\#15).
 //!
 //! -   [`idna`](/unic-idna): Unicode IDNA Compatibility Processing (UTS\#46).
 //!

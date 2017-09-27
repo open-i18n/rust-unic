@@ -18,18 +18,19 @@
 #[macro_use]
 extern crate matches;
 
+#[macro_use]
 extern crate unic_char_range;
+
 extern crate unic_ucd;
 
 
 use unic_ucd::bidi::BidiClass as BC;
 use unic_ucd::category::GeneralCategory as GC;
-use unic_char_range::CharRange;
 
 
 #[test]
 fn test_from_bidi_class() {
-    for cp in CharRange::all() {
+    for cp in chars!(..) {
         match BC::of(cp) {
             // == Strong ==
 
@@ -63,8 +64,8 @@ fn test_from_bidi_class() {
             // <http://www.unicode.org/reports/tr9/#ET>
             BC::EuropeanTerminator => {
                 assert!(
-                    GC::of(cp).is_symbol() ||
-                        matches!(GC::of(cp), GC::Unassigned | GC::OtherPunctuation)
+                    GC::of(cp).is_symbol()
+                        || matches!(GC::of(cp), GC::Unassigned | GC::OtherPunctuation)
                 );
             }
 
@@ -120,11 +121,11 @@ fn test_from_bidi_class() {
             BC::OtherNeutral => {
                 assert!(!matches!(
                     GC::of(cp),
-                    GC::UppercaseLetter | GC::LowercaseLetter | GC::TitlecaseLetter |
-                        GC::OtherLetter | GC::NonspacingMark | GC::SpacingMark |
-                        GC::EnclosingMark | GC::DecimalNumber |
-                        GC::SpaceSeparator | GC::LineSeparator |
-                        GC::ParagraphSeparator
+                    GC::UppercaseLetter | GC::LowercaseLetter | GC::TitlecaseLetter
+                        | GC::OtherLetter | GC::NonspacingMark | GC::SpacingMark
+                        | GC::EnclosingMark | GC::DecimalNumber
+                        | GC::SpaceSeparator | GC::LineSeparator
+                        | GC::ParagraphSeparator
                 ));
             }
 
@@ -147,7 +148,7 @@ fn test_from_bidi_class() {
 
 #[test]
 fn test_from_general_category() {
-    for cp in CharRange::all() {
+    for cp in chars!(..) {
         if !GC::of(cp).is_mark() {
             // Every GC!=Mark must not be an NSM
             //

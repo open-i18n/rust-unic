@@ -3,8 +3,8 @@
 
 #[macro_use]
 extern crate unic_char_range;
-extern crate unic_ucd_ident;
 extern crate unic_ucd_category;
+extern crate unic_ucd_ident;
 
 #[macro_use]
 extern crate matches;
@@ -15,7 +15,7 @@ use std::collections::BTreeSet;
 
 use unic_ucd_category::GeneralCategory;
 use unic_ucd_category::GeneralCategory::*;
-use unic_ucd_ident::{is_id_start, is_id_continue};
+use unic_ucd_ident::{is_id_continue, is_id_start};
 use unic_ucd_ident::{is_pattern_syntax, is_pattern_whitespace};
 
 use regex::Regex;
@@ -30,14 +30,12 @@ fn test_id_derivation() {
               (?:..([[:xdigit:]]{4,6}))? # high
               \s+;\s+
               Other_ID_Start             # property
-             "
-        )
-            .unwrap()
+             ",
+        ).unwrap()
             .captures_iter(include_str!("../../../../data/ucd/PropList.txt"))
             .flat_map(|cap: regex::Captures| {
                 let low = char::from_u32(u32::from_str_radix(&cap[1], 16).unwrap()).unwrap();
-                let high = cap
-                    .get(2)
+                let high = cap.get(2)
                     .map(|s| u32::from_str_radix(s.as_str(), 16).unwrap())
                     .map(|u| char::from_u32(u).unwrap())
                     .unwrap_or(low);
@@ -53,14 +51,12 @@ fn test_id_derivation() {
               (?:..([[:xdigit:]]{4,6}))? # high
               \s+;\s+
               Other_ID_Continue          # property
-             "
-        )
-            .unwrap()
+             ",
+        ).unwrap()
             .captures_iter(include_str!("../../../../data/ucd/PropList.txt"))
             .flat_map(|cap: regex::Captures| {
                 let low = char::from_u32(u32::from_str_radix(&cap[1], 16).unwrap()).unwrap();
-                let high = cap
-                    .get(2)
+                let high = cap.get(2)
                     .map(|s| u32::from_str_radix(s.as_str(), 16).unwrap())
                     .map(|u| char::from_u32(u).unwrap())
                     .unwrap_or(low);
@@ -72,17 +68,16 @@ fn test_id_derivation() {
     let is_id_start_derived = |ch| {
         let class = GeneralCategory::of(ch);
         (class.is_letter() || class == LetterNumber || other_start.contains(&ch))
-            && !is_pattern_syntax(ch)
-            && !is_pattern_whitespace(ch)
+            && !is_pattern_syntax(ch) && !is_pattern_whitespace(ch)
     };
 
     let is_id_continue_derived = |ch| {
         let class = GeneralCategory::of(ch);
-        (matches!(class, NonspacingMark | SpacingMark | DecimalNumber | ConnectorPunctuation) ||
-         is_id_start_derived(ch) ||
-         other_continue.contains(&ch))
-            && !is_pattern_syntax(ch)
-            && !is_pattern_whitespace(ch)
+        (matches!(
+            class,
+            NonspacingMark | SpacingMark | DecimalNumber | ConnectorPunctuation
+        ) || is_id_start_derived(ch) || other_continue.contains(&ch))
+            && !is_pattern_syntax(ch) && !is_pattern_whitespace(ch)
     };
 
     for ch in chars!(..) {
