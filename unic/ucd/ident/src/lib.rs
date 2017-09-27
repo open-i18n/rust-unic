@@ -40,7 +40,7 @@ mod xid {
         pub struct XidStart(bool) {
             abbr => "XIDS";
             long => "XID_Start";
-            human => "NFKC Identifier Start";
+            human => "XID Start";
 
             data_table_path => "../tables/xid_start.rsv";
         }
@@ -53,7 +53,7 @@ mod xid {
         pub struct XidContinue(bool) {
             abbr => "XIDC";
             long => "XID_Continue";
-            human => "NFKC Identifier Continue";
+            human => "XID Continue";
 
             data_table_path => "../tables/xid_continue.rsv";
         }
@@ -72,7 +72,7 @@ mod id {
         pub struct IdStart(bool) {
             abbr => "IDS";
             long => "ID_Start";
-            human => "Identifier Start";
+            human => "ID Start";
 
             data_table_path => "../tables/id_start.rsv";
         }
@@ -85,7 +85,7 @@ mod id {
         pub struct IdContinue(bool) {
             abbr => "IDC";
             long => "ID_Continue";
-            human => "Identifier Continue";
+            human => "ID Continue";
 
             data_table_path => "../tables/id_continue.rsv";
         }
