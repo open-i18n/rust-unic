@@ -18,18 +18,19 @@
 #[macro_use]
 extern crate matches;
 
+#[macro_use]
 extern crate unic_char_range;
+
 extern crate unic_ucd;
 
 
 use unic_ucd::bidi::BidiClass as BC;
 use unic_ucd::category::GeneralCategory as GC;
-use unic_char_range::CharRange;
 
 
 #[test]
 fn test_from_bidi_class() {
-    for cp in CharRange::all() {
+    for cp in chars!(..) {
         match BC::of(cp) {
             // == Strong ==
 
@@ -147,7 +148,7 @@ fn test_from_bidi_class() {
 
 #[test]
 fn test_from_general_category() {
-    for cp in CharRange::all() {
+    for cp in chars!(..) {
         if !GC::of(cp).is_mark() {
             // Every GC!=Mark must not be an NSM
             //

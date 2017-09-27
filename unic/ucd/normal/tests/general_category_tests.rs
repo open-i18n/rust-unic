@@ -31,7 +31,7 @@ use self::unic_ucd_normal::is_combining_mark;
 /// implementation.
 #[test]
 fn test_local_is_mark_against_ucd_category() {
-    for cp in CharRange::all() {
+    for cp in chars!(..) {
         assert_eq!(GC::of(cp).is_mark(), is_combining_mark(cp));
     }
 }

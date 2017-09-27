@@ -9,18 +9,19 @@
 // except according to those terms.
 
 
+#[macro_use]
 extern crate unic_char_range;
+
 extern crate unic_ucd_age;
 
 
 use unic_ucd_age::{Age, UnicodeVersion, UNICODE_VERSION};
-use unic_char_range::CharRange;
 
 
 /// Character *assignement* values always have Unicode Micro (Update) Version value of zero (`0`).
 #[test]
 fn test_assigned_age_micro_value() {
-    for ch in CharRange::all() {
+    for ch in chars!(..) {
         if let Some(age) = Age::of(ch) {
             assert_eq!(age.actual().micro, 0);
         }
@@ -31,7 +32,7 @@ fn test_assigned_age_micro_value() {
 /// 0 }`, because of the massive changes for the merger of the Unicode Standard with ISO 10646.
 #[test]
 fn test_earliest_assigned_age() {
-    for ch in CharRange::all() {
+    for ch in chars!(..) {
         if let Some(age) = Age::of(ch) {
             assert!(
                 age.actual() >= UnicodeVersion {
@@ -48,7 +49,7 @@ fn test_earliest_assigned_age() {
 /// `UNICODE_VERSION`. (Only not equal when `UNICODE_VERSION` has non-zero *micro* value.)
 #[test]
 fn test_latest_assigned_age() {
-    for ch in CharRange::all() {
+    for ch in chars!(..) {
         if let Some(age) = Age::of(ch) {
             assert!(age.actual() <= UNICODE_VERSION);
         }
