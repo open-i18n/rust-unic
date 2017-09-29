@@ -9,11 +9,11 @@
 // except according to those terms.
 
 
-pub mod emoji;
-pub mod idna;
-pub mod normal;
-pub mod segment;
-pub mod ucd;
+mod segment_tests;
 
-mod common;
-mod utils;
+use writer::utils::clean_dir;
+
+
+pub fn generate() {
+    segment_tests::generate(&clean_dir("unic/segment/tests/tables"));
+}

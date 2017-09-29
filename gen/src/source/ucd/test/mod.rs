@@ -10,3 +10,5 @@
 
 
 pub mod normalization_test;
+pub mod grapheme_break_test;
+pub mod word_break_test;

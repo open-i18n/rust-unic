@@ -20,5 +20,6 @@ clap = "2.25"
 lazy_static = "0.2"
 
 # Parsing
+itertools = "0.6"
 matches = "0.1"
 regex = "0.2"

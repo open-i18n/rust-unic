@@ -21,6 +21,7 @@ extern crate lazy_static;
 #[macro_use]
 extern crate matches;
 
+extern crate itertools;
 extern crate regex;
 
 
@@ -30,7 +31,10 @@ mod writer;
 
 /// Validate component target names passed in
 fn validate_component_name(name: String) -> Result<(), String> {
-    if matches!(name.as_str(), "idna" | "ucd" | "normal" | "emoji") {
+    if matches!(
+        name.as_str(),
+        "ucd" | "normal" | "segment" | "idna" | "emoji"
+    ) {
         Ok(())
     } else {
         Err(format!("Invalid component: `{}`", name))
@@ -55,6 +59,9 @@ fn main() {
     }
     if components.is_empty() || components.contains(&"normal") {
         writer::normal::generate();
+    }
+    if components.is_empty() || components.contains(&"segment") {
+        writer::segment::generate();
     }
     if components.is_empty() || components.contains(&"idna") {
         writer::idna::generate();

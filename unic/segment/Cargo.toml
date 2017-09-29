@@ -1,0 +1,23 @@
+[package]
+name = "unic-segment"
+version = "0.6.0"
+authors = ["The UNIC Project Developers"]
+repository = "https://github.com/behnam/rust-unic/"
+license = "MIT/Apache-2.0"
+description = "UNIC - Unicode Text Segmentation Algorithms"
+keywords = ["text", "unicode", "grapheme", "word", "boundary"]
+categories = ["internationalization", "text-processing", "parsing", "rendering"]
+readme = "README.md"
+
+# No tests/benches that depends on /data/
+exclude = []
+
+[badges]
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }
+
+[dependencies]
+unic-ucd-segment = { path = "../ucd/segment/", version = "0.6.0" }
+
+[dev-dependencies]
+quickcheck = "0.4"
+unic-ucd-common = { path = "../ucd/common/", version = "0.6.0" }

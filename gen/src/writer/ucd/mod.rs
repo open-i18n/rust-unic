@@ -19,6 +19,7 @@ mod ident;
 mod name;
 mod normal;
 mod segment;
+mod segment_tests;
 
 
 use writer::utils::clean_dir;
@@ -35,4 +36,5 @@ pub fn generate() {
     name::generate(&clean_dir("unic/ucd/name/tables"));
     normal::generate(&clean_dir("unic/ucd/normal/tables"));
     segment::generate(&clean_dir("unic/ucd/segment/tables"));
+    segment_tests::generate(&clean_dir("unic/ucd/segment/tests/tables"));
 }
