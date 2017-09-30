@@ -19,4 +19,4 @@ ROOT="$DIR/.."
 
 
 cd $ROOT
-- cargo run --package=unic-data
+- cargo run --package=unic-data -- "$@"
