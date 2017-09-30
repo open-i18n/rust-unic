@@ -14,11 +14,20 @@ specs = [
 "ReadMe.txt"                    = "ReadMe.txt"
 "UnicodeData.txt"               = "UnicodeData.txt"
 
+"GraphemeBreakProperty.txt"     = "auxiliary/GraphemeBreakProperty.txt"
+"SentenceBreakProperty.txt"     = "auxiliary/SentenceBreakProperty.txt"
+"WordBreakProperty.txt"         = "auxiliary/WordBreakProperty.txt"
+
 [ucd.test_resources]
 "BidiCharacterTest.txt"         = "BidiCharacterTest.txt"
 "BidiTest.txt"                  = "BidiTest.txt"
-"DecompositionTypeTest.txt"     = "extracted/DerivedDecompositionType.txt"
 "NormalizationTest.txt"         = "NormalizationTest.txt"
+
+"DecompositionTypeTest.txt"     = "extracted/DerivedDecompositionType.txt"
+
+"GraphemeBreakTest.txt"         = "auxiliary/GraphemeBreakTest.txt"
+"SentenceBreakTest.txt"         = "auxiliary/SentenceBreakTest.txt"
+"WordBreakTest.txt"             = "auxiliary/WordBreakTest.txt"
 
 
 [idna]
