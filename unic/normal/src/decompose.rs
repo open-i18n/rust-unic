@@ -11,13 +11,14 @@
 
 
 use std::fmt::{self, Write};
+use std::collections::VecDeque;
 
 use unic_ucd_normal::{decompose_canonical, decompose_compatible, CanonicalCombiningClass};
 use unic_ucd_normal::canonical_combining_class::values as ccc;
 
 
 // Helper functions used for Unicode normalization
-fn canonical_sort(comb: &mut [(char, CanonicalCombiningClass)]) {
+fn canonical_sort(comb: &mut VecDeque<(char, CanonicalCombiningClass)>) {
     let len = comb.len();
     for i in 0..len {
         let mut swapped = false;
@@ -46,7 +47,7 @@ enum DecompositionType {
 pub struct Decompositions<I> {
     kind: DecompositionType,
     iter: I,
-    buffer: Vec<(char, CanonicalCombiningClass)>,
+    buffer: VecDeque<(char, CanonicalCombiningClass)>,
     sorted: bool,
 }
 
@@ -54,7 +55,7 @@ pub struct Decompositions<I> {
 pub fn new_canonical<I: Iterator<Item = char>>(iter: I) -> Decompositions<I> {
     Decompositions {
         iter: iter,
-        buffer: Vec::new(),
+        buffer: VecDeque::new(),
         sorted: false,
         kind: self::DecompositionType::Canonical,
     }
@@ -64,7 +65,7 @@ pub fn new_canonical<I: Iterator<Item = char>>(iter: I) -> Decompositions<I> {
 pub fn new_compatible<I: Iterator<Item = char>>(iter: I) -> Decompositions<I> {
     Decompositions {
         iter: iter,
-        buffer: Vec::new(),
+        buffer: VecDeque::new(),
         sorted: false,
         kind: self::DecompositionType::Compatible,
     }
@@ -77,14 +78,14 @@ impl<I: Iterator<Item = char>> Iterator for Decompositions<I> {
     fn next(&mut self) -> Option<char> {
         use self::DecompositionType::*;
 
-        match self.buffer.first() {
+        match self.buffer.front() {
             Some(&(c, ccc::NotReordered)) => {
                 self.sorted = false;
-                self.buffer.remove(0);
+                self.buffer.pop_front();
                 return Some(c);
             }
             Some(&(c, _)) if self.sorted => {
-                self.buffer.remove(0);
+                self.buffer.pop_front();
                 return Some(c);
             }
             _ => self.sorted = false,
@@ -101,7 +102,7 @@ impl<I: Iterator<Item = char>> Iterator for Decompositions<I> {
                             canonical_sort(buffer);
                             *sorted = true;
                         }
-                        buffer.push((d, ccc));
+                        buffer.push_back((d, ccc));
                     };
                     match self.kind {
                         Canonical => decompose_canonical(ch, callback),
@@ -122,12 +123,13 @@ impl<I: Iterator<Item = char>> Iterator for Decompositions<I> {
         if self.buffer.is_empty() {
             None
         } else {
-            match self.buffer.remove(0) {
-                (c, ccc::NotReordered) => {
+            match self.buffer.pop_front() {
+                Some((c, ccc::NotReordered)) => {
                     self.sorted = false;
                     Some(c)
                 }
-                (c, _) => Some(c),
+                Some((c, _)) => Some(c),
+                None => unreachable!(),
             }
         }
     }
