@@ -251,7 +251,7 @@ macro_rules! char_property {
         }
 
         impl $crate::BinaryCharProperty for $prop_name {
-            fn bool(&self) -> bool { self.as_bool() }
+            fn as_bool(&self) -> bool { self.as_bool() }
         }
 
         impl From<$prop_name> for bool {
