@@ -14,9 +14,10 @@ mod bidi;
 mod case;
 mod category;
 mod core;
+mod ident;
 mod name;
 mod normal;
-mod ident;
+mod segment;
 
 
 use writer::utils::clean_dir;
@@ -31,4 +32,5 @@ pub fn generate() {
     name::generate(&clean_dir("unic/ucd/name/tables"));
     normal::generate(&clean_dir("unic/ucd/normal/tables"));
     ident::generate(&clean_dir("unic/ucd/ident/tables"));
+    segment::generate(&clean_dir("unic/ucd/segment/tables"));
 }

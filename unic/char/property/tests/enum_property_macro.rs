@@ -22,30 +22,30 @@ char_property! {
         long => "My_Prop";
         human => "My Property";
 
-        /// Required
-        Variant1 {
+        /// Variants can have multi-line documentations,
+        /// and/or other attributes.
+        | Variant1 {
             abbr => V1,
             long => Variant_1,
             human => "Variant 1",
         }
 
-        /// Required
-        Variant2 {
+        /// One line works too, or...
+        | Variant2 {
             abbr => V2,
             long => Variant_2,
             human => "Variant 2",
         }
 
-        /// Required
-        Variant3 {
+        | Variant3 {
             abbr => V3,
             long => Variant_3,
             human => "Variant 3",
         }
     }
 
-    pub mod abbr for abbr;
-    pub mod long for long;
+    pub mod abbr_names for abbr;
+    pub mod long_names for long;
 }
 
 
@@ -60,13 +60,13 @@ impl PartialCharProperty for MyProp {
 fn test_basic_macro_use() {
     use unic_char_property::EnumeratedCharProperty;
 
-    assert_eq!(MyProp::Variant1, abbr::V1);
-    assert_eq!(MyProp::Variant2, abbr::V2);
-    assert_eq!(MyProp::Variant3, abbr::V3);
+    assert_eq!(MyProp::Variant1, abbr_names::V1);
+    assert_eq!(MyProp::Variant2, abbr_names::V2);
+    assert_eq!(MyProp::Variant3, abbr_names::V3);
 
-    assert_eq!(MyProp::Variant1, long::Variant_1);
-    assert_eq!(MyProp::Variant2, long::Variant_2);
-    assert_eq!(MyProp::Variant3, long::Variant_3);
+    assert_eq!(MyProp::Variant1, long_names::Variant_1);
+    assert_eq!(MyProp::Variant2, long_names::Variant_2);
+    assert_eq!(MyProp::Variant3, long_names::Variant_3);
 
     assert_eq!(MyProp::Variant1.abbr_name(), "V1");
     assert_eq!(MyProp::Variant2.abbr_name(), "V2");
@@ -83,7 +83,7 @@ fn test_basic_macro_use() {
 
 #[test]
 fn test_fromstr_ignores_case() {
-    use abbr::V1;
+    use abbr_names::V1;
 
     assert_eq!("variant_1".parse(), Ok(V1));
     assert_eq!("VaRiAnT_1".parse(), Ok(V1));

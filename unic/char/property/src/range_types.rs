@@ -50,11 +50,11 @@ pub trait EnumeratedCharProperty: Sized + CharProperty {
 /// Examples: *Alphabetic*, *Bidi_Mirrored*, *White_Space*
 pub trait BinaryCharProperty: CharProperty {
     /// The boolean value of the property value.
-    fn bool(&self) -> bool;
+    fn as_bool(&self) -> bool;
 
     /// The *abbreviated name* of the property value.
     fn abbr_name(&self) -> &'static str {
-        if self.bool() {
+        if self.as_bool() {
             "Y"
         } else {
             "N"
@@ -63,7 +63,7 @@ pub trait BinaryCharProperty: CharProperty {
 
     /// The *long name* of the property value.
     fn long_name(&self) -> &'static str {
-        if self.bool() {
+        if self.as_bool() {
             "Yes"
         } else {
             "No"
@@ -72,7 +72,7 @@ pub trait BinaryCharProperty: CharProperty {
 
     /// The *human-readable name* of the property value.
     fn human_name(&self) -> &'static str {
-        if self.bool() {
+        if self.as_bool() {
             "Yes"
         } else {
             "No"
