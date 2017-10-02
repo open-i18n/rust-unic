@@ -10,18 +10,13 @@
 # option. This file may not be copied, modified, or distributed
 # except according to those terms.
 
-# Since `cargo publish --all` does not exist yet, we use this dumb alternative
-# solution for now.
-#
-# Main downside of this approch is that there are separate `target/`
-# directories used for each component, increasing the test and publish process
-# time.
+set -e
 
-set -ev
 
-# Rust
-cargo fmt --all
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ROOT="$DIR/.."
+. "$DIR/common.sh"
 
-# Python
-# this goes second, since not everyone has autopep8 installed
-autopep8 --in-place tools/*.py tools/*/*.py
+
+cd $ROOT
+- cargo fmt --all
