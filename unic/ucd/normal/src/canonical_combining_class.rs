@@ -127,18 +127,11 @@ impl CanonicalCombiningClass {
     pub fn of(ch: char) -> CanonicalCombiningClass {
         data::CANONICAL_COMBINING_CLASS_VALUES.find_or_default(ch)
     }
-
-    /// Human-readable description of the property value.
-    // TODO: Needs to be improved by returning long-name with underscores replaced by space.
-    #[inline]
-    pub fn display(&self) -> String {
-        format!("{}", self.number())
-    }
 }
 
 impl fmt::Display for CanonicalCombiningClass {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.display())
+        write!(f, "{}", self.number())
     }
 }
 

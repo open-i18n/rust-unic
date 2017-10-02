@@ -39,18 +39,9 @@ pub struct UnicodeVersion {
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");
 
 
-impl UnicodeVersion {
-    /// Human-readable description of the Age property value.
-    #[inline]
-    pub fn display(&self) -> String {
-        format!("{}.{}.{}", self.major, self.minor, self.micro)
-    }
-}
-
-
 impl fmt::Display for UnicodeVersion {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.display())
+        write!(f, "{}.{}.{}", self.major, self.minor, self.micro)
     }
 }
 

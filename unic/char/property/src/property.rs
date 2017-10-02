@@ -12,12 +12,12 @@
 //! Taxonomy and contracts for Character Property types.
 
 
-use std::fmt::{Debug, Display};
+use std::fmt::Debug;
 use std::hash::Hash;
 
 
 /// A Character Property, defined for some or all Unicode characters.
-pub trait CharProperty: PartialCharProperty + Debug + Display + Eq + Hash {
+pub trait CharProperty: PartialCharProperty + Debug + Eq + Hash {
     /// The *abbreviated name* of the property.
     fn prop_abbr_name() -> &'static str;
 

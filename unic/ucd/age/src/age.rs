@@ -9,7 +9,6 @@
 // except according to those terms.
 
 
-use std::fmt;
 use std::cmp;
 
 pub use unic_ucd_core::UnicodeVersion;
@@ -89,13 +88,6 @@ impl Age {
     pub fn actual(&self) -> UnicodeVersion {
         self.0
     }
-
-    /// Human-readable description of the Age property value.
-    #[inline]
-    // TODO: Review return type
-    pub fn human(&self) -> String {
-        format!("Assigned in Unicode {}", self.0).to_owned()
-    }
 }
 
 
@@ -106,13 +98,6 @@ impl cmp::PartialOrd for Age {
             cmp::Ordering::Less => Some(cmp::Ordering::Greater),
             cmp::Ordering::Equal => Some(cmp::Ordering::Equal),
         }
-    }
-}
-
-
-impl fmt::Display for Age {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.human())
     }
 }
 
@@ -674,21 +659,6 @@ mod tests {
                 minor: 0,
                 micro: 0,
             }))
-        );
-    }
-
-    #[test]
-    fn test_display() {
-        assert_eq!(
-            format!(
-                "{}",
-                Age(UnicodeVersion {
-                    major: 1,
-                    minor: 2,
-                    micro: 3,
-                })
-            ),
-            "Assigned in Unicode 1.2.3"
         );
     }
 }
