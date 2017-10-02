@@ -39,7 +39,7 @@ char_property! {
         /// ```text
         /// U+000D CARRIAGE RETURN (CR)
         /// ```
-        CR {
+        | CR {
             abbr => CR,
             long => CR,
             human => "Carriage Return",
@@ -48,7 +48,7 @@ char_property! {
         /// ```text
         /// U+000A LINE FEED (LF)
         /// ```
-        LF {
+        | LF {
             abbr => LF,
             long => LF,
             human => "Line Feed",
@@ -59,7 +59,7 @@ char_property! {
         /// U+200D ZERO WIDTH JOINER (ZWJ), or
         /// General_Category = Spacing_Mark
         /// ```
-        Extend {
+        | Extend {
             abbr => Extend,
             long => Extend,
             human => "Extend",
@@ -70,7 +70,7 @@ char_property! {
         /// U+2028 LINE SEPARATOR
         /// U+2029 PARAGRAPH SEPARATOR
         /// ```
-        Sep {
+        | Sep {
             abbr => SE,
             long => Sep,
             human => "Separator",
@@ -81,7 +81,7 @@ char_property! {
         /// and not U+200C ZERO WIDTH NON-JOINER (ZWNJ)
         /// and not U+200D ZERO WIDTH JOINER (ZWJ)
         /// ```
-        Format {
+        | Format {
             abbr => FO,
             long => Format,
             human => "Format",
@@ -93,7 +93,7 @@ char_property! {
         /// and Sentence_Break ≠ CR
         /// and Sentence_Break ≠ LF
         /// ```
-        Sp {
+        | Sp {
             abbr => SP,
             long => Sp,
             human => "Space",
@@ -103,7 +103,7 @@ char_property! {
         /// Lowercase = Yes
         /// and Grapheme_Extend = No
         /// ```
-        Lower {
+        | Lower {
             abbr => LO,
             long => Lower,
             human => "Lowercase",
@@ -113,7 +113,7 @@ char_property! {
         /// General_Category = Titlecase_Letter, or
         /// Uppercase = Yes
         /// ```
-        Upper {
+        | Upper {
             abbr => UP,
             long => Upper,
             human => "Uppercase",
@@ -127,7 +127,7 @@ char_property! {
         /// and Upper = No
         /// and Sentence_Break ≠ Extend
         /// ```
-        OLetter {
+        | OLetter {
             abbr => LE,
             long => OLetter,
             human => "Other Letter",
@@ -136,7 +136,7 @@ char_property! {
         /// ```text
         /// Line_Break = Numeric
         /// ```
-        Numeric {
+        | Numeric {
             abbr => NU,
             long => Numeric,
             human => "Numeric",
@@ -148,7 +148,7 @@ char_property! {
         /// U+FE52 ( ﹒ ) SMALL FULL STOP
         /// U+FF0E ( ． ) FULLWIDTH FULL STOP
         /// ```
-        ATerm {
+        | ATerm {
             abbr => AT,
             long => ATerm,
             human => "ATerm",
@@ -182,7 +182,7 @@ char_property! {
         /// U+FF1A ( ： ) FULLWIDTH COLON
         /// U+FF64 ( ､ ) HALFWIDTH IDEOGRAPHIC COMMA
         /// ```
-        SContinue {
+        | SContinue {
             abbr => SC,
             long => SContinue,
             human => "Sentence Continue",
@@ -191,7 +191,7 @@ char_property! {
         /// ```text
         /// Sentence_Terminal = Yes
         /// ```
-        STerm {
+        | STerm {
             abbr => ST,
             long => STerm,
             human => "Sentence Terminal",
@@ -205,7 +205,7 @@ char_property! {
         /// and ATerm = No
         /// and STerm = No
         /// ```
-        Close {
+        | Close {
             abbr => CL,
             long => Close,
             human => "Close",

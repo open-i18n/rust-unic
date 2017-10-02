@@ -26,7 +26,7 @@
 ///         human => "Human-Readable Property Name";
 ///
 ///         /// Exactly one attribute
-///         RustName {
+///         | RustName {
 ///             abbr => AbbrName,
 ///             long => Long_Name,
 ///             human => "&'static str that is a nicer presentation of the name",
@@ -110,7 +110,7 @@ macro_rules! char_property {
 
             $(
                 $(#[$variant_meta:meta])+
-                $variant:ident {
+                | $variant:ident {
                     abbr => $abbr:ident,
                     long => $long:ident,
                     human => $human:expr,

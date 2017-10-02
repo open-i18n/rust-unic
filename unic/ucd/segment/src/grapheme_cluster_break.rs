@@ -39,7 +39,7 @@ char_property! {
         /// ```text
         /// U+000D CARRIAGE RETURN (CR)
         /// ```
-        CR {
+        | CR {
             abbr => CR,
             long => CR,
             human => "Carriage Return",
@@ -48,7 +48,7 @@ char_property! {
         /// ```text
         /// U+000A LINE FEED (LF)
         /// ```
-        LF {
+        | LF {
             abbr => LF,
             long => LF,
             human => "Line Feed",
@@ -66,7 +66,7 @@ char_property! {
         /// and not U+200C ZERO WIDTH NON-JOINER (ZWNJ)
         /// and not U+200D ZERO WIDTH JOINER (ZWJ)
         /// ```
-        Control {
+        | Control {
             abbr => CN,
             long => Control,
             human => "Control",
@@ -81,7 +81,7 @@ char_property! {
         /// U+200C ZERO WIDTH NON-JOINER
         /// plus a few General_Category = Spacing_Mark needed for canonical equivalence.
         /// ```
-        Extend {
+        | Extend {
             abbr => EX,
             long => Extend,
             human => "Extend",
@@ -90,7 +90,7 @@ char_property! {
         /// ```text
         /// U+200D ZERO WIDTH JOINER
         /// ```
-        ZWJ {
+        | ZWJ {
             abbr => ZWJ,
             long => ZWJ,
             human => "Zero Width Joiner (ZWJ)",
@@ -105,7 +105,7 @@ char_property! {
         /// U+1F1E6 REGIONAL INDICATOR SYMBOL LETTER A
         /// ..U+1F1FF REGIONAL INDICATOR SYMBOL LETTER Z
         /// ```
-        RegionalIndicator {
+        | RegionalIndicator {
             abbr => RI,
             long => Regional_Indicator,
             human => "Regional Indicator",
@@ -116,7 +116,7 @@ char_property! {
         /// Indic_Syllabic_Category = Consonant_Prefixed, or
         /// Prepended_Concatenation_Mark = Yes
         /// ```
-        Prepend {
+        | Prepend {
             abbr => PP,
             long => Prepend,
             human => "Prepend",
@@ -155,7 +155,7 @@ char_property! {
         /// U+11720 ( 𑜠 ) AHOM VOWEL SIGN A
         /// U+11721 ( 𑜡 ) AHOM VOWEL SIGN AA
         /// ```
-        SpacingMark {
+        | SpacingMark {
             abbr => SM,
             long => SpacingMark,
             human => "Spacing Mark",
@@ -175,7 +175,7 @@ char_property! {
         /// U+A960 ( ꥠ ) HANGUL CHOSEONG TIKEUT-MIEUM
         /// U+A97C ( ꥼ ) HANGUL CHOSEONG SSANGYEORINHIEUH
         /// ```
-        L {
+        | L {
             abbr => L,
             long => L,
             human => "Hangul Syllable Type L",
@@ -193,7 +193,7 @@ char_property! {
         /// U+D7B0 ( ힰ ) HANGUL JUNGSEONG O-YEO
         /// U+D7C6 ( ퟆ ) HANGUL JUNGSEONG ARAEA-E
         /// ```
-        V {
+        | V {
             abbr => V,
             long => V,
             human => "Hangul Syllable Type V",
@@ -211,7 +211,7 @@ char_property! {
         /// U+D7CB ( ퟋ ) HANGUL JONGSEONG NIEUN-RIEUL
         /// U+D7FB ( ퟻ ) HANGUL JONGSEONG PHIEUPH-THIEUTH
         /// ```
-        T {
+        | T {
             abbr => T,
             long => T,
             human => "Hangul Syllable Type T",
@@ -229,7 +229,7 @@ char_property! {
         /// U+AC38 ( 갸 ) HANGUL SYLLABLE GYA
         /// ...
         /// ```
-        LV {
+        | LV {
             abbr => LV,
             long => LV,
             human => "Hangul Syllable Type LV",
@@ -248,7 +248,7 @@ char_property! {
         /// U+AC04 ( 간 ) HANGUL SYLLABLE GAN
         /// ...
         /// ```
-        LVT {
+        | LVT {
             abbr => LVT,
             long => LVT,
             human => "Hangul Syllable Type LVT",
@@ -260,7 +260,7 @@ char_property! {
         /// occur after ZWJ in `emoji-zwj-sequences.txt`.
         ///
         /// See <http://www.unicode.org/reports/tr51/>.
-        EBase {
+        | EBase {
             abbr => EB,
             long => E_Base,
             human => "Emoji Base",
@@ -269,7 +269,7 @@ char_property! {
         /// Emoji characters listed as `Emoji_Modifer=Yes` in `emoji-data.txt`.
         ///
         /// See <http://www.unicode.org/reports/tr51/>.
-        EModifier {
+        | EModifier {
             abbr => EM,
             long => E_Modifier,
             human => "Emoji Modifier",
@@ -279,7 +279,7 @@ char_property! {
         /// and are not listed as `Emoji_Modifier_Base=Yes` in `emoji-data.txt`.
         ///
         /// See <http://www.unicode.org/reports/tr51/>.
-        GlueAfterZwj {
+        | GlueAfterZwj {
             abbr => GAZ,
             long => Glue_After_Zwj,
             human => "Glue After ZWJ",
@@ -289,7 +289,7 @@ char_property! {
         /// after ZWJ in `emoji-zwj-sequences.txt`.
         ///
         /// See <http://www.unicode.org/reports/tr51/>.
-        EBaseGAZ {
+        | EBaseGAZ {
             abbr => EBG,
             long => E_Base_GAZ,
             human => "Emoji Base and Glue After ZWJ",

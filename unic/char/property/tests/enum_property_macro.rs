@@ -23,21 +23,21 @@ char_property! {
         human => "My Property";
 
         /// Required
-        Variant1 {
+        | Variant1 {
             abbr => V1,
             long => Variant_1,
             human => "Variant 1",
         }
 
         /// Required
-        Variant2 {
+        | Variant2 {
             abbr => V2,
             long => Variant_2,
             human => "Variant 2",
         }
 
         /// Required
-        Variant3 {
+        | Variant3 {
             abbr => V3,
             long => Variant_3,
             human => "Variant 3",
