@@ -25,7 +25,7 @@
 ///         long => "Long_Property_Name";
 ///         human => "Human-Readable Property Name";
 ///
-///         /// Exactly one attribute
+///         /// Zero or more documentation or other attributes.
 ///         | RustName {
 ///             abbr => AbbrName,
 ///             long => Long_Name,
@@ -86,16 +86,10 @@
 /// - Maintains all documentation comments and other `#[attributes]` as would be expected
 ///   (with some limitations, listed below)
 ///
-/// # Limitations
-///
-/// Due to [rust-lang/rust#24189](https://github.com/rust-lang/rust/issues/24189), (fixed in
-/// [rust-lang/rust#42913](https://github.com/rust-lang/rust/pull/42913), landing in 1.20),
-/// exactly one attribute line must be used on each variant.
-///
-/// On 1.20 or higher, one or more may be used, and the restriction can be relaxed back to
-/// the intended zero or more by replacing `$(#[$variant_meta:meta])+` with
-/// `$(#[$variant_meta:meta])*` and `$(#[$variant_meta])+` with `$(#[$variant_meta])*`.
-// TODO: Once adopting 1.20, fix the macro to work with zero attributes on variants (see above).
+// TODO: Due to [rust-lang/rust#24189](https://github.com/rust-lang/rust/issues/24189), (fixed in
+// [rust-lang/rust#42913](https://github.com/rust-lang/rust/pull/42913), landing in 1.20), we have
+// to use a delimiter token (`|`) between `meta*` and `ident` tokens. We can make this token
+// optional when we bump min version to 1.20.
 #[macro_export]
 macro_rules! char_property {
 
@@ -109,7 +103,7 @@ macro_rules! char_property {
             human => $prop_human:expr;
 
             $(
-                $(#[$variant_meta:meta])+
+                $(#[$variant_meta:meta])*
                 | $variant_name:ident {
                     abbr => $variant_abbr:ident,
                     long => $variant_long:ident,
@@ -129,7 +123,7 @@ macro_rules! char_property {
         #[allow(bad_style)]
         #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
         pub enum $prop_name {
-            $( $(#[$variant_meta])+ $variant_name, )*
+            $( $(#[$variant_meta])* $variant_name, )*
         }
 
         $(#[$abbr_mod_meta])*
@@ -166,7 +160,7 @@ macro_rules! char_property {
         impl $crate::EnumeratedCharProperty for $prop_name {
             fn all_values() -> &'static [$prop_name] {
                 const VALUES: &[$prop_name] = &[
-                    $( $prop_name::$variant_name, )+
+                    $( $prop_name::$variant_name, )*
                 ];
                 VALUES
             }
