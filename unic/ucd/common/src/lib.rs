@@ -29,11 +29,18 @@ extern crate unic_ucd_core;
 
 pub mod alphabetic;
 pub mod alphanumeric;
+pub mod control;
 pub mod numeric;
+pub mod white_space;
 
 
+// UCD-defined: types and methods
 pub use alphabetic::{is_alphabetic, Alphabetic};
+pub use white_space::{is_white_space, WhiteSpace};
+
+// Non-UCD-defined: methods only
 pub use alphanumeric::is_alphanumeric;
+pub use control::is_control;
 pub use numeric::is_numeric;
 
 

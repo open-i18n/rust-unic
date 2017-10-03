@@ -13,6 +13,7 @@ use std::path::Path;
 use std::collections::BTreeSet;
 
 use source::ucd::derived_core_properties::DERIVED_CORE_PROPERTIES;
+use source::ucd::prop_list::PROP_LIST;
 use source::ucd::readme::UNICODE_VERSION;
 use source::ucd::unicode_data::UNICODE_DATA;
 
@@ -24,8 +25,10 @@ use writer::utils::write;
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
     emit_alphabetic(dir);
-    emit_numeric(dir);
+    emit_white_space(dir);
     emit_alphanumeric(dir);
+    emit_control(dir);
+    emit_numeric(dir);
 }
 
 
@@ -37,8 +40,12 @@ fn emit_alphabetic(dir: &Path) {
     );
 }
 
-fn emit_numeric(dir: &Path) {
-    write(dir, "numeric.rsv", &get_numeric().to_range_char_set());
+fn emit_white_space(dir: &Path) {
+    write(
+        dir,
+        "white_space.rsv",
+        &PROP_LIST.white_space.to_range_char_set(),
+    );
 }
 
 fn emit_alphanumeric(dir: &Path) {
@@ -47,6 +54,20 @@ fn emit_alphanumeric(dir: &Path) {
         "alphanumeric.rsv",
         &get_alphanumeric().to_range_char_set(),
     );
+}
+
+fn emit_control(dir: &Path) {
+    let set: BTreeSet<char> = UNICODE_DATA
+        .entries
+        .iter()
+        .filter(|x| x.general_category == "Cc")
+        .map(|x| x.character)
+        .collect();
+    write(dir, "control.rsv", &set.to_range_char_set());
+}
+
+fn emit_numeric(dir: &Path) {
+    write(dir, "numeric.rsv", &get_numeric().to_range_char_set());
 }
 
 
