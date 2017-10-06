@@ -18,7 +18,7 @@
 //! * <http://www.unicode.org/reports/tr29/#Table_Word_Break_Property_Values>
 
 
-use unic_char_property::PartialCharProperty;
+use unic_char_property::TotalCharProperty;
 
 
 char_property! {
@@ -187,7 +187,7 @@ char_property! {
         /// ```text
         /// U+0022 ( " ) QUOTATION MARK
         /// ```
-        | DQ {
+        | DoubleQuote {
             abbr => DQ,
             long => Double_Quote,
             human => "Double Quote",
@@ -303,6 +303,12 @@ char_property! {
             human => "Emoji Base and Glue After ZWJ",
         }
 
+        /// All other characters
+        | Other {
+            abbr => XX,
+            long => Other,
+            human => "Other",
+        }
     }
 
     /// Abbreviated name aliases for the
@@ -325,9 +331,16 @@ char_property! {
 }
 
 
-impl PartialCharProperty for WordBreak {
-    fn of(ch: char) -> Option<Self> {
+impl TotalCharProperty for WordBreak {
+    fn of(ch: char) -> Self {
         Self::of(ch)
+    }
+}
+
+
+impl Default for WordBreak {
+    fn default() -> Self {
+        WordBreak::Other
     }
 }
 
@@ -342,8 +355,8 @@ mod data {
 
 impl WordBreak {
     /// Find the character *Word_Break* property value.
-    pub fn of(ch: char) -> Option<WordBreak> {
-        data::WORD_BREAK_TABLE.find(ch)
+    pub fn of(ch: char) -> WordBreak {
+        data::WORD_BREAK_TABLE.find_or_default(ch)
     }
 }
 
@@ -356,83 +369,83 @@ mod tests {
 
     #[test]
     fn test_ascii() {
-        assert_eq!(WB::of('\u{0000}'), None);
-        assert_eq!(WB::of('\u{0040}'), None);
-        assert_eq!(WB::of('\u{0041}'), Some(WB::ALetter));
-        assert_eq!(WB::of('\u{0062}'), Some(WB::ALetter));
-        assert_eq!(WB::of('\u{007F}'), None);
+        assert_eq!(WB::of('\u{0000}'), WB::Other);
+        assert_eq!(WB::of('\u{0040}'), WB::Other);
+        assert_eq!(WB::of('\u{0041}'), WB::ALetter);
+        assert_eq!(WB::of('\u{0062}'), WB::ALetter);
+        assert_eq!(WB::of('\u{007F}'), WB::Other);
     }
 
     #[test]
     fn test_bmp() {
         // Hebrew
-        assert_eq!(WB::of('\u{0590}'), None);
-        assert_eq!(WB::of('\u{05D0}'), Some(WB::HebrewLetter));
-        assert_eq!(WB::of('\u{05D1}'), Some(WB::HebrewLetter));
-        assert_eq!(WB::of('\u{05FF}'), None);
+        assert_eq!(WB::of('\u{0590}'), WB::Other);
+        assert_eq!(WB::of('\u{05D0}'), WB::HebrewLetter);
+        assert_eq!(WB::of('\u{05D1}'), WB::HebrewLetter);
+        assert_eq!(WB::of('\u{05FF}'), WB::Other);
 
         // Arabic
-        assert_eq!(WB::of('\u{0600}'), Some(WB::Format));
-        assert_eq!(WB::of('\u{0627}'), Some(WB::ALetter));
-        assert_eq!(WB::of('\u{07BF}'), None);
+        assert_eq!(WB::of('\u{0600}'), WB::Format);
+        assert_eq!(WB::of('\u{0627}'), WB::ALetter);
+        assert_eq!(WB::of('\u{07BF}'), WB::Other);
 
         // Default R + Arabic Extras
-        assert_eq!(WB::of('\u{07C0}'), Some(WB::Numeric));
-        assert_eq!(WB::of('\u{085F}'), None);
-        assert_eq!(WB::of('\u{0860}'), Some(WB::ALetter));
-        assert_eq!(WB::of('\u{0870}'), None);
-        assert_eq!(WB::of('\u{089F}'), None);
-        assert_eq!(WB::of('\u{08A0}'), Some(WB::ALetter));
-        assert_eq!(WB::of('\u{089F}'), None);
-        assert_eq!(WB::of('\u{08FF}'), Some(WB::Extend));
+        assert_eq!(WB::of('\u{07C0}'), WB::Numeric);
+        assert_eq!(WB::of('\u{085F}'), WB::Other);
+        assert_eq!(WB::of('\u{0860}'), WB::ALetter);
+        assert_eq!(WB::of('\u{0870}'), WB::Other);
+        assert_eq!(WB::of('\u{089F}'), WB::Other);
+        assert_eq!(WB::of('\u{08A0}'), WB::ALetter);
+        assert_eq!(WB::of('\u{089F}'), WB::Other);
+        assert_eq!(WB::of('\u{08FF}'), WB::Extend);
 
         // Default ET
-        assert_eq!(WB::of('\u{20A0}'), None);
-        assert_eq!(WB::of('\u{20CF}'), None);
+        assert_eq!(WB::of('\u{20A0}'), WB::Other);
+        assert_eq!(WB::of('\u{20CF}'), WB::Other);
 
         // Arabic Presentation Forms
-        assert_eq!(WB::of('\u{FB1D}'), Some(WB::HebrewLetter));
-        assert_eq!(WB::of('\u{FB4F}'), Some(WB::HebrewLetter));
-        assert_eq!(WB::of('\u{FB50}'), Some(WB::ALetter));
-        assert_eq!(WB::of('\u{FDCF}'), None);
-        assert_eq!(WB::of('\u{FDF0}'), Some(WB::ALetter));
-        assert_eq!(WB::of('\u{FDFF}'), None);
-        assert_eq!(WB::of('\u{FE70}'), Some(WB::ALetter));
-        assert_eq!(WB::of('\u{FEFE}'), None);
-        assert_eq!(WB::of('\u{FEFF}'), Some(WB::Format));
+        assert_eq!(WB::of('\u{FB1D}'), WB::HebrewLetter);
+        assert_eq!(WB::of('\u{FB4F}'), WB::HebrewLetter);
+        assert_eq!(WB::of('\u{FB50}'), WB::ALetter);
+        assert_eq!(WB::of('\u{FDCF}'), WB::Other);
+        assert_eq!(WB::of('\u{FDF0}'), WB::ALetter);
+        assert_eq!(WB::of('\u{FDFF}'), WB::Other);
+        assert_eq!(WB::of('\u{FE70}'), WB::ALetter);
+        assert_eq!(WB::of('\u{FEFE}'), WB::Other);
+        assert_eq!(WB::of('\u{FEFF}'), WB::Format);
 
         // noncharacters
-        assert_eq!(WB::of('\u{FDD0}'), None);
-        assert_eq!(WB::of('\u{FDD1}'), None);
-        assert_eq!(WB::of('\u{FDEE}'), None);
-        assert_eq!(WB::of('\u{FDEF}'), None);
-        assert_eq!(WB::of('\u{FFFE}'), None);
-        assert_eq!(WB::of('\u{FFFF}'), None);
+        assert_eq!(WB::of('\u{FDD0}'), WB::Other);
+        assert_eq!(WB::of('\u{FDD1}'), WB::Other);
+        assert_eq!(WB::of('\u{FDEE}'), WB::Other);
+        assert_eq!(WB::of('\u{FDEF}'), WB::Other);
+        assert_eq!(WB::of('\u{FFFE}'), WB::Other);
+        assert_eq!(WB::of('\u{FFFF}'), WB::Other);
     }
 
     #[test]
     fn test_smp() {
         // Default AL + R
-        assert_eq!(WB::of('\u{10800}'), Some(WB::ALetter));
-        assert_eq!(WB::of('\u{10FFF}'), None);
-        assert_eq!(WB::of('\u{1E800}'), Some(WB::ALetter));
-        assert_eq!(WB::of('\u{1EDFF}'), None);
-        assert_eq!(WB::of('\u{1EE00}'), Some(WB::ALetter));
-        assert_eq!(WB::of('\u{1EEFF}'), None);
-        assert_eq!(WB::of('\u{1EF00}'), None);
-        assert_eq!(WB::of('\u{1EFFF}'), None);
+        assert_eq!(WB::of('\u{10800}'), WB::ALetter);
+        assert_eq!(WB::of('\u{10FFF}'), WB::Other);
+        assert_eq!(WB::of('\u{1E800}'), WB::ALetter);
+        assert_eq!(WB::of('\u{1EDFF}'), WB::Other);
+        assert_eq!(WB::of('\u{1EE00}'), WB::ALetter);
+        assert_eq!(WB::of('\u{1EEFF}'), WB::Other);
+        assert_eq!(WB::of('\u{1EF00}'), WB::Other);
+        assert_eq!(WB::of('\u{1EFFF}'), WB::Other);
     }
 
     #[test]
     fn test_unassigned_planes() {
-        assert_eq!(WB::of('\u{30000}'), None);
-        assert_eq!(WB::of('\u{40000}'), None);
-        assert_eq!(WB::of('\u{50000}'), None);
-        assert_eq!(WB::of('\u{60000}'), None);
-        assert_eq!(WB::of('\u{70000}'), None);
-        assert_eq!(WB::of('\u{80000}'), None);
-        assert_eq!(WB::of('\u{90000}'), None);
-        assert_eq!(WB::of('\u{a0000}'), None);
+        assert_eq!(WB::of('\u{30000}'), WB::Other);
+        assert_eq!(WB::of('\u{40000}'), WB::Other);
+        assert_eq!(WB::of('\u{50000}'), WB::Other);
+        assert_eq!(WB::of('\u{60000}'), WB::Other);
+        assert_eq!(WB::of('\u{70000}'), WB::Other);
+        assert_eq!(WB::of('\u{80000}'), WB::Other);
+        assert_eq!(WB::of('\u{90000}'), WB::Other);
+        assert_eq!(WB::of('\u{a0000}'), WB::Other);
     }
 
     #[test]
