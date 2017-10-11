@@ -18,7 +18,7 @@
 //! * <http://www.unicode.org/reports/tr29/#Table_Sentence_Break_Property_Values>
 
 
-use unic_char_property::PartialCharProperty;
+use unic_char_property::TotalCharProperty;
 
 
 char_property! {
@@ -211,6 +211,12 @@ char_property! {
             human => "Close",
         }
 
+        /// All other characters
+        | Other {
+            abbr => XX,
+            long => Other,
+            human => "Other",
+        }
     }
 
     /// Abbreviated name aliases for the
@@ -233,9 +239,16 @@ char_property! {
 }
 
 
-impl PartialCharProperty for SentenceBreak {
-    fn of(ch: char) -> Option<Self> {
+impl TotalCharProperty for SentenceBreak {
+    fn of(ch: char) -> Self {
         Self::of(ch)
+    }
+}
+
+
+impl Default for SentenceBreak {
+    fn default() -> Self {
+        SentenceBreak::Other
     }
 }
 
@@ -250,8 +263,8 @@ mod data {
 
 impl SentenceBreak {
     /// Find the character *Sentence_Break* property value.
-    pub fn of(ch: char) -> Option<SentenceBreak> {
-        data::SENTENCE_BREAK_TABLE.find(ch)
+    pub fn of(ch: char) -> SentenceBreak {
+        data::SENTENCE_BREAK_TABLE.find_or_default(ch)
     }
 }
 
@@ -264,83 +277,83 @@ mod tests {
 
     #[test]
     fn test_ascii() {
-        assert_eq!(SB::of('\u{0000}'), None);
-        assert_eq!(SB::of('\u{0040}'), None);
-        assert_eq!(SB::of('\u{0041}'), Some(SB::Upper));
-        assert_eq!(SB::of('\u{0062}'), Some(SB::Lower));
-        assert_eq!(SB::of('\u{007F}'), None);
+        assert_eq!(SB::of('\u{0000}'), SB::Other);
+        assert_eq!(SB::of('\u{0040}'), SB::Other);
+        assert_eq!(SB::of('\u{0041}'), SB::Upper);
+        assert_eq!(SB::of('\u{0062}'), SB::Lower);
+        assert_eq!(SB::of('\u{007F}'), SB::Other);
     }
 
     #[test]
     fn test_bmp() {
         // Hebrew
-        assert_eq!(SB::of('\u{0590}'), None);
-        assert_eq!(SB::of('\u{05D0}'), Some(SB::OLetter));
-        assert_eq!(SB::of('\u{05D1}'), Some(SB::OLetter));
-        assert_eq!(SB::of('\u{05FF}'), None);
+        assert_eq!(SB::of('\u{0590}'), SB::Other);
+        assert_eq!(SB::of('\u{05D0}'), SB::OLetter);
+        assert_eq!(SB::of('\u{05D1}'), SB::OLetter);
+        assert_eq!(SB::of('\u{05FF}'), SB::Other);
 
         // Arabic
-        assert_eq!(SB::of('\u{0600}'), Some(SB::Format));
-        assert_eq!(SB::of('\u{0627}'), Some(SB::OLetter));
-        assert_eq!(SB::of('\u{07BF}'), None);
+        assert_eq!(SB::of('\u{0600}'), SB::Format);
+        assert_eq!(SB::of('\u{0627}'), SB::OLetter);
+        assert_eq!(SB::of('\u{07BF}'), SB::Other);
 
         // Default R + Arabic Extras
-        assert_eq!(SB::of('\u{07C0}'), Some(SB::Numeric));
-        assert_eq!(SB::of('\u{085F}'), None);
-        assert_eq!(SB::of('\u{0860}'), Some(SB::OLetter));
-        assert_eq!(SB::of('\u{0870}'), None);
-        assert_eq!(SB::of('\u{089F}'), None);
-        assert_eq!(SB::of('\u{08A0}'), Some(SB::OLetter));
-        assert_eq!(SB::of('\u{089F}'), None);
-        assert_eq!(SB::of('\u{08FF}'), Some(SB::Extend));
+        assert_eq!(SB::of('\u{07C0}'), SB::Numeric);
+        assert_eq!(SB::of('\u{085F}'), SB::Other);
+        assert_eq!(SB::of('\u{0860}'), SB::OLetter);
+        assert_eq!(SB::of('\u{0870}'), SB::Other);
+        assert_eq!(SB::of('\u{089F}'), SB::Other);
+        assert_eq!(SB::of('\u{08A0}'), SB::OLetter);
+        assert_eq!(SB::of('\u{089F}'), SB::Other);
+        assert_eq!(SB::of('\u{08FF}'), SB::Extend);
 
         // Default ET
-        assert_eq!(SB::of('\u{20A0}'), None);
-        assert_eq!(SB::of('\u{20CF}'), None);
+        assert_eq!(SB::of('\u{20A0}'), SB::Other);
+        assert_eq!(SB::of('\u{20CF}'), SB::Other);
 
         // Arabic Presentation Forms
-        assert_eq!(SB::of('\u{FB1D}'), Some(SB::OLetter));
-        assert_eq!(SB::of('\u{FB4F}'), Some(SB::OLetter));
-        assert_eq!(SB::of('\u{FB50}'), Some(SB::OLetter));
-        assert_eq!(SB::of('\u{FDCF}'), None);
-        assert_eq!(SB::of('\u{FDF0}'), Some(SB::OLetter));
-        assert_eq!(SB::of('\u{FDFF}'), None);
-        assert_eq!(SB::of('\u{FE70}'), Some(SB::OLetter));
-        assert_eq!(SB::of('\u{FEFE}'), None);
-        assert_eq!(SB::of('\u{FEFF}'), Some(SB::Format));
+        assert_eq!(SB::of('\u{FB1D}'), SB::OLetter);
+        assert_eq!(SB::of('\u{FB4F}'), SB::OLetter);
+        assert_eq!(SB::of('\u{FB50}'), SB::OLetter);
+        assert_eq!(SB::of('\u{FDCF}'), SB::Other);
+        assert_eq!(SB::of('\u{FDF0}'), SB::OLetter);
+        assert_eq!(SB::of('\u{FDFF}'), SB::Other);
+        assert_eq!(SB::of('\u{FE70}'), SB::OLetter);
+        assert_eq!(SB::of('\u{FEFE}'), SB::Other);
+        assert_eq!(SB::of('\u{FEFF}'), SB::Format);
 
         // noncharacters
-        assert_eq!(SB::of('\u{FDD0}'), None);
-        assert_eq!(SB::of('\u{FDD1}'), None);
-        assert_eq!(SB::of('\u{FDEE}'), None);
-        assert_eq!(SB::of('\u{FDEF}'), None);
-        assert_eq!(SB::of('\u{FFFE}'), None);
-        assert_eq!(SB::of('\u{FFFF}'), None);
+        assert_eq!(SB::of('\u{FDD0}'), SB::Other);
+        assert_eq!(SB::of('\u{FDD1}'), SB::Other);
+        assert_eq!(SB::of('\u{FDEE}'), SB::Other);
+        assert_eq!(SB::of('\u{FDEF}'), SB::Other);
+        assert_eq!(SB::of('\u{FFFE}'), SB::Other);
+        assert_eq!(SB::of('\u{FFFF}'), SB::Other);
     }
 
     #[test]
     fn test_smp() {
         // Default AL + R
-        assert_eq!(SB::of('\u{10800}'), Some(SB::OLetter));
-        assert_eq!(SB::of('\u{10FFF}'), None);
-        assert_eq!(SB::of('\u{1E800}'), Some(SB::OLetter));
-        assert_eq!(SB::of('\u{1EDFF}'), None);
-        assert_eq!(SB::of('\u{1EE00}'), Some(SB::OLetter));
-        assert_eq!(SB::of('\u{1EEFF}'), None);
-        assert_eq!(SB::of('\u{1EF00}'), None);
-        assert_eq!(SB::of('\u{1EFFF}'), None);
+        assert_eq!(SB::of('\u{10800}'), SB::OLetter);
+        assert_eq!(SB::of('\u{10FFF}'), SB::Other);
+        assert_eq!(SB::of('\u{1E800}'), SB::OLetter);
+        assert_eq!(SB::of('\u{1EDFF}'), SB::Other);
+        assert_eq!(SB::of('\u{1EE00}'), SB::OLetter);
+        assert_eq!(SB::of('\u{1EEFF}'), SB::Other);
+        assert_eq!(SB::of('\u{1EF00}'), SB::Other);
+        assert_eq!(SB::of('\u{1EFFF}'), SB::Other);
     }
 
     #[test]
     fn test_unassigned_planes() {
-        assert_eq!(SB::of('\u{30000}'), None);
-        assert_eq!(SB::of('\u{40000}'), None);
-        assert_eq!(SB::of('\u{50000}'), None);
-        assert_eq!(SB::of('\u{60000}'), None);
-        assert_eq!(SB::of('\u{70000}'), None);
-        assert_eq!(SB::of('\u{80000}'), None);
-        assert_eq!(SB::of('\u{90000}'), None);
-        assert_eq!(SB::of('\u{a0000}'), None);
+        assert_eq!(SB::of('\u{30000}'), SB::Other);
+        assert_eq!(SB::of('\u{40000}'), SB::Other);
+        assert_eq!(SB::of('\u{50000}'), SB::Other);
+        assert_eq!(SB::of('\u{60000}'), SB::Other);
+        assert_eq!(SB::of('\u{70000}'), SB::Other);
+        assert_eq!(SB::of('\u{80000}'), SB::Other);
+        assert_eq!(SB::of('\u{90000}'), SB::Other);
+        assert_eq!(SB::of('\u{a0000}'), SB::Other);
     }
 
     #[test]

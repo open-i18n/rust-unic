@@ -23,6 +23,7 @@ unic-bidi = { path = "bidi/", version = "0.6.0" }
 unic-char = { path = "char/", version = "0.6.0" }
 unic-idna = { path = "idna/", version = "0.6.0" }
 unic-normal = { path = "normal/", version = "0.6.0" }
+unic-segment = { path = "segment/", version = "0.6.0" }
 unic-ucd = { path = "ucd/", version = "0.6.0" }
 unic-utils = { path = "utils/", version = "0.6.0" }
 

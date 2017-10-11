@@ -18,7 +18,7 @@
 //! * <http://www.unicode.org/reports/tr29/#Grapheme_Cluster_Break_Property_Values>
 
 
-use unic_char_property::PartialCharProperty;
+use unic_char_property::TotalCharProperty;
 
 
 char_property! {
@@ -295,6 +295,12 @@ char_property! {
             human => "Emoji Base and Glue After ZWJ",
         }
 
+        /// All other characters
+        | Other {
+            abbr => XX,
+            long => Other,
+            human => "Other",
+        }
     }
 
     /// Abbreviated name aliases for the
@@ -317,9 +323,16 @@ char_property! {
 }
 
 
-impl PartialCharProperty for GraphemeClusterBreak {
-    fn of(ch: char) -> Option<Self> {
+impl TotalCharProperty for GraphemeClusterBreak {
+    fn of(ch: char) -> Self {
         Self::of(ch)
+    }
+}
+
+
+impl Default for GraphemeClusterBreak {
+    fn default() -> Self {
+        GraphemeClusterBreak::Other
     }
 }
 
@@ -334,8 +347,8 @@ mod data {
 
 impl GraphemeClusterBreak {
     /// Find the character *Grapheme_Cluster_Break* property value.
-    pub fn of(ch: char) -> Option<GraphemeClusterBreak> {
-        data::GRAPHEME_CLUSTER_BREAK_TABLE.find(ch)
+    pub fn of(ch: char) -> GraphemeClusterBreak {
+        data::GRAPHEME_CLUSTER_BREAK_TABLE.find_or_default(ch)
     }
 }
 
@@ -348,83 +361,83 @@ mod tests {
 
     #[test]
     fn test_ascii() {
-        assert_eq!(GCB::of('\u{0000}'), Some(GCB::Control));
-        assert_eq!(GCB::of('\u{0040}'), None);
-        assert_eq!(GCB::of('\u{0041}'), None);
-        assert_eq!(GCB::of('\u{0062}'), None);
-        assert_eq!(GCB::of('\u{007F}'), Some(GCB::Control));
+        assert_eq!(GCB::of('\u{0000}'), GCB::Control);
+        assert_eq!(GCB::of('\u{0040}'), GCB::Other);
+        assert_eq!(GCB::of('\u{0041}'), GCB::Other);
+        assert_eq!(GCB::of('\u{0062}'), GCB::Other);
+        assert_eq!(GCB::of('\u{007F}'), GCB::Control);
     }
 
     #[test]
     fn test_bmp() {
         // Hebrew
-        assert_eq!(GCB::of('\u{0590}'), None);
-        assert_eq!(GCB::of('\u{05D0}'), None);
-        assert_eq!(GCB::of('\u{05D1}'), None);
-        assert_eq!(GCB::of('\u{05FF}'), None);
+        assert_eq!(GCB::of('\u{0590}'), GCB::Other);
+        assert_eq!(GCB::of('\u{05D0}'), GCB::Other);
+        assert_eq!(GCB::of('\u{05D1}'), GCB::Other);
+        assert_eq!(GCB::of('\u{05FF}'), GCB::Other);
 
         // Arabic
-        assert_eq!(GCB::of('\u{0600}'), Some(GCB::Prepend));
-        assert_eq!(GCB::of('\u{0627}'), None);
-        assert_eq!(GCB::of('\u{07BF}'), None);
+        assert_eq!(GCB::of('\u{0600}'), GCB::Prepend);
+        assert_eq!(GCB::of('\u{0627}'), GCB::Other);
+        assert_eq!(GCB::of('\u{07BF}'), GCB::Other);
 
         // Default R + Arabic Extras
-        assert_eq!(GCB::of('\u{07C0}'), None);
-        assert_eq!(GCB::of('\u{085F}'), None);
-        assert_eq!(GCB::of('\u{0860}'), None);
-        assert_eq!(GCB::of('\u{0870}'), None);
-        assert_eq!(GCB::of('\u{089F}'), None);
-        assert_eq!(GCB::of('\u{08A0}'), None);
-        assert_eq!(GCB::of('\u{089F}'), None);
-        assert_eq!(GCB::of('\u{08FF}'), Some(GCB::Extend));
+        assert_eq!(GCB::of('\u{07C0}'), GCB::Other);
+        assert_eq!(GCB::of('\u{085F}'), GCB::Other);
+        assert_eq!(GCB::of('\u{0860}'), GCB::Other);
+        assert_eq!(GCB::of('\u{0870}'), GCB::Other);
+        assert_eq!(GCB::of('\u{089F}'), GCB::Other);
+        assert_eq!(GCB::of('\u{08A0}'), GCB::Other);
+        assert_eq!(GCB::of('\u{089F}'), GCB::Other);
+        assert_eq!(GCB::of('\u{08FF}'), GCB::Extend);
 
         // Default ET
-        assert_eq!(GCB::of('\u{20A0}'), None);
-        assert_eq!(GCB::of('\u{20CF}'), None);
+        assert_eq!(GCB::of('\u{20A0}'), GCB::Other);
+        assert_eq!(GCB::of('\u{20CF}'), GCB::Other);
 
         // Arabic Presentation Forms
-        assert_eq!(GCB::of('\u{FB1D}'), None);
-        assert_eq!(GCB::of('\u{FB4F}'), None);
-        assert_eq!(GCB::of('\u{FB50}'), None);
-        assert_eq!(GCB::of('\u{FDCF}'), None);
-        assert_eq!(GCB::of('\u{FDF0}'), None);
-        assert_eq!(GCB::of('\u{FDFF}'), None);
-        assert_eq!(GCB::of('\u{FE70}'), None);
-        assert_eq!(GCB::of('\u{FEFE}'), None);
-        assert_eq!(GCB::of('\u{FEFF}'), Some(GCB::Control));
+        assert_eq!(GCB::of('\u{FB1D}'), GCB::Other);
+        assert_eq!(GCB::of('\u{FB4F}'), GCB::Other);
+        assert_eq!(GCB::of('\u{FB50}'), GCB::Other);
+        assert_eq!(GCB::of('\u{FDCF}'), GCB::Other);
+        assert_eq!(GCB::of('\u{FDF0}'), GCB::Other);
+        assert_eq!(GCB::of('\u{FDFF}'), GCB::Other);
+        assert_eq!(GCB::of('\u{FE70}'), GCB::Other);
+        assert_eq!(GCB::of('\u{FEFE}'), GCB::Other);
+        assert_eq!(GCB::of('\u{FEFF}'), GCB::Control);
 
         // noncharacters
-        assert_eq!(GCB::of('\u{FDD0}'), None);
-        assert_eq!(GCB::of('\u{FDD1}'), None);
-        assert_eq!(GCB::of('\u{FDEE}'), None);
-        assert_eq!(GCB::of('\u{FDEF}'), None);
-        assert_eq!(GCB::of('\u{FFFE}'), None);
-        assert_eq!(GCB::of('\u{FFFF}'), None);
+        assert_eq!(GCB::of('\u{FDD0}'), GCB::Other);
+        assert_eq!(GCB::of('\u{FDD1}'), GCB::Other);
+        assert_eq!(GCB::of('\u{FDEE}'), GCB::Other);
+        assert_eq!(GCB::of('\u{FDEF}'), GCB::Other);
+        assert_eq!(GCB::of('\u{FFFE}'), GCB::Other);
+        assert_eq!(GCB::of('\u{FFFF}'), GCB::Other);
     }
 
     #[test]
     fn test_smp() {
         // Default AL + R
-        assert_eq!(GCB::of('\u{10800}'), None);
-        assert_eq!(GCB::of('\u{10FFF}'), None);
-        assert_eq!(GCB::of('\u{1E800}'), None);
-        assert_eq!(GCB::of('\u{1EDFF}'), None);
-        assert_eq!(GCB::of('\u{1EE00}'), None);
-        assert_eq!(GCB::of('\u{1EEFF}'), None);
-        assert_eq!(GCB::of('\u{1EF00}'), None);
-        assert_eq!(GCB::of('\u{1EFFF}'), None);
+        assert_eq!(GCB::of('\u{10800}'), GCB::Other);
+        assert_eq!(GCB::of('\u{10FFF}'), GCB::Other);
+        assert_eq!(GCB::of('\u{1E800}'), GCB::Other);
+        assert_eq!(GCB::of('\u{1EDFF}'), GCB::Other);
+        assert_eq!(GCB::of('\u{1EE00}'), GCB::Other);
+        assert_eq!(GCB::of('\u{1EEFF}'), GCB::Other);
+        assert_eq!(GCB::of('\u{1EF00}'), GCB::Other);
+        assert_eq!(GCB::of('\u{1EFFF}'), GCB::Other);
     }
 
     #[test]
     fn test_unassigned_planes() {
-        assert_eq!(GCB::of('\u{30000}'), None);
-        assert_eq!(GCB::of('\u{40000}'), None);
-        assert_eq!(GCB::of('\u{50000}'), None);
-        assert_eq!(GCB::of('\u{60000}'), None);
-        assert_eq!(GCB::of('\u{70000}'), None);
-        assert_eq!(GCB::of('\u{80000}'), None);
-        assert_eq!(GCB::of('\u{90000}'), None);
-        assert_eq!(GCB::of('\u{a0000}'), None);
+        assert_eq!(GCB::of('\u{30000}'), GCB::Other);
+        assert_eq!(GCB::of('\u{40000}'), GCB::Other);
+        assert_eq!(GCB::of('\u{50000}'), GCB::Other);
+        assert_eq!(GCB::of('\u{60000}'), GCB::Other);
+        assert_eq!(GCB::of('\u{70000}'), GCB::Other);
+        assert_eq!(GCB::of('\u{80000}'), GCB::Other);
+        assert_eq!(GCB::of('\u{90000}'), GCB::Other);
+        assert_eq!(GCB::of('\u{a0000}'), GCB::Other);
     }
 
     #[test]

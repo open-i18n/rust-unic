@@ -18,13 +18,17 @@
 //! instead of importing components one-by-one, and ensuring all components
 //! imported are compatible in algorithms and consistent data-wise.
 //!
-//! ## Components
+//! ## Major Components
 //!
-//! -   [`ucd`](/unic-ucd): Unicode Character Database.
+//! -   [`char`](/unic-char): Unicode Character utilities.
+//!
+//! -   [`ucd`](/unic-ucd): Unicode Character Database. (UAX\#44).
 //!
 //! -   [`bidi`](/unic-bidi): Unicode Bidirectional Algorithm (UAX\#9).
 //!
 //! -   [`normal`](/unic-normal): Unicode Normalization Forms (UAX\#15).
+//!
+//! -   [`segment`](/unic-segment): Unicode Text Segmentation (UAX\#29).
 //!
 //! -   [`idna`](/unic-idna): Unicode IDNA Compatibility Processing (UTS\#46).
 //!
@@ -116,11 +120,14 @@
 //! }
 //! ```
 
+
 pub extern crate unic_bidi as bidi;
 pub extern crate unic_char as char;
 pub extern crate unic_idna as idna;
 pub extern crate unic_normal as normal;
+pub extern crate unic_segment as segment;
 pub extern crate unic_ucd as ucd;
+
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data
 pub use ucd::UNICODE_VERSION;

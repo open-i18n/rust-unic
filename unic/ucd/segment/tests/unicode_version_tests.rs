@@ -9,11 +9,14 @@
 // except according to those terms.
 
 
-pub mod emoji;
-pub mod idna;
-pub mod normal;
-pub mod segment;
-pub mod ucd;
+extern crate unic_ucd_core;
+extern crate unic_ucd_segment;
 
-mod common;
-mod utils;
+
+#[test]
+fn test_version_against_ucd_core() {
+    assert_eq!(
+        unic_ucd_segment::UNICODE_VERSION,
+        unic_ucd_core::UNICODE_VERSION
+    );
+}
