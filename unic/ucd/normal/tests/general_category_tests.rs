@@ -13,12 +13,12 @@
 #![cfg(not(feature = "unic-ucd-category"))]
 
 
+#[macro_use]
 extern crate unic_char_range;
+
 extern crate unic_ucd_category;
 extern crate unic_ucd_normal;
 
-
-use unic_char_range::CharRange;
 
 use self::unic_ucd_category::GeneralCategory as GC;
 use self::unic_ucd_normal::is_combining_mark;

@@ -16,6 +16,9 @@
 //! <http://www.unicode.org/versions/Unicode9.0.0/ch03.pdf>
 
 
+use std::char;
+
+
 pub const S_BASE: u32 = 0xAC00;
 pub const L_BASE: u32 = 0x1100;
 pub const V_BASE: u32 = 0x1161;
@@ -41,20 +44,18 @@ pub fn decompose<F>(syllable: char, f: &mut F)
 where
     F: FnMut(char),
 {
-    use std::mem::transmute;
-
     let si = syllable as u32 - S_BASE;
 
     let li = si / N_COUNT;
     unsafe {
-        (*f)(transmute(L_BASE + li));
+        (*f)(char::from_u32_unchecked(L_BASE + li));
 
         let vi = (si % N_COUNT) / T_COUNT;
-        (*f)(transmute(V_BASE + vi));
+        (*f)(char::from_u32_unchecked(V_BASE + vi));
 
         let ti = si % T_COUNT;
         if ti > 0 {
-            (*f)(transmute(T_BASE + ti));
+            (*f)(char::from_u32_unchecked(T_BASE + ti));
         }
     }
 }
@@ -63,7 +64,6 @@ where
 #[allow(unsafe_code)]
 #[inline]
 pub fn compose(jamo1: char, jamo2: char) -> Option<char> {
-    use std::mem::transmute;
 
     let l = jamo1 as u32;
     let v = jamo2 as u32;
@@ -73,7 +73,7 @@ pub fn compose(jamo1: char, jamo2: char) -> Option<char> {
     {
         // v should be a V jungseong jamo
         let r = S_BASE + (l - L_BASE) * N_COUNT + (v - V_BASE) * T_COUNT;
-        return unsafe { Some(transmute(r)) };
+        return unsafe { Some(char::from_u32_unchecked(r)) };
     }
     // Compose an LVPart and a TPart
     if S_BASE <= l && l <= (S_BASE+S_COUNT-T_COUNT) // l should be a syllable block
@@ -82,7 +82,7 @@ pub fn compose(jamo1: char, jamo2: char) -> Option<char> {
     {
         // l should be an LV syllable block (not LVT)
         let r = l + (v - T_BASE);
-        return unsafe { Some(transmute(r)) };
+        return unsafe { Some(char::from_u32_unchecked(r)) };
     }
     None
 }
