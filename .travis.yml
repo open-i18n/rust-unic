@@ -32,6 +32,11 @@ script:
   - cargo test  --verbose --all
   - cargo test  --verbose --all --features serde
 
+  #  unic-ucd-normal is used in unic-ucd with non-default feature
+  - cargo test  --verbose --manifest-path unic/ucd/normal/Cargo.toml
+
+  # == Nightly-only ==
+
   - test "$TRAVIS_RUST_VERSION" != "nightly" ||
     cargo test  --verbose --all --all-features
 
