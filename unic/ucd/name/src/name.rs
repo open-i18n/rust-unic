@@ -22,14 +22,26 @@ impl Name {
         data::NAMES.find(ch).map(|pieces| Name { pieces })
     }
 
-    pub fn to_string(&self) -> String {
-        self.pieces.join(" ")
+    /// Length of the name in bytes.
+    pub fn len(&self) -> usize {
+        // start with spaces
+        let mut len = self.pieces.len().saturating_sub(1);
+        for piece in self.pieces {
+            len += piece.len();
+        }
+        len
     }
 }
 
 impl fmt::Display for Name {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.to_string())
+        let (first, rest) = self.pieces.split_first().unwrap();
+        f.write_str(first)?;
+        for piece in rest {
+            f.write_str(" ")?;
+            f.write_str(piece)?;
+        }
+        Ok(())
     }
 }
 
