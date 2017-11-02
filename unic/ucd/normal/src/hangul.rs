@@ -64,7 +64,6 @@ where
 #[allow(unsafe_code)]
 #[inline]
 pub fn compose(jamo1: char, jamo2: char) -> Option<char> {
-
     let l = jamo1 as u32;
     let v = jamo2 as u32;
     // Compose an LPart and a VPart
