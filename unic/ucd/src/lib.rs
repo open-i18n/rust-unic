@@ -9,6 +9,7 @@
 // except according to those terms.
 
 
+#![no_std]
 #![forbid(unsafe_code, missing_docs, unconditional_recursion)]
 
 //! # UNIC — Unicode Character Database
@@ -23,14 +24,14 @@ pub extern crate unic_ucd_age as age;
 pub extern crate unic_ucd_bidi as bidi;
 pub extern crate unic_ucd_case as case;
 pub extern crate unic_ucd_category as category;
-pub extern crate unic_ucd_core as core;
+pub extern crate unic_ucd_core as ucd_core;
 pub extern crate unic_ucd_name as name;
 pub extern crate unic_ucd_normal as normal;
 pub extern crate unic_ucd_segment as segment;
 
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data
-pub use core::UNICODE_VERSION;
+pub use ucd_core::UNICODE_VERSION;
 
 
 /// UNIC component version.
@@ -43,7 +44,7 @@ pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
 pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
 
 
-pub use core::UnicodeVersion;
+pub use ucd_core::UnicodeVersion;
 
 pub use age::{Age, CharAge};
 
