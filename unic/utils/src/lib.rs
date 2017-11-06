@@ -9,6 +9,7 @@
 // except according to those terms.
 
 
+#![no_std]
 #![forbid(missing_docs)]
 #![deny(unsafe_code)]
 
