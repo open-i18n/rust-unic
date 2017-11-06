@@ -14,8 +14,8 @@ forcing dependent crates to import all UCD data.
 ## Crates
 Here's a list of components (available or planned) for this super-crate:
 
-- [X] `core`: Providing basic information about UCD data, specifically the
-  [Unicode Version](http://www.unicode.org/versions/).
+- [X] `version`: The [Unicode Version](http://www.unicode.org/versions/) of UCD
+  data.
 
 - [X] `age`: Character Age property.
 - [X] `name`: Character Name property.
@@ -26,7 +26,7 @@ Here's a list of components (available or planned) for this super-crate:
 
 - [X] `normal`: Character Normalization properties.
 - [X] `case`: Character case properties.
-- [ ] `grapheme`: Character grapheme properties.
+- [X] `segment`: Character Segmentation properties.
 - [ ] `numeric`: Character numeric properties.
 
 - [X] `bidi`: Bidirectional properties. (Hebrew, Arabic, ...)

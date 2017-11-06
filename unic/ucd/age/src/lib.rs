@@ -26,13 +26,13 @@
 extern crate unic_char_property;
 #[macro_use]
 extern crate unic_char_range;
-extern crate unic_ucd_core;
+extern crate unic_ucd_version;
 extern crate unic_utils;
 
 
 mod age;
 
-pub use unic_ucd_core::UnicodeVersion;
+pub use unic_ucd_version::UnicodeVersion;
 
 pub use age::{Age, CharAge};
 

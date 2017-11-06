@@ -26,7 +26,7 @@ extern crate unic_char_property;
 #[macro_use]
 extern crate unic_char_range;
 
-extern crate unic_ucd_core;
+extern crate unic_ucd_version;
 extern crate unic_utils;
 
 
@@ -39,7 +39,7 @@ pub use bidi_class::{BidiClass, BidiClassCategory, CharBidiClass, StrBidiClass};
 pub use bidi_control::{is_bidi_control, BidiControl};
 pub use bidi_mirrored::{is_bidi_mirrored, BidiMirrored};
 
-use unic_ucd_core::UnicodeVersion;
+use unic_ucd_version::UnicodeVersion;
 
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data

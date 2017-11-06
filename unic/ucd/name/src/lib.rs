@@ -8,12 +8,15 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate unic_ucd_core;
+
+#![no_std]
+
+extern crate unic_ucd_version;
 extern crate unic_utils;
 
 mod name;
 
-use unic_ucd_core::UnicodeVersion;
+use unic_ucd_version::UnicodeVersion;
 
 pub use name::Name;
 

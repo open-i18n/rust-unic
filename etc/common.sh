@@ -19,7 +19,7 @@ export COMPONENTS="
     unic/utils
     unic/char/property
     unic/char
-    unic/ucd/core
+    unic/ucd/version
     unic/ucd/age
     unic/ucd/bidi
     unic/ucd/case

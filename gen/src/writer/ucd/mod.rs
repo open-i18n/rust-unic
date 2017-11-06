@@ -31,7 +31,7 @@ pub fn generate() {
     case::generate(&clean_dir("unic/ucd/case/tables"));
     category::generate(&clean_dir("unic/ucd/category/tables"));
     common::generate(&clean_dir("unic/ucd/common/tables"));
-    core::generate(&clean_dir("unic/ucd/core/tables"));
+    core::generate(&clean_dir("unic/ucd/version/tables"));
     ident::generate(&clean_dir("unic/ucd/ident/tables"));
     name::generate(&clean_dir("unic/ucd/name/tables"));
     normal::generate(&clean_dir("unic/ucd/normal/tables"));

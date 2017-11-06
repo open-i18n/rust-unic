@@ -7,9 +7,14 @@ license = "MIT/Apache-2.0"
 description = "UNIC - Unicode Characters"
 keywords = ["text", "unicode", "utilities"]
 categories = ["internationalization", "text-processing", "parsing"]
+readme = "README.md"
 
 # No tests/benches that depends on /data/
 exclude = []
+
+[features]
+default = []
+std = ["unic-char-range/std"]
 
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }

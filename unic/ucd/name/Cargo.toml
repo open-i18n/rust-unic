@@ -15,5 +15,5 @@ exclude = []
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
 [dependencies]
-unic-ucd-core = { path = "../core/", version = "0.6.0" }
+unic-ucd-version = { path = "../version/", version = "0.6.0" }
 unic-utils = { path = "../../utils", version = "0.6.0" }

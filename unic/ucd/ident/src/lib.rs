@@ -32,7 +32,7 @@
 extern crate unic_char_property;
 #[macro_use]
 extern crate unic_char_range;
-extern crate unic_ucd_core;
+extern crate unic_ucd_version;
 
 
 #[cfg(feature = "xid")]
@@ -132,7 +132,7 @@ mod pattern {
 pub use pattern::{is_pattern_syntax, is_pattern_whitespace, PatternSyntax, PatternWhitespace};
 
 
-use unic_ucd_core::UnicodeVersion;
+use unic_ucd_version::UnicodeVersion;
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

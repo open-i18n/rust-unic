@@ -10,13 +10,13 @@
 
 
 extern crate unic_idna_mapping;
-extern crate unic_ucd_core;
+extern crate unic_ucd_version;
 
 
 #[test]
-fn test_version_against_ucd_core() {
+fn test_version_against_ucd_version() {
     assert_eq!(
-        unic_ucd_core::UNICODE_VERSION,
+        unic_ucd_version::UNICODE_VERSION,
         unic_idna_mapping::UNICODE_VERSION
     );
 }

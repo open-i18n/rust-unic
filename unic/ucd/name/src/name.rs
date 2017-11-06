@@ -9,7 +9,7 @@
 // except according to those terms.
 
 
-use std::fmt;
+use core::fmt;
 
 
 #[derive(Copy, Clone, Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
@@ -49,20 +49,4 @@ mod data {
     use unic_utils::CharDataTable;
     include!("../tables/name_values.rsd");
     pub const NAMES: CharDataTable<&[&str]> = include!("../tables/name_map.rsv");
-}
-
-
-#[cfg(test)]
-mod test {
-    use super::Name;
-    #[test]
-    fn basic_tests() {
-        assert_eq!(
-            Name::of('A').expect("No name for A").to_string(),
-            "LATIN CAPITAL LETTER A"
-        );
-        assert_eq!(Name::of('\u{10FFFF}'), None);
-
-        assert!(Name::of('A') < Name::of('B'));
-    }
 }

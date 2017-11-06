@@ -33,7 +33,7 @@
 extern crate unic_char_property;
 #[macro_use]
 extern crate unic_char_range;
-extern crate unic_ucd_core;
+extern crate unic_ucd_version;
 extern crate unic_utils;
 
 
@@ -51,7 +51,7 @@ pub use gen_cat::is_combining_mark;
 pub use decomposition::{decompose_canonical, decompose_compatible};
 pub use decomposition_type::DecompositionType;
 
-use unic_ucd_core::UnicodeVersion;
+use unic_ucd_version::UnicodeVersion;
 
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data
