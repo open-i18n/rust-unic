@@ -5,7 +5,7 @@ authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
 description = "UNIC - Unicode Characters - Character Range and Iteration"
-keywords = ["text", "unicode", "iteration"]
+keywords = ["text", "unicode", "utilities", "iteration"]
 categories = ["internationalization", "text-processing"]
 
 # No tests/benches that depends on /data/
@@ -13,10 +13,10 @@ exclude = []
 
 [features]
 default = []
+std = []
 
 # Unstable features
-std = []
-unstable = [ "exact-size-is-empty", "fused", "trusted-len" ]
+unstable = ["exact-size-is-empty", "fused", "trusted-len"]
 exact-size-is-empty = []
 fused = []
 trusted-len = []
