@@ -8,6 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+
+#![no_std]
+
 extern crate unic_ucd_core;
 extern crate unic_utils;
 

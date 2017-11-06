@@ -59,4 +59,4 @@ pub use self::range_types::{
 
 // Used in macros
 #[doc(hidden)]
-pub use core::{str as __str, fmt as __fmt};
+pub use core::{fmt as __fmt, str as __str};

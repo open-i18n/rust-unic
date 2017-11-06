@@ -9,14 +9,19 @@
 // except according to those terms.
 
 
-extern crate unic_ucd_core;
 extern crate unic_ucd_name;
 
 
+use unic_ucd_name::Name;
+
+
 #[test]
-fn test_unicode_version_against_ucd_core() {
+fn basic_tests() {
     assert_eq!(
-        unic_ucd_name::UNICODE_VERSION,
-        unic_ucd_core::UNICODE_VERSION
-    )
+        Name::of('A').expect("No name for A").to_string(),
+        "LATIN CAPITAL LETTER A"
+    );
+    assert_eq!(Name::of('\u{10FFFF}'), None);
+
+    assert!(Name::of('A') < Name::of('B'));
 }
