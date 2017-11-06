@@ -454,9 +454,4 @@ mod tests {
     fn test_human_name() {
         assert_eq!(GCB::CR.human_name(), "Carriage Return");
     }
-
-    #[test]
-    fn test_display() {
-        assert_eq!(format!("{}", GCB::CR), "Carriage Return");
-    }
 }

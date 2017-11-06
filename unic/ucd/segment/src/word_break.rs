@@ -462,9 +462,4 @@ mod tests {
     fn test_human_name() {
         assert_eq!(WB::CR.human_name(), "Carriage Return");
     }
-
-    #[test]
-    fn test_display() {
-        assert_eq!(format!("{}", WB::CR), "Carriage Return");
-    }
 }
