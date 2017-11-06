@@ -16,7 +16,7 @@
 //! <http://www.unicode.org/versions/Unicode9.0.0/ch03.pdf>
 
 
-use std::char;
+use core::char;
 
 
 pub const S_BASE: u32 = 0xAC00;

@@ -323,9 +323,4 @@ mod tests {
         assert_eq!(DT::Canonical.human_name(), "Canonical");
         assert_eq!(DT::NoBreak.human_name(), "No-Break");
     }
-
-    #[test]
-    fn test_display() {
-        assert_eq!(format!("{}", DT::of('\u{a0}').unwrap()), "No-Break");
-    }
 }
