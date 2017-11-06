@@ -489,14 +489,6 @@ mod tests {
     }
 
     #[test]
-    fn test_display() {
-        assert_eq!(format!("{}", L), "Left-to-Right");
-        assert_eq!(format!("{}", R), "Right-to-Left");
-        assert_eq!(format!("{}", AL), "Right-to-Left Arabic");
-        assert_eq!(format!("{}", FSI), "First Strong Isolate");
-    }
-
-    #[test]
     fn test_char_trait() {
         use super::{BidiClass, BidiClassCategory, CharBidiClass};
 
