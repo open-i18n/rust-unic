@@ -55,3 +55,8 @@ pub use self::range_types::{
     NumericCharProperty,
     NumericCharPropertyValue,
 };
+
+
+// Used in macros
+#[doc(hidden)]
+pub use core::{str as __str, fmt as __fmt};

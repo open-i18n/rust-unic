@@ -9,8 +9,6 @@
 // except according to those terms.
 
 
-extern crate core;
-
 #[macro_use]
 extern crate unic_char_property;
 

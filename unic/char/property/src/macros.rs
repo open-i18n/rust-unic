@@ -14,9 +14,6 @@
 /// # Syntax (Enumerated Property)
 ///
 /// ```
-/// // Macro `char_property` needs `core` crate.
-/// extern crate core;
-///
 /// #[macro_use]
 /// extern crate unic_char_property;
 ///
@@ -55,9 +52,6 @@
 ///
 // rustc:1.17.0 cannot find data_table_path, so ignore this test for now.
 /// ```ignore
-/// // Macro `char_property` needs `core` crate.
-/// extern crate core;
-///
 /// #[macro_use] extern crate unic_char_property;
 /// # #[macro_use] extern crate unic_char_range;
 ///
@@ -283,7 +277,7 @@ macro_rules! char_property {
         $( $id:ident => $value:expr; )*
     ) => {
         #[allow(unreachable_patterns)]
-        impl ::core::str::FromStr for $prop_name {
+        impl $crate::__str::FromStr for $prop_name {
             type Err = ();
             fn from_str(s: &str) -> Result<Self, Self::Err> {
                 // This is a temporary solution to enable case-insensitive matching under `no_std`
@@ -359,8 +353,8 @@ macro_rules! char_property {
     };
 
     ( __impl Display for $prop_name:ident by $trait:ident ) => {
-        impl ::core::fmt::Display for $prop_name {
-            fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+        impl $crate::__fmt::Display for $prop_name {
+            fn fmt(&self, f: &mut $crate::__fmt::Formatter) -> $crate::__fmt::Result {
                 $crate::$trait::human_name(self).fmt(f)
             }
         }
