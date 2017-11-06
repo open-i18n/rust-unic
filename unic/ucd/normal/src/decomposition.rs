@@ -10,7 +10,7 @@
 // except according to those terms.
 
 
-use std::ops::FnMut;
+use core::ops::FnMut;
 
 use composition::{canonical_decomposition, compatibility_decomposition};
 use hangul;

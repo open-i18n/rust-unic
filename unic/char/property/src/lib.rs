@@ -9,6 +9,9 @@
 // except according to those terms.
 
 
+#![no_std]
+#![forbid(unsafe_code, unconditional_recursion, missing_docs)]
+
 //! # UNIC - Unicode Characters - Character Property
 //!
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
@@ -22,8 +25,6 @@
 //! * [Unicode UAX #44: Unicode Character Database](http://unicode.org/reports/tr44/).
 //!
 //! * [UCD's PropertyAliases.txt](http://www.unicode.org/Public/UCD/latest/ucd/PropertyAliases.txt).
-
-#![forbid(unsafe_code, unconditional_recursion, missing_docs)]
 
 
 #[doc(hidden)]

@@ -9,6 +9,13 @@
 // except according to those terms.
 
 
+#![cfg_attr(not(feature = "std"), no_std)]
+#![cfg_attr(feature = "exact-size-is-empty", feature(exact_size_is_empty))]
+#![cfg_attr(feature = "fused", feature(fused))]
+#![cfg_attr(feature = "trusted-len", feature(trusted_len))]
+#![forbid(bad_style, missing_debug_implementations, unconditional_recursion)]
+#![deny(missing_docs, unsafe_code, unused, future_incompatible)]
+
 //! # Unic - Char - Range
 //!
 //! A simple way to control iteration over a range of characters.
@@ -43,17 +50,21 @@
 //! [`TrustedLen`]: https://doc.rust-lang.org/std/iter/trait.TrustedLen.html
 //!
 
-#![forbid(bad_style, missing_debug_implementations, unconditional_recursion)]
-#![deny(missing_docs, unsafe_code, unused, future_incompatible)]
-#![cfg_attr(feature = "exact-size-is-empty", feature(exact_size_is_empty))]
-#![cfg_attr(feature = "fused", feature(fused))]
-#![cfg_attr(feature = "trusted-len", feature(trusted_len))]
+
+#[cfg(feature = "std")]
+extern crate core;
 
 
 mod macros;
 mod range;
 mod iter;
 mod step;
+
+#[cfg(feature = "fused")]
+mod iter_fused;
+
+#[cfg(feature = "trusted-len")]
+mod iter_trusted_len;
 
 
 pub use range::CharRange;

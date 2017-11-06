@@ -12,8 +12,8 @@
 //! Taxonomy and contracts for Character Property types.
 
 
-use std::fmt::Debug;
-use std::hash::Hash;
+use core::fmt::Debug;
+use core::hash::Hash;
 
 
 /// A Character Property, defined for some or all Unicode characters.

@@ -9,7 +9,7 @@
 // except according to those terms.
 
 
-use std::cmp;
+use core::cmp;
 
 pub use unic_ucd_core::UnicodeVersion;
 use unic_char_property::{CharProperty, CustomCharProperty, PartialCharProperty};
@@ -98,6 +98,20 @@ impl cmp::PartialOrd for Age {
             cmp::Ordering::Less => Some(cmp::Ordering::Greater),
             cmp::Ordering::Equal => Some(cmp::Ordering::Equal),
         }
+    }
+}
+
+
+/// Methods for character age property.
+pub trait CharAge {
+    /// Get `Age` of the character.
+    fn age(self) -> Option<Age>;
+}
+
+impl CharAge for char {
+    #[inline]
+    fn age(self) -> Option<Age> {
+        Age::of(self)
     }
 }
 
@@ -659,6 +673,36 @@ mod tests {
                 minor: 0,
                 micro: 0,
             }))
+        );
+    }
+
+    #[test]
+    fn test_char_trait() {
+        use super::CharAge;
+
+        assert_eq!(
+            '\u{0000}'.age().unwrap().actual(),
+            UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            }
+        );
+        assert_eq!(
+            '\u{0041}'.age().unwrap().actual(),
+            UnicodeVersion {
+                major: 1,
+                minor: 1,
+                micro: 0,
+            }
+        );
+        assert_eq!(
+            '\u{10ffff}'.age().unwrap().actual(),
+            UnicodeVersion {
+                major: 2,
+                minor: 0,
+                micro: 0,
+            }
         );
     }
 }

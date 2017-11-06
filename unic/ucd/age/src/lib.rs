@@ -9,6 +9,7 @@
 // except according to those terms.
 
 
+#![no_std]
 #![forbid(unsafe_code, unconditional_recursion)]
 #![deny(missing_docs)]
 
@@ -21,6 +22,7 @@
 //!
 //! * <http://www.unicode.org/reports/tr44/#Character_Age>
 
+
 extern crate unic_char_property;
 #[macro_use]
 extern crate unic_char_range;
@@ -29,12 +31,10 @@ extern crate unic_utils;
 
 
 mod age;
-mod traits;
 
 pub use unic_ucd_core::UnicodeVersion;
 
-pub use age::Age;
-pub use traits::CharAge;
+pub use age::{Age, CharAge};
 
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data

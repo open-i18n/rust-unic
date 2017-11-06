@@ -9,10 +9,12 @@
 // except according to those terms.
 
 
-use std::char;
-use std::cmp::Ordering;
+use core::{char, cmp};
+
+#[cfg(feature = "std")]
 use std::collections::Bound;
 
+use self::cmp::Ordering;
 use CharIter;
 
 
@@ -117,6 +119,7 @@ impl CharRange {
         iter.into()
     }
 
+    #[cfg(feature = "std")]
     /// Construct a range of characters from bounds.
     pub fn bound(start: Bound<char>, stop: Bound<char>) -> CharRange {
         let start = if start == Bound::Unbounded {

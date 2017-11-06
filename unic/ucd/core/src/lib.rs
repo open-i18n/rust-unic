@@ -9,6 +9,7 @@
 // except according to those terms.
 
 
+#![no_std]
 #![forbid(unsafe_code, missing_docs, unconditional_recursion)]
 
 //! # UNIC — UCD — Core
@@ -18,7 +19,7 @@
 //! Core create indicating the version of Unicode Character Database.
 
 
-use std::fmt;
+use core::fmt;
 
 
 /// Type of `UNICODE_VERSION` value:
@@ -66,40 +67,25 @@ impl<T: From<u16>> Into<(T, T, T)> for UnicodeVersion {
 }
 
 
-// TODO: Add conversion to/from `std::char::UnicodeVersion` whenever it becomes accessible.
+// TODO: Add conversion to/from `char::UnicodeVersion` whenever it becomes accessible.
 
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use super::UNICODE_VERSION;
 
     #[test]
     fn validate_version_values() {
         assert!(UNICODE_VERSION.major > 0);
 
         // Current release schedule of Unicode is to have one Major version update each year, with
-        // no Minor updates. We hard-code this internal policy while it stans.
+        // no Minor updates. We hard-code this internal policy while it stands.
         assert!(UNICODE_VERSION.minor == 0);
     }
 
     #[test]
-    fn test_display() {
-        assert_eq!(
-            format!(
-                "Unicode {}",
-                UnicodeVersion {
-                    major: 1,
-                    minor: 2,
-                    micro: 0,
-                }
-            ),
-            "Unicode 1.2.0"
-        );
-    }
-
-    #[test]
     fn test_against_rust_core_type() {
-        // Same type as std::char::UNICODE_VERSION
+        // Same type as pre-1.20.0 `char::UNICODE_VERSION`
         let uni_ver: (u64, u64, u64) = (9, 0, 0);
         assert!(uni_ver <= UNICODE_VERSION.into() || uni_ver > UNICODE_VERSION.into());
     }

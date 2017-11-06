@@ -9,13 +9,12 @@
 // except according to those terms.
 
 
-use std::char;
-use std::ops::Range;
+use core::{char, ops};
 
 use {step, CharRange};
 
 
-const SURROGATE_RANGE: Range<u32> = 0xD800..0xE000;
+const SURROGATE_RANGE: ops::Range<u32> = 0xD800..0xE000;
 
 
 /// An iterator over a range of unicode code points.
@@ -153,13 +152,3 @@ impl ExactSizeIterator for CharIter {
         self.is_finished()
     }
 }
-
-#[cfg(any(feature = "fused", feature = "trusted-len"))]
-use std::iter;
-
-#[cfg(feature = "fused")]
-impl iter::FusedIterator for CharIter {}
-
-#[allow(unsafe_code)]
-#[cfg(feature = "trusted-len")]
-unsafe impl iter::TrustedLen for CharIter {}

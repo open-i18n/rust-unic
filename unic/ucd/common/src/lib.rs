@@ -9,6 +9,7 @@
 // except according to those terms.
 
 
+#![no_std]
 #![forbid(unsafe_code, unconditional_recursion, missing_docs)]
 
 //! # UNIC — UCD — Case Character Properties

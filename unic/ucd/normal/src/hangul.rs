@@ -16,7 +16,7 @@
 //! <http://www.unicode.org/versions/Unicode9.0.0/ch03.pdf>
 
 
-use std::char;
+use core::char;
 
 
 pub const S_BASE: u32 = 0xAC00;
@@ -64,7 +64,6 @@ where
 #[allow(unsafe_code)]
 #[inline]
 pub fn compose(jamo1: char, jamo2: char) -> Option<char> {
-
     let l = jamo1 as u32;
     let v = jamo2 as u32;
     // Compose an LPart and a VPart

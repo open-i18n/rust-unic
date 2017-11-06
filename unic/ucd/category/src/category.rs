@@ -325,7 +325,7 @@ impl GeneralCategory {
 mod tests {
     use unic_char_property::EnumeratedCharProperty;
     use super::GeneralCategory as GC;
-    use std::char;
+    use core::char;
 
     #[test]
     fn test_ascii() {
@@ -437,11 +437,5 @@ mod tests {
     fn test_human_name() {
         assert_eq!(GC::UppercaseLetter.human_name(), "Uppercase Letter");
         assert_eq!(GC::Unassigned.human_name(), "Unassigned");
-    }
-
-    #[test]
-    fn test_display() {
-        assert_eq!(format!("{}", GC::UppercaseLetter), "Uppercase Letter");
-        assert_eq!(format!("{}", GC::Unassigned), "Unassigned");
     }
 }

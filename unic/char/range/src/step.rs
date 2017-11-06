@@ -9,7 +9,7 @@
 // except according to those terms.
 
 
-use std::char;
+use core::char;
 
 
 const BEFORE_SURROGATE: char = '\u{D7FF}';
