@@ -26,7 +26,7 @@ extern crate unic_char_property;
 #[macro_use]
 extern crate unic_char_range;
 
-extern crate unic_ucd_core;
+extern crate unic_ucd_version;
 
 
 pub mod lowercase;
@@ -52,7 +52,7 @@ pub use changes_when_casefolded::{changes_when_casefolded, ChangesWhenCasefolded
 pub use changes_when_casemapped::{changes_when_casemapped, ChangesWhenCasemapped};
 
 
-use unic_ucd_core::UnicodeVersion;
+use unic_ucd_version::UnicodeVersion;
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

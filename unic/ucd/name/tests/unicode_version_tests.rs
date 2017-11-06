@@ -9,14 +9,14 @@
 // except according to those terms.
 
 
-extern crate unic_ucd_core;
 extern crate unic_ucd_name;
+extern crate unic_ucd_version;
 
 
 #[test]
-fn test_unicode_version_against_ucd_core() {
+fn test_unicode_version_against_ucd_version() {
     assert_eq!(
         unic_ucd_name::UNICODE_VERSION,
-        unic_ucd_core::UNICODE_VERSION
+        unic_ucd_version::UNICODE_VERSION
     )
 }

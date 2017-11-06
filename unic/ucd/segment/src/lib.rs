@@ -25,7 +25,7 @@ extern crate unic_char_property;
 #[macro_use]
 extern crate unic_char_range;
 
-extern crate unic_ucd_core;
+extern crate unic_ucd_version;
 extern crate unic_utils;
 
 
@@ -39,7 +39,7 @@ pub use sentence_break::SentenceBreak;
 pub use word_break::WordBreak;
 
 
-use unic_ucd_core::UnicodeVersion;
+use unic_ucd_version::UnicodeVersion;
 
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data

@@ -11,7 +11,7 @@
 
 use core::cmp;
 
-pub use unic_ucd_core::UnicodeVersion;
+pub use unic_ucd_version::UnicodeVersion;
 use unic_char_property::{CharProperty, CustomCharProperty, PartialCharProperty};
 
 
@@ -119,7 +119,7 @@ impl CharAge for char {
 #[cfg(test)]
 mod tests {
     use super::Age;
-    use unic_ucd_core::UnicodeVersion;
+    use unic_ucd_version::UnicodeVersion;
 
     #[test]
     fn test_values() {

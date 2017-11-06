@@ -46,14 +46,14 @@ extern crate matches;
 extern crate unic_char_property;
 #[macro_use]
 extern crate unic_char_range;
-extern crate unic_ucd_core;
+extern crate unic_ucd_version;
 extern crate unic_utils;
 
 mod category;
 
 pub use category::GeneralCategory;
 
-use unic_ucd_core::UnicodeVersion;
+use unic_ucd_version::UnicodeVersion;
 
 /// The [Unicode version](http://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

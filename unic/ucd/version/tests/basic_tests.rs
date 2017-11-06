@@ -9,9 +9,9 @@
 // except according to those terms.
 
 
-extern crate unic_ucd_core;
+extern crate unic_ucd_version;
 
-use unic_ucd_core::UnicodeVersion;
+use unic_ucd_version::UnicodeVersion;
 
 
 #[test]

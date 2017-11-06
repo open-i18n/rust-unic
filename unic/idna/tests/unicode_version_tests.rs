@@ -10,10 +10,13 @@
 
 
 extern crate unic_idna;
-extern crate unic_ucd_core;
+extern crate unic_ucd_version;
 
 
 #[test]
-fn test_version_against_ucd_core() {
-    assert_eq!(unic_ucd_core::UNICODE_VERSION, unic_idna::UNICODE_VERSION);
+fn test_version_against_ucd_version() {
+    assert_eq!(
+        unic_ucd_version::UNICODE_VERSION,
+        unic_idna::UNICODE_VERSION
+    );
 }
