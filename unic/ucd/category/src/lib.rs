@@ -8,6 +8,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+
+#![no_std]
 #![deny(unsafe_code, missing_docs, unconditional_recursion)]
 
 //! # UNIC — UCD — Category
@@ -35,6 +37,7 @@
 //! Properties in [*Unicode*](http://unicode.org/reports/tr41/tr41-21.html#Unicode).
 //!
 //! -- [Unicode® Standard Annex #44 - Unicode Character Database](http://unicode.org/reports/tr44/)
+
 
 #[macro_use]
 extern crate matches;
