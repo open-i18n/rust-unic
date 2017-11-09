@@ -73,7 +73,7 @@ impl CustomCharProperty<UnicodeVersion> for Age {
 
 mod data {
     use super::UnicodeVersion;
-    use unic_utils::CharDataTable;
+    use unic_char_property::tables::CharDataTable;
     pub const AGE_TABLE: CharDataTable<UnicodeVersion> = include!("../tables/age_values.rsv");
 }
 

@@ -11,10 +11,13 @@
 
 #![no_std]
 
+
+extern crate unic_char_property;
 extern crate unic_ucd_version;
-extern crate unic_utils;
+
 
 mod name;
+
 
 use unic_ucd_version::UnicodeVersion;
 

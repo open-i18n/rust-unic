@@ -10,10 +10,10 @@
 
 
 extern crate unic_ucd_segment;
-extern crate unic_utils;
+extern crate unic_char_property;
 
 
-use unic_utils::CharDataTable;
+use unic_char_property::tables::CharDataTable;
 
 use unic_ucd_segment::grapheme_cluster_break::{self, GraphemeClusterBreak};
 use unic_ucd_segment::word_break::{self, WordBreak};

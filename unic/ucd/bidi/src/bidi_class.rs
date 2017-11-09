@@ -229,7 +229,7 @@ impl Default for BidiClass {
 
 mod data {
     use super::abbr_names::*;
-    use unic_utils::CharDataTable;
+    use unic_char_property::tables::CharDataTable;
     pub const BIDI_CLASS_TABLE: CharDataTable<super::BidiClass> =
         include!("../tables/bidi_class.rsv");
 }

@@ -116,7 +116,7 @@ pub mod values {
 
 mod data {
     use super::CanonicalCombiningClass;
-    use unic_utils::CharDataTable;
+    use unic_char_property::tables::CharDataTable;
     pub const CANONICAL_COMBINING_CLASS_VALUES: CharDataTable<CanonicalCombiningClass> =
         include!("../tables/canonical_combining_class_values.rsv");
 }

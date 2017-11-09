@@ -255,7 +255,7 @@ impl Default for SentenceBreak {
 
 mod data {
     use super::long_names as SB;
-    use unic_utils::CharDataTable;
+    use unic_char_property::tables::CharDataTable;
     pub const SENTENCE_BREAK_TABLE: CharDataTable<super::SentenceBreak> =
         include!("../tables/sentence_break.rsv");
 }

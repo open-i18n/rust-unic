@@ -27,7 +27,6 @@ extern crate unic_char_property;
 #[macro_use]
 extern crate unic_char_range;
 extern crate unic_ucd_version;
-extern crate unic_utils;
 
 
 mod age;

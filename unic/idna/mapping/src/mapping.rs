@@ -38,7 +38,7 @@ pub enum Mapping {
 
 mod data {
     use super::Mapping::*;
-    use unic_utils::CharDataTable;
+    use unic_char_property::tables::CharDataTable;
 
     #[cfg_attr(feature = "cargo-clippy", allow(unreadable_literal))]
     pub const MAPPING: CharDataTable<super::Mapping> = include!("../tables/idna_mapping.rsv");

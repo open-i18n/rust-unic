@@ -35,11 +35,6 @@ You find these directories in the project root:
     character-level functionalities vs. string-level functionalities), and
     practicality for users of the library.
 
--   [`/unic/utils/`](unic/utils/): the `utils` component is special, as it hosts
-    components that are not related to Unicode/i18n specifically, or are
-    slightly related, but not depending on any data or algorithm, like helper
-    utilities for working with Rust `char` and `str` types.
-
 ## Submitting a Pull Request
 
 Please consider running through these steps before submitting a PR for UNIC:

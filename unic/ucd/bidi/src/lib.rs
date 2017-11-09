@@ -27,7 +27,6 @@ extern crate unic_char_property;
 extern crate unic_char_range;
 
 extern crate unic_ucd_version;
-extern crate unic_utils;
 
 
 pub mod bidi_class;

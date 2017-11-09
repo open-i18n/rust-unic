@@ -255,7 +255,7 @@ impl Default for GeneralCategory {
 
 mod data {
     use super::abbr_names::*;
-    use unic_utils::CharDataTable;
+    use unic_char_property::tables::CharDataTable;
     pub const GENERAL_CATEGORY_TABLE: CharDataTable<super::GeneralCategory> =
         include!("../tables/general_category.rsv");
 }
