@@ -339,7 +339,7 @@ impl Default for GraphemeClusterBreak {
 
 mod data {
     use super::long_names as GCB;
-    use unic_utils::CharDataTable;
+    use unic_char_property::tables::CharDataTable;
     pub const GRAPHEME_CLUSTER_BREAK_TABLE: CharDataTable<super::GraphemeClusterBreak> =
         include!("../tables/grapheme_cluster_break.rsv");
 }

@@ -12,10 +12,10 @@
 #[macro_use]
 extern crate unic_char_range;
 
-extern crate unic_utils;
+extern crate unic_char_property;
 
 
-use unic_utils::CharDataTable;
+use unic_char_property::tables::CharDataTable;
 
 
 #[test]

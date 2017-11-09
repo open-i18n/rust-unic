@@ -46,7 +46,7 @@ impl fmt::Display for Name {
 }
 
 mod data {
-    use unic_utils::CharDataTable;
+    use unic_char_property::tables::CharDataTable;
     include!("../tables/name_values.rsd");
     pub const NAMES: CharDataTable<&[&str]> = include!("../tables/name_map.rsv");
 }

@@ -12,7 +12,7 @@
 
 #[cfg(not(feature = "unic-ucd-category"))]
 mod mark {
-    use unic_utils::CharDataTable;
+    use unic_char_property::tables::CharDataTable;
 
     const GENERAL_CATEGORY_MARK: CharDataTable<()> =
         include!("../tables/general_category_mark.rsv");

@@ -27,9 +27,8 @@
 //! * [UCD's PropertyAliases.txt](http://www.unicode.org/Public/UCD/latest/ucd/PropertyAliases.txt).
 
 
-#[doc(hidden)]
-#[allow(unused)] // used by char_property macro
-pub extern crate unic_utils;
+#[macro_use]
+extern crate unic_char_range;
 
 
 /// UNIC component version.
@@ -41,6 +40,9 @@ pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
 /// UNIC component description.
 pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
 
+
+// pub because is used in macros, called from macro call-site.
+pub mod tables;
 
 mod macros;
 mod property;
