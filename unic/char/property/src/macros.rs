@@ -50,7 +50,8 @@
 ///
 /// # Syntax (Binary Property)
 ///
-// rustc:1.17.0 cannot find data_table_path, so ignore this test for now.
+// rustc:1.19.0 cannot find data_table_path, so ignore this test for now.
+// TODO: Re-enable after rustc-1.20.0
 /// ```ignore
 /// #[macro_use] extern crate unic_char_property;
 /// # #[macro_use] extern crate unic_char_range;
