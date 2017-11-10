@@ -14,7 +14,7 @@
 //!
 //! ## References
 //!
-//! * <http://www.unicode.org/reports/tr29/#Word_Boundaries>
+//! * <https://www.unicode.org/reports/tr29/#Word_Boundaries>
 
 
 use std::cmp;
@@ -24,7 +24,7 @@ use unic_ucd_segment::WordBreak as WB;
 
 
 /// An iterator over the substrings of a string which, after splitting the string on [word
-/// boundaries](http://www.unicode.org/reports/tr29/#Word_Boundaries), contain any characters with
+/// boundaries](https://www.unicode.org/reports/tr29/#Word_Boundaries), contain any characters with
 /// the [Alphabetic](http://unicode.org/reports/tr44/#Alphabetic) property, or with
 /// [General_Category=Number](http://unicode.org/reports/tr44/#General_Category_Values).
 pub struct Words<'a> {
@@ -59,7 +59,7 @@ impl<'a> Words<'a> {
 
 
 /// External iterator for a string's
-/// [word boundaries](http://www.unicode.org/reports/tr29/#Word_Boundaries).
+/// [word boundaries](https://www.unicode.org/reports/tr29/#Word_Boundaries).
 #[derive(Clone)]
 pub struct WordBounds<'a> {
     string: &'a str,
@@ -207,7 +207,7 @@ impl<'a> Iterator for WordBounds<'a> {
             // characters at the beginning of a block of text, dump them out as one unit.
             //
             // (This is not obvious from the wording of UAX#29, but if you look at the
-            // test cases http://www.unicode.org/Public/UNIDATA/auxiliary/WordBreakTest.txt
+            // test cases https://www.unicode.org/Public/UNIDATA/auxiliary/WordBreakTest.txt
             // then the "correct" interpretation of WB4 becomes apparent.)
             if state != Start {
                 match cat {

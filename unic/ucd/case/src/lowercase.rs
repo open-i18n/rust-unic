@@ -14,7 +14,7 @@
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*Lowercase*](http://www.unicode.org/reports/tr44/#Lowercase).
+    /// [*Lowercase*](https://www.unicode.org/reports/tr44/#Lowercase).
     ///
     /// The value is `true` for lowercase characters, `false` otherwise.
     pub struct Lowercase(bool) {

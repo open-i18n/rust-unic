@@ -14,7 +14,7 @@ use std::char;
 
 #[test]
 fn test_idn_test_data() {
-    // Source: http://www.unicode.org/Public/idna/latest/IdnaTest.txt
+    // Source: https://www.unicode.org/Public/idna/latest/IdnaTest.txt
     for (line_idx, line) in include_str!("../../../data/idna/test/IdnaTest.txt")
         .lines()
         .enumerate()
@@ -74,7 +74,7 @@ fn test_idn_test_data() {
                 // Everybody ignores V2
                 // https://github.com/servo/rust-url/pull/240
                 // https://github.com/whatwg/url/issues/53#issuecomment-181528158
-                // http://www.unicode.org/review/pri317/
+                // https://www.unicode.org/review/pri317/
                 return;
             }
             let res = result.ok();

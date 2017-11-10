@@ -129,5 +129,5 @@ pub extern crate unic_segment as segment;
 pub extern crate unic_ucd as ucd;
 
 
-/// The [Unicode version](http://www.unicode.org/versions/) of data
+/// The [Unicode version](https://www.unicode.org/versions/) of data
 pub use ucd::UNICODE_VERSION;

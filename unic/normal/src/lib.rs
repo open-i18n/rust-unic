@@ -57,7 +57,7 @@ pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
 
 /// Methods for iterating over strings while applying Unicode normalizations
 /// as described in
-/// [Unicode Standard Annex #15](http://www.unicode.org/reports/tr15/).
+/// [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/).
 pub trait StrNormalForm<I: Iterator<Item = char>> {
     /// Returns an iterator over the string in Unicode Normalization Form D
     /// (canonical decomposition).

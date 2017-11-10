@@ -16,7 +16,7 @@ use unic_char_property::{CharProperty, CustomCharProperty, PartialCharProperty};
 
 
 /// Represents values of the Unicode character property
-/// [*Age*](http://www.unicode.org/reports/tr44/#Age).
+/// [*Age*](https://www.unicode.org/reports/tr44/#Age).
 ///
 /// The Age property indicates the age of a character, which is defined based on the first Unicode
 /// version in which a particular Unicode character was *assigned* (as *character* or
@@ -36,7 +36,7 @@ use unic_char_property::{CharProperty, CustomCharProperty, PartialCharProperty};
 /// The *latest* (smallest) value for this property is always equal to or greater than
 /// `UNICODE_VERSION`. (Only not equal when `UNICODE_VERSION` has non-zero *micro* value.)
 ///
-/// * <http://www.unicode.org/reports/tr44/#Character_Age>
+/// * <https://www.unicode.org/reports/tr44/#Character_Age>
 #[derive(Clone, Copy, Eq, PartialEq, Ord, Debug, Hash)]
 pub struct Age(UnicodeVersion);
 

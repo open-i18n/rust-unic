@@ -26,7 +26,7 @@ lazy_static! {
 
 /// Emoji Character Properties
 ///
-/// Ref: <http://www.unicode.org/reports/tr51/#Emoji_Properties>
+/// Ref: <https://www.unicode.org/reports/tr51/#Emoji_Properties>
 #[derive(Clone, Debug, Default)]
 pub struct EmojiData {
     /// Characters that are emoji.

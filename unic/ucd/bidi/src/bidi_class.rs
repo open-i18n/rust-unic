@@ -18,11 +18,11 @@ use unic_char_property::TotalCharProperty;
 
 char_property! {
     /// Represents the Unicode character
-    /// [*Bidi_Class*](http://www.unicode.org/reports/tr44/#Bidi_Class) property, also known as the
+    /// [*Bidi_Class*](https://www.unicode.org/reports/tr44/#Bidi_Class) property, also known as the
     /// *bidirectional character type*.
     ///
-    /// * <http://www.unicode.org/reports/tr9/#Bidirectional_Character_Types>
-    /// * <http://www.unicode.org/reports/tr44/#Bidi_Class_Values>
+    /// * <https://www.unicode.org/reports/tr9/#Bidirectional_Character_Types>
+    /// * <https://www.unicode.org/reports/tr44/#Bidi_Class_Values>
     pub enum BidiClass {
         abbr => "bc";
         long => "Bidi_Class";
@@ -191,21 +191,21 @@ char_property! {
     }
 
     /// Abbreviated name aliases for the
-    /// [*Bidi_Class*](http://www.unicode.org/reports/tr44/#Bidi_Class) property.
+    /// [*Bidi_Class*](https://www.unicode.org/reports/tr44/#Bidi_Class) property.
     ///
     /// ## See Also
     ///
-    /// - <http://www.unicode.org/reports/tr44/#Bidi_Class_Values>
-    /// - <http://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#Bidi_Class>
+    /// - <https://www.unicode.org/reports/tr44/#Bidi_Class_Values>
+    /// - <https://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#Bidi_Class>
     pub mod abbr_names for abbr;
 
     /// Long name aliases for the
-    /// [*Bidi_Class*](http://www.unicode.org/reports/tr44/#Bidi_Class) property.
+    /// [*Bidi_Class*](https://www.unicode.org/reports/tr44/#Bidi_Class) property.
     ///
     /// ## See Also
     ///
-    /// - <http://www.unicode.org/reports/tr44/#Bidi_Class_Values>
-    /// - <http://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#Bidi_Class>
+    /// - <https://www.unicode.org/reports/tr44/#Bidi_Class_Values>
+    /// - <https://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt#Bidi_Class>
     pub mod long_names for long;
 }
 
@@ -304,7 +304,7 @@ impl BidiClass {
 /// Represents **Category** of Unicode character `Bidi_Class` property, as demostrated under
 /// "Table 4. Bidirectional Character Types".
 ///
-/// * <http://www.unicode.org/reports/tr9/#Table_Bidirectional_Character_Types>
+/// * <https://www.unicode.org/reports/tr9/#Table_Bidirectional_Character_Types>
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum BidiClassCategory {
     /// Left-to-right and right-to-left types.

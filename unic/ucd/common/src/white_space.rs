@@ -14,7 +14,7 @@
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*White_Space*](http://www.unicode.org/reports/tr44/#White_Space).
+    /// [*White_Space*](https://www.unicode.org/reports/tr44/#White_Space).
     ///
     /// The value is `true` for characters that change when lowercased, `false` otherwise.
     pub struct WhiteSpace(bool) {

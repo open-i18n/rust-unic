@@ -40,7 +40,7 @@ pub struct ParagraphInfo {
 
     /// The paragraph embedding level.
     ///
-    /// <http://www.unicode.org/reports/tr9/#BD4>
+    /// <https://www.unicode.org/reports/tr9/#BD4>
     pub level: Level,
 }
 
@@ -63,7 +63,7 @@ pub struct InitialInfo<'text> {
 impl<'text> InitialInfo<'text> {
     /// Find the paragraphs and `BidiClass`es in a string of text.
     ///
-    /// <http://www.unicode.org/reports/tr9/#The_Paragraph_Level>
+    /// <https://www.unicode.org/reports/tr9/#The_Paragraph_Level>
     ///
     /// Also sets the class for each First Strong Isolate initiator (FSI) to LRI or RLI if a strong
     /// character is found before the matching PDI.  If no strong character is found, the class will
@@ -95,7 +95,7 @@ impl<'text> InitialInfo<'text> {
                     para_start = para_end;
                     // TODO: Support defaulting to direction of previous paragraph
                     //
-                    // <http://www.unicode.org/reports/tr9/#HL1>
+                    // <https://www.unicode.org/reports/tr9/#HL1>
                     para_level = default_para_level;
                     isolate_stack.clear();
                 }
@@ -281,7 +281,7 @@ impl<'text> BidiInfo<'text> {
     ///
     /// `line` is a range of bytes indices within `levels`.
     ///
-    /// <http://www.unicode.org/reports/tr9/#Reordering_Resolved_Levels>
+    /// <https://www.unicode.org/reports/tr9/#Reordering_Resolved_Levels>
     pub fn visual_runs(
         &self,
         para: &ParagraphInfo,
@@ -293,7 +293,7 @@ impl<'text> BidiInfo<'text> {
         let mut levels = self.levels.clone();
 
         // Reset some whitespace chars to paragraph level.
-        // <http://www.unicode.org/reports/tr9/#L1>
+        // <https://www.unicode.org/reports/tr9/#L1>
         let line_str: &str = &self.text[line.clone()];
         let mut reset_from: Option<usize> = Some(0);
         let mut reset_to: Option<usize> = None;
@@ -355,7 +355,7 @@ impl<'text> BidiInfo<'text> {
         let run_count = runs.len();
 
         // Re-order the odd runs.
-        // <http://www.unicode.org/reports/tr9/#L2>
+        // <https://www.unicode.org/reports/tr9/#L2>
 
         // Stop at the lowest *odd* level.
         min_level = min_level.new_lowest_ge_rtl().expect("Level error");

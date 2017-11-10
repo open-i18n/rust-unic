@@ -14,7 +14,7 @@
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*Changes_When_Titlecased*](http://www.unicode.org/reports/tr44/#CWT).
+    /// [*Changes_When_Titlecased*](https://www.unicode.org/reports/tr44/#CWT).
     ///
     /// The value is `true` for characters that change when titlecased, `false` otherwise.
     pub struct ChangesWhenTitlecased(bool) {

@@ -14,7 +14,7 @@ forcing dependent crates to import all UCD data.
 ## Crates
 Here's a list of components (available or planned) for this super-crate:
 
-- [X] `version`: The [Unicode Version](http://www.unicode.org/versions/) of UCD
+- [X] `version`: The [Unicode Version](https://www.unicode.org/versions/) of UCD
   data.
 
 - [X] `age`: Character Age property.

@@ -14,7 +14,7 @@
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*Uppercase*](http://www.unicode.org/reports/tr44/#Uppercase).
+    /// [*Uppercase*](https://www.unicode.org/reports/tr44/#Uppercase).
     ///
     /// The value is `true` for uppercase characters, `false` otherwise.
     pub struct Uppercase(bool) {

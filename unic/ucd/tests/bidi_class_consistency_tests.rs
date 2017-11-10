@@ -12,7 +12,7 @@
 
 //! Based on *General Scope* of *Bidirectional Character Types* table.
 //!
-//! Reference: <http://www.unicode.org/reports/tr9/#Table_Bidirectional_Character_Types>
+//! Reference: <https://www.unicode.org/reports/tr9/#Table_Bidirectional_Character_Types>
 
 
 #[macro_use]
@@ -34,34 +34,34 @@ fn test_from_bidi_class() {
         match BC::of(cp) {
             // == Strong ==
 
-            // <http://www.unicode.org/reports/tr9/#L>
+            // <https://www.unicode.org/reports/tr9/#L>
             BC::LeftToRight => {
                 // TODO: Impl using Script property, etc
             }
 
-            // <http://www.unicode.org/reports/tr9/#R>
+            // <https://www.unicode.org/reports/tr9/#R>
             BC::RightToLeft => {
                 // TODO: Impl using Script property, etc
             }
 
-            // <http://www.unicode.org/reports/tr9/#AL>
+            // <https://www.unicode.org/reports/tr9/#AL>
             BC::ArabicLetter => {
                 // TODO: Impl using Script property, etc
             }
 
             // == Weak ==
 
-            // <http://www.unicode.org/reports/tr9/#EN>
+            // <https://www.unicode.org/reports/tr9/#EN>
             BC::EuropeanNumber => {
                 assert!(GC::of(cp).is_number());
             }
 
-            // <http://www.unicode.org/reports/tr9/#ES>
+            // <https://www.unicode.org/reports/tr9/#ES>
             BC::EuropeanSeparator => {
                 assert!(matches!(GC::of(cp), GC::MathSymbol | GC::DashPunctuation));
             }
 
-            // <http://www.unicode.org/reports/tr9/#ET>
+            // <https://www.unicode.org/reports/tr9/#ET>
             BC::EuropeanTerminator => {
                 assert!(
                     GC::of(cp).is_symbol()
@@ -69,7 +69,7 @@ fn test_from_bidi_class() {
                 );
             }
 
-            // <http://www.unicode.org/reports/tr9/#AN>
+            // <https://www.unicode.org/reports/tr9/#AN>
             BC::ArabicNumber => {
                 assert!(matches!(
                     GC::of(cp),
@@ -77,7 +77,7 @@ fn test_from_bidi_class() {
                 ));
             }
 
-            // <http://www.unicode.org/reports/tr9/#CS>
+            // <https://www.unicode.org/reports/tr9/#CS>
             BC::CommonSeparator => {
                 assert!(matches!(
                     GC::of(cp),
@@ -87,29 +87,29 @@ fn test_from_bidi_class() {
 
             // Every NSM must be a GC=Mark
             //
-            // <http://www.unicode.org/reports/tr9/#NSM>
+            // <https://www.unicode.org/reports/tr9/#NSM>
             BC::NonspacingMark => {
                 assert!(GC::of(cp).is_mark());
             }
 
-            // <http://www.unicode.org/reports/tr9/#BN>
+            // <https://www.unicode.org/reports/tr9/#BN>
             BC::BoundaryNeutral => {
                 assert!(GC::of(cp).is_other());
             }
 
             // == Neutral ==
 
-            // <http://www.unicode.org/reports/tr9/#B>
+            // <https://www.unicode.org/reports/tr9/#B>
             BC::ParagraphSeparator => {
                 assert!(matches!(GC::of(cp), GC::Control | GC::ParagraphSeparator));
             }
 
-            // <http://www.unicode.org/reports/tr9/#S>
+            // <https://www.unicode.org/reports/tr9/#S>
             BC::SegmentSeparator => {
                 assert!(matches!(GC::of(cp), GC::Control));
             }
 
-            // <http://www.unicode.org/reports/tr9/#WS>
+            // <https://www.unicode.org/reports/tr9/#WS>
             BC::WhiteSpace => {
                 assert!(matches!(
                     GC::of(cp),
@@ -117,7 +117,7 @@ fn test_from_bidi_class() {
                 ));
             }
 
-            // <http://www.unicode.org/reports/tr9/#ON>
+            // <https://www.unicode.org/reports/tr9/#ON>
             BC::OtherNeutral => {
                 assert!(!matches!(
                     GC::of(cp),
@@ -152,7 +152,7 @@ fn test_from_general_category() {
         if !GC::of(cp).is_mark() {
             // Every GC!=Mark must not be an NSM
             //
-            // <http://www.unicode.org/reports/tr9/#NSM>
+            // <https://www.unicode.org/reports/tr9/#NSM>
             assert_ne!(BC::of(cp), BC::NonspacingMark);
         }
     }

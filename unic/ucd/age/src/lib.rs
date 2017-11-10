@@ -17,10 +17,10 @@
 //!
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
 //!
-//! Accessor for character [**Age**](http://www.unicode.org/reports/tr44/#Age) property from
+//! Accessor for character [**Age**](https://www.unicode.org/reports/tr44/#Age) property from
 //! Unicode Character Database (UCD)
 //!
-//! * <http://www.unicode.org/reports/tr44/#Character_Age>
+//! * <https://www.unicode.org/reports/tr44/#Character_Age>
 
 
 extern crate unic_char_property;
@@ -36,5 +36,5 @@ pub use unic_ucd_version::UnicodeVersion;
 pub use age::{Age, CharAge};
 
 
-/// The [Unicode version](http://www.unicode.org/versions/) of data
+/// The [Unicode version](https://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

@@ -14,7 +14,7 @@
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*Changes_When_Uppercased*](http://www.unicode.org/reports/tr44/#CWU).
+    /// [*Changes_When_Uppercased*](https://www.unicode.org/reports/tr44/#CWU).
     ///
     /// The value is `true` for characters that change when uppercased, `false` otherwise.
     pub struct ChangesWhenUppercased(bool) {

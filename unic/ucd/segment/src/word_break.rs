@@ -13,9 +13,9 @@
 //!
 //! ## References
 //!
-//! * <http://www.unicode.org/reports/tr44/#Word_Break>
-//! * <http://www.unicode.org/reports/tr29/#Word_Boundaries>
-//! * <http://www.unicode.org/reports/tr29/#Table_Word_Break_Property_Values>
+//! * <https://www.unicode.org/reports/tr44/#Word_Break>
+//! * <https://www.unicode.org/reports/tr29/#Word_Boundaries>
+//! * <https://www.unicode.org/reports/tr29/#Table_Word_Break_Property_Values>
 
 
 use unic_char_property::TotalCharProperty;
@@ -23,14 +23,14 @@ use unic_char_property::TotalCharProperty;
 
 char_property! {
     /// Represents the Unicode character
-    /// [*Word_Break*](http://www.unicode.org/reports/tr44/#Word_Break)
+    /// [*Word_Break*](https://www.unicode.org/reports/tr44/#Word_Break)
     /// property.
     ///
     /// ## References
     ///
-    /// * <http://www.unicode.org/reports/tr44/#Word_Break>
-    /// * <http://www.unicode.org/reports/tr29/#Word_Boundaries>
-    /// * <http://www.unicode.org/reports/tr29/#Table_Word_Break_Property_Values>
+    /// * <https://www.unicode.org/reports/tr44/#Word_Break>
+    /// * <https://www.unicode.org/reports/tr29/#Word_Boundaries>
+    /// * <https://www.unicode.org/reports/tr29/#Table_Word_Break_Property_Values>
     pub enum WordBreak {
         abbr => "WB";
         long => "Word_Break";
@@ -268,7 +268,7 @@ char_property! {
         /// Emoji characters listed as `Emoji_Modifier_Base=Yes` in `emoji-data.txt`, which do not
         /// occur after ZWJ in `emoji-zwj-sequences.txt`.
         ///
-        /// See <http://www.unicode.org/reports/tr51/>.
+        /// See <https://www.unicode.org/reports/tr51/>.
         | EBase {
             abbr => EB,
             long => E_Base,
@@ -277,7 +277,7 @@ char_property! {
 
         /// Emoji characters listed as `Emoji_Modifer=Yes` in `emoji-data.txt`.
         ///
-        /// See <http://www.unicode.org/reports/tr51/>.
+        /// See <https://www.unicode.org/reports/tr51/>.
         | EModifier {
             abbr => EM,
             long => E_Modifier,
@@ -287,7 +287,7 @@ char_property! {
         /// Emoji characters that do not break from a previous ZWJ in a defined emoji ZWJ sequence,
         /// and are not listed as `Emoji_Modifier_Base=Yes` in `emoji-data.txt`.
         ///
-        /// See <http://www.unicode.org/reports/tr51/>.
+        /// See <https://www.unicode.org/reports/tr51/>.
         | GlueAfterZwj {
             abbr => GAZ,
             long => Glue_After_Zwj,
@@ -297,7 +297,7 @@ char_property! {
         /// Emoji characters listed as `Emoji_Modifer_Base=Yes` in `emoji_data.txt`, and also occur
         /// after ZWJ in `emoji-zwj-sequences.txt`.
         ///
-        /// See <http://www.unicode.org/reports/tr51/>.
+        /// See <https://www.unicode.org/reports/tr51/>.
         | EBaseGAZ {
             abbr => EBG,
             long => E_Base_GAZ,
@@ -313,21 +313,21 @@ char_property! {
     }
 
     /// Abbreviated name aliases for the
-    /// [*Word_Break*](http://www.unicode.org/reports/tr44/#Word_Break)
+    /// [*Word_Break*](https://www.unicode.org/reports/tr44/#Word_Break)
     /// property.
     ///
     /// ## See Also
     ///
-    /// * <http://www.unicode.org/reports/tr29/#Word_Boundaries>
+    /// * <https://www.unicode.org/reports/tr29/#Word_Boundaries>
     pub mod abbr_names for abbr;
 
     /// Long name aliases for the
-    /// [*Word_Break*](http://www.unicode.org/reports/tr44/#Word_Break)
+    /// [*Word_Break*](https://www.unicode.org/reports/tr44/#Word_Break)
     /// property.
     ///
     /// ## See Also
     ///
-    /// * <http://www.unicode.org/reports/tr29/#Word_Boundaries>
+    /// * <https://www.unicode.org/reports/tr29/#Word_Boundaries>
     pub mod long_names for long;
 }
 

@@ -160,7 +160,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
     true
 }
 
-// http://www.unicode.org/reports/tr46/#Validity_Criteria
+// https://www.unicode.org/reports/tr46/#Validity_Criteria
 fn validate(label: &str, is_bidi_domain: bool, flags: Flags, errors: &mut Vec<Error>) {
     let first_char = label.chars().next();
     if first_char == None {
@@ -211,7 +211,7 @@ fn validate(label: &str, is_bidi_domain: bool, flags: Flags, errors: &mut Vec<Er
     }
 }
 
-// http://www.unicode.org/reports/tr46/#Processing
+// https://www.unicode.org/reports/tr46/#Processing
 fn processing(domain: &str, flags: Flags, errors: &mut Vec<Error>) -> String {
     use self::bidi_class::abbr_names::*;
 
@@ -278,18 +278,18 @@ fn processing(domain: &str, flags: Flags, errors: &mut Vec<Error>) -> String {
 pub struct Flags {
     /// *UseSTD3ASCIIRules* flag.
     ///
-    /// <http://www.unicode.org/reports/tr46/#UseSTD3ASCIIRules>
+    /// <https://www.unicode.org/reports/tr46/#UseSTD3ASCIIRules>
     pub use_std3_ascii_rules: bool,
 
     /// *Transitional_Processing* or *Nontransitional Processing*, for transitional handling of
     /// *Deviation* characters.
     ///
-    /// <http://www.unicode.org/reports/tr46/#Conformance>
+    /// <https://www.unicode.org/reports/tr46/#Conformance>
     pub transitional_processing: bool,
 
     /// *VerifyDnsLength* flag, to verify DNS length restrictions.
     ///
-    /// <http://www.unicode.org/reports/tr46/#ToASCII>
+    /// <https://www.unicode.org/reports/tr46/#ToASCII>
     pub verify_dns_length: bool,
 }
 
@@ -312,7 +312,7 @@ enum Error {
 #[derive(Debug, Eq, PartialEq)]
 pub struct Errors(Vec<Error>);
 
-/// <http://www.unicode.org/reports/tr46/#ToASCII>
+/// <https://www.unicode.org/reports/tr46/#ToASCII>
 pub fn to_ascii(domain: &str, flags: Flags) -> Result<String, Errors> {
     let mut errors = Vec::new();
     let mut result = String::new();
@@ -355,7 +355,7 @@ pub fn to_ascii(domain: &str, flags: Flags) -> Result<String, Errors> {
     }
 }
 
-/// <http://www.unicode.org/reports/tr46/#ToUnicode>
+/// <https://www.unicode.org/reports/tr46/#ToUnicode>
 ///
 /// Only `use_std3_ascii_rules` is used in `flags`.
 pub fn to_unicode(domain: &str, mut flags: Flags) -> (String, Result<(), Errors>) {

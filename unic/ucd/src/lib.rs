@@ -30,7 +30,7 @@ pub extern crate unic_ucd_segment as segment;
 pub extern crate unic_ucd_version as version;
 
 
-/// The [Unicode version](http://www.unicode.org/versions/) of data
+/// The [Unicode version](https://www.unicode.org/versions/) of data
 pub use version::UNICODE_VERSION;
 
 
