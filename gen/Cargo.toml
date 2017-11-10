@@ -14,7 +14,7 @@ travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 unic-char-range = { path = "../unic/char/range/", version = "0.6.0" }
 
 # Command line argument parsing
-clap = "2.25"
+clap = "2.27"
 
 # Memoization
 lazy_static = "0.2"
