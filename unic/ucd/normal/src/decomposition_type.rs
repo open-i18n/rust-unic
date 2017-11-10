@@ -19,9 +19,9 @@ use hangul;
 
 char_property! {
     /// Represents the Unicode character
-    /// [*Decomposition_Type*](http://www.unicode.org/reports/tr44/#Decomposition_Type) property.
+    /// [*Decomposition_Type*](https://www.unicode.org/reports/tr44/#Decomposition_Type) property.
     ///
-    /// * <http://www.unicode.org/reports/tr44/#Character_Decomposition_Mappings>
+    /// * <https://www.unicode.org/reports/tr44/#Character_Decomposition_Mappings>
     pub enum DecompositionType {
         abbr => "dt";
         long => "Decomposition_Type";

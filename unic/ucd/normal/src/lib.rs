@@ -53,11 +53,11 @@ pub use decomposition_type::DecompositionType;
 use unic_ucd_version::UnicodeVersion;
 
 
-/// The [Unicode version](http://www.unicode.org/versions/) of data
+/// The [Unicode version](https://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");
 
 /// Compose two characters into a single character, if possible.
-/// See [Unicode Standard Annex #15](http://www.unicode.org/reports/tr15/)
+/// See [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/)
 /// for more information.
 pub fn compose(a: char, b: char) -> Option<char> {
     hangul::compose(a, b).or_else(|| canonical_composition(a).and_then(|table| table.find(b)))

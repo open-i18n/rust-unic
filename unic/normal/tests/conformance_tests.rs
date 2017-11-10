@@ -35,7 +35,7 @@ fn test_nfc_nfd_nfkc_nfkd() {
 
     for &(s1, s2, s3, s4, s5) in TEST_DATA {
         // these invariants come from the CONFORMANCE section of
-        // http://www.unicode.org/Public/UNIDATA/NormalizationTest.txt
+        // https://www.unicode.org/Public/UNIDATA/NormalizationTest.txt
 
         // NFC
         {

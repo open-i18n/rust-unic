@@ -14,7 +14,7 @@
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*Case_Ignorable*](http://www.unicode.org/reports/tr44/#Case_Ignorable).
+    /// [*Case_Ignorable*](https://www.unicode.org/reports/tr44/#Case_Ignorable).
     ///
     /// The value is `true` for case-ignorable characters, `false` otherwise.
     pub struct CaseIgnorable(bool) {

@@ -14,7 +14,7 @@
 //!
 //! ## References
 //!
-//! * <http://www.unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries>
+//! * <https://www.unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries>
 
 
 use std::cmp;
@@ -97,7 +97,7 @@ impl<'a> DoubleEndedIterator for GraphemeIndices<'a> {
 
 
 /// External iterator for a string's
-/// [grapheme clusters](http://www.unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries).
+/// [grapheme clusters](https://www.unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries).
 #[derive(Clone)]
 pub struct Graphemes<'a> {
     string: &'a str,

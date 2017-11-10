@@ -9,7 +9,6 @@
 // except according to those terms.
 
 
-#![no_std]
 #![forbid(unsafe_code, missing_docs, unconditional_recursion)]
 
 //! # UNIC — Unicode Character Database
@@ -20,18 +19,14 @@
 //! Standard Annex #44 - Unicode Character Database](http://unicode.org/reports/tr44/).
 
 
-pub extern crate unic_ucd_age as age;
-pub extern crate unic_ucd_bidi as bidi;
-pub extern crate unic_ucd_case as case;
-pub extern crate unic_ucd_category as category;
-pub extern crate unic_ucd_name as name;
-pub extern crate unic_ucd_normal as normal;
-pub extern crate unic_ucd_segment as segment;
-pub extern crate unic_ucd_version as version;
+pub extern crate unic_emoji_char as char;
 
 
+/* TODO: Figure out relation between UNICODE_VERSION and EMOJI_VERSION
 /// The [Unicode version](https://www.unicode.org/versions/) of data
-pub use version::UNICODE_VERSION;
+pub use char::UNICODE_VERSION;
+pub use char::EMOJI_VERSION;
+*/
 
 
 /// UNIC component version.
@@ -44,37 +39,4 @@ pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
 pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
 
 
-pub use version::UnicodeVersion;
-
-pub use age::{Age, CharAge};
-
-pub use bidi::{is_bidi_mirrored, BidiClass, CharBidiClass, StrBidiClass};
-
-pub use case::{
-    changes_when_casefolded,
-    changes_when_casemapped,
-    changes_when_lowercased,
-    changes_when_titlecased,
-    changes_when_uppercased,
-    is_case_ignorable,
-    is_cased,
-    is_lowercase,
-    is_uppercase,
-    CaseIgnorable,
-    Cased,
-    ChangesWhenCasefolded,
-    ChangesWhenCasemapped,
-    ChangesWhenLowercased,
-    ChangesWhenTitlecased,
-    ChangesWhenUppercased,
-    Lowercase,
-    Uppercase,
-};
-
-pub use category::GeneralCategory;
-
-pub use name::Name;
-
-pub use normal::CanonicalCombiningClass;
-
-pub use segment::{GraphemeClusterBreak, SentenceBreak, WordBreak};
+pub use char::{is_emoji_component, EmojiComponent};

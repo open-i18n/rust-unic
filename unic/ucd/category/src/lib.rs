@@ -24,7 +24,7 @@
 //! punctuation, or a symbol, and if so, of what type? Other *General_Category* values define the
 //! classification of code points which are not assigned to regular graphic characters, including
 //! such statuses as private-use, control, surrogate code point, and reserved unassigned.
-//!
+//! >
 //! > Many characters have multiple uses, and not all such cases can be captured entirely by the
 //! *General_Category* value. For example, the *General_Category* value of Latin, Greek, or Hebrew
 //! letters does not attempt to cover (or preclude) the numerical use of such letters as Roman
@@ -32,7 +32,7 @@
 //! as Nd (decimal digit) neither attempts to cover (or preclude) the occasional use of these digits
 //! as letters in various orthographies. The *General_Category* is simply the first-order, most
 //! usual categorization of a character.
-//!
+//! >
 //! > For more information about the *General_Category* property, see Chapter 4, Character
 //! Properties in [*Unicode*](http://unicode.org/reports/tr41/tr41-21.html#Unicode).
 //!
@@ -54,5 +54,5 @@ pub use category::GeneralCategory;
 
 use unic_ucd_version::UnicodeVersion;
 
-/// The [Unicode version](http://www.unicode.org/versions/) of data
+/// The [Unicode version](https://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

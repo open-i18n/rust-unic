@@ -11,7 +11,7 @@
 
 //! 3.3.3 Preparations for Implicit Processing
 //!
-//! http://www.unicode.org/reports/tr9/#Preparations_for_Implicit_Processing
+//! https://www.unicode.org/reports/tr9/#Preparations_for_Implicit_Processing
 
 use std::cmp::max;
 use std::ops::Range;
@@ -52,7 +52,7 @@ pub fn isolating_run_sequences(
     let runs = level_runs(levels, original_classes);
 
     // Compute the set of isolating run sequences.
-    // http://www.unicode.org/reports/tr9/#BD13
+    // https://www.unicode.org/reports/tr9/#BD13
     let mut sequences = Vec::with_capacity(runs.len());
 
     // When we encounter an isolate initiator, we push the current sequence onto the
@@ -88,7 +88,7 @@ pub fn isolating_run_sequences(
     sequences.extend(stack.into_iter().rev().filter(|seq| !seq.is_empty()));
 
     // Determine the `sos` and `eos` class for each sequence.
-    // http://www.unicode.org/reports/tr9/#X10
+    // https://www.unicode.org/reports/tr9/#X10
     sequences
         .into_iter()
         .map(|sequence: Vec<LevelRun>| {
@@ -140,7 +140,7 @@ pub fn isolating_run_sequences(
 
 /// Finds the level runs in a paragraph.
 ///
-/// http://www.unicode.org/reports/tr9/#BD7
+/// https://www.unicode.org/reports/tr9/#BD7
 fn level_runs(levels: &[Level], original_classes: &[BidiClass]) -> Vec<LevelRun> {
     assert_eq!(levels.len(), original_classes.len());
 
@@ -166,7 +166,7 @@ fn level_runs(levels: &[Level], original_classes: &[BidiClass]) -> Vec<LevelRun>
 
 /// Should this character be ignored in steps after X9?
 ///
-/// http://www.unicode.org/reports/tr9/#X9
+/// https://www.unicode.org/reports/tr9/#X9
 pub fn removed_by_x9(class: BidiClass) -> bool {
     matches!(class, RLE | LRE | RLO | LRO | PDF | BN)
 }
@@ -189,7 +189,7 @@ mod tests {
         );
     }
 
-    // From http://www.unicode.org/reports/tr9/#BD13
+    // From https://www.unicode.org/reports/tr9/#BD13
     #[cfg_attr(rustfmt, rustfmt_skip)]
     #[test]
     fn test_isolating_run_sequences() {
@@ -234,7 +234,7 @@ mod tests {
         );
     }
 
-    // From http://www.unicode.org/reports/tr9/#X10
+    // From https://www.unicode.org/reports/tr9/#X10
     #[cfg_attr(rustfmt, rustfmt_skip)]
     #[test]
     fn test_isolating_run_sequences_sos_and_eos() {

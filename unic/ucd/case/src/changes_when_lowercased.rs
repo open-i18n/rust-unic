@@ -14,7 +14,7 @@
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*Changes_When_Lowercased*](http://www.unicode.org/reports/tr44/#CWL).
+    /// [*Changes_When_Lowercased*](https://www.unicode.org/reports/tr44/#CWL).
     ///
     /// The value is `true` for characters that change when lowercased, `false` otherwise.
     pub struct ChangesWhenLowercased(bool) {

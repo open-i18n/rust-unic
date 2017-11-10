@@ -33,7 +33,7 @@ pub fn generate(dir: &Path) {
 
 // Default `Bidi_Class` for unassigned codepoints.
 //
-// Ref: <http://www.unicode.org/Public/UNIDATA/extracted/DerivedBidiClass.txt>
+// Ref: <https://www.unicode.org/Public/UNIDATA/extracted/DerivedBidiClass.txt>
 const BIDI_CLASS_DEFAULTS: &[(u32, u32, &str)] = &[
     (0x0600, 0x07BF, "AL"),
     (0x08A0, 0x08FF, "AL"),

@@ -19,7 +19,7 @@ use hangul;
 
 /// Compute canonical Unicode decomposition for character.
 ///
-/// See [Unicode Standard Annex #15](http://www.unicode.org/reports/tr15/) for more information.
+/// See [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/) for more information.
 pub fn decompose_canonical<F>(ch: char, mut callback: F)
 where
     F: FnMut(char),
@@ -29,7 +29,7 @@ where
 
 /// Compute canonical or compatible Unicode decomposition for character.
 ///
-/// See [Unicode Standard Annex #15](http://www.unicode.org/reports/tr15/) for more information.
+/// See [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/) for more information.
 pub fn decompose_compatible<F>(ch: char, mut callback: F)
 where
     F: FnMut(char),

@@ -13,7 +13,7 @@
 //!
 //! See [`Level`](struct.Level.html) for more details.
 //!
-//! http://www.unicode.org/reports/tr9/#BD2
+//! <https://www.unicode.org/reports/tr9/#BD2>
 
 
 use std::convert::{From, Into};
@@ -31,7 +31,7 @@ use unic_ucd_bidi::BidiClass;
 /// mutating an existing level, with the value smaller than `0` (before conversion to `u8`) or
 /// larger than 125 results in an `Error`.
 ///
-/// http://www.unicode.org/reports/tr9/#BD2
+/// <https://www.unicode.org/reports/tr9/#BD2>
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Level(u8);

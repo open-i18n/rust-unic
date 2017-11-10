@@ -47,5 +47,5 @@ pub use numeric::is_numeric;
 
 use unic_ucd_version::UnicodeVersion;
 
-/// The [Unicode version](http://www.unicode.org/versions/) of data
+/// The [Unicode version](https://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

@@ -58,7 +58,7 @@ impl NumericCharProperty<u8> for CanonicalCombiningClass {
 
 
 // TODO: Once we fully adopt 1.20 change these to associated consts on CanonicalCombiningClass
-/// *Canonical_Combining_Class*es by their name
+/// *Canonical_Combining_Class* values by their name
 #[allow(non_upper_case_globals)]
 pub mod values {
     use super::CanonicalCombiningClass as CCC;

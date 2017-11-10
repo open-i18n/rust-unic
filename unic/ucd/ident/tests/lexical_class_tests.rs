@@ -21,7 +21,7 @@ use unic_ucd_ident::{is_pattern_syntax, is_pattern_whitespace};
 use regex::Regex;
 
 #[test]
-/// ref: <http://www.unicode.org/reports/tr31/#Table_Lexical_Classes_for_Identifiers>
+/// ref: <https://www.unicode.org/reports/tr31/#Table_Lexical_Classes_for_Identifiers>
 fn test_id_derivation() {
     let other_start: BTreeSet<char> = {
         Regex::new(

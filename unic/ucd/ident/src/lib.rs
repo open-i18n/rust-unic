@@ -26,7 +26,7 @@
 //!   because they are consistent under NFKC normalization_
 //! - `pattern` (optional): the `Pattern_Syntax` and `Pattern_White_Space` properties
 //!
-//! [UAX31 Unicode Identifier and Pattern Syntax]: <http://www.unicode.org/reports/tr31/>
+//! [UAX31 Unicode Identifier and Pattern Syntax]: <https://www.unicode.org/reports/tr31/>
 
 #[macro_use]
 extern crate unic_char_property;
@@ -134,5 +134,5 @@ pub use pattern::{is_pattern_syntax, is_pattern_whitespace, PatternSyntax, Patte
 
 use unic_ucd_version::UnicodeVersion;
 
-/// The [Unicode version](http://www.unicode.org/versions/) of data
+/// The [Unicode version](https://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

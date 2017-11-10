@@ -125,7 +125,7 @@ pub struct DerivedCoreProperties {
     ///     - U+FFF9-FFFB (annotation characters)
     ///     - U+0600-0605, U+06DD, U+070F, U+08E2, U+110BD (Cf characters that should be visible)
     ///
-    /// [Display of Unsupported Characters]: http://www.unicode.org/faq/unsup_char.html
+    /// [Display of Unsupported Characters]: https://www.unicode.org/faq/unsup_char.html
     /// [Unicode]: http://unicode.org/reports/tr41/tr41-21.html#Unicode
     pub default_ignorable_code_point: BTreeSet<char>,
 

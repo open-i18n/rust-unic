@@ -64,7 +64,7 @@
 //! ]);
 //! ```
 //!
-//! [tr9]: http://www.unicode.org/reports/tr9/
+//! [tr9]: https://www.unicode.org/reports/tr9/
 
 
 extern crate unic_ucd_bidi;

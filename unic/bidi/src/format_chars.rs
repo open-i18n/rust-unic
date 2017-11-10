@@ -11,7 +11,7 @@
 
 //! Directional Formatting Characters
 //!
-//! <http://www.unicode.org/reports/tr9/#Directional_Formatting_Characters>
+//! <https://www.unicode.org/reports/tr9/#Directional_Formatting_Characters>
 
 // == Implicit ==
 /// ARABIC LETTER MARK

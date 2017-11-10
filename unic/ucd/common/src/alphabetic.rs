@@ -14,7 +14,7 @@
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*Alphabetic*](http://www.unicode.org/reports/tr44/#Alphabetic).
+    /// [*Alphabetic*](https://www.unicode.org/reports/tr44/#Alphabetic).
     ///
     /// The value is `true` for characters that change when lowercased, `false` otherwise.
     pub struct Alphabetic(bool) {

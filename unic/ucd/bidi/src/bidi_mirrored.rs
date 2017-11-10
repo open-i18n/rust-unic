@@ -15,7 +15,7 @@
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*Bidi_Mirrored*](http://www.unicode.org/reports/tr44/#Bidi_Mirrored).
+    /// [*Bidi_Mirrored*](https://www.unicode.org/reports/tr44/#Bidi_Mirrored).
     ///
     /// The value is `true` if the character is a "mirrored" character in bidirectional context,
     /// `false` otherwise.

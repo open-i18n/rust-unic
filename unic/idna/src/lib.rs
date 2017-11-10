@@ -19,7 +19,7 @@
 //! This UNIC component implements algorithms from [Unicode Technical Standard #46 - Unicode IDNA
 //! Compatibility Processing](http://unicode.org/reports/tr46/).
 //!
-//! Quoting from [UTS #46’s introduction](http://www.unicode.org/reports/tr46/#Introduction):
+//! Quoting from [UTS #46’s introduction](https://www.unicode.org/reports/tr46/#Introduction):
 //!
 //! > Initially, domain names were restricted to ASCII characters.
 //! > A system was introduced in 2003 for internationalized domain names (IDN).

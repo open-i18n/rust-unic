@@ -15,7 +15,7 @@
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*Bidi_Control*](http://www.unicode.org/reports/tr44/#Bidi_Control).
+    /// [*Bidi_Control*](https://www.unicode.org/reports/tr44/#Bidi_Control).
     ///
     /// The value is `true` if the character is a Bidirectional control character, `false`
     /// otherwise.

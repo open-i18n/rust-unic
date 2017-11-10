@@ -13,9 +13,9 @@
 //!
 //! ## References
 //!
-//! * <http://www.unicode.org/reports/tr44/#Sentence_Break>
-//! * <http://www.unicode.org/reports/tr29/#Sentence_Boundaries>
-//! * <http://www.unicode.org/reports/tr29/#Table_Sentence_Break_Property_Values>
+//! * <https://www.unicode.org/reports/tr44/#Sentence_Break>
+//! * <https://www.unicode.org/reports/tr29/#Sentence_Boundaries>
+//! * <https://www.unicode.org/reports/tr29/#Table_Sentence_Break_Property_Values>
 
 
 use unic_char_property::TotalCharProperty;
@@ -23,14 +23,14 @@ use unic_char_property::TotalCharProperty;
 
 char_property! {
     /// Represents the Unicode character
-    /// [*Sentence_Break*](http://www.unicode.org/reports/tr44/#Sentence_Break)
+    /// [*Sentence_Break*](https://www.unicode.org/reports/tr44/#Sentence_Break)
     /// property.
     ///
     /// ## References
     ///
-    /// * <http://www.unicode.org/reports/tr44/#Sentence_Break>
-    /// * <http://www.unicode.org/reports/tr29/#Sentence_Boundaries>
-    /// * <http://www.unicode.org/reports/tr29/#Table_Sentence_Break_Property_Values>
+    /// * <https://www.unicode.org/reports/tr44/#Sentence_Break>
+    /// * <https://www.unicode.org/reports/tr29/#Sentence_Boundaries>
+    /// * <https://www.unicode.org/reports/tr29/#Table_Sentence_Break_Property_Values>
     pub enum SentenceBreak {
         abbr => "SB";
         long => "Sentence_Break";
@@ -220,21 +220,21 @@ char_property! {
     }
 
     /// Abbreviated name aliases for the
-    /// [*Sentence_Break*](http://www.unicode.org/reports/tr44/#Sentence_Break)
+    /// [*Sentence_Break*](https://www.unicode.org/reports/tr44/#Sentence_Break)
     /// property.
     ///
     /// ## See Also
     ///
-    /// * <http://www.unicode.org/reports/tr29/#Sentence_Boundaries>
+    /// * <https://www.unicode.org/reports/tr29/#Sentence_Boundaries>
     pub mod abbr_names for abbr;
 
     /// Long name aliases for the
-    /// [*Sentence_Break*](http://www.unicode.org/reports/tr44/#Sentence_Break)
+    /// [*Sentence_Break*](https://www.unicode.org/reports/tr44/#Sentence_Break)
     /// property.
     ///
     /// ## See Also
     ///
-    /// * <http://www.unicode.org/reports/tr29/#Sentence_Boundaries>
+    /// * <https://www.unicode.org/reports/tr29/#Sentence_Boundaries>
     pub mod long_names for long;
 }
 
