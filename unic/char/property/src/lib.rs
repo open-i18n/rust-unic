@@ -24,7 +24,7 @@
 //!
 //! * [Unicode UAX #44: Unicode Character Database](http://unicode.org/reports/tr44/).
 //!
-//! * [UCD's PropertyAliases.txt](https://www.unicode.org/Public/UCD/latest/ucd/PropertyAliases.txt).
+//! * [PropertyAliases.txt](https://www.unicode.org/Public/UCD/latest/ucd/PropertyAliases.txt).
 
 
 #[macro_use]
