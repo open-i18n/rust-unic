@@ -301,8 +301,8 @@ impl BidiClass {
 }
 
 
-/// Represents **Category** of Unicode character `Bidi_Class` property, as demostrated under "Table
-/// 4. Bidirectional Character Types".
+/// Represents **Category** of Unicode character `Bidi_Class` property, as demostrated under
+/// "Table 4. Bidirectional Character Types".
 ///
 /// * <http://www.unicode.org/reports/tr9/#Table_Bidirectional_Character_Types>
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]

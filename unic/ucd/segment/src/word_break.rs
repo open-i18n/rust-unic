@@ -92,6 +92,7 @@ char_property! {
         /// ```
         ///
         /// This consists of the range:
+        ///
         /// ```text
         /// U+1F1E6 REGIONAL INDICATOR SYMBOL LETTER A
         /// ..U+1F1FF REGIONAL INDICATOR SYMBOL LETTER Z
