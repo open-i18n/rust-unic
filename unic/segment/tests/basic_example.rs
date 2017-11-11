@@ -18,12 +18,6 @@ use unic_segment::{GraphemeIndices, Graphemes, WordBoundIndices, WordBounds, Wor
 use unic_ucd_common::is_alphanumeric;
 
 
-// Rust 1.17 won't accept closure where fn is expected
-fn has_alphanumeric(s: &&str) -> bool {
-    s.chars().any(is_alphanumeric)
-}
-
-
 #[test]
 fn test_all() {
     assert_eq!(
@@ -32,8 +26,8 @@ fn test_all() {
     );
 
     assert_eq!(
-        Graphemes::new("a\r\nb🇷🇺🇸🇹").collect::<Vec<&str>>(),
-        &["a", "\r\n", "b", "🇷🇺", "🇸🇹"]
+        Graphemes::new("a\r\nb🇺🇳🇮🇨").collect::<Vec<&str>>(),
+        &["a", "\r\n", "b", "🇺🇳", "🇮🇨"]
     );
 
     assert_eq!(
@@ -44,7 +38,7 @@ fn test_all() {
     assert_eq!(
         Words::new(
             "The quick (\"brown\") fox can't jump 32.3 feet, right?",
-            has_alphanumeric,
+            |s: &&str| s.chars().any(is_alphanumeric),
         ).collect::<Vec<&str>>(),
         &["The", "quick", "brown", "fox", "can't", "jump", "32.3", "feet", "right"]
     );
