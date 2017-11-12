@@ -22,21 +22,7 @@
 pub extern crate unic_emoji_char as char;
 
 
-/* TODO: Figure out relation between UNICODE_VERSION and EMOJI_VERSION
-/// The [Unicode version](https://www.unicode.org/versions/) of data
-pub use char::UNICODE_VERSION;
-pub use char::EMOJI_VERSION;
-*/
+mod pkg_info;
 
 
-/// UNIC component version.
-pub const PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");
-
-/// UNIC component name.
-pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
-
-/// UNIC component description.
-pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
-
-
-pub use char::{is_emoji_component, EmojiComponent};
+pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

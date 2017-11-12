@@ -130,7 +130,7 @@
 //!         Graphemes::new("a\r\nb🇺🇳🇮🇨").collect::<Vec<&str>>(),
 //!         &["a", "\r\n", "b", "🇺🇳", "🇮🇨"]
 //!     );
-//! 
+//!
 //!     assert_eq!(
 //!         GraphemeIndices::new("a̐éö̲\r\n").collect::<Vec<(usize, &str)>>(),
 //!         &[(0, "a̐"), (3, "é"), (6, "ö̲"), (11, "\r\n")]

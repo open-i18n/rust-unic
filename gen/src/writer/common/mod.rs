@@ -11,7 +11,7 @@
 
 use std::path::Path;
 
-use source::common::UnicodeVersion;
+use source::common::unicode_version::UnicodeVersion;
 
 use writer::utils::write;
 

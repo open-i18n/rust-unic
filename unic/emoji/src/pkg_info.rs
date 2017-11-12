@@ -9,12 +9,14 @@
 // except according to those terms.
 
 
-use source::common::unicode_version::UnicodeVersion;
-use source::utils::read;
+//! Package information
 
 
-lazy_static! {
-    pub static ref UNICODE_VERSION: UnicodeVersion = {
-        read("data/ucd/ReadMe.txt").parse().unwrap()
-    };
-}
+/// UNIC component version.
+pub const PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");
+
+/// UNIC component name.
+pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
+
+/// UNIC component description.
+pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
