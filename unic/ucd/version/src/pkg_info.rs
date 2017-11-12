@@ -9,18 +9,11 @@
 // except according to those terms.
 
 
-#![no_std]
-#![forbid(unsafe_code, missing_docs, unconditional_recursion)]
+/// UNIC component version.
+pub const PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
-//! # UNIC — UCD — Core
-//!
-//! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
-//!
-//! Core create indicating the version of Unicode Character Database.
+/// UNIC component name.
+pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
 
-
-mod pkg_info;
-mod unicode_version;
-
-pub use unicode_version::{UnicodeVersion, UNICODE_VERSION};
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+/// UNIC component description.
+pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
