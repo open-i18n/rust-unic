@@ -9,12 +9,12 @@
 // except according to those terms.
 
 
-use source::common::unicode_version::UnicodeVersion;
-use source::utils::read;
+extern crate unic_emoji_char;
 
 
-lazy_static! {
-    pub static ref UNICODE_VERSION: UnicodeVersion = {
-        read("data/ucd/ReadMe.txt").parse().unwrap()
-    };
+#[test]
+fn test_emoji_data_version_against_ucd_version() {
+    // At the moment, Emoji Version is strictly smaller than Unicode Version.
+    // TODO: After Emoji Version is *synced* with Unicode Version, this should always be equal.
+    assert!(unic_emoji_char::EMOJI_DATA_VERSION <= unic_emoji_char::UNICODE_VERSION);
 }

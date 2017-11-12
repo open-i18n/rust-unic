@@ -10,3 +10,4 @@
 
 
 pub mod emoji_data;
+pub mod readme;

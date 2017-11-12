@@ -9,16 +9,8 @@
 // except according to those terms.
 
 
-extern crate unic_emoji_char;
-extern crate unic_ucd_version;
+pub use unic_ucd_version::UnicodeVersion;
 
 
-#[test]
-fn test_version_against_ucd_version() {
-    /* TODO: Figure out relation between UNICODE_VERSION and EMOJI_VERSION
-    assert_eq!(
-        unic_ucd_version::UNICODE_VERSION,
-        unic_emoji_char::UNICODE_VERSION
-    );
-    */
-}
+/// The version of [Emoji data](https://www.unicode.org/versions/).
+pub const EMOJI_DATA_VERSION: UnicodeVersion = include!("../tables/emoji_data_version.rsv");

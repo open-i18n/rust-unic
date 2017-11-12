@@ -31,18 +31,14 @@ pub mod emoji_modifier;
 pub mod emoji_modifier_base;
 pub mod emoji_component;
 
+mod emoji_data_version;
+
 
 pub use emoji::{is_emoji, Emoji};
-pub use emoji_presentation::{is_emoji_presentation, EmojiPresentation};
+pub use emoji_component::{is_emoji_component, EmojiComponent};
 pub use emoji_modifier::{is_emoji_modifier, EmojiModifier};
 pub use emoji_modifier_base::{is_emoji_modifier_base, EmojiModifierBase};
-pub use emoji_component::{is_emoji_component, EmojiComponent};
+pub use emoji_presentation::{is_emoji_presentation, EmojiPresentation};
 
-
-/* TODO: Figure out relation between UNICODE_VERSION and EMOJI_VERSION
-use unic_ucd_version::UnicodeVersion;
-
-
-/// The [Unicode version](https://www.unicode.org/versions/) of data
-pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");
-*/
+pub use emoji_data_version::EMOJI_DATA_VERSION;
+pub use unic_ucd_version::{UnicodeVersion, UNICODE_VERSION};

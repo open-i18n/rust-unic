@@ -9,7 +9,7 @@
 // except according to those terms.
 
 
-use source::common::UnicodeVersion;
+use source::common::unicode_version::UnicodeVersion;
 use source::utils::read;
 
 

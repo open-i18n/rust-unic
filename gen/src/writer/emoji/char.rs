@@ -11,7 +11,7 @@
 
 use std::path::Path;
 
-// TODO: use source::emoji::readme::EMOJI_VERSION;
+use source::emoji::readme::{EmojiDataVersion, EMOJI_DATA_VERSION};
 use source::emoji::emoji_data::EMOJI_DATA;
 
 use writer::utils::tables::ToRangeCharSet;
@@ -19,14 +19,26 @@ use writer::utils::write;
 
 
 pub fn generate(dir: &Path) {
-    // TODO: emoji_unicode_version(dir, &UNICODE_VERSION);
-    // TODO: emoji_emoji_version(dir, &EMOJI_VERSION);
-
+    emit_emoji_data_version(dir, &EMOJI_DATA_VERSION);
     emit_emoji(dir);
     emit_emoji_presentation(dir);
     emit_emoji_modifier(dir);
     emit_emoji_modifier_base(dir);
     emit_emoji_component(dir);
+}
+
+
+pub fn emit_emoji_data_version(dir: &Path, emoji_data_version: &EmojiDataVersion) {
+    write(
+        dir,
+        "emoji_data_version.rsv",
+        &format!(
+            "UnicodeVersion {{ major: {}, minor: {}, micro: {} }}",
+            emoji_data_version.major,
+            emoji_data_version.minor,
+            emoji_data_version.micro,
+        ),
+    );
 }
 
 
