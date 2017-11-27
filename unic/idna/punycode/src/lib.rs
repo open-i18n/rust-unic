@@ -26,6 +26,8 @@
 
 use std::u32;
 use std::char;
+// TODO: Drop following after MIN_RUST_VERSION >= 1.23
+#[allow(unused_imports)]
 use std::ascii::AsciiExt;
 
 // Bootstring parameters for Punycode
