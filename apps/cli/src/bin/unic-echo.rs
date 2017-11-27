@@ -186,9 +186,9 @@ fn run() -> Result<()> {
             writers::write_with_control_n_unicode_braces_escape(&mut output, chars)?
         }
 
-        OutputFormat::BracesEscapeAll |
-        OutputFormat::Js6EscapeAll |
-        OutputFormat::RustEscapeAll => writers::write_with_all_braces_escape(&mut output, chars)?,
+        OutputFormat::BracesEscapeAll
+        | OutputFormat::Js6EscapeAll
+        | OutputFormat::RustEscapeAll => writers::write_with_all_braces_escape(&mut output, chars)?,
 
         /* TODO: Re-enable after rust-1.20.0
         OutputFormat::BracesEscapeControl |

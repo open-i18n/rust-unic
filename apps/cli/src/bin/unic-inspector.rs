@@ -14,9 +14,9 @@ extern crate clap;
 #[macro_use]
 extern crate prettytable;
 
+extern crate unic_char_property;
 extern crate unic_cli;
 extern crate unic_ucd;
-extern crate unic_char_property;
 
 
 use clap::Arg;

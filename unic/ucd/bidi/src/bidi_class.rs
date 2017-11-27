@@ -249,28 +249,28 @@ impl BidiClass {
                 BidiClassCategory::Strong
             }
 
-            BidiClass::EuropeanNumber |
-            BidiClass::EuropeanSeparator |
-            BidiClass::EuropeanTerminator |
-            BidiClass::ArabicNumber |
-            BidiClass::CommonSeparator |
-            BidiClass::NonspacingMark |
-            BidiClass::BoundaryNeutral => BidiClassCategory::Weak,
+            BidiClass::EuropeanNumber
+            | BidiClass::EuropeanSeparator
+            | BidiClass::EuropeanTerminator
+            | BidiClass::ArabicNumber
+            | BidiClass::CommonSeparator
+            | BidiClass::NonspacingMark
+            | BidiClass::BoundaryNeutral => BidiClassCategory::Weak,
 
-            BidiClass::ParagraphSeparator |
-            BidiClass::SegmentSeparator |
-            BidiClass::WhiteSpace |
-            BidiClass::OtherNeutral => BidiClassCategory::Neutral,
+            BidiClass::ParagraphSeparator
+            | BidiClass::SegmentSeparator
+            | BidiClass::WhiteSpace
+            | BidiClass::OtherNeutral => BidiClassCategory::Neutral,
 
-            BidiClass::LeftToRightEmbedding |
-            BidiClass::LeftToRightOverride |
-            BidiClass::RightToLeftEmbedding |
-            BidiClass::RightToLeftOverride |
-            BidiClass::PopDirectionalFormat |
-            BidiClass::LeftToRightIsolate |
-            BidiClass::RightToLeftIsolate |
-            BidiClass::FirstStrongIsolate |
-            BidiClass::PopDirectionalIsolate => BidiClassCategory::ExplicitFormatting,
+            BidiClass::LeftToRightEmbedding
+            | BidiClass::LeftToRightOverride
+            | BidiClass::RightToLeftEmbedding
+            | BidiClass::RightToLeftOverride
+            | BidiClass::PopDirectionalFormat
+            | BidiClass::LeftToRightIsolate
+            | BidiClass::RightToLeftIsolate
+            | BidiClass::FirstStrongIsolate
+            | BidiClass::PopDirectionalIsolate => BidiClassCategory::ExplicitFormatting,
         }
     }
 
@@ -278,10 +278,10 @@ impl BidiClass {
     #[inline]
     pub fn is_ltr(&self) -> bool {
         match *self {
-            BidiClass::LeftToRight |
-            BidiClass::LeftToRightEmbedding |
-            BidiClass::LeftToRightOverride |
-            BidiClass::LeftToRightIsolate => true,
+            BidiClass::LeftToRight
+            | BidiClass::LeftToRightEmbedding
+            | BidiClass::LeftToRightOverride
+            | BidiClass::LeftToRightIsolate => true,
             _ => false,
         }
     }
@@ -290,11 +290,11 @@ impl BidiClass {
     #[inline]
     pub fn is_rtl(&self) -> bool {
         match *self {
-            BidiClass::RightToLeft |
-            BidiClass::ArabicLetter |
-            BidiClass::RightToLeftEmbedding |
-            BidiClass::RightToLeftOverride |
-            BidiClass::RightToLeftIsolate => true,
+            BidiClass::RightToLeft
+            | BidiClass::ArabicLetter
+            | BidiClass::RightToLeftEmbedding
+            | BidiClass::RightToLeftOverride
+            | BidiClass::RightToLeftIsolate => true,
             _ => false,
         }
     }

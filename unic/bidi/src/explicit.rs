@@ -98,8 +98,8 @@ pub fn compute(
                     loop {
                         // Pop everything up to and including the last Isolate status.
                         match stack.vec.pop() {
-                            None |
-                            Some(Status {
+                            None
+                            | Some(Status {
                                 status: OverrideStatus::Isolate,
                                 ..
                             }) => break,

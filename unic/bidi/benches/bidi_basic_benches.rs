@@ -39,9 +39,11 @@ fn bench_bidi_info_new(b: &mut Bencher, texts: &[&str]) {
 fn bench_reorder_line(b: &mut Bencher, texts: &[&str]) {
     for text in texts {
         let bidi_info = BidiInfo::new(text, None);
-        b.iter(|| for para in &bidi_info.paragraphs {
-            let line = para.range.clone();
-            bidi_info.reorder_line(para, line);
+        b.iter(|| {
+            for para in &bidi_info.paragraphs {
+                let line = para.range.clone();
+                bidi_info.reorder_line(para, line);
+            }
         });
     }
 }

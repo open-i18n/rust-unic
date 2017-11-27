@@ -183,15 +183,15 @@ pub fn resolve_neutral(
             // <https://www.unicode.org/reports/tr9/#N2>
             let new_class = match (prev_class, next_class) {
                 (L, L) => L,
-                (R, R) |
-                (R, AN) |
-                (R, EN) |
-                (AN, R) |
-                (AN, AN) |
-                (AN, EN) |
-                (EN, R) |
-                (EN, AN) |
-                (EN, EN) => R,
+                (R, R)
+                | (R, AN)
+                | (R, EN)
+                | (AN, R)
+                | (AN, AN)
+                | (AN, EN)
+                | (EN, R)
+                | (EN, AN)
+                | (EN, EN) => R,
                 (_, _) => e,
             };
             for j in &ni_run {

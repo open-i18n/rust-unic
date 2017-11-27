@@ -130,15 +130,15 @@ fn test_from_bidi_class() {
             }
 
             // == Explicit Formatting ==
-            BC::LeftToRightEmbedding |
-            BC::LeftToRightIsolate |
-            BC::LeftToRightOverride |
-            BC::RightToLeftEmbedding |
-            BC::RightToLeftIsolate |
-            BC::RightToLeftOverride |
-            BC::FirstStrongIsolate |
-            BC::PopDirectionalFormat |
-            BC::PopDirectionalIsolate => {
+            BC::LeftToRightEmbedding
+            | BC::LeftToRightIsolate
+            | BC::LeftToRightOverride
+            | BC::RightToLeftEmbedding
+            | BC::RightToLeftIsolate
+            | BC::RightToLeftOverride
+            | BC::FirstStrongIsolate
+            | BC::PopDirectionalFormat
+            | BC::PopDirectionalIsolate => {
                 assert_eq!(GC::of(cp), GC::Format);
             }
         }
