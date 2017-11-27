@@ -37,7 +37,7 @@ impl fmt::Display for UnicodeVersion {
 }
 
 
-/// NOTE: (T, T, T) is the type of Rust's internal UNICODE_VERSION until Rust 1.20.
+/// NOTE: (T, T, T) is the type of Rust's internal `UNICODE_VERSION` until Rust 1.20.
 impl<T: Into<u16>> From<(T, T, T)> for UnicodeVersion {
     fn from(value: (T, T, T)) -> UnicodeVersion {
         UnicodeVersion {
@@ -49,7 +49,7 @@ impl<T: Into<u16>> From<(T, T, T)> for UnicodeVersion {
 }
 
 
-/// NOTE: (T, T, T) is the type of Rust's internal UNICODE_VERSION until Rust 1.20.
+/// NOTE: (T, T, T) is the type of Rust's internal `UNICODE_VERSION` until Rust 1.20.
 impl<T: From<u16>> Into<(T, T, T)> for UnicodeVersion {
     fn into(self) -> (T, T, T) {
         (self.major.into(), self.minor.into(), self.micro.into())

@@ -97,6 +97,6 @@ impl<'a, V: Copy> Iterator for CharDataTableIter<'a, V> {
 impl<V> CharDataTable<V> {
     /// Iterate over the entries in this table. Yields pairs `(CharRange, V)`.
     pub fn iter(&self) -> CharDataTableIter<V> {
-        CharDataTableIter(&self, 0)
+        CharDataTableIter(self, 0)
     }
 }

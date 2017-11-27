@@ -39,6 +39,7 @@ fn test_basics() {
     assert_eq!(is_my_prop('\u{0065}'), true);
 }
 
+#[cfg_attr(feature = "clippy", allow(needless_bool))]
 #[test]
 fn test_into_bool() {
     assert!(if MyProp::of('\u{0065}').into() {

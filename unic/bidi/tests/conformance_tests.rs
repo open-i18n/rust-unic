@@ -19,8 +19,8 @@ extern crate unic_char_property;
 use unic_bidi::{format_chars, level, BidiClass, BidiInfo, Level};
 
 
-const BASIC_TEST_DATA: &'static str = include_str!("../../../data/ucd/test/BidiTest.txt");
-const CHAR_TEST_DATA: &'static str = include_str!("../../../data/ucd/test/BidiCharacterTest.txt");
+const BASIC_TEST_DATA: &str = include_str!("../../../data/ucd/test/BidiTest.txt");
+const CHAR_TEST_DATA: &str = include_str!("../../../data/ucd/test/BidiCharacterTest.txt");
 
 
 #[derive(Debug)]
@@ -140,8 +140,7 @@ fn test_basic_conformance() {
 // TODO: Support auto-RTL
 fn gen_base_levels_for_base_tests(bitset: u8) -> Vec<Option<Level>> {
     /// Values: auto-LTR, LTR, RTL
-    const VALUES: &'static [Option<Level>] =
-        &[None, Some(level::LTR_LEVEL), Some(level::RTL_LEVEL)];
+    const VALUES: &[Option<Level>] = &[None, Some(level::LTR_LEVEL), Some(level::RTL_LEVEL)];
     assert!(bitset < (1 << VALUES.len()));
     (0..VALUES.len())
         .filter(|bit| bitset & (1u8 << bit) == 1)
@@ -233,8 +232,7 @@ fn test_character_conformance() {
 // TODO: Support auto-RTL
 fn gen_base_level_for_characters_tests(idx: usize) -> Option<Level> {
     /// Values: LTR, RTL, auto-LTR
-    const VALUES: &'static [Option<Level>] =
-        &[Some(level::LTR_LEVEL), Some(level::RTL_LEVEL), None];
+    const VALUES: &[Option<Level>] = &[Some(level::LTR_LEVEL), Some(level::RTL_LEVEL), None];
     assert!(idx < VALUES.len());
     VALUES[idx]
 }

@@ -176,7 +176,8 @@ impl<'a> Iterator for WordBounds<'a> {
     fn next(&mut self) -> Option<&'a str> {
         use self::WordBoundsState::*;
         use self::FormatExtendType::*;
-        if self.string.len() == 0 {
+
+        if self.string.is_empty() {
             return None;
         }
 
@@ -388,7 +389,7 @@ impl<'a> Iterator for WordBounds<'a> {
         }
 
         self.cat = if take_curr {
-            idx = idx + self.string[idx..].chars().next().unwrap().len_utf8();
+            idx += self.string[idx..].chars().next().unwrap().len_utf8();
             None
         } else if take_cat {
             Some(cat)
@@ -407,7 +408,7 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
     fn next_back(&mut self) -> Option<&'a str> {
         use self::WordBoundsState::*;
         use self::FormatExtendType::*;
-        if self.string.len() == 0 {
+        if self.string.is_empty() {
             return None;
         }
 
@@ -558,7 +559,7 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
                             let count = self.string[..previdx]
                                 .chars()
                                 .rev()
-                                .map(|c| WB::of(c))
+                                .map(WB::of)
                                 .filter(|&c| !(c == WB::ZWJ || c == WB::Extend || c == WB::Format))
                                 .take_while(|&c| c == WB::RegionalIndicator)
                                 .count();
@@ -630,7 +631,7 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
 impl<'a> WordBounds<'a> {
     /// Create new iterator for *word boundries*.
     #[inline]
-    pub fn new<'b>(s: &'b str) -> WordBounds<'b> {
+    pub fn new(s: &str) -> WordBounds {
         WordBounds {
             string: s,
             cat: None,

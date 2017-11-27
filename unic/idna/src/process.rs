@@ -10,6 +10,8 @@
 // except according to those terms.
 
 
+// TODO: Drop following after MIN_RUST_VERSION >= 1.23
+#[allow(unused_imports)]
 use std::ascii::AsciiExt;
 
 use unic_normal::StrNormalForm;

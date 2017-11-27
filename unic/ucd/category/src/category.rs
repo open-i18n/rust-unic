@@ -13,11 +13,11 @@ use unic_char_property::TotalCharProperty;
 
 char_property! {
     /// Represents the Unicode Character
-    /// [*General_Category*](http://unicode.org/reports/tr44/#General_Category) property.
+    /// [`General_Category`](http://unicode.org/reports/tr44/#General_Category) property.
     ///
     /// This is a useful breakdown into various character types which can be used as a default
     /// categorization in implementations. For the property values, see
-    /// [*General_Category Values*](http://unicode.org/reports/tr44/#General_Category_Values).
+    /// [`General_Category Values`](http://unicode.org/reports/tr44/#General_Category_Values).
     pub enum GeneralCategory {
         abbr => "gc";
         long => "General_Category";

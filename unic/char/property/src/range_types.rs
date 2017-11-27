@@ -47,7 +47,7 @@ pub trait EnumeratedCharProperty: Sized + CharProperty {
 
 /// A Character Property with binary values.
 ///
-/// Examples: *Alphabetic*, *Bidi_Mirrored*, *White_Space*
+/// Examples: `Alphabetic`, `Bidi_Mirrored`, `White_Space`
 pub trait BinaryCharProperty: CharProperty {
     /// The boolean value of the property value.
     fn as_bool(&self) -> bool;
@@ -91,7 +91,7 @@ impl NumericCharPropertyValue for u8 {}
 
 /// A Character Property with numeric values.
 ///
-/// Examples: *Numeric_Value*, *Canonical_Combining_Class*
+/// Examples: `Numeric_Value`, `Canonical_Combining_Class`
 pub trait NumericCharProperty<NumericValue: NumericCharPropertyValue>
     : CharProperty {
     /// The numeric value for the property value.
@@ -105,7 +105,7 @@ pub trait NumericCharProperty<NumericValue: NumericCharPropertyValue>
 ///
 /// Custom values means any non-enumerated, non-numeric value.
 ///
-/// Examples: *Age* property that returns a `UnicodeVersion` value.
+/// Examples: `Age` property that returns a `UnicodeVersion` value.
 pub trait CustomCharProperty<Value>: CharProperty {
     /// The actual (inner) value for the property value.
     fn actual(&self) -> Value;

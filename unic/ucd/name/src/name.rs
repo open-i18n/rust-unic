@@ -17,6 +17,7 @@ pub struct Name {
     pieces: &'static [&'static str],
 }
 
+#[cfg_attr(feature = "clippy", allow(len_without_is_empty))]
 impl Name {
     pub fn of(ch: char) -> Option<Name> {
         data::NAMES.find(ch).map(|pieces| Name { pieces })

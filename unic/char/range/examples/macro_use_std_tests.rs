@@ -17,6 +17,6 @@ fn main() {
     assert!(
         chars!('\u{0}'..='\u{2}')
             .iter()
-            .eq(['\u{0}', '\u{1}', '\u{2}'].iter().map(|&ch| ch))
+            .eq(['\u{0}', '\u{1}', '\u{2}'].iter().cloned())
     );
 }

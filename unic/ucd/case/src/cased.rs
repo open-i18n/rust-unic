@@ -9,12 +9,12 @@
 // except according to those terms.
 
 
-//! Unicode *Cased* Character Property.
+//! Unicode `Cased` Character Property.
 
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*Cased*](https://www.unicode.org/reports/tr44/#Cased).
+    /// [`Cased`](https://www.unicode.org/reports/tr44/#Cased).
     ///
     /// The value is `true` for cased characters, `false` otherwise.
     pub struct Cased(bool) {

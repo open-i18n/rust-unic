@@ -17,13 +17,13 @@
 extern crate unic;
 
 
-const PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");
+const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 
 fn main() {
     println!("# UNIC - Unicode and Internationalization Crates");
     println!("Package Version: {}", PKG_VERSION);
-    println!("");
+    println!();
 
     println!("# Component: {}", unic::ucd::PKG_NAME);
     println!("{}", unic::ucd::PKG_DESCRIPTION);
@@ -34,7 +34,7 @@ fn main() {
         unic::ucd::UNICODE_VERSION.minor,
         unic::ucd::UNICODE_VERSION.micro,
     );
-    println!("");
+    println!();
 
     println!("# Component: {}", unic::bidi::PKG_NAME);
     println!("{}", unic::bidi::PKG_DESCRIPTION);
@@ -45,7 +45,7 @@ fn main() {
         unic::bidi::UNICODE_VERSION.minor,
         unic::bidi::UNICODE_VERSION.micro,
     );
-    println!("");
+    println!();
 
     println!("# Component: {}", unic::idna::PKG_NAME);
     println!("{}", unic::idna::PKG_DESCRIPTION);
@@ -56,7 +56,7 @@ fn main() {
         unic::idna::UNICODE_VERSION.minor,
         unic::idna::UNICODE_VERSION.micro,
     );
-    println!("");
+    println!();
 
     println!("# Component: {}", unic::normal::PKG_NAME);
     println!("{}", unic::normal::PKG_DESCRIPTION);
@@ -67,5 +67,5 @@ fn main() {
         unic::normal::UNICODE_VERSION.minor,
         unic::normal::UNICODE_VERSION.micro,
     );
-    println!("");
+    println!();
 }

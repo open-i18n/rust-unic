@@ -9,12 +9,12 @@
 // except according to those terms.
 
 
-//! Unicode *Changes_When_Casefolded* Character Property.
+//! Unicode `Changes_When_Casefolded` Character Property.
 
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*Changes_When_Casefolded*](https://www.unicode.org/reports/tr44/#CWCF).
+    /// [`Changes_When_Casefolded`](https://www.unicode.org/reports/tr44/#CWCF).
     ///
     /// The value is `true` for characters that change when casefolded, `false` otherwise.
     pub struct ChangesWhenCasefolded(bool) {

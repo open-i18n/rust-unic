@@ -10,7 +10,7 @@
 // except according to those terms.
 
 
-//! Unicode *Bidi_Class* Character Property.
+//! Unicode `Bidi_Class` Character Property.
 
 
 use unic_char_property::TotalCharProperty;
@@ -18,7 +18,7 @@ use unic_char_property::TotalCharProperty;
 
 char_property! {
     /// Represents the Unicode character
-    /// [*Bidi_Class*](https://www.unicode.org/reports/tr44/#Bidi_Class) property, also known as the
+    /// [`Bidi_Class`](https://www.unicode.org/reports/tr44/#Bidi_Class) property, also known as the
     /// *bidirectional character type*.
     ///
     /// * <https://www.unicode.org/reports/tr9/#Bidirectional_Character_Types>
@@ -191,7 +191,7 @@ char_property! {
     }
 
     /// Abbreviated name aliases for the
-    /// [*Bidi_Class*](https://www.unicode.org/reports/tr44/#Bidi_Class) property.
+    /// [`Bidi_Class`](https://www.unicode.org/reports/tr44/#Bidi_Class) property.
     ///
     /// ## See Also
     ///
@@ -200,7 +200,7 @@ char_property! {
     pub mod abbr_names for abbr;
 
     /// Long name aliases for the
-    /// [*Bidi_Class*](https://www.unicode.org/reports/tr44/#Bidi_Class) property.
+    /// [`Bidi_Class`](https://www.unicode.org/reports/tr44/#Bidi_Class) property.
     ///
     /// ## See Also
     ///
@@ -236,7 +236,7 @@ mod data {
 
 
 impl BidiClass {
-    /// Find the character *Bidi_Class* property value.
+    /// Find the character `Bidi_Class` property value.
     pub fn of(ch: char) -> BidiClass {
         data::BIDI_CLASS_TABLE.find_or_default(ch)
     }
@@ -321,7 +321,7 @@ pub enum BidiClassCategory {
 }
 
 
-/// Methods for Bidi_Class character property.
+/// Methods for `Bidi_Class` character property.
 pub trait CharBidiClass {
     /// Get `BidiClass` of the character.
     fn bidi_class(self) -> BidiClass;
@@ -351,7 +351,7 @@ impl CharBidiClass for char {
 }
 
 
-/// Methods for Bidi_Class character properties of string types.
+/// Methods for `Bidi_Class` character properties of string types.
 pub trait StrBidiClass {
     /// Whether the string has any *explicit* bidi formatting character.
     fn has_bidi_explicit(&self) -> bool;

@@ -9,12 +9,12 @@
 // except according to those terms.
 
 
-//! Unicode *Changes_When_Casemapped* Character Property.
+//! Unicode `Changes_When_Casemapped` Character Property.
 
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*Changes_When_Casemapped*](https://www.unicode.org/reports/tr44/#CWCM).
+    /// [`Changes_When_Casemapped`](https://www.unicode.org/reports/tr44/#CWCM).
     ///
     /// The value is `true` for characters that change when casemapped, `false` otherwise.
     pub struct ChangesWhenCasemapped(bool) {

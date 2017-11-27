@@ -10,7 +10,7 @@
 // except according to those terms.
 
 
-//! Accessor for *Decomposition_Type* (dt) property
+//! Accessor for `Decomposition_Type` (dt) property
 
 use unic_char_property::PartialCharProperty;
 
@@ -19,7 +19,7 @@ use hangul;
 
 char_property! {
     /// Represents the Unicode character
-    /// [*Decomposition_Type*](https://www.unicode.org/reports/tr44/#Decomposition_Type) property.
+    /// [`Decomposition_Type`](https://www.unicode.org/reports/tr44/#Decomposition_Type) property.
     ///
     /// * <https://www.unicode.org/reports/tr44/#Character_Decomposition_Mappings>
     pub enum DecompositionType {

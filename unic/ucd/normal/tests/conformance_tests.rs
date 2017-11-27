@@ -20,8 +20,7 @@ use std::collections::HashSet as Set;
 use std::{char, u32};
 
 
-const DT_TEST_DATA: &'static str =
-    include_str!("../../../../data/ucd/test/DecompositionTypeTest.txt");
+const DT_TEST_DATA: &str = include_str!("../../../../data/ucd/test/DecompositionTypeTest.txt");
 
 
 #[derive(Debug)]
