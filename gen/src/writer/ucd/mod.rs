@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 mod age;
 mod bidi;
 mod case;
@@ -21,9 +20,7 @@ mod normal;
 mod segment;
 mod segment_tests;
 
-
 use writer::utils::clean_dir;
-
 
 pub fn generate() {
     age::generate(&clean_dir("unic/ucd/age/tables"));

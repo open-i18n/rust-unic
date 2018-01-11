@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![no_std]
 #![forbid(unsafe_code, unconditional_recursion)]
 #![deny(missing_docs)]
@@ -22,19 +21,16 @@
 //!
 //! * <https://www.unicode.org/reports/tr44/#Character_Age>
 
-
 extern crate unic_char_property;
 #[macro_use]
 extern crate unic_char_range;
 extern crate unic_ucd_version;
-
 
 mod age;
 
 pub use unic_ucd_version::UnicodeVersion;
 
 pub use age::{Age, CharAge};
-
 
 /// The [Unicode version](https://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

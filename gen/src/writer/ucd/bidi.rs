@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::char;
 use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::Display;
@@ -22,14 +21,12 @@ use writer::utils::tables::{ToRangeCharSet, ToRangeCharTable};
 use writer::common::emit_unicode_version;
 use writer::utils::write;
 
-
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
     emit_bidi_class(dir);
     emit_bidi_mirrored(dir);
     emit_bidi_control(dir);
 }
-
 
 // Default `Bidi_Class` for unassigned codepoints.
 //
@@ -49,7 +46,6 @@ const BIDI_CLASS_DEFAULTS: &[(u32, u32, &str)] = &[
     (0x1_EF00, 0x1_EFFF, "R"),
     (0x20A0, 0x20CF, "ET"),
 ];
-
 
 fn emit_bidi_class(dir: &Path) {
     let mut map: BTreeMap<char, &str> = UNICODE_DATA
@@ -72,7 +68,6 @@ fn emit_bidi_class(dir: &Path) {
         &map.to_range_char_table(Display::fmt),
     );
 }
-
 
 fn emit_bidi_mirrored(dir: &Path) {
     let set: BTreeSet<char> = UNICODE_DATA

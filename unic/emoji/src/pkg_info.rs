@@ -8,9 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Package information
-
 
 /// UNIC component version.
 pub const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");

@@ -9,15 +9,12 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Conjoining Jamo composition to/decomposition from Hangul syllables.
 //!
 //! Reference: Section 3.12 Conjoining Jamo Behavior, Unicode 9.0.0
 //! <https://www.unicode.org/versions/Unicode9.0.0/ch03.pdf>
 
-
 use core::char;
-
 
 pub const S_BASE: u32 = 0xAC00;
 pub const L_BASE: u32 = 0x1100;
@@ -29,12 +26,10 @@ pub const T_COUNT: u32 = 28;
 pub const N_COUNT: u32 = (V_COUNT * T_COUNT);
 pub const S_COUNT: u32 = (L_COUNT * N_COUNT);
 
-
 pub fn is_syllable(ch: char) -> bool {
     let cp = ch as u32;
     cp >= S_BASE && cp < (S_BASE + S_COUNT)
 }
-
 
 /// Decompose a precomposed Hangul syllable
 // FIXME: This is a workaround, we should use `F` instead of `&mut F`

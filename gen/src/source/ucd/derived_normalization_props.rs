@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::char;
 use std::collections::BTreeSet;
 use std::str::FromStr;
@@ -17,13 +16,11 @@ use regex::Regex;
 
 use source::utils::read;
 
-
 lazy_static! {
     pub static ref COMPOSITION_EXCLUSIONS: CompositionExclusions = {
         read("data/ucd/DerivedNormalizationProps.txt").parse().unwrap()
     };
 }
-
 
 pub struct CompositionExclusions {
     pub set: BTreeSet<char>,

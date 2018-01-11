@@ -19,14 +19,12 @@ use test::Bencher;
 
 use unic_bidi::BidiInfo;
 
-
 const LTR_TEXTS: &[&str] = &["abc\ndef\nghi", "abc 123\ndef 456\nghi 789"];
 
 const BIDI_TEXTS: &[&str] = &[
     "ابجد\nهوز\nحتی",
     "ابجد ۱۲۳\nهوز ۴۵۶\nحتی ۷۸۹\nabc\ndef",
 ];
-
 
 fn bench_bidi_info_new(b: &mut Bencher, texts: &[&str]) {
     for text in texts {
@@ -47,7 +45,6 @@ fn bench_reorder_line(b: &mut Bencher, texts: &[&str]) {
         });
     }
 }
-
 
 #[bench]
 fn bench_1_bidi_info_new_for_ltr_texts(b: &mut Bencher) {

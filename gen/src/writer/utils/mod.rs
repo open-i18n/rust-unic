@@ -8,14 +8,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 pub mod tables;
-
 
 use std::fs::{self, File};
 use std::io::Write;
 use std::path::{Path, PathBuf};
-
 
 pub fn capitalize(str: &str) -> String {
     let mut chars = str.chars();
@@ -24,7 +21,6 @@ pub fn capitalize(str: &str) -> String {
         Some(ch) => ch.to_uppercase().collect::<String>() + chars.as_str(),
     }
 }
-
 
 pub fn clean_dir(path: &str) -> PathBuf {
     println!("");
@@ -36,7 +32,6 @@ pub fn clean_dir(path: &str) -> PathBuf {
     fs::create_dir_all(&dir).unwrap();
     dir
 }
-
 
 // TODO: Add auto-signing here, to prevent accidental changes to auto-gened data tables.
 pub fn write(dir: &Path, filename: &str, contents: &str) {

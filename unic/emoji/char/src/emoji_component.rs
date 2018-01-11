@@ -8,9 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Unicode *Emoji_Component* Character Property.
-
 
 char_property! {
     /// Represents values of the Unicode character property
@@ -30,7 +28,6 @@ char_property! {
     /// separate choices, such as Keycap base characters, Regional_Indicators, …, `false` otherwise.
     pub fn is_emoji_component(char) -> bool;
 }
-
 
 #[cfg(test)]
 mod tests {

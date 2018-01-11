@@ -15,12 +15,10 @@
 //!
 //! <https://www.unicode.org/reports/tr9/#BD2>
 
-
 use std::convert::{From, Into};
 use std::fmt;
 
 use unic_ucd_bidi::BidiClass;
-
 
 /// Embedding Level
 ///
@@ -199,13 +197,11 @@ impl Level {
     }
 }
 
-
 impl fmt::Display for Level {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", self.0)
     }
 }
-
 
 /// If levels has any RTL (odd) level
 ///
@@ -214,7 +210,6 @@ impl fmt::Display for Level {
 pub fn has_rtl(levels: &[Level]) -> bool {
     levels.iter().any(|&lvl| lvl.is_rtl())
 }
-
 
 impl Into<u8> for Level {
     /// Convert to the level number
@@ -247,7 +242,6 @@ impl<'a> PartialEq<String> for Level {
         self == &s.as_str()
     }
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -364,7 +358,12 @@ mod tests {
     fn test_string_eq() {
         assert_eq!(
             Level::vec(&[0, 1, 4, 125]),
-            vec!["0".to_string(), "1".to_string(), "x".to_string(), "125".to_string()]
+            vec![
+                "0".to_string(),
+                "1".to_string(),
+                "x".to_string(),
+                "125".to_string(),
+            ]
         );
     }
 }

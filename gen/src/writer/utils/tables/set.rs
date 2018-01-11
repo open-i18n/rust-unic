@@ -8,10 +8,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::collections::BTreeSet;
 use std::fmt::Write;
-
 
 /// Create the source for a `CharDataTable` mapping to `()` for set inclusion of `char`.
 pub trait ToRangeCharSet {

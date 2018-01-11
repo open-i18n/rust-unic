@@ -9,7 +9,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![no_std]
 #![forbid(unsafe_code, unconditional_recursion)]
 #![deny(missing_docs)]
@@ -28,18 +27,15 @@ extern crate unic_char_range;
 
 extern crate unic_ucd_version;
 
-
 pub mod bidi_class;
 pub mod bidi_control;
 pub mod bidi_mirrored;
-
 
 pub use bidi_class::{BidiClass, BidiClassCategory, CharBidiClass, StrBidiClass};
 pub use bidi_control::{is_bidi_control, BidiControl};
 pub use bidi_mirrored::{is_bidi_mirrored, BidiMirrored};
 
 use unic_ucd_version::UnicodeVersion;
-
 
 /// The [Unicode version](https://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

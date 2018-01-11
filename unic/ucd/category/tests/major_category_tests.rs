@@ -8,14 +8,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 extern crate unic_char_property;
 extern crate unic_ucd_category;
 
-
 use unic_char_property::EnumeratedCharProperty;
 use unic_ucd_category::GeneralCategory;
-
 
 /// Every char falls in exactly one of the major categories; with the exception of `CasedLetter`,
 /// when it's also a `Letter`.

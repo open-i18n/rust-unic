@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::path::Path;
 
 use source::ucd::grapheme_break_property::GRAPHEME_CLUSTER_BREAK_DATA;
@@ -20,14 +19,12 @@ use writer::utils::tables::ToRangeCharTable;
 use writer::common::emit_unicode_version;
 use writer::utils::write;
 
-
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
     emit_grapheme_cluster_break(dir);
     emit_word_break(dir);
     emit_sentence_break(dir);
 }
-
 
 fn emit_grapheme_cluster_break(dir: &Path) {
     write(
@@ -39,7 +36,6 @@ fn emit_grapheme_cluster_break(dir: &Path) {
     );
 }
 
-
 fn emit_word_break(dir: &Path) {
     write(
         dir,
@@ -49,7 +45,6 @@ fn emit_word_break(dir: &Path) {
             .to_range_char_table(|v, f| write!(f, "WB::{}", v)),
     );
 }
-
 
 fn emit_sentence_break(dir: &Path) {
     write(

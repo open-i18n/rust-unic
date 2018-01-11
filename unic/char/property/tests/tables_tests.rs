@@ -8,15 +8,12 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #[macro_use]
 extern crate unic_char_range;
 
 extern crate unic_char_property;
 
-
 use unic_char_property::tables::CharDataTable;
-
 
 #[test]
 fn test_range_value_table() {

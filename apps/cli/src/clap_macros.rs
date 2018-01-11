@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #[macro_export]
 macro_rules! unic_arg_enum {
     (@as_item $($i:item)*) => ($($i)*);

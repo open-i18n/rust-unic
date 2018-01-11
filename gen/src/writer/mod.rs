@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 pub mod emoji;
 pub mod idna;
 pub mod normal;

@@ -9,9 +9,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Unicode `Bidi_Control` Character Property.
-
 
 char_property! {
     /// Represents values of the Unicode character property
@@ -30,7 +28,6 @@ char_property! {
     /// Return `true` if the character is a Bidirectional control character, `false` otherwise.
     pub fn is_bidi_control(char) -> bool;
 }
-
 
 #[cfg(test)]
 mod tests {

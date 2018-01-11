@@ -9,14 +9,12 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::collections::VecDeque;
 use std::fmt::{self, Write};
 
 use unic_ucd_normal::{compose, CanonicalCombiningClass};
 
 use decompose::Decompositions;
-
 
 #[derive(Clone)]
 enum RecompositionState {

@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::path::Path;
 
 use source::idna::readme::UNICODE_VERSION;
@@ -18,12 +17,10 @@ use writer::common::emit_unicode_version;
 use writer::utils::tables::ToRangeCharTable;
 use writer::utils::write;
 
-
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
     emit_idna_mapping(dir);
 }
-
 
 pub fn emit_idna_mapping(dir: &Path) {
     let contents: String = IDNA_MAPPING.map.to_range_char_table(|entry, f| {

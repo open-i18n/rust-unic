@@ -8,13 +8,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::path::Path;
 
 use source::common::unicode_version::UnicodeVersion;
 
 use writer::utils::write;
-
 
 pub fn emit_unicode_version(dir: &Path, unicode_version: &UnicodeVersion) {
     write(
@@ -22,9 +20,7 @@ pub fn emit_unicode_version(dir: &Path, unicode_version: &UnicodeVersion) {
         "unicode_version.rsv",
         &format!(
             "UnicodeVersion {{ major: {}, minor: {}, micro: {} }}",
-            unicode_version.major,
-            unicode_version.minor,
-            unicode_version.micro,
+            unicode_version.major, unicode_version.minor, unicode_version.micro,
         ),
     );
 }

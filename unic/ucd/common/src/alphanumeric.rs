@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! *Alphanumeric* Character Property, equal to `General_Category = Nd | Nl | No or Alphabetic =
 //! Yes`.
 //!
@@ -16,7 +15,6 @@
 //!
 //! NOTE: This property is not defined by UCD, but is used commonly enough in Unicode algorithms and
 //! applications to provide an optimized implementation.
-
 
 char_property! {
     /// Represents Unicode characters with `General_Category = Nd | Nl | No`.
@@ -38,7 +36,6 @@ char_property! {
     /// This is equivalent to `is_alphabetic(char) || is_numeric(char)`.
     pub fn is_alphanumeric(char) -> bool;
 }
-
 
 #[cfg(test)]
 mod tests {

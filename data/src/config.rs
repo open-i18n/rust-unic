@@ -8,16 +8,12 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
-
 use std::collections::HashMap;
 use std::path::PathBuf;
 
 use toml;
 
-
 const CONFIG_TOML: &str = include_str!("../sources.toml");
-
 
 type Config = HashMap<String, DataSource>;
 
@@ -29,7 +25,6 @@ struct DataSource {
     test_resources: HashMap<String, String>,
 }
 
-
 /// A mapping between a server resource and a local location.
 #[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct DownloadMap {
@@ -39,7 +34,6 @@ pub struct DownloadMap {
     /// The path to the location where the file should be saved
     pub dest: PathBuf,
 }
-
 
 /// Downloads all files from the config file.
 ///

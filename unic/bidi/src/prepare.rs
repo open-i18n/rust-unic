@@ -21,12 +21,10 @@ use unic_ucd_bidi::bidi_class::abbr_names::*;
 
 use super::level::Level;
 
-
 /// A maximal substring of characters with the same embedding level.
 ///
 /// Represented as a range of byte indices.
 pub type LevelRun = Range<usize>;
-
 
 /// Output of `isolating_run_sequences` (steps X9-X10)
 #[derive(Debug, PartialEq)]
@@ -35,7 +33,6 @@ pub struct IsolatingRunSequence {
     pub sos: BidiClass, // Start-of-sequence type.
     pub eos: BidiClass, // End-of-sequence type.
 }
-
 
 /// Compute the set of isolating run sequences.
 ///
@@ -362,7 +359,9 @@ mod tests {
 
     #[test]
     fn test_not_removed_by_x9() {
-        let non_x9_classes = &[L, R, AL, EN, ES, ET, AN, CS, NSM, B, S, WS, ON, LRI, RLI, FSI, PDI];
+        let non_x9_classes = &[
+            L, R, AL, EN, ES, ET, AN, CS, NSM, B, S, WS, ON, LRI, RLI, FSI, PDI
+        ];
         for x in non_x9_classes {
             assert_eq!(not_removed_by_x9(&x), true);
         }

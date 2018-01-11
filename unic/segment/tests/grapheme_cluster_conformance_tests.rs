@@ -9,12 +9,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 extern crate unic_segment;
 
-
 use unic_segment::Graphemes;
-
 
 type TestData = &'static [(
     &'static str,
@@ -22,12 +19,10 @@ type TestData = &'static [(
     Option<&'static [&'static str]>,
 )];
 
-
 const TEST_DATA: TestData = include!("tables/grapheme_cluster_break_test_data.rsv");
 
 /// Extra cases that the official test suite doesn't cover.
 const EXTRA_TEST_DATA: TestData = include!("extra_grapheme_cluster_break_test_data.rsv");
-
 
 #[test]
 fn test_graphemes_conformance() {

@@ -8,16 +8,13 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Character Property Range types.
 //!
 //! NOTE: At the moment, it is not possible to define a marker for all character property range
 //! types and enforce their implementation from `CharProperty`.  We need to fix this whenever the
 //! compiler becomes able to do to so.
 
-
 use super::property::CharProperty;
-
 
 // == Enumerated/Catalog Types ==
 
@@ -41,7 +38,6 @@ pub trait EnumeratedCharProperty: Sized + CharProperty {
     /// The *human-readable name* of the property value.
     fn human_name(&self) -> &'static str;
 }
-
 
 // == Binary Types ==
 
@@ -80,14 +76,12 @@ pub trait BinaryCharProperty: CharProperty {
     }
 }
 
-
 // == Numeric Types ==
 
 /// Marker for numeric types accepted by `NumericCharProperty`.
 pub trait NumericCharPropertyValue {}
 
 impl NumericCharPropertyValue for u8 {}
-
 
 /// A Character Property with numeric values.
 ///
@@ -97,7 +91,6 @@ pub trait NumericCharProperty<NumericValue: NumericCharPropertyValue>
     /// The numeric value for the property value.
     fn number(&self) -> NumericValue;
 }
-
 
 // == Custom Types ==
 

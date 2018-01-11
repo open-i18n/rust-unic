@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![cfg_attr(not(feature = "std"), no_std)]
 #![cfg_attr(feature = "exact-size-is-empty", feature(exact_size_is_empty))]
 #![cfg_attr(feature = "fused", feature(fused))]
@@ -50,10 +49,8 @@
 //! [`TrustedLen`]: https://doc.rust-lang.org/std/iter/trait.TrustedLen.html
 //!
 
-
 #[cfg(feature = "std")]
 extern crate core;
-
 
 mod macros;
 mod range;
@@ -65,7 +62,6 @@ mod iter_fused;
 
 #[cfg(feature = "trusted-len")]
 mod iter_trusted_len;
-
 
 pub use range::CharRange;
 pub use iter::CharIter;

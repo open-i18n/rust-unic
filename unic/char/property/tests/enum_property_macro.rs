@@ -8,13 +8,10 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #[macro_use]
 extern crate unic_char_property;
 
-
 use unic_char_property::PartialCharProperty;
-
 
 char_property! {
     pub enum MyProp {
@@ -48,13 +45,11 @@ char_property! {
     pub mod long_names for long;
 }
 
-
 impl PartialCharProperty for MyProp {
     fn of(_: char) -> Option<Self> {
         None
     }
 }
-
 
 #[test]
 fn test_basic_macro_use() {

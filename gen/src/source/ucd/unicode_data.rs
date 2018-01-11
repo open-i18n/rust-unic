@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::char;
 use std::str::FromStr;
 
@@ -16,13 +15,11 @@ use regex::Regex;
 
 use source::utils::read;
 
-
 lazy_static! {
     pub static ref UNICODE_DATA: UnicodeData = {
         read("data/ucd/UnicodeData.txt").parse().unwrap()
     };
 }
-
 
 /// Data line from UnicodeData.txt
 #[derive(Clone, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -161,7 +158,6 @@ pub struct UnicodeDataEntry {
 
     /// (14) Simple titlecase mapping (single character result).
     pub simple_titlecase_mapping: Option<char>,
-
     // Implementation note:
     // This struct is currently 200 bytes wide.
     // If the Option<char> are changed to char, it is only 184 bytes.
@@ -182,12 +178,10 @@ pub struct UnicodeDataEntry {
     // by unsafe-hacking a u32::MAX char, and not losing any application space.
 }
 
-
 #[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct UnicodeData {
     pub entries: Box<[UnicodeDataEntry]>,
 }
-
 
 impl FromStr for UnicodeData {
     type Err = ();
@@ -300,7 +294,6 @@ impl FromStr for UnicodeData {
         })
     }
 }
-
 
 #[cfg(test)]
 mod test {

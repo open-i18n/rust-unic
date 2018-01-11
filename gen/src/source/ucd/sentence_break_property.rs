@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::char;
 use std::collections::BTreeMap;
 use std::str::FromStr;
@@ -17,19 +16,16 @@ use regex::Regex;
 
 use source::utils::read;
 
-
 lazy_static! {
     pub static ref SENTENCE_BREAK_DATA: SentenceBreakData = {
         read("data/ucd/SentenceBreakProperty.txt").parse().expect("Failed parsing source data")
     };
 }
 
-
 #[derive(Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct SentenceBreakData {
     pub map: BTreeMap<char, String>,
 }
-
 
 impl FromStr for SentenceBreakData {
     type Err = ();

@@ -9,7 +9,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Accessor for `Decomposition_Type` (dt) property
 
 use unic_char_property::PartialCharProperty;
@@ -154,13 +153,11 @@ char_property! {
     pub mod long_names for long;
 }
 
-
 impl PartialCharProperty for DecompositionType {
     fn of(ch: char) -> Option<Self> {
         Self::of(ch)
     }
 }
-
 
 impl DecompositionType {
     /// Find the DecompositionType of the character.
@@ -174,7 +171,6 @@ impl DecompositionType {
             .map(|it| it.0)
     }
 }
-
 
 #[cfg(test)]
 mod tests {

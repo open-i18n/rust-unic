@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![no_std]
 #![deny(unsafe_code, missing_docs, unconditional_recursion)]
 
@@ -37,7 +36,6 @@
 //! Properties in the Unicode Standard](https://www.unicode.org/versions/Unicode10.0.0/ch04.pdf).
 //!
 //! -- [Unicode® Standard Annex #44 - Unicode Character Database](http://unicode.org/reports/tr44/)
-
 
 #[macro_use]
 extern crate matches;

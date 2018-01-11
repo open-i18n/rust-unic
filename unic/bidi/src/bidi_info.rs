@@ -9,7 +9,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::borrow::Cow;
 use std::cmp::{max, min};
 use std::fmt;
@@ -27,8 +26,6 @@ use format_chars;
 
 use level::{Level, LTR_LEVEL, RTL_LEVEL};
 use prepare::LevelRun;
-
-
 
 /// Bidi information about a single paragraph
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -256,7 +253,6 @@ impl<'text> BidiInfo<'text> {
         self.text.char_indices().map(|(i, _)| levels[i]).collect()
     }
 
-
     /// Re-order a line based on resolved levels and return the line in display order.
     pub fn reorder_line(&self, para: &ParagraphInfo, line: Range<usize>) -> Cow<'text, str> {
         let (levels, runs) = self.visual_runs(para, line.clone());
@@ -400,7 +396,6 @@ impl<'text> BidiInfo<'text> {
     }
 }
 
-
 impl<'text> fmt::Display for BidiInfo<'text> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
@@ -412,11 +407,9 @@ impl<'text> fmt::Display for BidiInfo<'text> {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
-
 
     #[test]
     fn test_initial_text_info() {
@@ -728,9 +721,7 @@ mod tests {
         bidi_info
             .paragraphs
             .iter()
-            .map(|para| {
-                bidi_info.reordered_levels_per_char(para, para.range.clone())
-            })
+            .map(|para| bidi_info.reordered_levels_per_char(para, para.range.clone()))
             .collect()
     }
 
@@ -782,7 +773,6 @@ mod tests {
         );
     }
 }
-
 
 #[cfg(all(feature = "serde", test))]
 mod serde_tests {

@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::fmt::Write;
 use std::path::Path;
 
@@ -16,11 +15,9 @@ use source::ucd::test::normalization_test::NORMALIZATION_TESTS;
 
 use writer::utils::write;
 
-
 pub fn generate(dir: &Path) {
     emit_conformance_tests_data(dir);
 }
-
 
 fn emit_conformance_tests_data(dir: &Path) {
     let mut contents = "&[\n".to_owned();

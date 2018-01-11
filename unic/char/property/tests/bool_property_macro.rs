@@ -8,13 +8,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #[macro_use]
 extern crate unic_char_property;
 
 #[macro_use]
 extern crate unic_char_range;
-
 
 char_property! {
     /// This is a test property.

@@ -9,7 +9,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 // TODO: Drop following after MIN_RUST_VERSION >= 1.23
 #[allow(unused_imports)]
 use std::ascii::AsciiExt;
@@ -21,10 +20,8 @@ use unic_ucd_normal::is_combining_mark;
 use mapping::Mapping;
 use punycode;
 
-
 /// Prefix used in Punycode encoding.
 pub static PUNYCODE_PREFIX: &'static str = "xn--";
-
 
 fn map_char(codepoint: char, flags: Flags, output: &mut String, errors: &mut Vec<Error>) {
     match Mapping::of(codepoint) {

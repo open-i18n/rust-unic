@@ -9,18 +9,15 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Unicode Grapheme Clusters of a string.
 //!
 //! ## References
 //!
 //! * <https://www.unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries>
 
-
 use std::cmp;
 
 use unic_ucd_segment::GraphemeClusterBreak as GCB;
-
 
 /// External iterator for grapheme clusters and byte offsets.
 #[derive(Clone)]
@@ -28,7 +25,6 @@ pub struct GraphemeIndices<'a> {
     start_offset: usize,
     iter: Graphemes<'a>,
 }
-
 
 impl<'a> GraphemeIndices<'a> {
     /// Create new iterator for *extended grapheme clusters*.
@@ -49,7 +45,6 @@ impl<'a> GraphemeIndices<'a> {
         }
     }
 
-
     #[inline]
     /// View the underlying data (the part yet to be iterated) as a slice of the original string.
     ///
@@ -68,7 +63,6 @@ impl<'a> GraphemeIndices<'a> {
     }
 }
 
-
 impl<'a> Iterator for GraphemeIndices<'a> {
     type Item = (usize, &'a str);
 
@@ -85,7 +79,6 @@ impl<'a> Iterator for GraphemeIndices<'a> {
     }
 }
 
-
 impl<'a> DoubleEndedIterator for GraphemeIndices<'a> {
     #[inline]
     fn next_back(&mut self) -> Option<(usize, &'a str)> {
@@ -95,7 +88,6 @@ impl<'a> DoubleEndedIterator for GraphemeIndices<'a> {
     }
 }
 
-
 /// External iterator for a string's
 /// [grapheme clusters](https://www.unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries).
 #[derive(Clone)]
@@ -104,7 +96,6 @@ pub struct Graphemes<'a> {
     cursor: GraphemeCursor,
     cursor_back: GraphemeCursor,
 }
-
 
 impl<'a> Graphemes<'a> {
     /// Create new iterator for *extended grapheme clusters*.
@@ -129,7 +120,6 @@ impl<'a> Graphemes<'a> {
         }
     }
 
-
     #[inline]
     /// View the underlying data (the part yet to be iterated) as a slice of the original string.
     ///
@@ -147,7 +137,6 @@ impl<'a> Graphemes<'a> {
         &self.string[self.cursor.cur_cursor()..self.cursor_back.cur_cursor()]
     }
 }
-
 
 impl<'a> Iterator for Graphemes<'a> {
     type Item = &'a str;
@@ -169,7 +158,6 @@ impl<'a> Iterator for Graphemes<'a> {
     }
 }
 
-
 impl<'a> DoubleEndedIterator for Graphemes<'a> {
     #[inline]
     fn next_back(&mut self) -> Option<&'a str> {
@@ -184,7 +172,6 @@ impl<'a> DoubleEndedIterator for Graphemes<'a> {
         Some(&self.string[prev..end])
     }
 }
-
 
 // maybe unify with PairResult?
 // An enum describing information about a potential boundary.
@@ -203,7 +190,6 @@ enum GraphemeState {
     // depends on pre-context according to GB10.
     Emoji,
 }
-
 
 /// Cursor-based segmenter for grapheme clusters.
 #[derive(Clone)]
@@ -240,7 +226,6 @@ pub struct GraphemeCursor {
     resuming: bool,
 }
 
-
 /// An error return indicating that not enough content was available in the
 /// provided chunk to satisfy the query, and that more content must be provided.
 #[derive(PartialEq, Eq, Debug)]
@@ -265,7 +250,6 @@ pub enum GraphemeIncomplete {
     InvalidOffset,
 }
 
-
 // An enum describing the result from lookup of a pair of categories.
 #[derive(PartialEq, Eq)]
 enum PairResult {
@@ -284,7 +268,6 @@ enum PairResult {
     /// a break if preceded by Emoji Base and (Extend)*
     Emoji,
 }
-
 
 fn check_pair(before: GCB, after: GCB) -> PairResult {
     use self::PairResult::*;
@@ -335,7 +318,6 @@ fn check_pair(before: GCB, after: GCB) -> PairResult {
         (_, _) => Break, // GB999
     }
 }
-
 
 impl GraphemeCursor {
     /// Create a new cursor. The string and initial offset are given at creation
@@ -788,7 +770,6 @@ impl GraphemeCursor {
         }
     }
 }
-
 
 #[cfg(test)]
 mod tests {

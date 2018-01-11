@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![no_std]
 #![forbid(unsafe_code, unconditional_recursion, missing_docs)]
 
@@ -19,7 +18,6 @@
 //! Accessor for case conversion (case folding) character properties from the Unicode Character
 //! Database (UCD).
 
-
 #[macro_use]
 extern crate unic_char_property;
 
@@ -27,7 +25,6 @@ extern crate unic_char_property;
 extern crate unic_char_range;
 
 extern crate unic_ucd_version;
-
 
 pub mod lowercase;
 pub mod uppercase;
@@ -39,7 +36,6 @@ pub mod changes_when_titlecased;
 pub mod changes_when_casefolded;
 pub mod changes_when_casemapped;
 
-
 pub use lowercase::{is_lowercase, Lowercase};
 pub use uppercase::{is_uppercase, Uppercase};
 pub use cased::{is_cased, Cased};
@@ -50,7 +46,6 @@ pub use changes_when_uppercased::{changes_when_uppercased, ChangesWhenUppercased
 pub use changes_when_titlecased::{changes_when_titlecased, ChangesWhenTitlecased};
 pub use changes_when_casefolded::{changes_when_casefolded, ChangesWhenCasefolded};
 pub use changes_when_casemapped::{changes_when_casemapped, ChangesWhenCasemapped};
-
 
 use unic_ucd_version::UnicodeVersion;
 

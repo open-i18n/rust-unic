@@ -8,12 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 extern crate unic_ucd_normal;
 
-
 use unic_ucd_normal::{canonical_composition, canonical_decomposition};
-
 
 // Consider: could be conformance pulling from UCD Composition Exclusions
 // <https://www.unicode.org/Public/10.0.0/ucd/CompositionExclusions.txt>

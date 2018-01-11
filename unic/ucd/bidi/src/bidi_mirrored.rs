@@ -9,9 +9,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Unicode `Bidi_Mirrored` Character Property.
-
 
 char_property! {
     /// Represents values of the Unicode character property
@@ -31,7 +29,6 @@ char_property! {
     /// otherwise.
     pub fn is_bidi_mirrored(char) -> bool;
 }
-
 
 #[cfg(test)]
 mod tests {

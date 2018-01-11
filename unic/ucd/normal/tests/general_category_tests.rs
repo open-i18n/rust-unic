@@ -8,10 +8,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 // Run these tests only if using local GC=Mark implementation
 #![cfg(not(feature = "unic-ucd-category"))]
-
 
 #[macro_use]
 extern crate unic_char_range;
@@ -19,10 +17,8 @@ extern crate unic_char_range;
 extern crate unic_ucd_category;
 extern crate unic_ucd_normal;
 
-
 use self::unic_ucd_category::GeneralCategory as GC;
 use self::unic_ucd_normal::is_combining_mark;
-
 
 /// `normal::is_combining_mark` and `GeneralCategory::is_mark()` are expected to return the same
 /// results.

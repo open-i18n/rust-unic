@@ -9,14 +9,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 extern crate unic_segment;
 extern crate unic_ucd_common;
 
-
 use unic_segment::{GraphemeIndices, Graphemes, WordBoundIndices, WordBounds, Words};
 use unic_ucd_common::is_alphanumeric;
-
 
 #[test]
 fn test_all() {
@@ -40,12 +37,16 @@ fn test_all() {
             "The quick (\"brown\") fox can't jump 32.3 feet, right?",
             |s: &&str| s.chars().any(is_alphanumeric),
         ).collect::<Vec<&str>>(),
-        &["The", "quick", "brown", "fox", "can't", "jump", "32.3", "feet", "right"]
+        &[
+            "The", "quick", "brown", "fox", "can't", "jump", "32.3", "feet", "right"
+        ]
     );
 
     assert_eq!(
         WordBounds::new("The quick (\"brown\")  fox").collect::<Vec<&str>>(),
-        &["The", " ", "quick", " ", "(", "\"", "brown", "\"", ")", " ", " ", "fox"]
+        &[
+            "The", " ", "quick", " ", "(", "\"", "brown", "\"", ")", " ", " ", "fox"
+        ]
     );
 
     assert_eq!(

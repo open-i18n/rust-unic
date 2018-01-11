@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use core::{char, cmp};
 
 #[cfg(feature = "std")]
@@ -16,7 +15,6 @@ use std::collections::Bound;
 
 use self::cmp::Ordering;
 use CharIter;
-
 
 /// A range of unicode code points.
 ///

@@ -9,13 +9,10 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use core::ops::FnMut;
 
 use composition::{canonical_decomposition, compatibility_decomposition};
 use hangul;
-
-
 
 /// Compute canonical Unicode decomposition for character.
 ///

@@ -8,11 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::fs::File;
 use std::io::Read;
 use std::path::PathBuf;
-
 
 pub fn read(path: &str) -> String {
     println!("    Reading file: < {}", &path);

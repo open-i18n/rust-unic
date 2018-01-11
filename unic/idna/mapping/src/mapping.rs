@@ -9,7 +9,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 /// Represents the IDNA Mapping status of the Unicode character.
 #[repr(u8)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -44,14 +43,12 @@ mod data {
     pub const MAPPING: CharDataTable<super::Mapping> = include!("../tables/idna_mapping.rsv");
 }
 
-
 impl Mapping {
     /// Get Mapping status of the character.
     pub fn of(ch: char) -> Mapping {
         data::MAPPING.find(ch).expect("Table is missing value")
     }
 }
-
 
 #[cfg(test)]
 mod tests {

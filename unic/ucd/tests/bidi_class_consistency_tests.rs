@@ -9,11 +9,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Based on *General Scope* of *Bidirectional Character Types* table.
 //!
 //! Reference: <https://www.unicode.org/reports/tr9/#Table_Bidirectional_Character_Types>
-
 
 #[macro_use]
 extern crate matches;
@@ -23,10 +21,8 @@ extern crate unic_char_range;
 
 extern crate unic_ucd;
 
-
 use unic_ucd::bidi::BidiClass as BC;
 use unic_ucd::category::GeneralCategory as GC;
-
 
 #[test]
 fn test_from_bidi_class() {
@@ -144,7 +140,6 @@ fn test_from_bidi_class() {
         }
     }
 }
-
 
 #[test]
 fn test_from_general_category() {

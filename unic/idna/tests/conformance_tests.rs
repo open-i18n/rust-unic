@@ -8,9 +8,7 @@
 
 extern crate unic_idna;
 
-
 use std::char;
-
 
 #[test]
 fn test_idn_test_data() {

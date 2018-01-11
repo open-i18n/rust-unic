@@ -8,12 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Character data tables used in UNIC.
 
-
 use unic_char_range::CharRange;
-
 
 /// A mapping from characters to some associated data.
 ///

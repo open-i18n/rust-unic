@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![no_std]
 #![forbid(unsafe_code, unconditional_recursion)]
 #![deny(missing_docs)]
@@ -27,19 +26,15 @@ extern crate unic_char_range;
 
 extern crate unic_ucd_version;
 
-
 pub mod grapheme_cluster_break;
 pub mod sentence_break;
 pub mod word_break;
-
 
 pub use grapheme_cluster_break::GraphemeClusterBreak;
 pub use sentence_break::SentenceBreak;
 pub use word_break::WordBreak;
 
-
 use unic_ucd_version::UnicodeVersion;
-
 
 /// The [Unicode version](https://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

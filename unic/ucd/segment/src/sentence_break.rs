@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Unicode *Sentence_Break* Character Property.
 //!
 //! ## References
@@ -17,9 +16,7 @@
 //! * <https://www.unicode.org/reports/tr29/#Sentence_Boundaries>
 //! * <https://www.unicode.org/reports/tr29/#Table_Sentence_Break_Property_Values>
 
-
 use unic_char_property::TotalCharProperty;
-
 
 char_property! {
     /// Represents the Unicode character
@@ -238,20 +235,17 @@ char_property! {
     pub mod long_names for long;
 }
 
-
 impl TotalCharProperty for SentenceBreak {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }
 }
 
-
 impl Default for SentenceBreak {
     fn default() -> Self {
         SentenceBreak::Other
     }
 }
-
 
 mod data {
     use super::long_names as SB;
@@ -260,15 +254,12 @@ mod data {
         include!("../tables/sentence_break.rsv");
 }
 
-
 impl SentenceBreak {
     /// Find the character *Sentence_Break* property value.
     pub fn of(ch: char) -> SentenceBreak {
         data::SENTENCE_BREAK_TABLE.find_or_default(ch)
     }
 }
-
-
 
 #[cfg(test)]
 mod tests {

@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! # UNIC — Utilities
 //!
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
@@ -16,9 +15,7 @@
 #![forbid(missing_docs)]
 #![deny(unsafe_code)]
 
-
 pub extern crate unic_char_property as property;
-
 
 /// UNIC component version.
 pub const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");

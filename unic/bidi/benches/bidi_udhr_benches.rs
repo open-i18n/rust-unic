@@ -19,7 +19,6 @@ use test::Bencher;
 
 use unic_bidi::BidiInfo;
 
-
 const LTR_TEXTS: &[&str] = &[
     include_str!("../../../data/udhr/txt/udhr_acu_1.txt"),
     include_str!("../../../data/udhr/txt/udhr_auc.txt"),
@@ -50,7 +49,6 @@ const BIDI_TEXTS: &[&str] = &[
     include_str!("../../../data/udhr/txt/udhr_ydd.txt"),
 ];
 
-
 fn bench_bidi_info_new(b: &mut Bencher, texts: &[&str]) {
     for text in texts {
         b.iter(|| {
@@ -70,7 +68,6 @@ fn bench_reorder_line(b: &mut Bencher, texts: &[&str]) {
         });
     }
 }
-
 
 #[bench]
 fn bench_1_bidi_info_new_for_ltr_texts(b: &mut Bencher) {

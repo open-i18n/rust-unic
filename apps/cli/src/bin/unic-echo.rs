@@ -8,20 +8,17 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #[macro_use]
 extern crate clap;
 
 #[macro_use]
 extern crate unic_cli;
 
-
 use std::io::{self, Write};
 
 use clap::{Arg, ErrorKind};
 
 use unic_cli::{parsers, writers, Result};
-
 
 unic_arg_enum!{
     #[derive(Debug)]
@@ -45,7 +42,6 @@ INPUT FORMATS:
 "
     }
 }
-
 
 unic_arg_enum!{
     #[derive(Debug)]
@@ -95,7 +91,6 @@ OUTPUT FORMATS:
 "
     }
 }
-
 
 fn main() {
     run().expect("IO Error");
@@ -189,7 +184,6 @@ fn run() -> Result<()> {
         OutputFormat::BracesEscapeAll
         | OutputFormat::Js6EscapeAll
         | OutputFormat::RustEscapeAll => writers::write_with_all_braces_escape(&mut output, chars)?,
-
         /* TODO: Re-enable after rust-1.20.0
         OutputFormat::BracesEscapeControl |
         OutputFormat::Js6EscapeControl |

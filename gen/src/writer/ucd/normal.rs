@@ -20,7 +20,6 @@ use writer::utils::{capitalize, write};
 use writer::utils::tables::{ToDirectCharTable, ToRangeCharSet, ToRangeCharTable};
 use writer::common::emit_unicode_version;
 
-
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
     emit_general_category_mark(dir);
@@ -30,20 +29,16 @@ pub fn generate(dir: &Path) {
     emit_compatibility_decomposition_mapping(dir);
 }
 
-
 fn emit_general_category_mark(dir: &Path) {
     let set: BTreeSet<char> = UNICODE_DATA
         .entries
         .iter()
-        .filter(|x| {
-            matches!(x.general_category.as_str(), "Mn" | "Mc" | "Me")
-        })
+        .filter(|x| matches!(x.general_category.as_str(), "Mn" | "Mc" | "Me"))
         .map(|x| x.character)
         .collect();
 
     write(dir, "general_category_mark.rsv", &set.to_range_char_set());
 }
-
 
 fn emit_canonical_combining_class(dir: &Path) {
     let map: BTreeMap<char, u8> = UNICODE_DATA
@@ -59,7 +54,6 @@ fn emit_canonical_combining_class(dir: &Path) {
         &map.to_range_char_table(|val, f| write!(f, "CanonicalCombiningClass({})", val)),
     );
 }
-
 
 fn decomposition_map<'a>() -> &'a BTreeMap<char, Box<[char]>> {
     lazy_static!{
@@ -77,7 +71,6 @@ fn decomposition_map<'a>() -> &'a BTreeMap<char, Box<[char]>> {
     &MAP
 }
 
-
 fn emit_canonical_decomposition_mapping(dir: &Path) {
     write(
         dir,
@@ -91,7 +84,6 @@ fn emit_canonical_decomposition_mapping(dir: &Path) {
         }),
     );
 }
-
 
 fn emit_canonical_composition_mapping(dir: &Path) {
     let mut map: BTreeMap<char, Vec<(char, char)>> = BTreeMap::default();
@@ -132,7 +124,6 @@ fn emit_canonical_composition_mapping(dir: &Path) {
         }),
     );
 }
-
 
 fn emit_compatibility_decomposition_mapping(dir: &Path) {
     let map: BTreeMap<char, (&str, &[char])> = UNICODE_DATA

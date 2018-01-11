@@ -8,9 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Unicode `Uppercase` Character Property.
-
 
 char_property! {
     /// Represents values of the Unicode character property
@@ -28,7 +26,6 @@ char_property! {
     /// Return `true` for uppercase character, `false` otherwise.
     pub fn is_uppercase(char) -> bool;
 }
-
 
 #[cfg(test)]
 mod tests {

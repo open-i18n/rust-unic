@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use unic_char_property::TotalCharProperty;
 
 char_property! {
@@ -238,20 +237,17 @@ char_property! {
     pub mod long_names for long;
 }
 
-
 impl TotalCharProperty for GeneralCategory {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }
 }
 
-
 impl Default for GeneralCategory {
     fn default() -> Self {
         GeneralCategory::Unassigned
     }
 }
-
 
 mod data {
     use super::abbr_names::*;
@@ -260,15 +256,12 @@ mod data {
         include!("../tables/general_category.rsv");
 }
 
-
-
 impl GeneralCategory {
     /// Find the `GeneralCategory` of a single char.
     pub fn of(ch: char) -> GeneralCategory {
         data::GENERAL_CATEGORY_TABLE.find_or_default(ch)
     }
 }
-
 
 impl GeneralCategory {
     /// `Lu` | `Ll` | `Lt`  (Short form: `LC`)
@@ -319,7 +312,6 @@ impl GeneralCategory {
         matches!(*self, Cc | Cf | Cs | Co | Cn)
     }
 }
-
 
 #[cfg(test)]
 mod tests {

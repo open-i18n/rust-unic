@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![forbid(unsafe_code, missing_docs, unconditional_recursion)]
 
 //! # UNIC — Unicode Character Database
@@ -18,11 +17,8 @@
 //! This UNIC component provides access to character properties as defined in the [Unicode
 //! Standard Annex #44 - Unicode Character Database](http://unicode.org/reports/tr44/).
 
-
 pub extern crate unic_emoji_char as char;
 
-
 mod pkg_info;
-
 
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

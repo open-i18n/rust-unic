@@ -8,12 +8,10 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! *Control* Character Property, equal to `General_Category = Cc`.
 //!
 //! NOTE: This property is not defined by UCD, but is used commonly enough in Unicode algorithms and
 //! applications to provide an optimized implementation.
-
 
 char_property! {
     /// Represents Unicode characters with `General_Category = Cc`.
@@ -31,7 +29,6 @@ char_property! {
     /// Return `true` for control characters, `false` otherwise.
     pub fn is_control(char) -> bool;
 }
-
 
 #[cfg(test)]
 mod tests {

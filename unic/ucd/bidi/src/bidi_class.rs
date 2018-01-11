@@ -9,12 +9,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Unicode `Bidi_Class` Character Property.
 
-
 use unic_char_property::TotalCharProperty;
-
 
 char_property! {
     /// Represents the Unicode character
@@ -209,13 +206,11 @@ char_property! {
     pub mod long_names for long;
 }
 
-
 impl TotalCharProperty for BidiClass {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }
 }
-
 
 /// UCD/extracted/DerivedBidiClass.txt:
 /// "All code points not explicitly listed for `Bidi_Class` have the value `Left_To_Right` (`L`)."
@@ -226,14 +221,12 @@ impl Default for BidiClass {
     }
 }
 
-
 mod data {
     use super::abbr_names::*;
     use unic_char_property::tables::CharDataTable;
     pub const BIDI_CLASS_TABLE: CharDataTable<super::BidiClass> =
         include!("../tables/bidi_class.rsv");
 }
-
 
 impl BidiClass {
     /// Find the character `Bidi_Class` property value.
@@ -300,7 +293,6 @@ impl BidiClass {
     }
 }
 
-
 /// Represents **Category** of Unicode character `Bidi_Class` property, as demostrated under
 /// "Table 4. Bidirectional Character Types".
 ///
@@ -319,7 +311,6 @@ pub enum BidiClassCategory {
     /// Everything else.
     Neutral,
 }
-
 
 /// Methods for `Bidi_Class` character property.
 pub trait CharBidiClass {
@@ -350,7 +341,6 @@ impl CharBidiClass for char {
     }
 }
 
-
 /// Methods for `Bidi_Class` character properties of string types.
 pub trait StrBidiClass {
     /// Whether the string has any *explicit* bidi formatting character.
@@ -366,9 +356,8 @@ pub trait StrBidiClass {
 impl StrBidiClass for str {
     #[inline]
     fn has_bidi_explicit(&self) -> bool {
-        self.chars().any(|ch| {
-            ch.bidi_class().category() == BidiClassCategory::ExplicitFormatting
-        })
+        self.chars()
+            .any(|ch| ch.bidi_class().category() == BidiClassCategory::ExplicitFormatting)
     }
 
     #[inline]
@@ -381,7 +370,6 @@ impl StrBidiClass for str {
         self.chars().any(|ch| ch.is_rtl())
     }
 }
-
 
 #[cfg(test)]
 mod tests {

@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::char;
 use std::collections::BTreeSet;
 use std::str::FromStr;
@@ -17,13 +16,11 @@ use source::utils::read;
 
 use super::BINARY_PROPERTIES_REGEX;
 
-
 lazy_static! {
     pub static ref PROP_LIST: PropList = {
         read("data/ucd/PropList.txt").parse().unwrap()
     };
 }
-
 
 #[derive(Clone, Debug, Default)]
 pub struct PropList {

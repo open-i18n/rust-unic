@@ -9,7 +9,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![forbid(unsafe_code, missing_docs)]
 
 //! # UNIC - IDNA - IDNA Mapping Table
@@ -23,14 +22,11 @@ extern crate unic_char_property;
 extern crate unic_char_range;
 extern crate unic_ucd_version;
 
-
 mod mapping;
-
 
 use unic_ucd_version::UnicodeVersion;
 
 pub use mapping::Mapping;
-
 
 /// The version of [Unicode IDNA Compatibility Processing](https://www.unicode.org/reports/tr46/)
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

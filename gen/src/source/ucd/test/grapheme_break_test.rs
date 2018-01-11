@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::char;
 use std::str::FromStr;
 
@@ -18,18 +17,15 @@ use source::utils::read;
 
 use regex::Regex;
 
-
 lazy_static! {
     pub static ref GRAPHEME_BREAK_TESTS: GraphemeBreakTests = {
         read("data/ucd/test/GraphemeBreakTest.txt").parse().unwrap()
     };
 }
 
-
 pub struct GraphemeBreakTests {
     pub entries: Vec<GraphemeBreakTest>,
 }
-
 
 /// Represents a Test Case, containing a sequence of characters and GCB for each character, and for
 /// each pair of adjacent chars, if they can break or not, and which rule matching the position.
@@ -47,7 +43,6 @@ pub struct GraphemeBreakTest {
     pub breaks: Vec<bool>,
     pub rules: Vec<String>,
 }
-
 
 impl FromStr for GraphemeBreakTests {
     type Err = ();

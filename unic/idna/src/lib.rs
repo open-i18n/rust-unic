@@ -9,7 +9,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![forbid(unsafe_code, missing_docs)]
 
 //! # UNIC — Unicode IDNA Compatibility Processing
@@ -39,7 +38,6 @@
 //! > that minimizes the impact of this transition for client software,
 //! > allowing client software to access domains that are valid under either system.
 
-
 #[macro_use]
 extern crate matches;
 
@@ -50,14 +48,12 @@ extern crate unic_ucd_normal;
 extern crate unic_idna_mapping as mapping;
 extern crate unic_idna_punycode as punycode;
 
-
 mod process;
 
 pub use mapping::UNICODE_VERSION;
 pub use process::PUNYCODE_PREFIX;
 pub use process::{Errors, Flags};
 pub use process::{to_ascii, to_unicode};
-
 
 /// UNIC component version.
 pub const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");

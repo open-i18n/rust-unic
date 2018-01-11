@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::char;
 use std::str::FromStr;
 use std::collections::BTreeMap;
@@ -17,19 +16,16 @@ use regex::Regex;
 
 use source::utils::read;
 
-
 lazy_static! {
     pub static ref IDNA_MAPPING: IdnaMapping = {
         read("data/idna/IdnaMappingTable.txt").parse().unwrap()
     };
 }
 
-
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct IdnaMapping {
     pub map: BTreeMap<char, IdnaMappingEntry>,
 }
-
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct IdnaMappingEntry {
@@ -39,10 +35,8 @@ pub struct IdnaMappingEntry {
 
     /// Only present if status is Mapped, Deviation, or DisallowedStd3Mapped.
     pub mapping: Option<String>,
-
     // idna_2008_status unused
 }
-
 
 impl FromStr for IdnaMapping {
     type Err = ();

@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Unicode *Word_Break* Character Property.
 //!
 //! ## References
@@ -17,9 +16,7 @@
 //! * <https://www.unicode.org/reports/tr29/#Word_Boundaries>
 //! * <https://www.unicode.org/reports/tr29/#Table_Word_Break_Property_Values>
 
-
 use unic_char_property::TotalCharProperty;
-
 
 char_property! {
     /// Represents the Unicode character
@@ -331,20 +328,17 @@ char_property! {
     pub mod long_names for long;
 }
 
-
 impl TotalCharProperty for WordBreak {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }
 }
 
-
 impl Default for WordBreak {
     fn default() -> Self {
         WordBreak::Other
     }
 }
-
 
 mod data {
     use super::long_names as WB;
@@ -353,15 +347,12 @@ mod data {
         include!("../tables/word_break.rsv");
 }
 
-
 impl WordBreak {
     /// Find the character *Word_Break* property value.
     pub fn of(ch: char) -> WordBreak {
         data::WORD_BREAK_TABLE.find_or_default(ch)
     }
 }
-
-
 
 #[cfg(test)]
 mod tests {

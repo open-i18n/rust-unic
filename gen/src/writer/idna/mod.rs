@@ -8,12 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 mod mapping;
 
-
 use writer::utils::clean_dir;
-
 
 pub fn generate() {
     mapping::generate(&clean_dir("unic/idna/mapping/tables"));

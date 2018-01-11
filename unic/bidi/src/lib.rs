@@ -9,7 +9,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![forbid(unsafe_code, missing_docs)]
 
 //! # UNIC — Unicode Bidirectional Algorithm
@@ -66,7 +65,6 @@
 //!
 //! [tr9]: https://www.unicode.org/reports/tr9/
 
-
 extern crate unic_ucd_bidi;
 
 #[macro_use]
@@ -87,14 +85,12 @@ mod explicit;
 mod implicit;
 mod prepare;
 
-
 pub use unic_ucd_bidi::UNICODE_VERSION;
 pub use unic_ucd_bidi::{bidi_class, BidiClass, BidiClassCategory};
 
 pub use bidi_info::{BidiInfo, ParagraphInfo};
 pub use level::Level;
 pub use prepare::LevelRun;
-
 
 /// UNIC component version.
 pub const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");

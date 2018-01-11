@@ -8,11 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 mod segment_tests;
 
 use writer::utils::clean_dir;
-
 
 pub fn generate() {
     segment_tests::generate(&clean_dir("unic/segment/tests/tables"));

@@ -9,21 +9,16 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 extern crate unic_segment;
-
 
 use unic_segment::{WordBoundIndices, WordBounds};
 
-
 type TestData = &'static [(&'static str, &'static [&'static str])];
-
 
 const TEST_DATA: TestData = include!("tables/word_break_test_data.rsv");
 
 /// Extra cases that the official test suite doesn't cover.
 const EXTRA_TEST_DATA: TestData = include!("extra_word_break_test_data.rsv");
-
 
 #[test]
 fn test_words_conformance() {

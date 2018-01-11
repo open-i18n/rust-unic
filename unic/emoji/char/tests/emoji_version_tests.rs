@@ -8,9 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 extern crate unic_emoji_char;
-
 
 #[test]
 fn test_emoji_data_version_against_ucd_version() {

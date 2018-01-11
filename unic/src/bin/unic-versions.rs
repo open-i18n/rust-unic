@@ -8,17 +8,13 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![forbid(unsafe_code)]
 
 //! Command-line tool to list versions of UNIC components.
 
-
 extern crate unic;
 
-
 const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
-
 
 fn main() {
     println!("# UNIC - Unicode and Internationalization Crates");

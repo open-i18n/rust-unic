@@ -8,20 +8,16 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #[macro_use]
 extern crate unic_char_range;
 
 extern crate unic_ucd_normal;
 
-
 use unic_ucd_normal::DecompositionType as DT;
 use std::collections::HashSet as Set;
 use std::{char, u32};
 
-
 const DT_TEST_DATA: &str = include_str!("../../../../data/ucd/test/DecompositionTypeTest.txt");
-
 
 #[derive(Debug)]
 struct Fail {

@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::error::Error;
 use std::fs::File;
 use std::io::Write;
@@ -19,7 +18,6 @@ use hyper::{Client, Uri};
 use tokio_core::reactor::Core;
 
 use config::DownloadMap;
-
 
 /// Concurrently download all files as indicated by `DownloadMap`s.
 ///

@@ -8,12 +8,10 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use core::cmp;
 
 pub use unic_ucd_version::UnicodeVersion;
 use unic_char_property::{CharProperty, CustomCharProperty, PartialCharProperty};
-
 
 /// Represents values of the Unicode character property
 /// [*Age*](https://www.unicode.org/reports/tr44/#Age).
@@ -40,7 +38,6 @@ use unic_char_property::{CharProperty, CustomCharProperty, PartialCharProperty};
 #[derive(Clone, Copy, Eq, PartialEq, Ord, Debug, Hash)]
 pub struct Age(UnicodeVersion);
 
-
 impl CharProperty for Age {
     fn prop_abbr_name() -> &'static str {
         "age"
@@ -55,13 +52,11 @@ impl CharProperty for Age {
     }
 }
 
-
 impl PartialCharProperty for Age {
     fn of(ch: char) -> Option<Self> {
         Self::of(ch)
     }
 }
-
 
 impl CustomCharProperty<UnicodeVersion> for Age {
     /// Get numeric value for character property value
@@ -70,13 +65,11 @@ impl CustomCharProperty<UnicodeVersion> for Age {
     }
 }
 
-
 mod data {
     use super::UnicodeVersion;
     use unic_char_property::tables::CharDataTable;
     pub const AGE_TABLE: CharDataTable<UnicodeVersion> = include!("../tables/age_values.rsv");
 }
-
 
 impl Age {
     /// Find the character *Age* property value.
@@ -90,7 +83,6 @@ impl Age {
     }
 }
 
-
 impl cmp::PartialOrd for Age {
     fn partial_cmp(&self, other: &Age) -> Option<cmp::Ordering> {
         match self.0.cmp(&other.0) {
@@ -100,7 +92,6 @@ impl cmp::PartialOrd for Age {
         }
     }
 }
-
 
 /// Methods for character age property.
 pub trait CharAge {
@@ -114,7 +105,6 @@ impl CharAge for char {
         Age::of(self)
     }
 }
-
 
 #[cfg(test)]
 mod tests {

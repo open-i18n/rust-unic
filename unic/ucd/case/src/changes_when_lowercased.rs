@@ -8,9 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Unicode `Changes_When_Lowercased` Character Property.
-
 
 char_property! {
     /// Represents values of the Unicode character property
@@ -28,7 +26,6 @@ char_property! {
     /// Return `true` for characters that change when lowercased, `false` otherwise.
     pub fn changes_when_lowercased(char) -> bool;
 }
-
 
 #[cfg(test)]
 mod tests {

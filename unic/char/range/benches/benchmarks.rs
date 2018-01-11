@@ -8,17 +8,13 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![feature(test)]
-
 
 extern crate test;
 extern crate unic_char_range;
 
-
 use std::char;
 use unic_char_range::CharRange;
-
 
 #[bench]
 fn forward_iteration(b: &mut test::Bencher) {

@@ -8,14 +8,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 extern crate unic_char_range;
-
 
 use std::{char, vec, u32};
 
 use unic_char_range::CharRange;
-
 
 fn all_chars() -> vec::IntoIter<char> {
     (u32::MIN..u32::MAX)

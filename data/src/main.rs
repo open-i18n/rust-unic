@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! UNIC - Source Data Download Script
 //!
 //! # Config Format:
@@ -25,7 +24,6 @@
 //! "other_data.txt" = "tests/other_data.txt"
 //! ```
 
-
 #[macro_use]
 extern crate clap;
 
@@ -38,15 +36,12 @@ extern crate serde_derive;
 
 extern crate toml;
 
-
 mod client;
 mod config;
-
 
 use std::fs;
 
 use config::DownloadMap;
-
 
 fn main() {
     let matches = clap_app!(
@@ -69,7 +64,6 @@ fn main() {
 
     client::download_all(&download_maps).expect("Download error");
 }
-
 
 fn clean_dirs(download_maps: &[DownloadMap]) {
     let dirs = download_maps

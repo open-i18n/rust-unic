@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Unicode *Grapheme_Cluster_Break* Character Property.
 //!
 //! ## References
@@ -17,9 +16,7 @@
 //! * <https://www.unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries>
 //! * <https://www.unicode.org/reports/tr29/#Grapheme_Cluster_Break_Property_Values>
 
-
 use unic_char_property::TotalCharProperty;
-
 
 char_property! {
     /// Represents the Unicode character
@@ -323,20 +320,17 @@ char_property! {
     pub mod long_names for long;
 }
 
-
 impl TotalCharProperty for GraphemeClusterBreak {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }
 }
 
-
 impl Default for GraphemeClusterBreak {
     fn default() -> Self {
         GraphemeClusterBreak::Other
     }
 }
-
 
 mod data {
     use super::long_names as GCB;
@@ -345,15 +339,12 @@ mod data {
         include!("../tables/grapheme_cluster_break.rsv");
 }
 
-
 impl GraphemeClusterBreak {
     /// Find the character *Grapheme_Cluster_Break* property value.
     pub fn of(ch: char) -> GraphemeClusterBreak {
         data::GRAPHEME_CLUSTER_BREAK_TABLE.find_or_default(ch)
     }
 }
-
-
 
 #[cfg(test)]
 mod tests {

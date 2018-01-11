@@ -9,19 +9,16 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Unicode Words of a string.
 //!
 //! ## References
 //!
 //! * <https://www.unicode.org/reports/tr29/#Word_Boundaries>
 
-
 use std::cmp;
 use std::iter::Filter;
 
 use unic_ucd_segment::WordBreak as WB;
-
 
 /// An iterator over the substrings of a string which, after splitting the string on [word
 /// boundaries](https://www.unicode.org/reports/tr29/#Word_Boundaries), contain any characters with
@@ -56,7 +53,6 @@ impl<'a> Words<'a> {
         }
     }
 }
-
 
 /// External iterator for a string's
 /// [word boundaries](https://www.unicode.org/reports/tr29/#Word_Boundaries).
@@ -128,7 +124,6 @@ impl<'a> DoubleEndedIterator for WordBoundIndices<'a> {
     }
 }
 
-
 // state machine for word boundary rules
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 enum WordBoundsState {
@@ -154,7 +149,6 @@ enum FormatExtendType {
     AcceptQLetter,
     RequireNumeric,
 }
-
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 enum RegionalState {
@@ -679,7 +673,6 @@ impl<'a> WordBounds<'a> {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::{WordBounds, Words};
@@ -689,7 +682,9 @@ mod tests {
     fn test_word_bounds() {
         assert_eq!(
             WordBounds::new("The quick (\"brown\")  fox").collect::<Vec<&str>>(),
-            &["The", " ", "quick", " ", "(", "\"", "brown", "\"", ")", " ", " ", "fox"]
+            &[
+                "The", " ", "quick", " ", "(", "\"", "brown", "\"", ")", " ", " ", "fox"
+            ]
         );
     }
 
@@ -700,7 +695,9 @@ mod tests {
                 "The quick (\"brown\") fox can't jump 32.3 feet, right?",
                 |s: &&str| s.chars().any(is_alphanumeric),
             ).collect::<Vec<&str>>(),
-            &["The", "quick", "brown", "fox", "can't", "jump", "32.3", "feet", "right"]
+            &[
+                "The", "quick", "brown", "fox", "can't", "jump", "32.3", "feet", "right"
+            ]
         );
     }
 }
