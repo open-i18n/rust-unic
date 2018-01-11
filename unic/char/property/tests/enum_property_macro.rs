@@ -21,20 +21,20 @@ char_property! {
 
         /// Variants can have multi-line documentations,
         /// and/or other attributes.
-        | Variant1 {
+        Variant1 {
             abbr => V1,
             long => Variant_1,
             human => "Variant 1",
         }
 
         /// One line works too, or...
-        | Variant2 {
+        Variant2 {
             abbr => V2,
             long => Variant_2,
             human => "Variant 2",
         }
 
-        | Variant3 {
+        Variant3 {
             abbr => V3,
             long => Variant_3,
             human => "Variant 3",
