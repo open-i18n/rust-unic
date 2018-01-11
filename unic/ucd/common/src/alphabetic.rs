@@ -8,9 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Unicode *Alphabetic* Character Property.
-
 
 char_property! {
     /// Represents values of the Unicode character property
@@ -28,7 +26,6 @@ char_property! {
     /// Return `true` for Alphabetic characters, `false` otherwise.
     pub fn is_alphabetic(char) -> bool;
 }
-
 
 #[cfg(test)]
 mod tests {

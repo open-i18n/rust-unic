@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Unicode *Word_Break* Character Property.
 //!
 //! ## References
@@ -17,9 +16,7 @@
 //! * <https://www.unicode.org/reports/tr29/#Word_Boundaries>
 //! * <https://www.unicode.org/reports/tr29/#Table_Word_Break_Property_Values>
 
-
 use unic_char_property::TotalCharProperty;
-
 
 char_property! {
     /// Represents the Unicode character
@@ -39,7 +36,7 @@ char_property! {
         /// ```text
         /// U+000D CARRIAGE RETURN (CR)
         /// ```
-        | CR {
+        CR {
             abbr => CR,
             long => CR,
             human => "Carriage Return",
@@ -48,7 +45,7 @@ char_property! {
         /// ```text
         /// U+000A LINE FEED (LF)
         /// ```
-        | LF {
+        LF {
             abbr => LF,
             long => LF,
             human => "Line Feed",
@@ -61,7 +58,7 @@ char_property! {
         /// U+2028 LINE SEPARATOR
         /// U+2029 PARAGRAPH SEPARATOR
         /// ```
-        | Newline {
+        Newline {
             abbr => NL,
             long => Newline,
             human => "Newline",
@@ -72,7 +69,7 @@ char_property! {
         /// General_Category = Spacing_Mark
         /// and not U+200D ZERO WIDTH JOINER (ZWJ)
         /// ```
-        | Extend {
+        Extend {
             abbr => Extend,
             long => Extend,
             human => "Extend",
@@ -81,7 +78,7 @@ char_property! {
         /// ```text
         /// U+200D ZERO WIDTH JOINER
         /// ```
-        | ZWJ {
+        ZWJ {
             abbr => ZWJ,
             long => ZWJ,
             human => "Zero Width Joiner (ZWJ)",
@@ -97,7 +94,7 @@ char_property! {
         /// U+1F1E6 REGIONAL INDICATOR SYMBOL LETTER A
         /// ..U+1F1FF REGIONAL INDICATOR SYMBOL LETTER Z
         /// ```
-        | RegionalIndicator {
+        RegionalIndicator {
             abbr => RI,
             long => Regional_Indicator,
             human => "Regional Indicator",
@@ -109,7 +106,7 @@ char_property! {
         /// and not U+200C ZERO WIDTH NON-JOINER (ZWNJ)
         /// and not U+200D ZERO WIDTH JOINER (ZWJ)
         /// ```
-        | Format {
+        Format {
             abbr => FO,
             long => Format,
             human => "Format",
@@ -129,7 +126,7 @@ char_property! {
         /// U+30FC ( ー ) KATAKANA-HIRAGANA PROLONGED SOUND MARK
         /// U+FF70 ( ｰ ) HALFWIDTH KATAKANA-HIRAGANA PROLONGED SOUND MARK
         /// ```
-        | Katakana {
+        Katakana {
             abbr => KA,
             long => Katakana,
             human => "Katakana",
@@ -139,7 +136,7 @@ char_property! {
         /// Script = Hebrew
         /// and General_Category = Other_Letter
         /// ```
-        | HebrewLetter {
+        HebrewLetter {
             abbr => HL,
             long => Hebrew_Letter,
             human => "Hebrew Letter",
@@ -170,7 +167,7 @@ char_property! {
         /// and Word_Break ≠ Extend
         /// and Word_Break ≠ Hebrew_Letter
         /// ```
-        | ALetter {
+        ALetter {
             abbr => LE,
             long => ALetter,
             human => "Alphabetic Letter",
@@ -179,7 +176,7 @@ char_property! {
         /// ```text
         /// U+0027 ( ' ) APOSTROPHE
         /// ```
-        | SingleQuote {
+        SingleQuote {
             abbr => SQ,
             long => Single_Quote,
             human => "Single Quote",
@@ -188,7 +185,7 @@ char_property! {
         /// ```text
         /// U+0022 ( " ) QUOTATION MARK
         /// ```
-        | DoubleQuote {
+        DoubleQuote {
             abbr => DQ,
             long => Double_Quote,
             human => "Double Quote",
@@ -203,7 +200,7 @@ char_property! {
         /// U+FF07 ( ＇ ) FULLWIDTH APOSTROPHE
         /// U+FF0E ( ． ) FULLWIDTH FULL STOP
         /// ```
-        | MidNumLet {
+        MidNumLet {
             abbr => MB,
             long => MidNumLet,
             human => "Middle of Numeric/Letter",
@@ -219,7 +216,7 @@ char_property! {
         /// U+FE55 ( ﹕ ) SMALL COLON
         /// U+FF1A ( ： ) FULLWIDTH COLON
         /// ```
-        | MidLetter {
+        MidLetter {
             abbr => ML,
             long => MidLetter,
             human => "Middle of Letter",
@@ -237,7 +234,7 @@ char_property! {
         /// and not U+FE13 ( ︓ ) PRESENTATION FORM FOR VERTICAL COLON
         /// and not U+002E ( . ) FULL STOP
         /// ```
-        | MidNum {
+        MidNum {
             abbr => MN,
             long => MidNum,
             human => "Middle of Numeric",
@@ -247,7 +244,7 @@ char_property! {
         /// Line_Break = Numeric
         /// and not U+066C ( ٬ ) ARABIC THOUSANDS SEPARATOR
         /// ```
-        | Numeric {
+        Numeric {
             abbr => NU,
             long => Numeric,
             human => "Numeric",
@@ -257,7 +254,7 @@ char_property! {
         /// General_Category = Connector_Punctuation, or
         /// U+202F NARROW NO-BREAK SPACE (NNBSP)
         /// ```
-        | ExtendNumLet {
+        ExtendNumLet {
             abbr => EX,
             long => ExtendNumLet,
             human => "Extend Numeric/Letter",
@@ -269,7 +266,7 @@ char_property! {
         /// occur after ZWJ in `emoji-zwj-sequences.txt`.
         ///
         /// See <https://www.unicode.org/reports/tr51/>.
-        | EBase {
+        EBase {
             abbr => EB,
             long => E_Base,
             human => "Emoji Base",
@@ -278,7 +275,7 @@ char_property! {
         /// Emoji characters listed as `Emoji_Modifer=Yes` in `emoji-data.txt`.
         ///
         /// See <https://www.unicode.org/reports/tr51/>.
-        | EModifier {
+        EModifier {
             abbr => EM,
             long => E_Modifier,
             human => "Emoji Modifier",
@@ -288,7 +285,7 @@ char_property! {
         /// and are not listed as `Emoji_Modifier_Base=Yes` in `emoji-data.txt`.
         ///
         /// See <https://www.unicode.org/reports/tr51/>.
-        | GlueAfterZwj {
+        GlueAfterZwj {
             abbr => GAZ,
             long => Glue_After_Zwj,
             human => "Glue After ZWJ",
@@ -298,14 +295,14 @@ char_property! {
         /// after ZWJ in `emoji-zwj-sequences.txt`.
         ///
         /// See <https://www.unicode.org/reports/tr51/>.
-        | EBaseGAZ {
+        EBaseGAZ {
             abbr => EBG,
             long => E_Base_GAZ,
             human => "Emoji Base and Glue After ZWJ",
         }
 
         /// All other characters
-        | Other {
+        Other {
             abbr => XX,
             long => Other,
             human => "Other",
@@ -331,20 +328,17 @@ char_property! {
     pub mod long_names for long;
 }
 
-
 impl TotalCharProperty for WordBreak {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }
 }
 
-
 impl Default for WordBreak {
     fn default() -> Self {
         WordBreak::Other
     }
 }
-
 
 mod data {
     use super::long_names as WB;
@@ -353,15 +347,12 @@ mod data {
         include!("../tables/word_break.rsv");
 }
 
-
 impl WordBreak {
     /// Find the character *Word_Break* property value.
     pub fn of(ch: char) -> WordBreak {
         data::WORD_BREAK_TABLE.find_or_default(ch)
     }
 }
-
-
 
 #[cfg(test)]
 mod tests {

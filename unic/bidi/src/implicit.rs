@@ -19,7 +19,6 @@ use unic_ucd_bidi::bidi_class::abbr_names::*;
 use super::prepare::{IsolatingRunSequence, LevelRun, not_removed_by_x9, removed_by_x9};
 use super::level::Level;
 
-
 /// 3.3.4 Resolving Weak Types
 ///
 /// <https://www.unicode.org/reports/tr9/#Resolving_Weak_Types>
@@ -183,15 +182,15 @@ pub fn resolve_neutral(
             // <https://www.unicode.org/reports/tr9/#N2>
             let new_class = match (prev_class, next_class) {
                 (L, L) => L,
-                (R, R) |
-                (R, AN) |
-                (R, EN) |
-                (AN, R) |
-                (AN, AN) |
-                (AN, EN) |
-                (EN, R) |
-                (EN, AN) |
-                (EN, EN) => R,
+                (R, R)
+                | (R, AN)
+                | (R, EN)
+                | (AN, R)
+                | (AN, AN)
+                | (AN, EN)
+                | (EN, R)
+                | (EN, AN)
+                | (EN, EN) => R,
                 (_, _) => e,
             };
             for j in &ni_run {

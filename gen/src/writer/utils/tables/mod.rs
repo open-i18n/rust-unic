@@ -8,18 +8,15 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 mod range;
 mod set;
 mod direct;
-
 
 use std::fmt;
 
 pub use self::range::ToRangeCharTable;
 pub use self::set::ToRangeCharSet;
 pub use self::direct::ToDirectCharTable;
-
 
 #[derive(Debug)]
 struct DisplayWrapper<'a, T: 'a, F: 'a>(&'a T, &'a F)

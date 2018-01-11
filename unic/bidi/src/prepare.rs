@@ -11,7 +11,7 @@
 
 //! 3.3.3 Preparations for Implicit Processing
 //!
-//! https://www.unicode.org/reports/tr9/#Preparations_for_Implicit_Processing
+//! <https://www.unicode.org/reports/tr9/#Preparations_for_Implicit_Processing>
 
 use std::cmp::max;
 use std::ops::Range;
@@ -21,12 +21,10 @@ use unic_ucd_bidi::bidi_class::abbr_names::*;
 
 use super::level::Level;
 
-
 /// A maximal substring of characters with the same embedding level.
 ///
 /// Represented as a range of byte indices.
 pub type LevelRun = Range<usize>;
-
 
 /// Output of `isolating_run_sequences` (steps X9-X10)
 #[derive(Debug, PartialEq)]
@@ -35,7 +33,6 @@ pub struct IsolatingRunSequence {
     pub sos: BidiClass, // Start-of-sequence type.
     pub eos: BidiClass, // End-of-sequence type.
 }
-
 
 /// Compute the set of isolating run sequences.
 ///
@@ -52,7 +49,7 @@ pub fn isolating_run_sequences(
     let runs = level_runs(levels, original_classes);
 
     // Compute the set of isolating run sequences.
-    // https://www.unicode.org/reports/tr9/#BD13
+    // <https://www.unicode.org/reports/tr9/#BD13>
     let mut sequences = Vec::with_capacity(runs.len());
 
     // When we encounter an isolate initiator, we push the current sequence onto the
@@ -88,7 +85,7 @@ pub fn isolating_run_sequences(
     sequences.extend(stack.into_iter().rev().filter(|seq| !seq.is_empty()));
 
     // Determine the `sos` and `eos` class for each sequence.
-    // https://www.unicode.org/reports/tr9/#X10
+    // <https://www.unicode.org/reports/tr9/#X10>
     sequences
         .into_iter()
         .map(|sequence: Vec<LevelRun>| {
@@ -140,7 +137,7 @@ pub fn isolating_run_sequences(
 
 /// Finds the level runs in a paragraph.
 ///
-/// https://www.unicode.org/reports/tr9/#BD7
+/// <https://www.unicode.org/reports/tr9/#BD7>
 fn level_runs(levels: &[Level], original_classes: &[BidiClass]) -> Vec<LevelRun> {
     assert_eq!(levels.len(), original_classes.len());
 
@@ -166,7 +163,7 @@ fn level_runs(levels: &[Level], original_classes: &[BidiClass]) -> Vec<LevelRun>
 
 /// Should this character be ignored in steps after X9?
 ///
-/// https://www.unicode.org/reports/tr9/#X9
+/// <https://www.unicode.org/reports/tr9/#X9>
 pub fn removed_by_x9(class: BidiClass) -> bool {
     matches!(class, RLE | LRE | RLO | LRO | PDF | BN)
 }
@@ -189,7 +186,7 @@ mod tests {
         );
     }
 
-    // From https://www.unicode.org/reports/tr9/#BD13
+    // From <https://www.unicode.org/reports/tr9/#BD13>
     #[cfg_attr(rustfmt, rustfmt_skip)]
     #[test]
     fn test_isolating_run_sequences() {
@@ -234,7 +231,7 @@ mod tests {
         );
     }
 
-    // From https://www.unicode.org/reports/tr9/#X10
+    // From <https://www.unicode.org/reports/tr9/#X10>
     #[cfg_attr(rustfmt, rustfmt_skip)]
     #[test]
     fn test_isolating_run_sequences_sos_and_eos() {
@@ -362,7 +359,9 @@ mod tests {
 
     #[test]
     fn test_not_removed_by_x9() {
-        let non_x9_classes = &[L, R, AL, EN, ES, ET, AN, CS, NSM, B, S, WS, ON, LRI, RLI, FSI, PDI];
+        let non_x9_classes = &[
+            L, R, AL, EN, ES, ET, AN, CS, NSM, B, S, WS, ON, LRI, RLI, FSI, PDI
+        ];
         for x in non_x9_classes {
             assert_eq!(not_removed_by_x9(&x), true);
         }

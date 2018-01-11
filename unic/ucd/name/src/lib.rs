@@ -8,20 +8,15 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![no_std]
-
 
 extern crate unic_char_property;
 extern crate unic_ucd_version;
 
-
 mod name;
-
 
 use unic_ucd_version::UnicodeVersion;
 
 pub use name::Name;
-
 
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

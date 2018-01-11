@@ -8,13 +8,10 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use core::char;
-
 
 const BEFORE_SURROGATE: char = '\u{D7FF}';
 const AFTER_SURROGATE: char = '\u{E000}';
-
 
 #[inline]
 #[allow(unsafe_code)]
@@ -30,7 +27,6 @@ pub unsafe fn forward(ch: char) -> char {
         char::from_u32_unchecked(ch as u32 + 1)
     }
 }
-
 
 #[inline]
 #[allow(unsafe_code)]

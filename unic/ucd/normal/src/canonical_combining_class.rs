@@ -9,23 +9,19 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
-//! Accessor for *Canonical_Combining_Class* (ccc) property
+//! Accessor for `Canonical_Combining_Class` (ccc) property
 //!
 //! Reference: <http://unicode.org/reports/tr44/#Canonical_Combining_Class_Values>
-
 
 use core::fmt;
 
 use unic_char_property::{CharProperty, NumericCharProperty, TotalCharProperty};
 
-
-/// Represents *Canonical_Combining_Class* property of a Unicode character.
+/// Represents `Canonical_Combining_Class` property of a Unicode character.
 ///
 /// * <http://unicode.org/reports/tr44/#Canonical_Combining_Class>
 #[derive(Copy, Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct CanonicalCombiningClass(u8);
-
 
 impl CharProperty for CanonicalCombiningClass {
     fn prop_abbr_name() -> &'static str {
@@ -41,13 +37,11 @@ impl CharProperty for CanonicalCombiningClass {
     }
 }
 
-
 impl TotalCharProperty for CanonicalCombiningClass {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }
 }
-
 
 impl NumericCharProperty<u8> for CanonicalCombiningClass {
     /// Get numeric value for character property value
@@ -56,9 +50,8 @@ impl NumericCharProperty<u8> for CanonicalCombiningClass {
     }
 }
 
-
 // TODO: Once we fully adopt 1.20 change these to associated consts on CanonicalCombiningClass
-/// *Canonical_Combining_Class* values by their name
+/// `Canonical_Combining_Class` values by their name
 #[allow(non_upper_case_globals)]
 pub mod values {
     use super::CanonicalCombiningClass as CCC;
@@ -113,7 +106,6 @@ pub mod values {
     pub const IotaSubscript: CCC = CCC(240);
 }
 
-
 mod data {
     use super::CanonicalCombiningClass;
     use unic_char_property::tables::CharDataTable;
@@ -121,9 +113,8 @@ mod data {
         include!("../tables/canonical_combining_class_values.rsv");
 }
 
-
 impl CanonicalCombiningClass {
-    /// Find the character *Canonical_Combining_Class* property value.
+    /// Find the character `Canonical_Combining_Class` property value.
     pub fn of(ch: char) -> CanonicalCombiningClass {
         data::CANONICAL_COMBINING_CLASS_VALUES.find_or_default(ch)
     }
@@ -135,9 +126,8 @@ impl fmt::Display for CanonicalCombiningClass {
     }
 }
 
-
 impl CanonicalCombiningClass {
-    /// Get numeric *Canonical_Combining_Class* value
+    /// Get numeric `Canonical_Combining_Class` value
     pub fn number(&self) -> u8 {
         self.0
     }
@@ -152,7 +142,6 @@ impl CanonicalCombiningClass {
         self.0 != 0
     }
 }
-
 
 #[cfg(test)]
 mod tests {

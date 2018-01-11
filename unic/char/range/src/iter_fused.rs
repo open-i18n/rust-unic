@@ -8,10 +8,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use core::iter;
 
 use super::iter::CharIter;
-
 
 impl iter::FusedIterator for CharIter {}

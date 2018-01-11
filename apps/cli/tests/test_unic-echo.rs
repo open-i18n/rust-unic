@@ -10,19 +10,15 @@
 
 extern crate assert_cli;
 
-
 use assert_cli::Assert;
-
 
 // At the moment, there's no way to test stdout value for an exact string, therefore a mix of
 // `is()`, `contains()`, and `doesnt_contain()` is test trailing newline behavior.
 // See <https://github.com/killercup/assert_cli/issues/77> for details and updates.
 
-
 fn bin() -> Assert {
     Assert::cargo_binary("unic-echo")
 }
-
 
 #[test]
 fn test_plain_text_input() {
@@ -63,7 +59,6 @@ fn test_plain_text_input() {
     // TODO: Find a way to test invalid UTF-8 args.
 }
 
-
 #[test]
 fn test_no_newline_output() {
     fn run(args: &[&str]) -> Assert {
@@ -88,7 +83,6 @@ fn test_no_newline_output() {
         .stdout().doesnt_contain("Hello World\n") //.
         .unwrap();
 }
-
 
 // == Input Formats ==
 
@@ -115,7 +109,6 @@ fn test_codepoints_input() {
     ]).stdout().is("سلام") //.
         .unwrap();
 }
-
 
 #[test]
 fn test_utf8_hex_input() {
@@ -156,7 +149,6 @@ fn test_utf8_hex_input() {
         .unwrap();
 }
 
-
 #[test]
 fn test_utf16_hex_input() {
     fn run(args: &[&str]) -> Assert {
@@ -170,7 +162,6 @@ fn test_utf16_hex_input() {
         .stdout().contains("سلام\n") //.
         .unwrap();
 }
-
 
 // == Output Formats ==
 
@@ -201,7 +192,6 @@ fn test_codepoints_output() {
         .unwrap();
 }
 
-
 #[test]
 fn test_utf8_hex_output() {
     fn run(args: &[&str]) -> Assert {
@@ -228,7 +218,6 @@ fn test_utf8_hex_output() {
         .stdout().is("0xF0 0x9F 0x92 0x9F") //.
         .unwrap();
 }
-
 
 #[test]
 fn test_utf16_hex_output() {

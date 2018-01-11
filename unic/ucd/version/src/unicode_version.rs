@@ -8,9 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use core::fmt;
-
 
 /// Version of Unicode data and specifications.
 #[derive(Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Debug, Hash, Default)]
@@ -25,10 +23,8 @@ pub struct UnicodeVersion {
     pub micro: u16,
 }
 
-
 /// The [Unicode version](https://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");
-
 
 impl fmt::Display for UnicodeVersion {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -36,8 +32,7 @@ impl fmt::Display for UnicodeVersion {
     }
 }
 
-
-/// NOTE: (T, T, T) is the type of Rust's internal UNICODE_VERSION until Rust 1.20.
+/// NOTE: (T, T, T) is the type of Rust's internal `UNICODE_VERSION` until Rust 1.20.
 impl<T: Into<u16>> From<(T, T, T)> for UnicodeVersion {
     fn from(value: (T, T, T)) -> UnicodeVersion {
         UnicodeVersion {
@@ -48,17 +43,14 @@ impl<T: Into<u16>> From<(T, T, T)> for UnicodeVersion {
     }
 }
 
-
-/// NOTE: (T, T, T) is the type of Rust's internal UNICODE_VERSION until Rust 1.20.
+/// NOTE: (T, T, T) is the type of Rust's internal `UNICODE_VERSION` until Rust 1.20.
 impl<T: From<u16>> Into<(T, T, T)> for UnicodeVersion {
     fn into(self) -> (T, T, T) {
         (self.major.into(), self.minor.into(), self.micro.into())
     }
 }
 
-
 // TODO: Add conversion to/from `char::UnicodeVersion` whenever it becomes accessible.
-
 
 #[cfg(test)]
 mod tests {

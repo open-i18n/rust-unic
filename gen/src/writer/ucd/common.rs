@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::path::Path;
 use std::collections::BTreeSet;
 
@@ -21,7 +20,6 @@ use writer::utils::tables::ToRangeCharSet;
 use writer::common::emit_unicode_version;
 use writer::utils::write;
 
-
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
     emit_alphabetic(dir);
@@ -30,7 +28,6 @@ pub fn generate(dir: &Path) {
     emit_control(dir);
     emit_numeric(dir);
 }
-
 
 fn emit_alphabetic(dir: &Path) {
     write(
@@ -70,14 +67,11 @@ fn emit_numeric(dir: &Path) {
     write(dir, "numeric.rsv", &get_numeric().to_range_char_set());
 }
 
-
 fn get_numeric() -> BTreeSet<char> {
     UNICODE_DATA
         .entries
         .iter()
-        .filter(|x| {
-            ["Nd", "Nl", "No"].contains(&x.general_category.as_str())
-        })
+        .filter(|x| ["Nd", "Nl", "No"].contains(&x.general_category.as_str()))
         .map(|x| x.character)
         .collect()
 }

@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::char;
 use std::collections::BTreeSet;
 use std::str::FromStr;
@@ -16,13 +15,11 @@ use std::str::FromStr;
 use source::ucd::BINARY_PROPERTIES_REGEX;
 use source::utils::read;
 
-
 lazy_static! {
     pub static ref EMOJI_DATA: EmojiData = {
         read("data/emoji/emoji-data.txt").parse().unwrap()
     };
 }
-
 
 /// Emoji Character Properties
 ///

@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::char;
 use std::collections::BTreeMap;
 use std::fmt::Display;
@@ -21,12 +20,10 @@ use writer::utils::tables::ToRangeCharTable;
 use writer::common::emit_unicode_version;
 use writer::utils::write;
 
-
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
     emit_general_category(dir);
 }
-
 
 fn emit_general_category(dir: &Path) {
     let map: BTreeMap<char, &str> = UNICODE_DATA

@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::char;
 use std::str::FromStr;
 
@@ -16,18 +15,15 @@ use source::utils::read;
 
 use regex::Regex;
 
-
 lazy_static! {
     pub static ref NORMALIZATION_TESTS: NormalizationTests = {
         read("data/ucd/test/NormalizationTest.txt").parse().unwrap()
     };
 }
 
-
 pub struct NormalizationTests {
     pub entries: Box<[NormalizationTest]>,
 }
-
 
 pub struct NormalizationTest {
     pub source: Box<[char]>,
@@ -36,7 +32,6 @@ pub struct NormalizationTest {
     pub nfkc: Box<[char]>,
     pub nfkd: Box<[char]>,
 }
-
 
 impl FromStr for NormalizationTests {
     type Err = ();

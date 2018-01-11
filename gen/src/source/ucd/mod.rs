@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 pub mod test;
 
 pub mod derived_age;
@@ -21,9 +20,7 @@ pub mod sentence_break_property;
 pub mod unicode_data;
 pub mod word_break_property;
 
-
 use regex::Regex;
-
 
 lazy_static! {
     pub static ref BINARY_PROPERTIES_REGEX: Regex = Regex::new(

@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::fmt::Display;
 use std::path::Path;
 
@@ -19,12 +18,10 @@ use writer::utils::tables::ToRangeCharTable;
 use writer::utils::write;
 use writer::common::emit_unicode_version;
 
-
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
     emit_age_values(dir);
 }
-
 
 pub fn emit_age_values(dir: &Path) {
     write(

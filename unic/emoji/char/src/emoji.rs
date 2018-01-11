@@ -8,9 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Unicode *Emoji* Character Property.
-
 
 char_property! {
     /// Represents values of the Unicode character property
@@ -28,7 +26,6 @@ char_property! {
     /// The value is `true` for characters that are emoji.
     pub fn is_emoji(char) -> bool;
 }
-
 
 #[cfg(test)]
 mod tests {

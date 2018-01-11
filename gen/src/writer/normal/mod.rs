@@ -8,11 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 mod normal_tests;
 
 use writer::utils::clean_dir;
-
 
 pub fn generate() {
     normal_tests::generate(&clean_dir("unic/normal/tests/tables"));

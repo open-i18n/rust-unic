@@ -8,12 +8,10 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::char;
 use std::str;
 
 use regex::Regex;
-
 
 lazy_static! {
     // Anything not alphanumeric or `+`
@@ -28,7 +26,6 @@ lazy_static! {
     // Hex prefix: `0x`
     static ref HEX_PREFIX: Regex = Regex::new(r#"^0[xX]"#).unwrap();
 }
-
 
 pub fn codepoints(string: &str) -> String {
     CODEPOINT_SEPARATORS
@@ -46,7 +43,6 @@ pub fn codepoints(string: &str) -> String {
         .collect::<String>()
 }
 
-
 pub fn utf8_hex(string: &str) -> String {
     let utf8 = HEX_SEPARATORS.split(&string).map(|token| {
         let mut token = token;
@@ -59,7 +55,6 @@ pub fn utf8_hex(string: &str) -> String {
 
     String::from_utf8(utf8.collect()).expect("Invalid UTF-8 sequence")
 }
-
 
 pub fn utf16_hex(string: &str) -> String {
     let utf16 = HEX_SEPARATORS.split(&string).map(|token| {

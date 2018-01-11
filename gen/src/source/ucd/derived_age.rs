@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::char;
 use std::collections::BTreeMap;
 use std::str::FromStr;
@@ -17,19 +16,16 @@ use regex::Regex;
 
 use source::utils::read;
 
-
 lazy_static! {
     pub static ref AGE_DATA: AgeData = {
         read("data/ucd/DerivedAge.txt").parse().unwrap()
     };
 }
 
-
 #[derive(Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct AgeData {
     pub map: BTreeMap<char, String>,
 }
-
 
 impl FromStr for AgeData {
     type Err = ();
@@ -66,9 +62,7 @@ impl FromStr for AgeData {
                         char,
                         format!(
                             "UnicodeVersion {{ major: {}, minor: {}, micro: {} }}",
-                            major,
-                            minor,
-                            micro,
+                            major, minor, micro,
                         ),
                     );
                 }

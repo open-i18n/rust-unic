@@ -13,12 +13,10 @@
 //!
 //! <https://www.unicode.org/reports/tr9/#Explicit_Levels_and_Directions>
 
-
 use unic_ucd_bidi::BidiClass;
 use unic_ucd_bidi::bidi_class::abbr_names::*;
 
 use super::level::Level;
-
 
 /// Compute explicit embedding levels for one paragraph of text (X1-X8).
 ///
@@ -98,8 +96,8 @@ pub fn compute(
                     loop {
                         // Pop everything up to and including the last Isolate status.
                         match stack.vec.pop() {
-                            None |
-                            Some(Status {
+                            None
+                            | Some(Status {
                                 status: OverrideStatus::Isolate,
                                 ..
                             }) => break,

@@ -8,13 +8,10 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![cfg(feature = "unstable")]
 #![feature(unicode)]
 
-
 extern crate unic;
-
 
 #[test]
 fn test_unicode_version_against_rust_core() {

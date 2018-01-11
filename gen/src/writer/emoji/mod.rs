@@ -8,12 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 mod char;
 
-
 use writer::utils::clean_dir;
-
 
 pub fn generate() {
     char::generate(&clean_dir("unic/emoji/char/tables"));

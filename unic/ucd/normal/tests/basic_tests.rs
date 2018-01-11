@@ -8,19 +8,15 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 extern crate unic_ucd_normal;
 
-
 use self::unic_ucd_normal::{CanonicalCombiningClass as CCC, DecompositionType as DT};
-
 
 #[test]
 fn test_canonical_combining_class_display() {
     assert_eq!(format!("{}", CCC::of('\u{0000}')), "0");
     assert_eq!(format!("{}", CCC::of('\u{0300}')), "230");
 }
-
 
 #[test]
 fn test_decomposition_type_display() {

@@ -8,11 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use core::iter;
 
 use super::iter::CharIter;
-
 
 #[allow(unsafe_code)]
 unsafe impl iter::TrustedLen for CharIter {}

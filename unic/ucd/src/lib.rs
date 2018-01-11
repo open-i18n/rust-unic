@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![no_std]
 #![forbid(unsafe_code, missing_docs, unconditional_recursion)]
 
@@ -18,7 +17,6 @@
 //!
 //! This UNIC component provides access to character properties as defined in the [Unicode
 //! Standard Annex #44 - Unicode Character Database](http://unicode.org/reports/tr44/).
-
 
 pub extern crate unic_ucd_age as age;
 pub extern crate unic_ucd_bidi as bidi;
@@ -30,20 +28,17 @@ pub extern crate unic_ucd_normal as normal;
 pub extern crate unic_ucd_segment as segment;
 pub extern crate unic_ucd_version as version;
 
-
 /// The [Unicode version](https://www.unicode.org/versions/) of data
 pub use version::UNICODE_VERSION;
 
-
 /// UNIC component version.
-pub const PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");
+pub const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// UNIC component name.
-pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
+pub const PKG_NAME: &str = env!("CARGO_PKG_NAME");
 
 /// UNIC component description.
-pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
-
+pub const PKG_DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");
 
 pub use version::UnicodeVersion;
 

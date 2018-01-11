@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use core::{char, cmp};
 
 #[cfg(feature = "std")]
@@ -16,7 +15,6 @@ use std::collections::Bound;
 
 use self::cmp::Ordering;
 use CharIter;
-
 
 /// A range of unicode code points.
 ///
@@ -171,7 +169,8 @@ impl CharRange {
     ///
     /// Panics if the range is empty. This fn may be adjusted in the future to not panic
     /// in optimized builds. Even if so, an empty range will never compare as `Ordering::Equal`.
-    ///
+    // TODO: Rename `cmp()` to not collid with `std::cmp::Ord::cmp`
+    #[cfg_attr(feature = "clippy", allow(should_implement_trait))]
     pub fn cmp(&self, ch: char) -> Ordering {
         // possible optimization: only assert this in debug builds
         assert!(!self.is_empty(), "Cannot compare empty range's ordering");

@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::path::Path;
 use std::collections::BTreeMap;
 
@@ -18,12 +17,10 @@ use source::ucd::test::word_break_test::{WordBreakTest, WORD_BREAK_TESTS};
 use writer::utils::tables::ToDirectCharTable;
 use writer::utils::write;
 
-
 pub fn generate(dir: &Path) {
     emit_grapheme_cluster_break_test_data(dir);
     emit_word_break_test_data(dir);
 }
-
 
 fn emit_grapheme_cluster_break_test_data(dir: &Path) {
     let mut map = BTreeMap::default();

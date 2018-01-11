@@ -8,16 +8,14 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #[macro_use]
 extern crate clap;
 #[macro_use]
 extern crate prettytable;
 
+extern crate unic_char_property;
 extern crate unic_cli;
 extern crate unic_ucd;
-extern crate unic_char_property;
-
 
 use clap::Arg;
 use prettytable::format::TableFormat;
@@ -25,7 +23,6 @@ use prettytable::Table;
 
 use unic_char_property::EnumeratedCharProperty;
 use unic_ucd::{GeneralCategory, Name};
-
 
 fn main() {
     let app = app_from_crate!()

@@ -8,13 +8,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
-//! Unicode *Changes_When_Titlecased* Character Property.
-
+//! Unicode `Changes_When_Titlecased` Character Property.
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*Changes_When_Titlecased*](https://www.unicode.org/reports/tr44/#CWT).
+    /// [`Changes_When_Titlecased`](https://www.unicode.org/reports/tr44/#CWT).
     ///
     /// The value is `true` for characters that change when titlecased, `false` otherwise.
     pub struct ChangesWhenTitlecased(bool) {
@@ -28,7 +26,6 @@ char_property! {
     /// Return `true` for characters that change when titlecased, `false` otherwise.
     pub fn changes_when_titlecased(char) -> bool;
 }
-
 
 #[cfg(test)]
 mod tests {

@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::char;
 use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::Write;
@@ -21,18 +20,15 @@ use writer::utils::tables::ToDirectCharTable;
 use writer::common::emit_unicode_version;
 use writer::utils::write;
 
-
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
     emit_name_tables(dir);
 }
 
-
 #[derive(Clone, Debug)]
 struct NameRecord<'a> {
     pieces: Vec<&'a str>,
 }
-
 
 fn emit_name_tables(dir: &Path) {
     let mut values: BTreeSet<&str> = BTreeSet::default();

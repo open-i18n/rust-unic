@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![no_std]
 #![forbid(unsafe_code, unconditional_recursion, missing_docs)]
 
@@ -33,7 +32,6 @@ extern crate unic_char_property;
 #[macro_use]
 extern crate unic_char_range;
 extern crate unic_ucd_version;
-
 
 #[cfg(feature = "xid")]
 mod xid {
@@ -130,7 +128,6 @@ mod pattern {
 }
 #[cfg(feature = "pattern")]
 pub use pattern::{is_pattern_syntax, is_pattern_whitespace, PatternSyntax, PatternWhitespace};
-
 
 use unic_ucd_version::UnicodeVersion;
 

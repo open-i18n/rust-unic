@@ -13,9 +13,7 @@
 
 extern crate unic;
 
-
 use unic::ucd::bidi::{BidiClass, BidiClassCategory, CharBidiClass, StrBidiClass};
-
 
 #[cfg_attr(rustfmt, rustfmt_skip)]
 fn main() {

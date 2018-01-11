@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #[macro_use]
 extern crate unic_char_range;
 
@@ -24,10 +23,8 @@ extern crate matches;
 extern crate itertools;
 extern crate regex;
 
-
 mod source;
 mod writer;
-
 
 /// Validate component target names passed in
 fn validate_component_name(name: String) -> Result<(), String> {
@@ -40,7 +37,6 @@ fn validate_component_name(name: String) -> Result<(), String> {
         Err(format!("Invalid component: `{}`", name))
     }
 }
-
 
 fn main() {
     let matches = clap_app!(unic_gen =>

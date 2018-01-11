@@ -8,12 +8,10 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::collections::BTreeMap;
 use std::fmt::{self, Write};
 
 use super::DisplayWrapper;
-
 
 /// Create the source for a `CharDataTable`, using direct mappings from char to values
 pub trait ToDirectCharTable<T> {

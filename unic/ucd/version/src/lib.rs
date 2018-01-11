@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![no_std]
 #![forbid(unsafe_code, missing_docs, unconditional_recursion)]
 
@@ -18,10 +17,8 @@
 //!
 //! Core create indicating the version of Unicode Character Database.
 
-
 mod pkg_info;
 mod unicode_version;
-
 
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 

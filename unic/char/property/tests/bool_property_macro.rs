@@ -8,13 +8,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #[macro_use]
 extern crate unic_char_property;
 
 #[macro_use]
 extern crate unic_char_range;
-
 
 char_property! {
     /// This is a test property.
@@ -39,6 +37,7 @@ fn test_basics() {
     assert_eq!(is_my_prop('\u{0065}'), true);
 }
 
+#[cfg_attr(feature = "clippy", allow(needless_bool))]
 #[test]
 fn test_into_bool() {
     assert!(if MyProp::of('\u{0065}').into() {

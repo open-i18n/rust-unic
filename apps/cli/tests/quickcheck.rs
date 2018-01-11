@@ -13,10 +13,8 @@ extern crate quickcheck;
 
 extern crate unic_cli;
 
-
 use unic_cli::parsers;
 use unic_cli::writers;
-
 
 // Quickcheck parsers against writers
 quickcheck! {

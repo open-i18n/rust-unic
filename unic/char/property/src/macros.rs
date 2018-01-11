@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 /// Macro for declaring a character property.
 ///
 /// # Syntax (Enumerated Property)
@@ -26,7 +25,7 @@
 ///         human => "Human-Readable Property Name";
 ///
 ///         /// Zero or more documentation or other attributes.
-///         | RustName {
+///         RustName {
 ///             abbr => AbbrName,
 ///             long => Long_Name,
 ///             human => "&'static str that is a nicer presentation of the name",
@@ -50,9 +49,7 @@
 ///
 /// # Syntax (Binary Property)
 ///
-// rustc:1.19.0 cannot find data_table_path, so ignore this test for now.
-// TODO: Re-enable after rustc-1.20.0
-/// ```ignore
+/// ```
 /// #[macro_use] extern crate unic_char_property;
 /// # #[macro_use] extern crate unic_char_range;
 ///
@@ -87,10 +84,6 @@
 /// - Maintains all documentation comments and other `#[attributes]` as would be expected
 ///   (with some limitations, listed below)
 ///
-// TODO: Due to [rust-lang/rust#24189](https://github.com/rust-lang/rust/issues/24189), (fixed in
-// [rust-lang/rust#42913](https://github.com/rust-lang/rust/pull/42913), landing in 1.20), we have
-// to use a delimiter token (`|`) between `meta*` and `ident` tokens. We can make this token
-// optional when we bump min version to 1.20.
 #[macro_export]
 macro_rules! char_property {
 
@@ -105,7 +98,7 @@ macro_rules! char_property {
 
             $(
                 $(#[$variant_meta:meta])*
-                | $variant_name:ident {
+                $variant_name:ident {
                     abbr => $variant_abbr:ident,
                     long => $variant_long:ident,
                     human => $variant_human:expr,

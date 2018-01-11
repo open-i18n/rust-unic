@@ -8,16 +8,13 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Character Property Range types.
 //!
 //! NOTE: At the moment, it is not possible to define a marker for all character property range
 //! types and enforce their implementation from `CharProperty`.  We need to fix this whenever the
 //! compiler becomes able to do to so.
 
-
 use super::property::CharProperty;
-
 
 // == Enumerated/Catalog Types ==
 
@@ -42,12 +39,11 @@ pub trait EnumeratedCharProperty: Sized + CharProperty {
     fn human_name(&self) -> &'static str;
 }
 
-
 // == Binary Types ==
 
 /// A Character Property with binary values.
 ///
-/// Examples: *Alphabetic*, *Bidi_Mirrored*, *White_Space*
+/// Examples: `Alphabetic`, `Bidi_Mirrored`, `White_Space`
 pub trait BinaryCharProperty: CharProperty {
     /// The boolean value of the property value.
     fn as_bool(&self) -> bool;
@@ -80,7 +76,6 @@ pub trait BinaryCharProperty: CharProperty {
     }
 }
 
-
 // == Numeric Types ==
 
 /// Marker for numeric types accepted by `NumericCharProperty`.
@@ -88,16 +83,14 @@ pub trait NumericCharPropertyValue {}
 
 impl NumericCharPropertyValue for u8 {}
 
-
 /// A Character Property with numeric values.
 ///
-/// Examples: *Numeric_Value*, *Canonical_Combining_Class*
+/// Examples: `Numeric_Value`, `Canonical_Combining_Class`
 pub trait NumericCharProperty<NumericValue: NumericCharPropertyValue>
     : CharProperty {
     /// The numeric value for the property value.
     fn number(&self) -> NumericValue;
 }
-
 
 // == Custom Types ==
 
@@ -105,7 +98,7 @@ pub trait NumericCharProperty<NumericValue: NumericCharPropertyValue>
 ///
 /// Custom values means any non-enumerated, non-numeric value.
 ///
-/// Examples: *Age* property that returns a `UnicodeVersion` value.
+/// Examples: `Age` property that returns a `UnicodeVersion` value.
 pub trait CustomCharProperty<Value>: CharProperty {
     /// The actual (inner) value for the property value.
     fn actual(&self) -> Value;

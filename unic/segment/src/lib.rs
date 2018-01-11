@@ -9,7 +9,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! # UNIC — Unicode Text Segmentation Algorithms
 //!
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
@@ -73,28 +72,24 @@
 
 #![forbid(unsafe_code, missing_docs)]
 
-
 extern crate unic_ucd_segment;
 
 #[cfg(test)]
 extern crate unic_ucd_common;
 
-
 mod grapheme;
 mod word;
-
 
 pub use unic_ucd_segment::UNICODE_VERSION;
 
 pub use grapheme::{GraphemeCursor, GraphemeIncomplete, GraphemeIndices, Graphemes};
 pub use word::{WordBoundIndices, WordBounds, Words};
 
-
 /// UNIC component version.
-pub const PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");
+pub const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// UNIC component name.
-pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
+pub const PKG_NAME: &str = env!("CARGO_PKG_NAME");
 
 /// UNIC component description.
-pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
+pub const PKG_DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");

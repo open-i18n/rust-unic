@@ -8,15 +8,13 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #[macro_use]
 extern crate unic_char_range;
-
 
 fn main() {
     assert!(
         chars!('\u{0}'..='\u{2}')
             .iter()
-            .eq(['\u{0}', '\u{1}', '\u{2}'].iter().map(|&ch| ch))
+            .eq(['\u{0}', '\u{1}', '\u{2}'].iter().cloned())
     );
 }

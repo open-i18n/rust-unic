@@ -8,9 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 pub use unic_ucd_version::UnicodeVersion;
-
 
 /// The version of [Emoji data](https://www.unicode.org/versions/).
 pub const EMOJI_DATA_VERSION: UnicodeVersion = include!("../tables/emoji_data_version.rsv");

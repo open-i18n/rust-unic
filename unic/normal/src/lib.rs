@@ -9,7 +9,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![forbid(unsafe_code, missing_docs)]
 
 //! # UNIC — Unicode Normalization Forms
@@ -31,12 +30,10 @@
 //! }
 //! ```
 
-
 extern crate unic_ucd_normal;
 
 mod decompose;
 mod recompose;
-
 
 use std::str::Chars;
 
@@ -44,16 +41,14 @@ pub use unic_ucd_normal::UNICODE_VERSION;
 pub use decompose::Decompositions;
 pub use recompose::Recompositions;
 
-
 /// UNIC component version.
-pub const PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");
+pub const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// UNIC component name.
-pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
+pub const PKG_NAME: &str = env!("CARGO_PKG_NAME");
 
 /// UNIC component description.
-pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
-
+pub const PKG_DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");
 
 /// Methods for iterating over strings while applying Unicode normalizations
 /// as described in
@@ -123,7 +118,6 @@ impl<I: Iterator<Item = char>> StrNormalForm<I> for I {
         recompose::new_compatible(self)
     }
 }
-
 
 #[cfg(test)]
 mod tests {

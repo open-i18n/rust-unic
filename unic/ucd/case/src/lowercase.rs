@@ -8,13 +8,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
-//! Unicode *Lowercase* Character Property.
-
+//! Unicode `Lowercase` Character Property.
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*Lowercase*](https://www.unicode.org/reports/tr44/#Lowercase).
+    /// [`Lowercase`](https://www.unicode.org/reports/tr44/#Lowercase).
     ///
     /// The value is `true` for lowercase characters, `false` otherwise.
     pub struct Lowercase(bool) {
@@ -28,7 +26,6 @@ char_property! {
     /// Return `true` for lowercase character, `false` otherwise.
     pub fn is_lowercase(char) -> bool;
 }
-
 
 #[cfg(test)]
 mod tests {

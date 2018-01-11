@@ -8,12 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Character data tables used in UNIC.
 
-
 use unic_char_range::CharRange;
-
 
 /// A mapping from characters to some associated data.
 ///
@@ -97,6 +94,6 @@ impl<'a, V: Copy> Iterator for CharDataTableIter<'a, V> {
 impl<V> CharDataTable<V> {
     /// Iterate over the entries in this table. Yields pairs `(CharRange, V)`.
     pub fn iter(&self) -> CharDataTableIter<V> {
-        CharDataTableIter(&self, 0)
+        CharDataTableIter(self, 0)
     }
 }

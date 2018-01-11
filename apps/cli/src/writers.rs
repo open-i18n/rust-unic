@@ -8,18 +8,14 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::io;
 use std::str::Chars;
 
-
 use super::Result;
-
 
 // TODO: Replace with char::MAX_UTF*_LEN when available.
 const MAX_UTF8_LEN: usize = 4; // x u8 per char
 const MAX_UTF16_LEN: usize = 2; // x u16 per char
-
 
 macro_rules! write_join_with_space {
     ($output:expr, $values:expr, $write_fn:expr) => {{
@@ -35,13 +31,11 @@ macro_rules! write_join_with_space {
     }};
 }
 
-
 // == Single Char ==
 
 pub fn write_char_as_codepoint<W: io::Write>(output: &mut W, ch: char) -> Result<()> {
     write!(output, "U+{:04X}", ch as u32)
 }
-
 
 pub fn write_char_as_utf8_hex<W: io::Write>(output: &mut W, ch: char) -> Result<()> {
     let mut buf = [0; MAX_UTF8_LEN];
@@ -59,25 +53,19 @@ pub fn write_char_as_utf16_hex<W: io::Write>(output: &mut W, ch: char) -> Result
     })
 }
 
-
 // == Multiple Chars ==
 
 pub fn write_as_codepoints<'a, W: io::Write>(output: &mut W, chars: Chars<'a>) -> Result<()> {
     write_join_with_space!(output, chars, write_char_as_codepoint)
 }
 
-
-
 pub fn write_as_utf8_hex<'a, W: io::Write>(output: &mut W, chars: Chars<'a>) -> Result<()> {
     write_join_with_space!(output, chars, write_char_as_utf8_hex)
 }
 
-
-
 pub fn write_as_utf16_hex<'a, W: io::Write>(output: &mut W, chars: Chars<'a>) -> Result<()> {
     write_join_with_space!(output, chars, write_char_as_utf16_hex)
 }
-
 
 pub fn write_with_control_n_unicode_braces_escape<'a, W: io::Write>(
     output: &mut W,
@@ -90,7 +78,6 @@ pub fn write_with_control_n_unicode_braces_escape<'a, W: io::Write>(
     write!(output, "\"")?;
     Ok(())
 }
-
 
 /* TODO: Re-enable after rust-1.20.0
 pub fn write_with_control_braces_escape<'a, W: io::Write>(
@@ -105,7 +92,6 @@ pub fn write_with_control_braces_escape<'a, W: io::Write>(
     Ok(())
 }
 */
-
 
 pub fn write_with_all_braces_escape<'a, W: io::Write>(
     output: &mut W,

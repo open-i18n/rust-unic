@@ -9,7 +9,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![no_std]
 #![deny(unsafe_code, missing_docs, unconditional_recursion)]
 
@@ -35,14 +34,12 @@ extern crate unic_char_property;
 extern crate unic_char_range;
 extern crate unic_ucd_version;
 
-
 pub mod canonical_combining_class;
 mod composition;
 mod decomposition;
 mod gen_cat;
 mod hangul;
 mod decomposition_type;
-
 
 pub use canonical_combining_class::CanonicalCombiningClass;
 pub use composition::{canonical_composition, canonical_decomposition, compatibility_decomposition};
@@ -51,7 +48,6 @@ pub use decomposition::{decompose_canonical, decompose_compatible};
 pub use decomposition_type::DecompositionType;
 
 use unic_ucd_version::UnicodeVersion;
-
 
 /// The [Unicode version](https://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

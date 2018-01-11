@@ -8,13 +8,10 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 //! Taxonomy and contracts for Character Property types.
-
 
 use core::fmt::Debug;
 use core::hash::Hash;
-
 
 /// A Character Property, defined for some or all Unicode characters.
 pub trait CharProperty: PartialCharProperty + Debug + Eq + Hash {
@@ -28,19 +25,17 @@ pub trait CharProperty: PartialCharProperty + Debug + Eq + Hash {
     fn prop_human_name() -> &'static str;
 }
 
-
 /// A Character Property defined for some characters.
 ///
-/// Examples: *Decomposition_Type*, *Numeric_Type*
+/// Examples: `Decomposition_Type`, `Numeric_Type`
 pub trait PartialCharProperty: Copy {
     /// The property value for the character, or None.
     fn of(ch: char) -> Option<Self>;
 }
 
-
 /// A Character Property defined on all characters.
 ///
-/// Examples: *Age*, *Name*, *General_Category*, *Bidi_Class*
+/// Examples: `Age`, `Name`, `General_Category`, `Bidi_Class`
 // Because of rustc bug, we cannot rely on inheritance for the moment.
 // See: <https://github.com/rust-lang/rust/issues/43777>
 // See: <https://github.com/rust-lang/rust/issues/43784>

@@ -8,14 +8,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use core::{char, ops};
 
 use {step, CharRange};
 
-
 const SURROGATE_RANGE: ops::Range<u32> = 0xD800..0xE000;
-
 
 /// An iterator over a range of unicode code points.
 ///

@@ -8,17 +8,14 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #[macro_use]
 extern crate unic_char_range;
 
 extern crate unic_ucd_category;
 extern crate unic_ucd_common;
 
-
 use unic_ucd_category::GeneralCategory;
 use unic_ucd_common::{is_alphabetic, is_alphanumeric, is_control, is_numeric, is_white_space};
-
 
 macro_rules! assert_char {
     (
@@ -40,7 +37,6 @@ macro_rules! assert_char {
         }
     );
 }
-
 
 #[test]
 fn test_values_internally_and_against_general_category() {

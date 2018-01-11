@@ -8,6 +8,5 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 pub mod readme;
 pub mod idna_mapping_table;

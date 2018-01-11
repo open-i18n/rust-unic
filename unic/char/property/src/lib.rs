@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![no_std]
 #![forbid(unsafe_code, unconditional_recursion, missing_docs)]
 
@@ -26,20 +25,17 @@
 //!
 //! * [PropertyAliases.txt](https://www.unicode.org/Public/UCD/latest/ucd/PropertyAliases.txt).
 
-
 #[macro_use]
 extern crate unic_char_range;
 
-
 /// UNIC component version.
-pub const PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");
+pub const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// UNIC component name.
-pub const PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
+pub const PKG_NAME: &str = env!("CARGO_PKG_NAME");
 
 /// UNIC component description.
-pub const PKG_DESCRIPTION: &'static str = env!("CARGO_PKG_DESCRIPTION");
-
+pub const PKG_DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");
 
 // pub because is used in macros, called from macro call-site.
 pub mod tables;
@@ -47,7 +43,6 @@ pub mod tables;
 mod macros;
 mod property;
 mod range_types;
-
 
 pub use self::property::{CharProperty, PartialCharProperty, TotalCharProperty};
 pub use self::range_types::{
@@ -57,7 +52,6 @@ pub use self::range_types::{
     NumericCharProperty,
     NumericCharPropertyValue,
 };
-
 
 // Used in macros
 #[doc(hidden)]

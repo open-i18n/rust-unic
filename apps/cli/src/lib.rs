@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #[macro_use]
 extern crate lazy_static;
 extern crate regex;
@@ -17,7 +16,6 @@ pub mod parsers;
 pub mod writers;
 
 pub mod clap_macros;
-
 
 use std::io;
 

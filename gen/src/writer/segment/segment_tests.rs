@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use std::path::Path;
 
 use source::ucd::test::grapheme_break_test::{GraphemeBreakTest, GRAPHEME_BREAK_TESTS};
@@ -16,12 +15,10 @@ use source::ucd::test::word_break_test::{WordBreakTest, WORD_BREAK_TESTS};
 
 use writer::utils::write;
 
-
 pub fn generate(dir: &Path) {
     emit_grapheme_cluster_break_test_data(dir);
     emit_word_break_test_data(dir);
 }
-
 
 fn str_escape(s: &str) -> String {
     format!(
@@ -36,12 +33,10 @@ fn chars_escape(cs: &[char]) -> String {
     str_escape(&cs.iter().collect::<String>())
 }
 
-
 fn legacy_should_break(rule: &String) -> bool {
     const EXTENDED_ONLY_RULES: &[&str] = &["9.1", "9.2"];
     EXTENDED_ONLY_RULES.contains(&rule.as_str())
 }
-
 
 fn emit_grapheme_cluster_break_test_data(dir: &Path) {
     let mut contents = "&[\n".to_owned();

@@ -9,7 +9,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![deny(unsafe_code)]
 #![forbid(missing_docs)]
 
@@ -26,6 +25,8 @@
 
 use std::u32;
 use std::char;
+// TODO: Drop following after MIN_RUST_VERSION >= 1.23
+#[allow(unused_imports)]
 use std::ascii::AsciiExt;
 
 // Bootstring parameters for Punycode
@@ -37,7 +38,6 @@ static DAMP: u32 = 700;
 static INITIAL_BIAS: u32 = 72;
 static INITIAL_N: u32 = 0x80;
 static DELIMITER: char = '-';
-
 
 #[inline]
 fn adapt(mut delta: u32, num_points: u32, first_time: bool) -> u32 {
@@ -51,7 +51,6 @@ fn adapt(mut delta: u32, num_points: u32, first_time: bool) -> u32 {
     k + (((BASE - T_MIN + 1) * delta) / (delta + SKEW))
 }
 
-
 /// Convert Punycode to an Unicode `String`.
 ///
 /// This is a convenience wrapper around `decode`.
@@ -59,7 +58,6 @@ fn adapt(mut delta: u32, num_points: u32, first_time: bool) -> u32 {
 pub fn decode_to_string(input: &str) -> Option<String> {
     decode(input).map(|chars| chars.into_iter().collect())
 }
-
 
 /// Convert Punycode to Unicode.
 ///
@@ -144,7 +142,6 @@ pub fn decode(input: &str) -> Option<Vec<char>> {
     Some(output)
 }
 
-
 /// Convert an Unicode `str` to Punycode.
 ///
 /// This is a convenience wrapper around `encode`.
@@ -152,7 +149,6 @@ pub fn decode(input: &str) -> Option<Vec<char>> {
 pub fn encode_str(input: &str) -> Option<String> {
     encode(&input.chars().collect::<Vec<char>>())
 }
-
 
 /// Convert Unicode to Punycode.
 ///
@@ -229,7 +225,6 @@ pub fn encode(input: &[char]) -> Option<String> {
     }
     Some(output)
 }
-
 
 #[inline]
 fn value_to_digit(value: u32) -> char {

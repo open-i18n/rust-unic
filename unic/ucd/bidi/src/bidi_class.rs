@@ -9,16 +9,13 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
-//! Unicode *Bidi_Class* Character Property.
-
+//! Unicode `Bidi_Class` Character Property.
 
 use unic_char_property::TotalCharProperty;
 
-
 char_property! {
     /// Represents the Unicode character
-    /// [*Bidi_Class*](https://www.unicode.org/reports/tr44/#Bidi_Class) property, also known as the
+    /// [`Bidi_Class`](https://www.unicode.org/reports/tr44/#Bidi_Class) property, also known as the
     /// *bidirectional character type*.
     ///
     /// * <https://www.unicode.org/reports/tr9/#Bidirectional_Character_Types>
@@ -29,161 +26,161 @@ char_property! {
         human => "Bidirectional Class";
 
         /// A strong Right-to-Left (Arabic-type) character
-        | ArabicLetter {
+        ArabicLetter {
             abbr => AL,
             long => Arabic_Letter,
             human => "Right-to-Left Arabic",
         }
 
         /// A (non-Eastern) Arabic-Indic digit
-        | ArabicNumber {
+        ArabicNumber {
             abbr => AN,
             long => Arabic_Number,
             human => "Arabic Number",
         }
 
         /// A newline character
-        | ParagraphSeparator {
+        ParagraphSeparator {
             abbr => B,
             long => Paragraph_Separator,
             human => "Paragraph Separator",
         }
 
         /// Most format characters, control codes, and noncharacters
-        | BoundaryNeutral {
+        BoundaryNeutral {
             abbr => BN,
             long => Boundary_Neutral,
             human => "Neutral Boundary",
         }
 
         /// A comma, colon, or slash
-        | CommonSeparator {
+        CommonSeparator {
             abbr => CS,
             long => Common_Separator,
             human => "Common Number Separator",
         }
 
         /// A ASCII digit or Eastern Arabic-Indic digit
-        | EuropeanNumber {
+        EuropeanNumber {
             abbr => EN,
             long => European_Number,
             human => "European Number",
         }
 
         /// A plus or minus sign
-        | EuropeanSeparator {
+        EuropeanSeparator {
             abbr => ES,
             long => European_Separator,
             human => "European Number Separator",
         }
 
         /// A terminator in a numeric format context (including currency signs)
-        | EuropeanTerminator {
+        EuropeanTerminator {
             abbr => ET,
             long => European_Terminator,
             human => "European Number Terminator",
         }
 
         /// U+2068: The first strong isolate control
-        | FirstStrongIsolate {
+        FirstStrongIsolate {
             abbr => FSI,
             long => First_Strong_Isolate,
             human => "First Strong Isolate",
         }
 
         /// A strong Left-to-Right character
-        | LeftToRight {
+        LeftToRight {
             abbr => L,
             long => Left_To_Right,
             human => "Left-to-Right",
         }
 
         /// U+202A: the Left-to-Right embedding control
-        | LeftToRightEmbedding {
+        LeftToRightEmbedding {
             abbr => LRE,
             long => Left_To_Right_Embedding,
             human => "Left-to-Right Embedding",
         }
 
         /// U+2066: the Left-to-Right isolate control
-        | LeftToRightIsolate {
+        LeftToRightIsolate {
             abbr => LRI,
             long => Left_To_Right_Isolate,
             human => "Left-to-Right Isolate",
         }
 
         /// U+202D: the Left-to-Right override control
-        | LeftToRightOverride {
+        LeftToRightOverride {
             abbr => LRO,
             long => Left_To_Right_Override,
             human => "LeftToRightOverride",
         }
 
         /// A nonspacing mark
-        | NonspacingMark {
+        NonspacingMark {
             abbr => NSM,
             long => Nonspacing_Mark,
             human => "Nonspacing Mark",
         }
 
         /// Symbols and Punctuation not in a different category
-        | OtherNeutral {
+        OtherNeutral {
             abbr => ON,
             long => Other_Neutral,
             human => "OtherNeutral",
         }
 
         /// U+202C: terminates an embedding or override control
-        | PopDirectionalFormat {
+        PopDirectionalFormat {
             abbr => PDF,
             long => Pop_Directional_Format,
             human => "Pop Directional Format",
         }
 
         /// U+2069: terminates an isolate control
-        | PopDirectionalIsolate {
+        PopDirectionalIsolate {
             abbr => PDI,
             long => Pop_Directional_Isolate,
             human => "PopDirectionalIsolate",
         }
 
         /// A strong Right-to-Left (non-Arabic-type) character
-        | RightToLeft {
+        RightToLeft {
             abbr => R,
             long => Right_To_Left,
             human => "Right-to-Left",
         }
 
         /// U+202B: The Right-to-Left embedding control
-        | RightToLeftEmbedding {
+        RightToLeftEmbedding {
             abbr => RLE,
             long => Right_To_Left_Embedding,
             human => "Right-to-Left Embedding",
         }
 
         /// U+2067: The Right-to-Left isolate control
-        | RightToLeftIsolate {
+        RightToLeftIsolate {
             abbr => RLI,
             long => Right_To_Left_Isolate,
             human => "Right-to-Left Isolate",
         }
 
         /// U+202E: The Right-to-Left override control
-        | RightToLeftOverride {
+        RightToLeftOverride {
             abbr => RLO,
             long => Right_To_Left_Override,
             human => "Right-to-Left Override",
         }
 
         /// A segment-related control code
-        | SegmentSeparator {
+        SegmentSeparator {
             abbr => S,
             long => Segment_Separator,
             human => "Segment Separator",
         }
 
         /// Whitespace
-        | WhiteSpace {
+        WhiteSpace {
             abbr => WS,
             long => White_Space,
             human => "Whitespace",
@@ -191,7 +188,7 @@ char_property! {
     }
 
     /// Abbreviated name aliases for the
-    /// [*Bidi_Class*](https://www.unicode.org/reports/tr44/#Bidi_Class) property.
+    /// [`Bidi_Class`](https://www.unicode.org/reports/tr44/#Bidi_Class) property.
     ///
     /// ## See Also
     ///
@@ -200,7 +197,7 @@ char_property! {
     pub mod abbr_names for abbr;
 
     /// Long name aliases for the
-    /// [*Bidi_Class*](https://www.unicode.org/reports/tr44/#Bidi_Class) property.
+    /// [`Bidi_Class`](https://www.unicode.org/reports/tr44/#Bidi_Class) property.
     ///
     /// ## See Also
     ///
@@ -209,13 +206,11 @@ char_property! {
     pub mod long_names for long;
 }
 
-
 impl TotalCharProperty for BidiClass {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }
 }
-
 
 /// UCD/extracted/DerivedBidiClass.txt:
 /// "All code points not explicitly listed for `Bidi_Class` have the value `Left_To_Right` (`L`)."
@@ -226,7 +221,6 @@ impl Default for BidiClass {
     }
 }
 
-
 mod data {
     use super::abbr_names::*;
     use unic_char_property::tables::CharDataTable;
@@ -234,9 +228,8 @@ mod data {
         include!("../tables/bidi_class.rsv");
 }
 
-
 impl BidiClass {
-    /// Find the character *Bidi_Class* property value.
+    /// Find the character `Bidi_Class` property value.
     pub fn of(ch: char) -> BidiClass {
         data::BIDI_CLASS_TABLE.find_or_default(ch)
     }
@@ -249,28 +242,28 @@ impl BidiClass {
                 BidiClassCategory::Strong
             }
 
-            BidiClass::EuropeanNumber |
-            BidiClass::EuropeanSeparator |
-            BidiClass::EuropeanTerminator |
-            BidiClass::ArabicNumber |
-            BidiClass::CommonSeparator |
-            BidiClass::NonspacingMark |
-            BidiClass::BoundaryNeutral => BidiClassCategory::Weak,
+            BidiClass::EuropeanNumber
+            | BidiClass::EuropeanSeparator
+            | BidiClass::EuropeanTerminator
+            | BidiClass::ArabicNumber
+            | BidiClass::CommonSeparator
+            | BidiClass::NonspacingMark
+            | BidiClass::BoundaryNeutral => BidiClassCategory::Weak,
 
-            BidiClass::ParagraphSeparator |
-            BidiClass::SegmentSeparator |
-            BidiClass::WhiteSpace |
-            BidiClass::OtherNeutral => BidiClassCategory::Neutral,
+            BidiClass::ParagraphSeparator
+            | BidiClass::SegmentSeparator
+            | BidiClass::WhiteSpace
+            | BidiClass::OtherNeutral => BidiClassCategory::Neutral,
 
-            BidiClass::LeftToRightEmbedding |
-            BidiClass::LeftToRightOverride |
-            BidiClass::RightToLeftEmbedding |
-            BidiClass::RightToLeftOverride |
-            BidiClass::PopDirectionalFormat |
-            BidiClass::LeftToRightIsolate |
-            BidiClass::RightToLeftIsolate |
-            BidiClass::FirstStrongIsolate |
-            BidiClass::PopDirectionalIsolate => BidiClassCategory::ExplicitFormatting,
+            BidiClass::LeftToRightEmbedding
+            | BidiClass::LeftToRightOverride
+            | BidiClass::RightToLeftEmbedding
+            | BidiClass::RightToLeftOverride
+            | BidiClass::PopDirectionalFormat
+            | BidiClass::LeftToRightIsolate
+            | BidiClass::RightToLeftIsolate
+            | BidiClass::FirstStrongIsolate
+            | BidiClass::PopDirectionalIsolate => BidiClassCategory::ExplicitFormatting,
         }
     }
 
@@ -278,10 +271,10 @@ impl BidiClass {
     #[inline]
     pub fn is_ltr(&self) -> bool {
         match *self {
-            BidiClass::LeftToRight |
-            BidiClass::LeftToRightEmbedding |
-            BidiClass::LeftToRightOverride |
-            BidiClass::LeftToRightIsolate => true,
+            BidiClass::LeftToRight
+            | BidiClass::LeftToRightEmbedding
+            | BidiClass::LeftToRightOverride
+            | BidiClass::LeftToRightIsolate => true,
             _ => false,
         }
     }
@@ -290,16 +283,15 @@ impl BidiClass {
     #[inline]
     pub fn is_rtl(&self) -> bool {
         match *self {
-            BidiClass::RightToLeft |
-            BidiClass::ArabicLetter |
-            BidiClass::RightToLeftEmbedding |
-            BidiClass::RightToLeftOverride |
-            BidiClass::RightToLeftIsolate => true,
+            BidiClass::RightToLeft
+            | BidiClass::ArabicLetter
+            | BidiClass::RightToLeftEmbedding
+            | BidiClass::RightToLeftOverride
+            | BidiClass::RightToLeftIsolate => true,
             _ => false,
         }
     }
 }
-
 
 /// Represents **Category** of Unicode character `Bidi_Class` property, as demostrated under
 /// "Table 4. Bidirectional Character Types".
@@ -320,8 +312,7 @@ pub enum BidiClassCategory {
     Neutral,
 }
 
-
-/// Methods for Bidi_Class character property.
+/// Methods for `Bidi_Class` character property.
 pub trait CharBidiClass {
     /// Get `BidiClass` of the character.
     fn bidi_class(self) -> BidiClass;
@@ -350,8 +341,7 @@ impl CharBidiClass for char {
     }
 }
 
-
-/// Methods for Bidi_Class character properties of string types.
+/// Methods for `Bidi_Class` character properties of string types.
 pub trait StrBidiClass {
     /// Whether the string has any *explicit* bidi formatting character.
     fn has_bidi_explicit(&self) -> bool;
@@ -366,9 +356,8 @@ pub trait StrBidiClass {
 impl StrBidiClass for str {
     #[inline]
     fn has_bidi_explicit(&self) -> bool {
-        self.chars().any(|ch| {
-            ch.bidi_class().category() == BidiClassCategory::ExplicitFormatting
-        })
+        self.chars()
+            .any(|ch| ch.bidi_class().category() == BidiClassCategory::ExplicitFormatting)
     }
 
     #[inline]
@@ -381,7 +370,6 @@ impl StrBidiClass for str {
         self.chars().any(|ch| ch.is_rtl())
     }
 }
-
 
 #[cfg(test)]
 mod tests {

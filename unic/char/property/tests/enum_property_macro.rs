@@ -8,13 +8,10 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #[macro_use]
 extern crate unic_char_property;
 
-
 use unic_char_property::PartialCharProperty;
-
 
 char_property! {
     pub enum MyProp {
@@ -24,20 +21,20 @@ char_property! {
 
         /// Variants can have multi-line documentations,
         /// and/or other attributes.
-        | Variant1 {
+        Variant1 {
             abbr => V1,
             long => Variant_1,
             human => "Variant 1",
         }
 
         /// One line works too, or...
-        | Variant2 {
+        Variant2 {
             abbr => V2,
             long => Variant_2,
             human => "Variant 2",
         }
 
-        | Variant3 {
+        Variant3 {
             abbr => V3,
             long => Variant_3,
             human => "Variant 3",
@@ -48,13 +45,11 @@ char_property! {
     pub mod long_names for long;
 }
 
-
 impl PartialCharProperty for MyProp {
     fn of(_: char) -> Option<Self> {
         None
     }
 }
-
 
 #[test]
 fn test_basic_macro_use() {

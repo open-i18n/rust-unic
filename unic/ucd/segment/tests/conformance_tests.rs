@@ -8,16 +8,13 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 extern crate unic_char_property;
 extern crate unic_ucd_segment;
-
 
 use unic_char_property::tables::CharDataTable;
 
 use unic_ucd_segment::grapheme_cluster_break::{self, GraphemeClusterBreak};
 use unic_ucd_segment::word_break::{self, WordBreak};
-
 
 #[test]
 fn test_grapheme_cluster_break_conformance() {

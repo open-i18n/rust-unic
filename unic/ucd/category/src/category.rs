@@ -8,226 +8,225 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use unic_char_property::TotalCharProperty;
 
 char_property! {
     /// Represents the Unicode Character
-    /// [*General_Category*](http://unicode.org/reports/tr44/#General_Category) property.
+    /// [`General_Category`](http://unicode.org/reports/tr44/#General_Category) property.
     ///
     /// This is a useful breakdown into various character types which can be used as a default
     /// categorization in implementations. For the property values, see
-    /// [*General_Category Values*](http://unicode.org/reports/tr44/#General_Category_Values).
+    /// [`General_Category Values`](http://unicode.org/reports/tr44/#General_Category_Values).
     pub enum GeneralCategory {
         abbr => "gc";
         long => "General_Category";
         human => "General Category";
 
         /// An uppercase letter
-        | UppercaseLetter {
+        UppercaseLetter {
             abbr => Lu,
             long => Uppercase_Letter,
             human => "Uppercase Letter",
         }
 
         /// A lowercase letter
-        | LowercaseLetter {
+        LowercaseLetter {
             abbr => Ll,
             long => Lowercase_Letter,
             human => "Lowercase Letter",
         }
 
         /// A digraphic character, with first part uppercase
-        | TitlecaseLetter {
+        TitlecaseLetter {
             abbr => Lt,
             long => Titlecase_Letter,
             human => "Titlecase Letter",
         }
 
         /// A modifier letter
-        | ModifierLetter {
+        ModifierLetter {
             abbr => Lm,
             long => Modifier_Letter,
             human => "Modifier Letter",
         }
 
         /// Other letters, including syllables and ideographs
-        | OtherLetter {
+        OtherLetter {
             abbr => Lo,
             long => Other_Letter,
             human => "Other Letter",
         }
 
         /// A nonspacing combining mark (zero advance width)
-        | NonspacingMark {
+        NonspacingMark {
             abbr => Mn,
             long => Nonspacing_Mark,
             human => "Nonspacing Mark",
         }
 
         /// A spacing combining mark (positive advance width)
-        | SpacingMark {
+        SpacingMark {
             abbr => Mc,
             long => Spacing_Mark,
             human => "Spacing Mark",
         }
 
         /// An enclosing combining mark
-        | EnclosingMark {
+        EnclosingMark {
             abbr => Me,
             long => Enclosing_Mark,
             human => "Enclosing Mark",
         }
 
         /// A decimal digit
-        | DecimalNumber {
+        DecimalNumber {
             abbr => Nd,
             long => Decimal_Number,
             human => "Decimal Digit",
         }
 
         /// A letterlike numeric character
-        | LetterNumber {
+        LetterNumber {
             abbr => Nl,
             long => Letter_Number,
             human => "Letterlike Number",
         }
 
         /// A numeric character of other type
-        | OtherNumber {
+        OtherNumber {
             abbr => No,
             long => Other_Number,
             human => "Other Numeric",
         }
 
         /// A connecting punctuation mark, like a tie
-        | ConnectorPunctuation {
+        ConnectorPunctuation {
             abbr => Pc,
             long => Connector_Punctuation,
             human => "Connecting Punctuation",
         }
 
         /// A dash or hyphen punctuation mark
-        | DashPunctuation {
+        DashPunctuation {
             abbr => Pd,
             long => Dash_Punctuation,
             human => "Dash Punctuation",
         }
 
         /// An opening punctuation mark (of a pair)
-        | OpenPunctuation {
+        OpenPunctuation {
             abbr => Ps,
             long => Open_Punctuation,
             human => "Opening Punctuation",
         }
 
         /// A closing punctuation mark (of a pair)
-        | ClosePunctuation {
+        ClosePunctuation {
             abbr => Pe,
             long => Close_Punctuation,
             human => "Closing Punctuation",
         }
 
         /// An initial quotation mark
-        | InitialPunctuation {
+        InitialPunctuation {
             abbr => Pi,
             long => Initial_Punctuation,
             human => "Initial Quotation",
         }
 
         /// A final quotation mark
-        | FinalPunctuation {
+        FinalPunctuation {
             abbr => Pf,
             long => Final_Punctuation,
             human => "Final Quotation",
         }
 
         /// A punctuation mark of other type
-        | OtherPunctuation {
+        OtherPunctuation {
             abbr => Po,
             long => Other_Punctuation,
             human => "Other Punctuation",
         }
 
         /// A symbol of mathematical use
-        | MathSymbol {
+        MathSymbol {
             abbr => Sm,
             long => Math_Symbol,
             human => "Math Symbol",
         }
 
         /// A currency sign
-        | CurrencySymbol {
+        CurrencySymbol {
             abbr => Sc,
             long => Currency_Symbol,
             human => "Currency Symbol",
         }
 
         /// A non-letterlike modifier symbol
-        | ModifierSymbol {
+        ModifierSymbol {
             abbr => Sk,
             long => Modifier_Symbol,
             human => "Modifier Symbol",
         }
 
         /// A symbol of other type
-        | OtherSymbol {
+        OtherSymbol {
             abbr => So,
             long => Other_Symbol,
             human => "Other Symbol",
         }
 
         /// A space character (of various non-zero widths)
-        | SpaceSeparator {
+        SpaceSeparator {
             abbr => Zs,
             long => Space_Separator,
             human => "Space",
         }
 
         /// U+2028 LINE SEPARATOR only
-        | LineSeparator {
+        LineSeparator {
             abbr => Zl,
             long => Line_Separator,
             human => "Line Separator",
         }
 
         /// U+2029 PARAGRAPH SEPARATOR only
-        | ParagraphSeparator {
+        ParagraphSeparator {
             abbr => Zp,
             long => Paragraph_Separator,
             human => "Paragraph Separator",
         }
 
         /// A C0 or C1 control code
-        | Control {
+        Control {
             abbr => Cc,
             long => Control,
             human => "Control",
         }
 
         /// A format control character
-        | Format {
+        Format {
             abbr => Cf,
             long => Format,
             human => "Formatting",
         }
 
         /// A surrogate code point
-        | Surrogate {
+        Surrogate {
             abbr => Cs,
             long => Surrogate,
             human => "Surrogate",
         }
 
         /// A private-use character
-        | PrivateUse {
+        PrivateUse {
             abbr => Co,
             long => Private_Use,
             human => "Private-Use",
         }
 
         /// Unassigned
-        | Unassigned {
+        Unassigned {
             abbr => Cn,
             long => Unassigned,
             human => "Unassigned",
@@ -238,20 +237,17 @@ char_property! {
     pub mod long_names for long;
 }
 
-
 impl TotalCharProperty for GeneralCategory {
     fn of(ch: char) -> Self {
         Self::of(ch)
     }
 }
 
-
 impl Default for GeneralCategory {
     fn default() -> Self {
         GeneralCategory::Unassigned
     }
 }
-
 
 mod data {
     use super::abbr_names::*;
@@ -260,15 +256,12 @@ mod data {
         include!("../tables/general_category.rsv");
 }
 
-
-
 impl GeneralCategory {
     /// Find the `GeneralCategory` of a single char.
     pub fn of(ch: char) -> GeneralCategory {
         data::GENERAL_CATEGORY_TABLE.find_or_default(ch)
     }
 }
-
 
 impl GeneralCategory {
     /// `Lu` | `Ll` | `Lt`  (Short form: `LC`)
@@ -319,7 +312,6 @@ impl GeneralCategory {
         matches!(*self, Cc | Cf | Cs | Co | Cn)
     }
 }
-
 
 #[cfg(test)]
 mod tests {

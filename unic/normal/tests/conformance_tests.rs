@@ -11,11 +11,9 @@
 
 #![cfg(test)]
 
-
 extern crate unic_normal;
 
 use unic_normal::StrNormalForm;
-
 
 type TestDatum = (
     &'static str,
@@ -24,8 +22,7 @@ type TestDatum = (
     &'static str,
     &'static str,
 );
-const TEST_DATA: &'static [TestDatum] = include!("tables/conformance_tests_data.rsv");
-
+const TEST_DATA: &[TestDatum] = include!("tables/conformance_tests_data.rsv");
 
 #[test]
 fn test_nfc_nfd_nfkc_nfkd() {

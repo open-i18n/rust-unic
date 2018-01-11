@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 #![forbid(unsafe_code, unconditional_recursion)]
 #![deny(missing_docs)]
 
@@ -22,7 +21,6 @@ extern crate unic_char_property;
 extern crate unic_char_range;
 extern crate unic_ucd_version;
 
-
 mod emoji;
 mod emoji_component;
 mod emoji_data_version;
@@ -30,7 +28,6 @@ mod emoji_modifier;
 mod emoji_modifier_base;
 mod emoji_presentation;
 mod pkg_info;
-
 
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 

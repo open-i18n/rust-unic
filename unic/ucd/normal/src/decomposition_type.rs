@@ -9,8 +9,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
-//! Accessor for *Decomposition_Type* (dt) property
+//! Accessor for `Decomposition_Type` (dt) property
 
 use unic_char_property::PartialCharProperty;
 
@@ -19,7 +18,7 @@ use hangul;
 
 char_property! {
     /// Represents the Unicode character
-    /// [*Decomposition_Type*](https://www.unicode.org/reports/tr44/#Decomposition_Type) property.
+    /// [`Decomposition_Type`](https://www.unicode.org/reports/tr44/#Decomposition_Type) property.
     ///
     /// * <https://www.unicode.org/reports/tr44/#Character_Decomposition_Mappings>
     pub enum DecompositionType {
@@ -28,119 +27,119 @@ char_property! {
         human => "Decomposition Type";
 
         #[allow(missing_docs)]
-        | Canonical {
+        Canonical {
             abbr => Can,
             long => Canonical,
             human => "Canonical",
         }
 
         /// Otherwise unspecified compatibility character
-        | Compat {
+        Compat {
             abbr => Com,
             long => Compat,
             human => "Unspecified",
         }
 
         /// Encircled form
-        | Circle {
+        Circle {
             abbr => Enc,
             long => Circle,
             human => "Encircled",
         }
 
         /// Final presentation form (Arabic)
-        | Final {
+        Final {
             abbr => Fin,
             long => Final,
             human => "Arabic Final",
         }
 
         /// Font variant (for example, a blackletter form)
-        | Font {
+        Font {
             abbr => Font,
             long => Font,
             human => "Font Variant",
         }
 
         /// Vulgar fraction form
-        | Fraction {
+        Fraction {
             abbr => Fra,
             long => Fraction,
             human => "Vulgar Fraction",
         }
 
         /// Initial presentation form (Arabic)
-        | Initial {
+        Initial {
             abbr => Init,
             long => Initial,
             human => "Arabic Initial",
         }
 
         /// Isolated presentation form (Arabic)
-        | Isolated {
+        Isolated {
             abbr => Iso,
             long => Isolated,
             human => "Arabic Isolated",
         }
 
         /// Medial presentation form (Arabic)
-        | Medial {
+        Medial {
             abbr => Med,
             long => Medial,
             human => "Arabic Medial",
         }
 
         /// Narrow (or hankaku) compatibility character
-        | Narrow {
+        Narrow {
             abbr => Nar,
             long => Narrow,
             human => "Narrow",
         }
 
         /// No-break version of a space or hyphen
-        | NoBreak {
+        NoBreak {
             abbr => Nb,
             long => Nobreak,
             human => "No-Break",
         }
 
         /// Small variant form (CNS compatibility)
-        | Small {
+        Small {
             abbr => Sml,
             long => Small,
             human => "Small",
         }
 
         /// CJK squared font variant
-        | Square {
+        Square {
             abbr => Sqr,
             long => Square,
             human => "CJK Squared",
         }
 
         /// Subscript form
-        | Sub {
+        Sub {
             abbr => Sub,
             long => Sub,
             human => "Subscript",
         }
 
         /// Superscript form
-        | Super {
+        Super {
             abbr => Sup,
             long => Super,
             human => "Superscript",
         }
 
         /// Vertical layout presentation form
-        | Vertical {
+        Vertical {
             abbr => Vert,
             long => Vertical,
             human => "Vertical Layout",
         }
 
         /// Wide (or zenkaku) compatibility character
-        | Wide {
+        Wide {
             abbr => Wide,
             long => Wide,
             human => "Wide",
@@ -154,13 +153,11 @@ char_property! {
     pub mod long_names for long;
 }
 
-
 impl PartialCharProperty for DecompositionType {
     fn of(ch: char) -> Option<Self> {
         Self::of(ch)
     }
 }
-
 
 impl DecompositionType {
     /// Find the DecompositionType of the character.
@@ -174,7 +171,6 @@ impl DecompositionType {
             .map(|it| it.0)
     }
 }
-
 
 #[cfg(test)]
 mod tests {
