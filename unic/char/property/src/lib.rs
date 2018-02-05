@@ -11,7 +11,7 @@
 #![no_std]
 #![forbid(unsafe_code, unconditional_recursion, missing_docs)]
 
-//! # UNIC - Unicode Characters - Character Property
+//! # UNIC — Unicode Character Tools - Character Property
 //!
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
 //!
@@ -28,19 +28,11 @@
 #[macro_use]
 extern crate unic_char_range;
 
-/// UNIC component version.
-pub const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
-
-/// UNIC component name.
-pub const PKG_NAME: &str = env!("CARGO_PKG_NAME");
-
-/// UNIC component description.
-pub const PKG_DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");
-
 // pub because is used in macros, called from macro call-site.
 pub mod tables;
 
 mod macros;
+mod pkg_info;
 mod property;
 mod range_types;
 
@@ -56,3 +48,5 @@ pub use self::range_types::{
 // Used in macros
 #[doc(hidden)]
 pub use core::{fmt as __fmt, str as __str};
+
+pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
