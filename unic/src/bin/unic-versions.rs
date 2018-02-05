@@ -16,52 +16,55 @@ extern crate unic;
 
 const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
 
+macro_rules! print_pkg_name_desc_version {
+    ( $component:tt ) => {
+        println!("Component: {}", unic::$component::PKG_DESCRIPTION);
+        println!(
+            "Package: {}:{}",
+            unic::$component::PKG_NAME,
+            unic::$component::PKG_VERSION,
+        );
+    }
+}
+
+macro_rules! print_unicode_version {
+    ( $component:tt ) => {
+        println!(
+            "Unicode Version: {}.{}.{}",
+            unic::$component::UNICODE_VERSION.major,
+            unic::$component::UNICODE_VERSION.minor,
+            unic::$component::UNICODE_VERSION.micro,
+        );
+    }
+}
+
 fn main() {
-    println!("# UNIC - Unicode and Internationalization Crates");
-    println!("Package Version: {}", PKG_VERSION);
+    println!("UNIC: Unicode and Internationalization Crates for Rust");
+    println!("Package: unic:{}", PKG_VERSION);
     println!();
 
-    println!("# Component: {}", unic::ucd::PKG_NAME);
-    println!("{}", unic::ucd::PKG_DESCRIPTION);
-    println!("Package Version: {}", PKG_VERSION);
-    println!(
-        "Unicode Version: {}.{}.{}",
-        unic::ucd::UNICODE_VERSION.major,
-        unic::ucd::UNICODE_VERSION.minor,
-        unic::ucd::UNICODE_VERSION.micro,
-    );
+    print_pkg_name_desc_version!(char);
     println!();
 
-    println!("# Component: {}", unic::bidi::PKG_NAME);
-    println!("{}", unic::bidi::PKG_DESCRIPTION);
-    println!("Package Version: {}", PKG_VERSION);
-    println!(
-        "Unicode Version: {}.{}.{}",
-        unic::bidi::UNICODE_VERSION.major,
-        unic::bidi::UNICODE_VERSION.minor,
-        unic::bidi::UNICODE_VERSION.micro,
-    );
+    print_pkg_name_desc_version!(ucd);
+    print_unicode_version!(ucd);
     println!();
 
-    println!("# Component: {}", unic::idna::PKG_NAME);
-    println!("{}", unic::idna::PKG_DESCRIPTION);
-    println!("Package Version: {}", PKG_VERSION);
-    println!(
-        "Unicode Version: {}.{}.{}",
-        unic::idna::UNICODE_VERSION.major,
-        unic::idna::UNICODE_VERSION.minor,
-        unic::idna::UNICODE_VERSION.micro,
-    );
+    print_pkg_name_desc_version!(bidi);
+    print_unicode_version!(bidi);
     println!();
 
-    println!("# Component: {}", unic::normal::PKG_NAME);
-    println!("{}", unic::normal::PKG_DESCRIPTION);
-    println!("Package Version: {}", PKG_VERSION);
-    println!(
-        "Unicode Version: {}.{}.{}",
-        unic::normal::UNICODE_VERSION.major,
-        unic::normal::UNICODE_VERSION.minor,
-        unic::normal::UNICODE_VERSION.micro,
-    );
+    print_pkg_name_desc_version!(normal);
+    print_unicode_version!(normal);
     println!();
+
+    print_pkg_name_desc_version!(idna);
+    print_unicode_version!(idna);
+    println!();
+
+    /* FIXME(behnam)
+    print_pkg_name_desc_version!(emoji);
+    print_unicode_version!(emoji);
+    println!();
+    */
 }
