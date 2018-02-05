@@ -77,12 +77,9 @@ fn test_idn_test_data() {
             }
             let res = result.ok();
             assert_eq!(
-                res,
-                None,
+                res, None,
                 "{}: Expected error for source `{}`. original: `{}`",
-                test_name,
-                source,
-                original
+                test_name, source, original
             );
             return;
         }
@@ -110,12 +107,9 @@ fn test_idn_test_data() {
         );
         let output = result.unwrap();
         assert_eq!(
-            output,
-            to_ascii,
+            output, to_ascii,
             "{}: Incorrect result for source `{}`. original: `{}`",
-            test_name,
-            source,
-            original
+            test_name, source, original
         );
     }
 }
