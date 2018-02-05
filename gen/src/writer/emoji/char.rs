@@ -10,14 +10,14 @@
 
 use std::path::Path;
 
-use source::emoji::readme::{EmojiDataVersion, EMOJI_DATA_VERSION};
+use source::emoji::readme::{EmojiDataVersion, EMOJI_VERSION};
 use source::emoji::emoji_data::EMOJI_DATA;
 
 use writer::utils::tables::ToRangeCharSet;
 use writer::utils::write;
 
 pub fn generate(dir: &Path) {
-    emit_emoji_data_version(dir, &EMOJI_DATA_VERSION);
+    emit_emoji_data_version(dir, &EMOJI_VERSION);
     emit_emoji(dir);
     emit_emoji_presentation(dir);
     emit_emoji_modifier(dir);
@@ -25,13 +25,13 @@ pub fn generate(dir: &Path) {
     emit_emoji_component(dir);
 }
 
-pub fn emit_emoji_data_version(dir: &Path, emoji_data_version: &EmojiDataVersion) {
+pub fn emit_emoji_data_version(dir: &Path, emoji_version: &EmojiDataVersion) {
     write(
         dir,
-        "emoji_data_version.rsv",
+        "emoji_version.rsv",
         &format!(
             "UnicodeVersion {{ major: {}, minor: {}, micro: {} }}",
-            emoji_data_version.major, emoji_data_version.minor, emoji_data_version.micro,
+            emoji_version.major, emoji_version.minor, emoji_version.micro,
         ),
     );
 }

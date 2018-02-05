@@ -21,18 +21,19 @@ extern crate unic_char_property;
 extern crate unic_char_range;
 extern crate unic_ucd_version;
 
+mod pkg_info;
+
+mod emoji_version;
+
 mod emoji;
 mod emoji_component;
-mod emoji_data_version;
 mod emoji_modifier;
 mod emoji_modifier_base;
 mod emoji_presentation;
-mod pkg_info;
 
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
-pub use emoji_data_version::EMOJI_DATA_VERSION;
-pub use unic_ucd_version::{UnicodeVersion, UNICODE_VERSION};
+pub use emoji_version::{UnicodeVersion, EMOJI_VERSION};
 
 pub use emoji::{is_emoji, Emoji};
 pub use emoji_component::{is_emoji_component, EmojiComponent};

@@ -9,10 +9,11 @@
 // except according to those terms.
 
 extern crate unic_emoji_char;
+extern crate unic_ucd_version;
 
 #[test]
 fn test_emoji_data_version_against_ucd_version() {
-    // At the moment, Emoji Version is strictly smaller than Unicode Version.
-    // TODO: After Emoji Version is *synced* with Unicode Version, this should always be equal.
-    assert!(unic_emoji_char::EMOJI_DATA_VERSION <= unic_emoji_char::UNICODE_VERSION);
+    // At the moment, Emoji Version is strictly smaller than Unicode Version. Emoji Version is going
+    // to be *synced* with Unicode Version, but may receive minor updates separately.
+    assert!(unic_emoji_char::EMOJI_VERSION.major <= unic_ucd_version::UNICODE_VERSION.major);
 }
