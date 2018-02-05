@@ -14,7 +14,7 @@
 extern crate unic;
 
 #[test]
-fn test_unicode_version_against_rust_core() {
+fn test_unicode_version_against_rust_internal_value() {
     assert!(std::char::UNICODE_VERSION.major <= unic::UNICODE_VERSION.major as u32);
     if std::char::UNICODE_VERSION.major == unic::UNICODE_VERSION.major as u32 {
         assert!(std::char::UNICODE_VERSION.minor <= unic::UNICODE_VERSION.minor as u32);
@@ -24,9 +24,8 @@ fn test_unicode_version_against_rust_core() {
     }
 }
 
-/* TODO: Enable after `std::char::UnicodeVersion` becomes accessible.
 #[test]
-fn test_unicode_version_against_rust_core_2() {
+fn test_unicode_version_against_rust_internal_type() {
     fn check(unicode_version: std::char::UnicodeVersion) {
         assert!(unicode_version.major <= unic::UNICODE_VERSION.major as u32);
         if unicode_version.major == unic::UNICODE_VERSION.major as u32 {
@@ -39,4 +38,3 @@ fn test_unicode_version_against_rust_core_2() {
 
     check(std::char::UNICODE_VERSION);
 }
-*/
