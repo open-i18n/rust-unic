@@ -85,6 +85,9 @@ this crate.
 
 ### Major Components
 
+-   [`unic-char`](char): Unicode Character Tools.
+    [![Crates.io](https://img.shields.io/crates/v/unic-char.svg)](https://crates.io/crates/unic-char/)
+
 -   [`unic-ucd`](unic/ucd/): Unicode Character Database
     ([UAX\#44](https://unicode.org/reports/tr44/)).
     [![Crates.io](https://img.shields.io/crates/v/unic-ucd.svg)](https://crates.io/crates/unic-ucd/)
@@ -107,7 +110,7 @@ this crate.
 
 -   [`unic-emoji`](unic/emoji/): Unicode Emoji
     ([UTS\#51](https://unicode.org/reports/tr51/)).
-    [![Crates.io](https://img.shields.io/crates/v/unic-idna.svg)](https://crates.io/crates/unic-idna/)
+    [![Crates.io](https://img.shields.io/crates/v/unic-emoji.svg)](https://crates.io/crates/unic-emoji/)
 
 ## Code Organization: Combined Repository
 

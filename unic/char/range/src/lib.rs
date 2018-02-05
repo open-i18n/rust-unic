@@ -15,7 +15,7 @@
 #![forbid(bad_style, missing_debug_implementations, unconditional_recursion)]
 #![deny(missing_docs, unsafe_code, unused, future_incompatible)]
 
-//! # Unic - Char - Range
+//! # UNIC — Unicode Character Tools - Character Range
 //!
 //! A simple way to control iteration over a range of characters.
 //!
@@ -52,9 +52,10 @@
 #[cfg(feature = "std")]
 extern crate core;
 
-mod macros;
-mod range;
 mod iter;
+mod macros;
+mod pkg_info;
+mod range;
 mod step;
 
 #[cfg(feature = "fused")]
@@ -65,3 +66,5 @@ mod iter_trusted_len;
 
 pub use range::CharRange;
 pub use iter::CharIter;
+
+pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

@@ -19,5 +19,5 @@ travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 unic-ucd-segment = { path = "../ucd/segment/", version = "0.6.0" }
 
 [dev-dependencies]
-quickcheck = "0.4"
+quickcheck = "0.6"
 unic-ucd-common = { path = "../ucd/common/", version = "0.6.0" }

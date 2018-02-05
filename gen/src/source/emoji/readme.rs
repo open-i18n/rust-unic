@@ -21,7 +21,7 @@ pub struct EmojiDataVersion {
 }
 
 lazy_static! {
-    pub static ref EMOJI_DATA_VERSION: EmojiDataVersion = {
+    pub static ref EMOJI_VERSION: EmojiDataVersion = {
         read("data/emoji/ReadMe.txt").parse().unwrap()
     };
 }

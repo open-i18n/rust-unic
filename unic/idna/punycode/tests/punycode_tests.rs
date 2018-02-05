@@ -53,13 +53,9 @@ fn one_test(test_name: &str, decoded: &str, encoded: &str) {
         Some(result) => {
             let result = result.into_iter().collect::<String>();
             assert_eq!(
-                result,
-                decoded,
+                result, decoded,
                 "Test `{}`: Incorrect decoding of \"{}\":\n   \"{}\"\n!= \"{}\"\n",
-                test_name,
-                encoded,
-                result,
-                decoded
+                test_name, encoded, result, decoded
             )
         }
     }
@@ -67,13 +63,9 @@ fn one_test(test_name: &str, decoded: &str, encoded: &str) {
     match encode_str(decoded) {
         None => panic!("Encoding {} failed.", decoded),
         Some(result) => assert_eq!(
-            result,
-            encoded,
+            result, encoded,
             "Test `{}`: Incorrect encoding of \"{}\":\n   \"{}\"\n!= \"{}\"\n",
-            test_name,
-            decoded,
-            result,
-            encoded
+            test_name, decoded, result, encoded
         ),
     }
 }

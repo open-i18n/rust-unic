@@ -13,7 +13,7 @@ travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 [dependencies]
 
 # Command line argument parsing
-clap = "2.27"
+clap = "2.29"
 
 # Download Unicode files from the web
 futures = "0.1"

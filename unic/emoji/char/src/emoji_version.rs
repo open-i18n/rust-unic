@@ -10,5 +10,8 @@
 
 pub use unic_ucd_version::UnicodeVersion;
 
-/// The version of [Emoji data](https://www.unicode.org/versions/).
-pub const EMOJI_DATA_VERSION: UnicodeVersion = include!("../tables/emoji_data_version.rsv");
+/// The [Emoji Version] of character property data.
+///
+/// Refs:
+/// - <https://unicode.org/reports/tr51/>
+pub const EMOJI_VERSION: UnicodeVersion = include!("../tables/emoji_version.rsv");

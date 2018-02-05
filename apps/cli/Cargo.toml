@@ -14,11 +14,11 @@ readme = "README.md"
 unic-ucd = { path = "../../unic/ucd/", version = "0.6.0" }
 unic-char-property = { path = "../../unic/char/property/", version = "0.6.0" }
 
-clap = "2.27"
-lazy_static = "0.2"
+clap = "2.29"
+lazy_static = "1.0"
 prettytable-rs = "0.6.7"
 regex = "0.2"
 
 [dev-dependencies]
 assert_cli = "0.5"
-quickcheck = "0.4"
+quickcheck = "0.6"

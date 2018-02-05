@@ -1,4 +1,4 @@
-# UNIC — Unicode Characters
+# UNIC — Unicode Character Tools
 
 [![Crates.io](https://img.shields.io/crates/v/unic-char.svg)](https://crates.io/crates/unic-char)
 [![Documentation](https://docs.rs/unic-char/badge.svg)](https://docs.rs/unic-char/)

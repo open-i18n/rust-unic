@@ -17,8 +17,10 @@ use unic_char_range::CharRange;
 /// For the set case, use `()` as the associated value.
 #[derive(Copy, Clone, Debug)]
 pub enum CharDataTable<V: 'static> {
-    #[doc(hidden)] Direct(&'static [(char, V)]),
-    #[doc(hidden)] Range(&'static [(CharRange, V)]),
+    #[doc(hidden)]
+    Direct(&'static [(char, V)]),
+    #[doc(hidden)]
+    Range(&'static [(CharRange, V)]),
 }
 
 impl<V> Default for CharDataTable<V> {

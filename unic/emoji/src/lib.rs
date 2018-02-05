@@ -10,12 +10,12 @@
 
 #![forbid(unsafe_code, missing_docs, unconditional_recursion)]
 
-//! # UNIC — Unicode Character Database
+//! # UNIC — Unicode Emoji
 //!
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
 //!
-//! This UNIC component provides access to character properties as defined in the [Unicode
-//! Standard Annex #44 - Unicode Character Database](http://unicode.org/reports/tr44/).
+//! This UNIC component implements character properties and algorithms from [Unicode® Technical
+//! Standard #51 - Unicode Emoji](http://unicode.org/reports/tr51/).
 
 pub extern crate unic_emoji_char as char;
 

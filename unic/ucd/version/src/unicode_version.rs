@@ -8,9 +8,21 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+#![cfg_attr(feature = "unstable", feature(unicode))]
+
 use core::fmt;
 
-/// Version of Unicode data and specifications.
+#[cfg(feature = "unstable")]
+use core::char;
+
+/// Represents a *Unicode Version*, as used for Unicode datasets and specifications.
+///
+/// TODO: *Unicode Version* is guaranteed to have three integer fields between 0 and 255. We are
+/// going to switch over to `u8` after Unicode 11.0.0 release.
+///
+/// Refs:
+/// - <https://www.unicode.org/versions/>
+/// - <https://www.unicode.org/L2/L2017/17222.htm#152-C3>
 #[derive(Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Debug, Hash, Default)]
 pub struct UnicodeVersion {
     /// Major version.
@@ -23,37 +35,33 @@ pub struct UnicodeVersion {
     pub micro: u16,
 }
 
-/// The [Unicode version](https://www.unicode.org/versions/) of data
-pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");
-
 impl fmt::Display for UnicodeVersion {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}.{}.{}", self.major, self.minor, self.micro)
     }
 }
 
-/// NOTE: (T, T, T) is the type of Rust's internal `UNICODE_VERSION` until Rust 1.20.
-impl<T: Into<u16>> From<(T, T, T)> for UnicodeVersion {
-    fn from(value: (T, T, T)) -> UnicodeVersion {
+#[cfg(feature = "unstable")]
+/// Convert from Rust's internal Unicode Version.
+impl From<char::UnicodeVersion> for UnicodeVersion {
+    fn from(value: char::UnicodeVersion) -> UnicodeVersion {
         UnicodeVersion {
-            major: value.0.into(),
-            minor: value.1.into(),
-            micro: value.2.into(),
+            major: value.major.into(),
+            minor: value.minor.into(),
+            micro: value.micro.into(),
         }
     }
 }
 
-/// NOTE: (T, T, T) is the type of Rust's internal `UNICODE_VERSION` until Rust 1.20.
-impl<T: From<u16>> Into<(T, T, T)> for UnicodeVersion {
-    fn into(self) -> (T, T, T) {
-        (self.major.into(), self.minor.into(), self.micro.into())
-    }
-}
-
-// TODO: Add conversion to/from `char::UnicodeVersion` whenever it becomes accessible.
+/// The [Version of The Unicode Standard](https://www.unicode.org/versions/) of the Unicode
+/// Character Database in use.
+pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");
 
 #[cfg(test)]
 mod tests {
+    #[cfg(feature = "unstable")]
+    use core::char;
+
     use super::UNICODE_VERSION;
 
     #[test]
@@ -65,10 +73,12 @@ mod tests {
         assert!(UNICODE_VERSION.minor == 0);
     }
 
+    #[cfg(feature = "unstable")]
     #[test]
-    fn test_against_rust_core_type() {
-        // Same type as pre-1.20.0 `char::UNICODE_VERSION`
-        let uni_ver: (u64, u64, u64) = (9, 0, 0);
-        assert!(uni_ver <= UNICODE_VERSION.into() || uni_ver > UNICODE_VERSION.into());
+    fn test_against_rust_internal_unicore_version() {
+        use super::UnicodeVersion;
+        let core_uni_ver: UnicodeVersion = char::UnicodeVersion.into();
+        assert!(core_uni_ver.major >= 10);
+        assert!(UNICODE_VERSION.major >= core_uni_ver.major);
     }
 }

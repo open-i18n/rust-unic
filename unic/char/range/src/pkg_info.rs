@@ -8,16 +8,13 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! # UNIC — Unicode Character Tools
-//!
-//! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
+//! Package information
 
-#![forbid(missing_docs)]
-#![deny(unsafe_code)]
+/// UNIC component version.
+pub const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
 
-pub extern crate unic_char_property as property;
-pub extern crate unic_char_range as range;
+/// UNIC component name.
+pub const PKG_NAME: &str = env!("CARGO_PKG_NAME");
 
-mod pkg_info;
-
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+/// UNIC component description.
+pub const PKG_DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");
