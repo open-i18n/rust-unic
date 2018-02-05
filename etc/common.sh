@@ -15,25 +15,37 @@ set -e
 
 # List of components, in order of dependency
 export COMPONENTS="
-    unic/char/range
     unic/char/property
+    unic/char/range
     unic/char
+
     unic/ucd/version
     unic/ucd/age
     unic/ucd/bidi
     unic/ucd/case
     unic/ucd/category
+    unic/ucd/common
+    unic/ucd/ident
     unic/ucd/name
     unic/ucd/normal
+    unic/ucd/segment
     unic/ucd
+
     unic/bidi
+
     unic/normal
+
+    unic/segment
+
     unic/idna/mapping
     unic/idna/punycode
     unic/idna
+
+    unic/emoji/char
+    unic/emoji
+
     unic
 "
-
 
 -() {
     cmd="$@"

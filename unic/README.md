@@ -10,16 +10,29 @@ algorithms and consistent in data.
 
 ### Major Components
 
--   [`unic::ucd`](ucd): Unicode Character Database.
+-   [`unic-char`](char): Unicode Character Tools.
+    [![Crates.io](https://img.shields.io/crates/v/unic-char.svg)](https://crates.io/crates/unic-char/)
+
+-   [`unic-ucd`](unic/ucd/): Unicode Character Database
+    ([UAX\#44](https://unicode.org/reports/tr44/)).
     [![Crates.io](https://img.shields.io/crates/v/unic-ucd.svg)](https://crates.io/crates/unic-ucd/)
 
--   [`unic::bidi`](bidi): Unicode Bidirectional Algorithm (UAX\#9).
+-   [`unic-bidi`](unic/bidi/): Unicode Bidirectional Algorithm
+    ([UAX\#9](https://unicode.org/reports/tr9/)).
     [![Crates.io](https://img.shields.io/crates/v/unic-bidi.svg)](https://crates.io/crates/unic-bidi/)
 
--   [`unic::normal`](normal): Unicode Normalization Forms (UAX\#15).
+-   [`unic-normal`](unic/normal/): Unicode Normalization Forms
+    ([UAX\#15](https://unicode.org/reports/tr15/)).
     [![Crates.io](https://img.shields.io/crates/v/unic-normal.svg)](https://crates.io/crates/unic-normal/)
 
--   [`unic::idna`](idna): Unicode IDNA Compatibility Processing
-    (UTS\#46).
+-   [`unic-segment`](unic/segment/): Unicode Text Segmentation Algorithms
+    ([UAX\#29](https://unicode.org/reports/tr29/)).
+    [![Crates.io](https://img.shields.io/crates/v/unic-segment.svg)](https://crates.io/crates/unic-segment/)
+
+-   [`unic-idna`](unic/idna/): Unicode IDNA Compatibility Processing
+    ([UTS\#46](https://unicode.org/reports/tr46/)).
     [![Crates.io](https://img.shields.io/crates/v/unic-idna.svg)](https://crates.io/crates/unic-idna/)
 
+-   [`unic-emoji`](unic/emoji/): Unicode Emoji
+    ([UTS\#51](https://unicode.org/reports/tr51/)).
+    [![Crates.io](https://img.shields.io/crates/v/unic-emoji.svg)](https://crates.io/crates/unic-emoji/)
