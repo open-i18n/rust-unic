@@ -1,6 +1,6 @@
 [package]
 name = "unic-char"
-version = "0.6.0"
+version = "0.7.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
@@ -20,5 +20,5 @@ std = ["unic-char-range/std"]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
 [dependencies]
-unic-char-property = { path = "property/", version = "0.6.0" }
-unic-char-range = { path = "range/", version = "0.6.0" }
+unic-char-property = { path = "property/", version = "0.7.0" }
+unic-char-range = { path = "range/", version = "0.7.0" }
