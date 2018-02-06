@@ -71,8 +71,10 @@ impl Name {
                 len
             },
             &Name::HangulSyllable(ch) => {
-                // FIXME: unimplemented
-                0
+                let mut len = PREFIX_HANGUL_SYLLABLE.len();
+                // FIXME: use decomposed jamo short names instead
+                len += self.num_of_hex_digits(ch as u32);
+                len
             },
             &Name::CJKUnifiedIdeograph(ch) => {
                 let mut len = PREFIX_CJK_UNIFIED_IDEOGRAPH.len();
@@ -121,8 +123,9 @@ impl fmt::Display for Name {
                 Ok(())
             },
             &Name::HangulSyllable(ch) => {
-                // FIXME: unimplemented
-                Ok(())
+                f.write_str(PREFIX_HANGUL_SYLLABLE)?;
+                // FIXME: use decomposed jamo short names instead
+                write!(f, "{:X}", ch as u32)
             },
             &Name::CJKUnifiedIdeograph(ch) => {
                 f.write_str(PREFIX_CJK_UNIFIED_IDEOGRAPH)?;
