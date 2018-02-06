@@ -13,3 +13,6 @@ exclude = []
 
 [badges]
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
+
+[dependencies]
+unic-common = { path = "../../common/", version = "0.6.0" }

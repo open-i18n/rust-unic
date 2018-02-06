@@ -14,13 +14,14 @@ exclude = []
 
 [features]
 default = []
-unstable = []  # Rust nightly features
+unstable = ["unic-common/unstable"]  # Rust nightly features
 bench_it = ["unic-bidi/bench_it"]
 serde = ["unic-bidi/serde"]
 
 [dependencies]
 unic-bidi = { path = "bidi/", version = "0.6.0" }
 unic-char = { path = "char/", version = "0.6.0", features = ["std"] }
+unic-common = { path = "common/", version = "0.6.0" }
 unic-emoji = { path = "emoji/", version = "0.6.0" }
 unic-idna = { path = "idna/", version = "0.6.0" }
 unic-normal = { path = "normal/", version = "0.6.0" }
