@@ -8,18 +8,13 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![no_std]
+//! Package information
 
-extern crate unic_char_property;
-extern crate unic_ucd_version;
+/// UNIC component version.
+pub const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
 
-mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+/// UNIC component name.
+pub const PKG_NAME: &str = env!("CARGO_PKG_NAME");
 
-mod name;
-pub use name::Name;
-
-use unic_ucd_version::UnicodeVersion;
-
-/// The [Unicode version](https://www.unicode.org/versions/) of data
-pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");
+/// UNIC component description.
+pub const PKG_DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");

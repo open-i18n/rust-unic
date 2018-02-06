@@ -20,5 +20,4 @@
 pub extern crate unic_emoji_char as char;
 
 mod pkg_info;
-
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

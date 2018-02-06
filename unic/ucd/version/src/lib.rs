@@ -18,8 +18,7 @@
 //! Core create indicating the version of Unicode Character Database.
 
 mod pkg_info;
-mod unicode_version;
-
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
+mod unicode_version;
 pub use unicode_version::{UnicodeVersion, UNICODE_VERSION};

@@ -77,26 +77,23 @@ extern crate serde;
 #[cfg(all(feature = "serde", test))]
 extern crate serde_test;
 
-pub mod format_chars;
-pub mod level;
-
-mod bidi_info;
-mod explicit;
-mod implicit;
-mod prepare;
-
 pub use unic_ucd_bidi::UNICODE_VERSION;
 pub use unic_ucd_bidi::{bidi_class, BidiClass, BidiClassCategory};
 
-pub use bidi_info::{BidiInfo, ParagraphInfo};
+mod pkg_info;
+pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+
+pub mod format_chars;
+
+pub mod level;
 pub use level::Level;
+
+mod bidi_info;
+pub use bidi_info::{BidiInfo, ParagraphInfo};
+
+mod explicit;
+
+mod implicit;
+
+mod prepare;
 pub use prepare::LevelRun;
-
-/// UNIC component version.
-pub const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
-
-/// UNIC component name.
-pub const PKG_NAME: &str = env!("CARGO_PKG_NAME");
-
-/// UNIC component description.
-pub const PKG_DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");

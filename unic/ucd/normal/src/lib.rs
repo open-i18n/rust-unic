@@ -34,23 +34,25 @@ extern crate unic_char_property;
 extern crate unic_char_range;
 extern crate unic_ucd_version;
 
-pub mod canonical_combining_class;
-mod composition;
-mod decomposition;
-mod gen_cat;
-mod hangul;
-mod decomposition_type;
+mod pkg_info;
+pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
+pub mod canonical_combining_class;
 pub use canonical_combining_class::CanonicalCombiningClass;
+
+mod composition;
 pub use composition::{canonical_composition, canonical_decomposition, compatibility_decomposition};
-pub use gen_cat::is_combining_mark;
+
+mod decomposition;
 pub use decomposition::{decompose_canonical, decompose_compatible};
+
+mod gen_cat;
+pub use gen_cat::is_combining_mark;
+
+mod decomposition_type;
 pub use decomposition_type::DecompositionType;
 
-use unic_ucd_version::UnicodeVersion;
-
-/// The [Unicode version](https://www.unicode.org/versions/) of data
-pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");
+mod hangul;
 
 /// Compose two characters into a single character, if possible.
 /// See [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/)
@@ -58,3 +60,8 @@ pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.
 pub fn compose(a: char, b: char) -> Option<char> {
     hangul::compose(a, b).or_else(|| canonical_composition(a).and_then(|table| table.find(b)))
 }
+
+use unic_ucd_version::UnicodeVersion;
+
+/// The [Unicode version](https://www.unicode.org/versions/) of data
+pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

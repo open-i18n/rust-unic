@@ -52,10 +52,17 @@
 #[cfg(feature = "std")]
 extern crate core;
 
-mod iter;
-mod macros;
 mod pkg_info;
+pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+
+mod iter;
+pub use iter::CharIter;
+
 mod range;
+pub use range::CharRange;
+
+mod macros;
+
 mod step;
 
 #[cfg(feature = "fused")]
@@ -63,8 +70,3 @@ mod iter_fused;
 
 #[cfg(feature = "trusted-len")]
 mod iter_trusted_len;
-
-pub use range::CharRange;
-pub use iter::CharIter;
-
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

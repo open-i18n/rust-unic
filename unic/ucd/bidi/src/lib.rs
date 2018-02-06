@@ -27,12 +27,16 @@ extern crate unic_char_range;
 
 extern crate unic_ucd_version;
 
-pub mod bidi_class;
-pub mod bidi_control;
-pub mod bidi_mirrored;
+mod pkg_info;
+pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
+pub mod bidi_class;
 pub use bidi_class::{BidiClass, BidiClassCategory, CharBidiClass, StrBidiClass};
+
+pub mod bidi_control;
 pub use bidi_control::{is_bidi_control, BidiControl};
+
+pub mod bidi_mirrored;
 pub use bidi_mirrored::{is_bidi_mirrored, BidiMirrored};
 
 use unic_ucd_version::UnicodeVersion;

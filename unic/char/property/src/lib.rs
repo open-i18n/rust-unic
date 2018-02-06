@@ -28,16 +28,14 @@
 #[macro_use]
 extern crate unic_char_range;
 
-// pub because is used in macros, called from macro call-site.
-pub mod tables;
-
-mod macros;
 mod pkg_info;
-mod property;
-mod range_types;
+pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
+mod property;
 pub use self::property::{CharProperty, PartialCharProperty, TotalCharProperty};
-pub use self::range_types::{
+
+mod range_types;
+pub use range_types::{
     BinaryCharProperty,
     CustomCharProperty,
     EnumeratedCharProperty,
@@ -45,8 +43,11 @@ pub use self::range_types::{
     NumericCharPropertyValue,
 };
 
+mod macros;
+
+// pub because is used in macros, called from macro call-site.
+pub mod tables;
+
 // Used in macros
 #[doc(hidden)]
 pub use core::{fmt as __fmt, str as __str};
-
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

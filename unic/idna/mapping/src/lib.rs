@@ -26,16 +26,10 @@ mod mapping;
 
 use unic_ucd_version::UnicodeVersion;
 
+mod pkg_info;
+pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+
 pub use mapping::Mapping;
 
 /// The version of [Unicode IDNA Compatibility Processing](https://www.unicode.org/reports/tr46/)
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");
-
-/// UNIC component version.
-pub const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
-
-/// UNIC component name.
-pub const PKG_NAME: &str = env!("CARGO_PKG_NAME");
-
-/// UNIC component description.
-pub const PKG_DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");
