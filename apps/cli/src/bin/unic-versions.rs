@@ -38,33 +38,51 @@ macro_rules! print_unicode_version {
     }
 }
 
+macro_rules! print_emoji_version {
+    ( $component:tt ) => {
+        println!(
+            "Emoji Version: {}.{}.{}",
+            unic::$component::EMOJI_VERSION.major,
+            unic::$component::EMOJI_VERSION.minor,
+            unic::$component::EMOJI_VERSION.micro,
+        );
+    }
+}
+
+macro_rules! print_pkg_only {
+    ( $component:tt ) => {
+        print_pkg_name_desc_version!($component);
+        println!();
+    }
+}
+
+macro_rules! print_pkg_with_unicode_version {
+    ( $component:tt ) => {
+        print_pkg_name_desc_version!($component);
+        print_unicode_version!($component);
+        println!();
+    }
+}
+
+macro_rules! print_pkg_with_emoji_version {
+    ( $component:tt ) => {
+        print_pkg_name_desc_version!($component);
+        print_emoji_version!($component);
+        println!();
+    }
+}
+
 fn main() {
     println!("UNIC: Unicode and Internationalization Crates for Rust");
     println!("Package: unic:{}", PKG_VERSION);
     println!();
 
-    print_pkg_name_desc_version!(char);
-    println!();
+    print_pkg_only!(char);
 
-    print_pkg_name_desc_version!(ucd);
-    print_unicode_version!(ucd);
-    println!();
+    print_pkg_with_unicode_version!(ucd);
+    print_pkg_with_unicode_version!(bidi);
+    print_pkg_with_unicode_version!(normal);
+    print_pkg_with_unicode_version!(idna);
 
-    print_pkg_name_desc_version!(bidi);
-    print_unicode_version!(bidi);
-    println!();
-
-    print_pkg_name_desc_version!(normal);
-    print_unicode_version!(normal);
-    println!();
-
-    print_pkg_name_desc_version!(idna);
-    print_unicode_version!(idna);
-    println!();
-
-    /* FIXME(behnam)
-    print_pkg_name_desc_version!(emoji);
-    print_unicode_version!(emoji);
-    println!();
-    */
+    print_pkg_with_emoji_version!(emoji);
 }
