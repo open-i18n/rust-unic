@@ -9,6 +9,7 @@
 // except according to those terms.
 
 use core::fmt;
+use core::cmp::Ordering;
 
 pub static PREFIX_HANGUL_SYLLABLE: &'static str = "HANGUL SYLLABLE ";
 pub static PREFIX_CJK_UNIFIED_IDEOGRAPH: &'static str = "CJK UNIFIED IDEOGRAPH-";
@@ -16,7 +17,7 @@ pub static PREFIX_TANGUT_IDEOGRAPH: &'static str = "TANGUT IDEOGRAPH-";
 pub static PREFIX_NUSHU_CHARACTER: &'static str = "NUSHU CHARACTER-";
 pub static PREFIX_CJK_COMPATIBILITY_IDEOGRAPH: &'static str = "CJK COMPATIBILITY IDEOGRAPH-";
 
-#[derive(Copy, Clone, Debug, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
 pub enum Name {
     Pieces(&'static [&'static str]),
     HangulSyllable(char),
@@ -144,6 +145,100 @@ impl fmt::Display for Name {
                 write!(f, "{:X}", ch as u32)
             },
         }
+    }
+}
+
+impl Ord for Name {
+    fn cmp(&self, other: &Name) -> Ordering {
+        match self {
+            &Name::Pieces(pieces) => {
+                let (first, _) = pieces.split_first().unwrap();
+                match other {
+                    &Name::Pieces(other_pieces) => pieces.cmp(other_pieces),
+                    &Name::HangulSyllable(_) => first.cmp(&PREFIX_HANGUL_SYLLABLE),
+                    &Name::CJKUnifiedIdeograph(_) => first.cmp(&PREFIX_CJK_UNIFIED_IDEOGRAPH),
+                    &Name::TangutIdieograph(_) => first.cmp(&PREFIX_TANGUT_IDEOGRAPH),
+                    &Name::NushuCharacter(_) => first.cmp(&PREFIX_NUSHU_CHARACTER),
+                    &Name::CJKCompatibilityIdeograph(_) => first.cmp(&PREFIX_CJK_COMPATIBILITY_IDEOGRAPH),
+                }
+            },
+            &Name::HangulSyllable(ch) => {
+                let prefix = PREFIX_HANGUL_SYLLABLE;
+                match other {
+                    &Name::Pieces(pieces) => {
+                        let (first, _) = pieces.split_first().unwrap();
+                        prefix.cmp(first)
+                    },
+                    &Name::HangulSyllable(other_ch) => ch.cmp(&other_ch),
+                    &Name::CJKUnifiedIdeograph(_) => prefix.cmp(&PREFIX_CJK_UNIFIED_IDEOGRAPH),
+                    &Name::TangutIdieograph(_) => prefix.cmp(&PREFIX_TANGUT_IDEOGRAPH),
+                    &Name::NushuCharacter(_) => prefix.cmp(&PREFIX_NUSHU_CHARACTER),
+                    &Name::CJKCompatibilityIdeograph(_) => prefix.cmp(&PREFIX_CJK_COMPATIBILITY_IDEOGRAPH),
+                }
+            },
+            &Name::CJKUnifiedIdeograph(ch) => {
+                let prefix = PREFIX_CJK_UNIFIED_IDEOGRAPH;
+                match other {
+                    &Name::Pieces(pieces) => {
+                        let (first, _) = pieces.split_first().unwrap();
+                        prefix.cmp(first)
+                    },
+                    &Name::HangulSyllable(_) => prefix.cmp(&PREFIX_HANGUL_SYLLABLE),
+                    &Name::CJKUnifiedIdeograph(other_ch) => ch.cmp(&other_ch),
+                    &Name::TangutIdieograph(_) => prefix.cmp(&PREFIX_TANGUT_IDEOGRAPH),
+                    &Name::NushuCharacter(_) => prefix.cmp(&PREFIX_NUSHU_CHARACTER),
+                    &Name::CJKCompatibilityIdeograph(_) => prefix.cmp(&PREFIX_CJK_COMPATIBILITY_IDEOGRAPH),
+                }
+            },
+            &Name::TangutIdieograph(ch) => {
+                let prefix = PREFIX_TANGUT_IDEOGRAPH;
+                match other {
+                    &Name::Pieces(pieces) => {
+                        let (first, _) = pieces.split_first().unwrap();
+                        prefix.cmp(first)
+                    },
+                    &Name::HangulSyllable(_) => prefix.cmp(&PREFIX_CJK_UNIFIED_IDEOGRAPH),
+                    &Name::CJKUnifiedIdeograph(_) => prefix.cmp(&PREFIX_CJK_UNIFIED_IDEOGRAPH),
+                    &Name::TangutIdieograph(other_ch) => ch.cmp(&other_ch),
+                    &Name::NushuCharacter(_) => prefix.cmp(&PREFIX_NUSHU_CHARACTER),
+                    &Name::CJKCompatibilityIdeograph(_) => prefix.cmp(&PREFIX_CJK_COMPATIBILITY_IDEOGRAPH),
+                }
+            },
+            &Name::NushuCharacter(ch) => {
+                let prefix = PREFIX_NUSHU_CHARACTER;
+                match other {
+                    &Name::Pieces(pieces) => {
+                        let (first, _) = pieces.split_first().unwrap();
+                        prefix.cmp(first)
+                    },
+                    &Name::HangulSyllable(_) => prefix.cmp(&PREFIX_CJK_UNIFIED_IDEOGRAPH),
+                    &Name::CJKUnifiedIdeograph(_) => prefix.cmp(&PREFIX_CJK_UNIFIED_IDEOGRAPH),
+                    &Name::TangutIdieograph(_) => prefix.cmp(&PREFIX_TANGUT_IDEOGRAPH),
+                    &Name::NushuCharacter(other_ch) => ch.cmp(&other_ch),
+                    &Name::CJKCompatibilityIdeograph(_) => prefix.cmp(&PREFIX_CJK_COMPATIBILITY_IDEOGRAPH),
+                }
+            },
+            &Name::CJKCompatibilityIdeograph(ch) => {
+                let prefix = PREFIX_CJK_COMPATIBILITY_IDEOGRAPH;
+                match other {
+                    &Name::Pieces(pieces) => {
+                        let (first, _) = pieces.split_first().unwrap();
+                        prefix.cmp(first)
+                    },
+                    &Name::HangulSyllable(_) => prefix.cmp(&PREFIX_CJK_UNIFIED_IDEOGRAPH),
+                    &Name::CJKUnifiedIdeograph(_) => prefix.cmp(&PREFIX_CJK_UNIFIED_IDEOGRAPH),
+                    &Name::TangutIdieograph(_) => prefix.cmp(&PREFIX_TANGUT_IDEOGRAPH),
+                    &Name::NushuCharacter(_) => prefix.cmp(&PREFIX_NUSHU_CHARACTER),
+                    &Name::CJKCompatibilityIdeograph(other_ch) => ch.cmp(&other_ch),
+                }
+            },
+        }
+    }
+}
+
+impl PartialOrd for Name {
+    fn partial_cmp(&self, other: &Name) -> Option<Ordering> {
+        Some(self.cmp(other))
     }
 }
 
