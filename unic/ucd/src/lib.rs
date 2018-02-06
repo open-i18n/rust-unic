@@ -23,6 +23,7 @@ pub extern crate unic_ucd_bidi as bidi;
 pub extern crate unic_ucd_case as case;
 pub extern crate unic_ucd_category as category;
 pub extern crate unic_ucd_common as common;
+pub extern crate unic_ucd_ident as ident;
 pub extern crate unic_ucd_name as name;
 pub extern crate unic_ucd_normal as normal;
 pub extern crate unic_ucd_segment as segment;
