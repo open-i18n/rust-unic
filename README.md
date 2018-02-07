@@ -85,7 +85,7 @@ this crate.
 
 ### Major Components
 
--   [`unic-char`](char): Unicode Character Tools.
+-   [`unic-char`](unic/char/): Unicode Character Tools.
     [![Crates.io](https://img.shields.io/crates/v/unic-char.svg)](https://crates.io/crates/unic-char/)
 
 -   [`unic-ucd`](unic/ucd/): Unicode Character Database
@@ -111,6 +111,11 @@ this crate.
 -   [`unic-emoji`](unic/emoji/): Unicode Emoji
     ([UTS\#51](https://unicode.org/reports/tr51/)).
     [![Crates.io](https://img.shields.io/crates/v/unic-emoji.svg)](https://crates.io/crates/unic-emoji/)
+
+### Applications
+
+-   [`unic-cli`](apps/cli): UNIC Command-Line Tools
+    [![Crates.io](https://img.shields.io/crates/v/unic-cli.svg)](https://crates.io/crates/unic-cli/)
 
 ## Code Organization: Combined Repository
 
@@ -154,7 +159,7 @@ In `Cargo.toml`:
 
 ```toml
 [dependencies]
-unic = "0.6.0"  # This has Unicode 10.0.0 data and algorithms
+unic = "0.7.0"  # This has Unicode 10.0.0 data and algorithms
 ```
 
 And in `main.rs`:

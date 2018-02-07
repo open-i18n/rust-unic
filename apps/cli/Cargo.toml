@@ -1,6 +1,6 @@
 [package]
 name = "unic-cli"
-version = "0.6.0"
+version = "0.7.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
@@ -11,7 +11,7 @@ readme = "README.md"
 
 
 [dependencies]
-unic = { path = "../../unic/", version = "0.6.0" }
+unic = { path = "../../unic/", version = "0.7.0" }
 
 clap = "2.29"
 lazy_static = "1.0"

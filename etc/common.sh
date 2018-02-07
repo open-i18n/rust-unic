@@ -17,8 +17,8 @@ set -e
 export COMPONENTS="
     unic/common
 
-    unic/char/property
     unic/char/range
+    unic/char/property
     unic/char
 
     unic/ucd/version
@@ -47,6 +47,11 @@ export COMPONENTS="
     unic/emoji
 
     unic
+"
+
+# List of apps, in order of dependency
+export APPS="
+    apps/cli
 "
 
 -() {

@@ -1,6 +1,6 @@
 [package]
 name = "unic"
-version = "0.6.0"
+version = "0.7.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
@@ -19,14 +19,14 @@ bench_it = ["unic-bidi/bench_it"]
 serde = ["unic-bidi/serde"]
 
 [dependencies]
-unic-bidi = { path = "bidi/", version = "0.6.0" }
-unic-char = { path = "char/", version = "0.6.0", features = ["std"] }
-unic-common = { path = "common/", version = "0.6.0" }
-unic-emoji = { path = "emoji/", version = "0.6.0" }
-unic-idna = { path = "idna/", version = "0.6.0" }
-unic-normal = { path = "normal/", version = "0.6.0" }
-unic-segment = { path = "segment/", version = "0.6.0" }
-unic-ucd = { path = "ucd/", version = "0.6.0" }
+unic-bidi = { path = "bidi/", version = "0.7.0" }
+unic-char = { path = "char/", version = "0.7.0", features = ["std"] }
+unic-common = { path = "common/", version = "0.7.0" }
+unic-emoji = { path = "emoji/", version = "0.7.0" }
+unic-idna = { path = "idna/", version = "0.7.0" }
+unic-normal = { path = "normal/", version = "0.7.0" }
+unic-segment = { path = "segment/", version = "0.7.0" }
+unic-ucd = { path = "ucd/", version = "0.7.0" }
 
 [badges]
 appveyor = { repository = "behnam/rust-unic", branch = "master", service = "github" }

@@ -1,6 +1,6 @@
 [package]
 name = "unic-segment"
-version = "0.6.0"
+version = "0.7.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
@@ -16,8 +16,8 @@ exclude = []
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }
 
 [dependencies]
-unic-ucd-segment = { path = "../ucd/segment/", version = "0.6.0" }
+unic-ucd-segment = { path = "../ucd/segment/", version = "0.7.0" }
 
 [dev-dependencies]
 quickcheck = "0.6"
-unic-ucd-common = { path = "../ucd/common/", version = "0.6.0" }
+unic-ucd-common = { path = "../ucd/common/", version = "0.7.0" }
