@@ -26,25 +26,34 @@ extern crate unic_char_range;
 
 extern crate unic_ucd_version;
 
-pub mod lowercase;
-pub mod uppercase;
-pub mod cased;
-pub mod case_ignorable;
-pub mod changes_when_lowercased;
-pub mod changes_when_uppercased;
-pub mod changes_when_titlecased;
-pub mod changes_when_casefolded;
-pub mod changes_when_casemapped;
+mod pkg_info;
+pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
+pub mod lowercase;
 pub use lowercase::{is_lowercase, Lowercase};
+
+pub mod uppercase;
 pub use uppercase::{is_uppercase, Uppercase};
+
+pub mod cased;
 pub use cased::{is_cased, Cased};
+
+pub mod case_ignorable;
 pub use case_ignorable::{is_case_ignorable, CaseIgnorable};
 
+pub mod changes_when_lowercased;
 pub use changes_when_lowercased::{changes_when_lowercased, ChangesWhenLowercased};
+
+pub mod changes_when_uppercased;
 pub use changes_when_uppercased::{changes_when_uppercased, ChangesWhenUppercased};
+
+pub mod changes_when_titlecased;
 pub use changes_when_titlecased::{changes_when_titlecased, ChangesWhenTitlecased};
+
+pub mod changes_when_casefolded;
 pub use changes_when_casefolded::{changes_when_casefolded, ChangesWhenCasefolded};
+
+pub mod changes_when_casemapped;
 pub use changes_when_casemapped::{changes_when_casemapped, ChangesWhenCasemapped};
 
 use unic_ucd_version::UnicodeVersion;

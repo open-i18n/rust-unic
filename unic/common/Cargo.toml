@@ -1,0 +1,19 @@
+[package]
+name = "unic-common"
+version = "0.6.0"
+authors = ["The UNIC Project Developers"]
+repository = "https://github.com/behnam/rust-unic/"
+license = "MIT/Apache-2.0"
+description = "UNIC - Common Utilities"
+keywords = ["unicode", "version"]
+categories = ["internationalization", "text-processing"]
+
+# No tests/benches that depends on /data/
+exclude = []
+
+[features]
+default = []
+unstable = []  # Rust nightly features
+
+[badges]
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }

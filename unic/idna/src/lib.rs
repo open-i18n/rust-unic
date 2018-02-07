@@ -48,18 +48,12 @@ extern crate unic_ucd_normal;
 extern crate unic_idna_mapping as mapping;
 extern crate unic_idna_punycode as punycode;
 
-mod process;
+mod pkg_info;
+pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
 pub use mapping::UNICODE_VERSION;
+
+mod process;
 pub use process::PUNYCODE_PREFIX;
 pub use process::{Errors, Flags};
 pub use process::{to_ascii, to_unicode};
-
-/// UNIC component version.
-pub const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
-
-/// UNIC component name.
-pub const PKG_NAME: &str = env!("CARGO_PKG_NAME");
-
-/// UNIC component description.
-pub const PKG_DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");

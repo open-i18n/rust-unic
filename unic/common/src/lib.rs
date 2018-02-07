@@ -10,19 +10,16 @@
 
 #![no_std]
 #![forbid(unsafe_code, missing_docs, unconditional_recursion)]
+#![cfg_attr(feature = "unstable", feature(unicode))]
 
-//! # UNIC — UCD — Core
+//! # UNIC — Common Utilities
 //!
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
 //!
-//! Core create indicating the version of Unicode Character Database.
-
-extern crate unic_common;
-
-pub use unic_common::version::UnicodeVersion;
+//!  This UNIC component provides common types, algorithms and macros not shared between many
+//!  components.
 
 mod pkg_info;
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
-mod unicode_version;
-pub use unicode_version::UNICODE_VERSION;
+pub mod version;

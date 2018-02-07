@@ -46,8 +46,10 @@ extern crate unic_char_property;
 extern crate unic_char_range;
 extern crate unic_ucd_version;
 
-mod category;
+mod pkg_info;
+pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
+mod category;
 pub use category::GeneralCategory;
 
 use unic_ucd_version::UnicodeVersion;

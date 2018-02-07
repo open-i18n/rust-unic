@@ -11,8 +11,7 @@ readme = "README.md"
 
 
 [dependencies]
-unic-ucd = { path = "../../unic/ucd/", version = "0.6.0" }
-unic-char-property = { path = "../../unic/char/property/", version = "0.6.0" }
+unic = { path = "../../unic/", version = "0.6.0" }
 
 clap = "2.29"
 lazy_static = "1.0"

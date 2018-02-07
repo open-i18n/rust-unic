@@ -23,24 +23,16 @@ pub extern crate unic_ucd_bidi as bidi;
 pub extern crate unic_ucd_case as case;
 pub extern crate unic_ucd_category as category;
 pub extern crate unic_ucd_common as common;
+pub extern crate unic_ucd_ident as ident;
 pub extern crate unic_ucd_name as name;
 pub extern crate unic_ucd_normal as normal;
 pub extern crate unic_ucd_segment as segment;
 pub extern crate unic_ucd_version as version;
 
+pub use version::UnicodeVersion;
+
 /// The [Unicode version](https://www.unicode.org/versions/) of data
 pub use version::UNICODE_VERSION;
-
-/// UNIC component version.
-pub const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
-
-/// UNIC component name.
-pub const PKG_NAME: &str = env!("CARGO_PKG_NAME");
-
-/// UNIC component description.
-pub const PKG_DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");
-
-pub use version::UnicodeVersion;
 
 pub use age::{Age, CharAge};
 
@@ -76,3 +68,6 @@ pub use name::Name;
 pub use normal::CanonicalCombiningClass;
 
 pub use segment::{GraphemeClusterBreak, SentenceBreak, WordBreak};
+
+mod pkg_info;
+pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

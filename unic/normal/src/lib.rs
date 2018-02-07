@@ -41,14 +41,8 @@ pub use unic_ucd_normal::UNICODE_VERSION;
 pub use decompose::Decompositions;
 pub use recompose::Recompositions;
 
-/// UNIC component version.
-pub const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
-
-/// UNIC component name.
-pub const PKG_NAME: &str = env!("CARGO_PKG_NAME");
-
-/// UNIC component description.
-pub const PKG_DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");
+mod pkg_info;
+pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
 /// Methods for iterating over strings while applying Unicode normalizations
 /// as described in
