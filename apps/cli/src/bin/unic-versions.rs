@@ -14,75 +14,81 @@
 
 extern crate unic;
 
-const PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
-
-macro_rules! print_pkg_name_desc_version {
-    ( $component:tt ) => {
+macro_rules! print_component_desc {
+    ( $component:tt ) => (
         println!("Component: {}", unic::$component::PKG_DESCRIPTION);
+    );
+}
+
+macro_rules! print_component_name_version {
+    ( $component:tt ) => (
         println!(
-            "Package: {}:{}",
+            "Package: {} ({})",
             unic::$component::PKG_NAME,
-            unic::$component::PKG_VERSION,
+            unic::$component::PKG_VERSION
         );
-    }
+    );
 }
 
 macro_rules! print_unicode_version {
-    ( $component:tt ) => {
+    ( $component:tt ) => (
         println!(
             "Unicode Version: {}.{}.{}",
             unic::$component::UNICODE_VERSION.major,
             unic::$component::UNICODE_VERSION.minor,
-            unic::$component::UNICODE_VERSION.micro,
+            unic::$component::UNICODE_VERSION.micro
         );
-    }
+    );
 }
 
 macro_rules! print_emoji_version {
-    ( $component:tt ) => {
+    ( $component:tt ) => (
         println!(
             "Emoji Version: {}.{}.{}",
             unic::$component::EMOJI_VERSION.major,
             unic::$component::EMOJI_VERSION.minor,
-            unic::$component::EMOJI_VERSION.micro,
+            unic::$component::EMOJI_VERSION.micro
         );
-    }
+    );
 }
 
-macro_rules! print_pkg_only {
-    ( $component:tt ) => {
-        print_pkg_name_desc_version!($component);
+macro_rules! print_component_info {
+    ( $component:tt ) => (
+        print_component_desc!($component);
+        print_component_name_version!($component);
         println!();
-    }
+    );
 }
 
-macro_rules! print_pkg_with_unicode_version {
-    ( $component:tt ) => {
-        print_pkg_name_desc_version!($component);
+macro_rules! print_component_info_with_unicode_version {
+    ( $component:tt ) => (
+        print_component_desc!($component);
+        print_component_name_version!($component);
         print_unicode_version!($component);
         println!();
-    }
+    );
 }
 
-macro_rules! print_pkg_with_emoji_version {
-    ( $component:tt ) => {
-        print_pkg_name_desc_version!($component);
+macro_rules! print_component_info_with_emoji_version {
+    ( $component:tt ) => (
+        print_component_desc!($component);
+        print_component_name_version!($component);
         print_emoji_version!($component);
         println!();
-    }
+    );
 }
 
 fn main() {
     println!("UNIC: Unicode and Internationalization Crates for Rust");
-    println!("Package: unic:{}", PKG_VERSION);
+    println!("Package: unic ({})", unic::PKG_VERSION);
     println!();
 
-    print_pkg_only!(char);
+    print_component_info!(char);
 
-    print_pkg_with_unicode_version!(ucd);
-    print_pkg_with_unicode_version!(bidi);
-    print_pkg_with_unicode_version!(normal);
-    print_pkg_with_unicode_version!(idna);
+    print_component_info_with_unicode_version!(ucd);
+    print_component_info_with_unicode_version!(bidi);
+    print_component_info_with_unicode_version!(normal);
+    print_component_info_with_unicode_version!(idna);
 
-    print_pkg_with_emoji_version!(emoji);
+    print_component_info_with_emoji_version!(emoji);
 }
