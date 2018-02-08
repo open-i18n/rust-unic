@@ -31,32 +31,20 @@ pub enum Name {
 impl Name {
     pub fn of(ch: char) -> Option<Name> {
         match ch {
-            '\u{AC00}' ... '\u{D7A3}' => {
-                Some(Name::HangulSyllable(ch))
-            },
-            '\u{3400}' ... '\u{4DB5}'
-            | '\u{4E00}' ... '\u{9FEA}'
-            | '\u{20000}' ... '\u{2A6D6}'
-            | '\u{2A700}' ... '\u{2B734}'
-            | '\u{2B740}' ... '\u{2B81D}'
-            | '\u{2B820}' ... '\u{2CEA1}'
-            | '\u{2CEB0}' ... '\u{2EBE0}' => {
-                Some(Name::CJKUnifiedIdeograph(ch))
-            },
-            '\u{17000}' ... '\u{187EC}' => {
-                Some(Name::TangutIdieograph(ch))
-            },
-            '\u{1B170}' ... '\u{1B2FB}' => {
-                Some(Name::NushuCharacter(ch))
-            },
-            '\u{F900}' ... '\u{FA6D}'
-            | '\u{FA70}' ... '\u{FAD9}'
-            | '\u{2F800}' ... '\u{2FA1D}' => {
+            '\u{AC00}'...'\u{D7A3}' => Some(Name::HangulSyllable(ch)),
+            '\u{3400}'...'\u{4DB5}'
+            | '\u{4E00}'...'\u{9FEA}'
+            | '\u{20000}'...'\u{2A6D6}'
+            | '\u{2A700}'...'\u{2B734}'
+            | '\u{2B740}'...'\u{2B81D}'
+            | '\u{2B820}'...'\u{2CEA1}'
+            | '\u{2CEB0}'...'\u{2EBE0}' => Some(Name::CJKUnifiedIdeograph(ch)),
+            '\u{17000}'...'\u{187EC}' => Some(Name::TangutIdieograph(ch)),
+            '\u{1B170}'...'\u{1B2FB}' => Some(Name::NushuCharacter(ch)),
+            '\u{F900}'...'\u{FA6D}' | '\u{FA70}'...'\u{FAD9}' | '\u{2F800}'...'\u{2FA1D}' => {
                 Some(Name::CJKCompatibilityIdeograph(ch))
-            },
-            _ => {
-                data::NAMES.find(ch).map(|pieces| Name::Pieces(pieces))
-            },
+            }
+            _ => data::NAMES.find(ch).map(|pieces| Name::Pieces(pieces)),
         }
     }
 
@@ -70,33 +58,33 @@ impl Name {
                     len += piece.len();
                 }
                 len
-            },
+            }
             &Name::HangulSyllable(ch) => {
                 let mut len = PREFIX_HANGUL_SYLLABLE.len();
                 // FIXME: use decomposed jamo short names instead
                 len += self.num_of_hex_digits(ch as u32);
                 len
-            },
+            }
             &Name::CJKUnifiedIdeograph(ch) => {
                 let mut len = PREFIX_CJK_UNIFIED_IDEOGRAPH.len();
                 len += self.num_of_hex_digits(ch as u32);
                 len
-            },
+            }
             &Name::TangutIdieograph(ch) => {
                 let mut len = PREFIX_TANGUT_IDEOGRAPH.len();
                 len += self.num_of_hex_digits(ch as u32);
                 len
-            },
+            }
             &Name::NushuCharacter(ch) => {
                 let mut len = PREFIX_NUSHU_CHARACTER.len();
                 len += self.num_of_hex_digits(ch as u32);
                 len
-            },
+            }
             &Name::CJKCompatibilityIdeograph(ch) => {
                 let mut len = PREFIX_CJK_COMPATIBILITY_IDEOGRAPH.len();
                 len += self.num_of_hex_digits(ch as u32);
                 len
-            },
+            }
         }
     }
 
@@ -122,28 +110,28 @@ impl fmt::Display for Name {
                     f.write_str(piece)?;
                 }
                 Ok(())
-            },
+            }
             &Name::HangulSyllable(ch) => {
                 f.write_str(PREFIX_HANGUL_SYLLABLE)?;
                 // FIXME: use decomposed jamo short names instead
                 write!(f, "{:X}", ch as u32)
-            },
+            }
             &Name::CJKUnifiedIdeograph(ch) => {
                 f.write_str(PREFIX_CJK_UNIFIED_IDEOGRAPH)?;
                 write!(f, "{:X}", ch as u32)
-            },
+            }
             &Name::TangutIdieograph(ch) => {
                 f.write_str(PREFIX_TANGUT_IDEOGRAPH)?;
                 write!(f, "{:X}", ch as u32)
-            },
+            }
             &Name::NushuCharacter(ch) => {
                 f.write_str(PREFIX_NUSHU_CHARACTER)?;
                 write!(f, "{:X}", ch as u32)
-            },
+            }
             &Name::CJKCompatibilityIdeograph(ch) => {
                 f.write_str(PREFIX_CJK_COMPATIBILITY_IDEOGRAPH)?;
                 write!(f, "{:X}", ch as u32)
-            },
+            }
         }
     }
 }
@@ -159,79 +147,89 @@ impl Ord for Name {
                     &Name::CJKUnifiedIdeograph(_) => first.cmp(&PREFIX_CJK_UNIFIED_IDEOGRAPH),
                     &Name::TangutIdieograph(_) => first.cmp(&PREFIX_TANGUT_IDEOGRAPH),
                     &Name::NushuCharacter(_) => first.cmp(&PREFIX_NUSHU_CHARACTER),
-                    &Name::CJKCompatibilityIdeograph(_) => first.cmp(&PREFIX_CJK_COMPATIBILITY_IDEOGRAPH),
+                    &Name::CJKCompatibilityIdeograph(_) => {
+                        first.cmp(&PREFIX_CJK_COMPATIBILITY_IDEOGRAPH)
+                    }
                 }
-            },
+            }
             &Name::HangulSyllable(ch) => {
                 let prefix = PREFIX_HANGUL_SYLLABLE;
                 match other {
                     &Name::Pieces(pieces) => {
                         let (first, _) = pieces.split_first().unwrap();
                         prefix.cmp(first)
-                    },
+                    }
                     &Name::HangulSyllable(other_ch) => ch.cmp(&other_ch),
                     &Name::CJKUnifiedIdeograph(_) => prefix.cmp(&PREFIX_CJK_UNIFIED_IDEOGRAPH),
                     &Name::TangutIdieograph(_) => prefix.cmp(&PREFIX_TANGUT_IDEOGRAPH),
                     &Name::NushuCharacter(_) => prefix.cmp(&PREFIX_NUSHU_CHARACTER),
-                    &Name::CJKCompatibilityIdeograph(_) => prefix.cmp(&PREFIX_CJK_COMPATIBILITY_IDEOGRAPH),
+                    &Name::CJKCompatibilityIdeograph(_) => {
+                        prefix.cmp(&PREFIX_CJK_COMPATIBILITY_IDEOGRAPH)
+                    }
                 }
-            },
+            }
             &Name::CJKUnifiedIdeograph(ch) => {
                 let prefix = PREFIX_CJK_UNIFIED_IDEOGRAPH;
                 match other {
                     &Name::Pieces(pieces) => {
                         let (first, _) = pieces.split_first().unwrap();
                         prefix.cmp(first)
-                    },
+                    }
                     &Name::HangulSyllable(_) => prefix.cmp(&PREFIX_HANGUL_SYLLABLE),
                     &Name::CJKUnifiedIdeograph(other_ch) => ch.cmp(&other_ch),
                     &Name::TangutIdieograph(_) => prefix.cmp(&PREFIX_TANGUT_IDEOGRAPH),
                     &Name::NushuCharacter(_) => prefix.cmp(&PREFIX_NUSHU_CHARACTER),
-                    &Name::CJKCompatibilityIdeograph(_) => prefix.cmp(&PREFIX_CJK_COMPATIBILITY_IDEOGRAPH),
+                    &Name::CJKCompatibilityIdeograph(_) => {
+                        prefix.cmp(&PREFIX_CJK_COMPATIBILITY_IDEOGRAPH)
+                    }
                 }
-            },
+            }
             &Name::TangutIdieograph(ch) => {
                 let prefix = PREFIX_TANGUT_IDEOGRAPH;
                 match other {
                     &Name::Pieces(pieces) => {
                         let (first, _) = pieces.split_first().unwrap();
                         prefix.cmp(first)
-                    },
+                    }
                     &Name::HangulSyllable(_) => prefix.cmp(&PREFIX_CJK_UNIFIED_IDEOGRAPH),
                     &Name::CJKUnifiedIdeograph(_) => prefix.cmp(&PREFIX_CJK_UNIFIED_IDEOGRAPH),
                     &Name::TangutIdieograph(other_ch) => ch.cmp(&other_ch),
                     &Name::NushuCharacter(_) => prefix.cmp(&PREFIX_NUSHU_CHARACTER),
-                    &Name::CJKCompatibilityIdeograph(_) => prefix.cmp(&PREFIX_CJK_COMPATIBILITY_IDEOGRAPH),
+                    &Name::CJKCompatibilityIdeograph(_) => {
+                        prefix.cmp(&PREFIX_CJK_COMPATIBILITY_IDEOGRAPH)
+                    }
                 }
-            },
+            }
             &Name::NushuCharacter(ch) => {
                 let prefix = PREFIX_NUSHU_CHARACTER;
                 match other {
                     &Name::Pieces(pieces) => {
                         let (first, _) = pieces.split_first().unwrap();
                         prefix.cmp(first)
-                    },
+                    }
                     &Name::HangulSyllable(_) => prefix.cmp(&PREFIX_CJK_UNIFIED_IDEOGRAPH),
                     &Name::CJKUnifiedIdeograph(_) => prefix.cmp(&PREFIX_CJK_UNIFIED_IDEOGRAPH),
                     &Name::TangutIdieograph(_) => prefix.cmp(&PREFIX_TANGUT_IDEOGRAPH),
                     &Name::NushuCharacter(other_ch) => ch.cmp(&other_ch),
-                    &Name::CJKCompatibilityIdeograph(_) => prefix.cmp(&PREFIX_CJK_COMPATIBILITY_IDEOGRAPH),
+                    &Name::CJKCompatibilityIdeograph(_) => {
+                        prefix.cmp(&PREFIX_CJK_COMPATIBILITY_IDEOGRAPH)
+                    }
                 }
-            },
+            }
             &Name::CJKCompatibilityIdeograph(ch) => {
                 let prefix = PREFIX_CJK_COMPATIBILITY_IDEOGRAPH;
                 match other {
                     &Name::Pieces(pieces) => {
                         let (first, _) = pieces.split_first().unwrap();
                         prefix.cmp(first)
-                    },
+                    }
                     &Name::HangulSyllable(_) => prefix.cmp(&PREFIX_CJK_UNIFIED_IDEOGRAPH),
                     &Name::CJKUnifiedIdeograph(_) => prefix.cmp(&PREFIX_CJK_UNIFIED_IDEOGRAPH),
                     &Name::TangutIdieograph(_) => prefix.cmp(&PREFIX_TANGUT_IDEOGRAPH),
                     &Name::NushuCharacter(_) => prefix.cmp(&PREFIX_NUSHU_CHARACTER),
                     &Name::CJKCompatibilityIdeograph(other_ch) => ch.cmp(&other_ch),
                 }
-            },
+            }
         }
     }
 }
