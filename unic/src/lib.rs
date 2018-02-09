@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![forbid(unsafe_code)]
+#![forbid(unsafe_code, missing_docs)]
 
 //! # UNIC: Unicode and Internationalization Crates for Rust
 //!
