@@ -23,22 +23,27 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 . "$DIR/common.sh"
 
 
-# Steps
-
 # Check all components
 for component in $COMPONENTS; do
     lib_rs="$component/src/lib.rs"
     pkg_info_rs="$component/src/pkg_info.rs"
 
-    # Require Documentation Enforcement
-    if grep --quiet 'missing_docs' $lib_rs; then true; else
-        echo "$component: missing 'missing_docs' config"
-    fi
-
-    # Require Safety Enforcement
-    if grep --quiet 'unsafe_code' $lib_rs; then true; else
-        echo "$component: missing 'unsafe_code' config"
-    fi
+    # Require library attribute settings
+    ATTRS='
+        bad_style
+        future_incompatible
+        missing_debug_implementations
+        missing_docs
+        unconditional_recursion
+        unsafe_code
+        unused
+        unused_imports
+    '
+    for attr in $ATTRS; do
+        if grep --quiet "$attr" $lib_rs; then true; else
+            echo "$component: missing '$attr' attribute setting"
+        fi
+    done
 
     # Package Info
     if [ ! -f "$pkg_info_rs" ]; then
