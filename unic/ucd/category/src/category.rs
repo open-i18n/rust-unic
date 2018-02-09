@@ -315,9 +315,9 @@ impl GeneralCategory {
 
 #[cfg(test)]
 mod tests {
-    use unic_char_property::EnumeratedCharProperty;
     use super::GeneralCategory as GC;
     use core::char;
+    use unic_char_property::EnumeratedCharProperty;
 
     #[test]
     fn test_ascii() {

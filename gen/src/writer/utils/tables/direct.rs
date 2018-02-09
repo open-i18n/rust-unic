@@ -45,9 +45,9 @@ impl<T> ToDirectCharTable<T> for BTreeMap<char, T> {
 
 #[cfg(test)]
 mod test {
+    use super::ToDirectCharTable;
     use std::collections::BTreeMap;
     use std::fmt::Display;
-    use super::ToDirectCharTable;
 
     #[test]
     fn simple_single_bsearch_map() {

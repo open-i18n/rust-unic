@@ -15,8 +15,8 @@ use source::ucd::readme::UNICODE_VERSION;
 use source::ucd::sentence_break_property::SENTENCE_BREAK_DATA;
 use source::ucd::word_break_property::WORD_BREAK_DATA;
 
-use writer::utils::tables::ToRangeCharTable;
 use writer::common::emit_unicode_version;
+use writer::utils::tables::ToRangeCharTable;
 use writer::utils::write;
 
 pub fn generate(dir: &Path) {

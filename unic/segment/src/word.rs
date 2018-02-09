@@ -168,8 +168,8 @@ impl<'a> Iterator for WordBounds<'a> {
 
     #[inline]
     fn next(&mut self) -> Option<&'a str> {
-        use self::WordBoundsState::*;
         use self::FormatExtendType::*;
+        use self::WordBoundsState::*;
 
         if self.string.is_empty() {
             return None;
@@ -400,8 +400,8 @@ impl<'a> Iterator for WordBounds<'a> {
 impl<'a> DoubleEndedIterator for WordBounds<'a> {
     #[inline]
     fn next_back(&mut self) -> Option<&'a str> {
-        use self::WordBoundsState::*;
         use self::FormatExtendType::*;
+        use self::WordBoundsState::*;
         if self.string.is_empty() {
             return None;
         }

@@ -8,8 +8,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use std::path::Path;
 use std::collections::BTreeMap;
+use std::path::Path;
 
 use source::ucd::test::grapheme_break_test::{GraphemeBreakTest, GRAPHEME_BREAK_TESTS};
 use source::ucd::test::word_break_test::{WordBreakTest, WORD_BREAK_TESTS};

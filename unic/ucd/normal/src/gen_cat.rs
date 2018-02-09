@@ -38,8 +38,8 @@ pub use self::mark::is_combining_mark;
 
 #[cfg(test)]
 mod tests {
-    use core::char;
     use super::*;
+    use core::char;
 
     #[test]
     fn test_is_combining_mark_ascii() {

@@ -9,7 +9,8 @@
 // except according to those terms.
 
 #![no_std]
-#![forbid(unsafe_code, unconditional_recursion)]
+#![forbid(bad_style, future_incompatible, missing_debug_implementations, unconditional_recursion,
+          unsafe_code, unused)]
 #![deny(missing_docs)]
 
 //! # UNIC — UCD — Character Age

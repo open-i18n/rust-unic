@@ -9,8 +9,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![deny(unsafe_code)]
-#![forbid(missing_docs)]
+#![forbid(bad_style, future_incompatible, missing_debug_implementations, missing_docs,
+          unconditional_recursion, unused)]
+#![deny(unsafe_code, unused_imports)]
 
 //! # UNIC — IDNA — Punycode (RFC 3492)
 //!
@@ -23,8 +24,8 @@
 //! `encode_str` and `decode_to_string` provide convenience wrappers
 //! that convert from and to Rust’s UTF-8 based `str` and `String` types.
 
-use std::u32;
 use std::char;
+use std::u32;
 
 // TODO: Drop following after MIN_RUST_VERSION >= 1.23
 #[allow(unused_imports)]

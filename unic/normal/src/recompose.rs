@@ -16,7 +16,7 @@ use unic_ucd_normal::{compose, CanonicalCombiningClass};
 
 use decompose::Decompositions;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 enum RecompositionState {
     Composing,
     Purging,
@@ -24,7 +24,7 @@ enum RecompositionState {
 }
 
 /// External iterator for a string recomposition's characters.
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Recompositions<I> {
     iter: Decompositions<I>,
     state: RecompositionState,

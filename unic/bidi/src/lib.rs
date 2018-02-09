@@ -9,7 +9,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![forbid(unsafe_code, missing_docs)]
+#![forbid(future_incompatible, missing_debug_implementations, missing_docs,
+          unconditional_recursion, unsafe_code)]
+#![deny(bad_style, unused)]
 
 //! # UNIC — Unicode Bidirectional Algorithm
 //!
@@ -77,8 +79,8 @@ extern crate serde;
 #[cfg(all(feature = "serde", test))]
 extern crate serde_test;
 
-pub use unic_ucd_bidi::UNICODE_VERSION;
 pub use unic_ucd_bidi::{bidi_class, BidiClass, BidiClassCategory};
+pub use unic_ucd_bidi::UNICODE_VERSION;
 
 mod pkg_info;
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

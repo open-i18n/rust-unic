@@ -174,8 +174,8 @@ impl DecompositionType {
 
 #[cfg(test)]
 mod tests {
-    use unic_char_property::EnumeratedCharProperty;
     use super::DecompositionType as DT;
+    use unic_char_property::EnumeratedCharProperty;
 
     #[test]
     fn test_ascii() {

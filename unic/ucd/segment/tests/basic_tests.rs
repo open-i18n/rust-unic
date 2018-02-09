@@ -11,8 +11,8 @@
 extern crate unic_ucd_segment;
 
 use unic_ucd_segment::grapheme_cluster_break::GraphemeClusterBreak as GCB;
-use unic_ucd_segment::word_break::WordBreak as WB;
 use unic_ucd_segment::sentence_break::SentenceBreak as SB;
+use unic_ucd_segment::word_break::WordBreak as WB;
 
 #[test]
 fn test_grapheme_cluster_break_display() {

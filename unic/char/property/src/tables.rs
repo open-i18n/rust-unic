@@ -67,6 +67,7 @@ impl<V: Copy + Default> CharDataTable<V> {
 }
 
 /// Iterator for `CharDataTable`. Iterates over pairs `(CharRange, V)`.
+#[derive(Debug)]
 pub struct CharDataTableIter<'a, V: 'static>(&'a CharDataTable<V>, usize);
 
 impl<'a, V: Copy> Iterator for CharDataTableIter<'a, V> {

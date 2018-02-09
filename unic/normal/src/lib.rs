@@ -9,7 +9,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![forbid(unsafe_code, missing_docs)]
+#![forbid(bad_style, future_incompatible, missing_debug_implementations, missing_docs,
+          unconditional_recursion, unsafe_code)]
+#![deny(unused)]
 
 //! # UNIC — Unicode Normalization Forms
 //!
@@ -37,9 +39,9 @@ mod recompose;
 
 use std::str::Chars;
 
-pub use unic_ucd_normal::UNICODE_VERSION;
 pub use decompose::Decompositions;
 pub use recompose::Recompositions;
+pub use unic_ucd_normal::UNICODE_VERSION;
 
 mod pkg_info;
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

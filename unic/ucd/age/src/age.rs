@@ -10,8 +10,8 @@
 
 use core::cmp;
 
-pub use unic_ucd_version::UnicodeVersion;
 use unic_char_property::{CharProperty, CustomCharProperty, PartialCharProperty};
+pub use unic_ucd_version::UnicodeVersion;
 
 /// Represents values of the Unicode character property
 /// [*Age*](https://www.unicode.org/reports/tr44/#Age).

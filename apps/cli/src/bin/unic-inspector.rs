@@ -18,8 +18,8 @@ extern crate unic;
 extern crate unic_cli;
 
 use clap::Arg;
-use prettytable::format::TableFormat;
 use prettytable::Table;
+use prettytable::format::TableFormat;
 
 use unic::char::property::EnumeratedCharProperty;
 use unic::ucd::{GeneralCategory, Name};

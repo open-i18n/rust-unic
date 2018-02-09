@@ -14,8 +14,8 @@ use source::ucd::derived_core_properties::DERIVED_CORE_PROPERTIES;
 use source::ucd::prop_list::PROP_LIST;
 use source::ucd::readme::UNICODE_VERSION;
 
-use writer::utils::tables::ToRangeCharSet;
 use writer::common::emit_unicode_version;
+use writer::utils::tables::ToRangeCharSet;
 use writer::utils::write;
 
 pub fn generate(dir: &Path) {

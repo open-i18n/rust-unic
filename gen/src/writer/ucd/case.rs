@@ -13,8 +13,8 @@ use std::path::Path;
 use source::ucd::derived_core_properties::DERIVED_CORE_PROPERTIES;
 use source::ucd::readme::UNICODE_VERSION;
 
-use writer::utils::tables::ToRangeCharSet;
 use writer::common::emit_unicode_version;
+use writer::utils::tables::ToRangeCharSet;
 use writer::utils::write;
 
 pub fn generate(dir: &Path) {

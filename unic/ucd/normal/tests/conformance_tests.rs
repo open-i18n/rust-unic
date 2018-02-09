@@ -13,9 +13,9 @@ extern crate unic_char_range;
 
 extern crate unic_ucd_normal;
 
-use unic_ucd_normal::DecompositionType as DT;
-use std::collections::HashSet as Set;
 use std::{char, u32};
+use std::collections::HashSet as Set;
+use unic_ucd_normal::DecompositionType as DT;
 
 const DT_TEST_DATA: &str = include_str!("../../../../data/ucd/test/DecompositionTypeTest.txt");
 

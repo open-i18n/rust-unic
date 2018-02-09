@@ -12,8 +12,8 @@
 extern crate rustc_serialize;
 extern crate unic_idna_punycode;
 
-use unic_idna_punycode::{decode, encode_str};
 use rustc_serialize::json::{self, Json};
+use unic_idna_punycode::{decode, encode_str};
 
 #[test]
 fn test_punycode_js_data() {

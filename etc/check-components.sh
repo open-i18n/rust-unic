@@ -23,13 +23,35 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 . "$DIR/common.sh"
 
 
-# Steps
-
-# Package all components
+# Check all components
 for component in $COMPONENTS; do
-    pkg_file="$component/src/pkg_info.rs"
-    if [ ! -f "$pkg_file" ]
-    then
-        echo "Missing pkg_file: $component"
+    lib_rs="$component/src/lib.rs"
+    pkg_info_rs="$component/src/pkg_info.rs"
+
+    # Require library attribute settings
+    # TODO:
+    #   warnings (all lints that are set to issue warnings)
+    #   missing-copy-implementations
+    #   unreachable-pub
+    #   unused-results
+    ATTRS='
+        bad_style
+        future_incompatible
+        missing_debug_implementations
+        missing_docs
+        unconditional_recursion
+        unsafe_code
+        unused
+    '
+    for attr in $ATTRS; do
+        if grep --quiet "$attr" $lib_rs; then true; else
+            echo "$component: missing '$attr' attribute setting"
+        fi
+    done
+
+    # Package Info
+    if [ ! -f "$pkg_info_rs" ]; then
+        echo "$component: missing 'pkg_info.rs'"
     fi
+
 done
