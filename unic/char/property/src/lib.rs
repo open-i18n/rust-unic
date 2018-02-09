@@ -9,7 +9,8 @@
 // except according to those terms.
 
 #![no_std]
-#![forbid(unsafe_code, unconditional_recursion, missing_docs)]
+#![forbid(bad_style, future_incompatible, missing_debug_implementations, missing_docs,
+          unconditional_recursion, unsafe_code, unused, unused_imports)]
 
 //! # UNIC — Unicode Character Tools - Character Property
 //!
