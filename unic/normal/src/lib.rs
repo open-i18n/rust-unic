@@ -37,9 +37,9 @@ mod recompose;
 
 use std::str::Chars;
 
-pub use unic_ucd_normal::UNICODE_VERSION;
 pub use decompose::Decompositions;
 pub use recompose::Recompositions;
+pub use unic_ucd_normal::UNICODE_VERSION;
 
 mod pkg_info;
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

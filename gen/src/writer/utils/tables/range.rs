@@ -64,9 +64,9 @@ impl<T: Eq> ToRangeCharTable<T> for BTreeMap<char, T> {
 
 #[cfg(test)]
 mod test {
+    use super::ToRangeCharTable;
     use std::collections::BTreeMap;
     use std::fmt::Display;
-    use super::ToRangeCharTable;
 
     #[test]
     fn simple_range_bsearch_map() {

@@ -356,8 +356,8 @@ impl WordBreak {
 
 #[cfg(test)]
 mod tests {
-    use unic_char_property::EnumeratedCharProperty;
     use super::WordBreak as WB;
+    use unic_char_property::EnumeratedCharProperty;
 
     #[test]
     fn test_ascii() {

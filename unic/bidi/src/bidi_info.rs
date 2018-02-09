@@ -19,10 +19,10 @@ use unic_ucd_bidi::BidiClass;
 use unic_ucd_bidi::bidi_class::abbr_names::*;
 
 use explicit;
+use format_chars;
 use implicit;
 use level;
 use prepare;
-use format_chars;
 
 use level::{Level, LTR_LEVEL, RTL_LEVEL};
 use prepare::LevelRun;
@@ -776,8 +776,8 @@ mod tests {
 
 #[cfg(all(feature = "serde", test))]
 mod serde_tests {
-    use serde_test::{assert_tokens, Token};
     use super::*;
+    use serde_test::{assert_tokens, Token};
 
     #[test]
     fn test_levels() {

@@ -8,8 +8,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use core::fmt;
 use core::cmp::Ordering;
+use core::fmt;
 
 pub static PREFIX_HANGUL_SYLLABLE: &'static str = "HANGUL SYLLABLE ";
 pub static PREFIX_CJK_UNIFIED_IDEOGRAPH: &'static str = "CJK UNIFIED IDEOGRAPH-";

@@ -263,8 +263,8 @@ impl SentenceBreak {
 
 #[cfg(test)]
 mod tests {
-    use unic_char_property::EnumeratedCharProperty;
     use super::SentenceBreak as SB;
+    use unic_char_property::EnumeratedCharProperty;
 
     #[test]
     fn test_ascii() {

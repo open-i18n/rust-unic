@@ -10,8 +10,8 @@
 
 use std::path::Path;
 
-use source::emoji::readme::{EmojiDataVersion, EMOJI_VERSION};
 use source::emoji::emoji_data::EMOJI_DATA;
+use source::emoji::readme::{EmojiDataVersion, EMOJI_VERSION};
 
 use writer::utils::tables::ToRangeCharSet;
 use writer::utils::write;

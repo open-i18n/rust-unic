@@ -13,11 +13,11 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::Write;
 use std::path::Path;
 
-use source::ucd::unicode_data::UNICODE_DATA;
 use source::ucd::readme::UNICODE_VERSION;
+use source::ucd::unicode_data::UNICODE_DATA;
 
-use writer::utils::tables::ToDirectCharTable;
 use writer::common::emit_unicode_version;
+use writer::utils::tables::ToDirectCharTable;
 use writer::utils::write;
 
 pub fn generate(dir: &Path) {

@@ -54,6 +54,6 @@ pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 pub use mapping::UNICODE_VERSION;
 
 mod process;
-pub use process::PUNYCODE_PREFIX;
 pub use process::{Errors, Flags};
 pub use process::{to_ascii, to_unicode};
+pub use process::PUNYCODE_PREFIX;

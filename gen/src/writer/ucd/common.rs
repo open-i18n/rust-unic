@@ -8,16 +8,16 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use std::path::Path;
 use std::collections::BTreeSet;
+use std::path::Path;
 
 use source::ucd::derived_core_properties::DERIVED_CORE_PROPERTIES;
 use source::ucd::prop_list::PROP_LIST;
 use source::ucd::readme::UNICODE_VERSION;
 use source::ucd::unicode_data::UNICODE_DATA;
 
-use writer::utils::tables::ToRangeCharSet;
 use writer::common::emit_unicode_version;
+use writer::utils::tables::ToRangeCharSet;
 use writer::utils::write;
 
 pub fn generate(dir: &Path) {

@@ -370,8 +370,8 @@ mod tests {
 
 #[cfg(all(feature = "serde", test))]
 mod serde_tests {
-    use serde_test::{assert_tokens, Token};
     use super::*;
+    use serde_test::{assert_tokens, Token};
 
     #[test]
     fn test_statics() {

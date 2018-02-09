@@ -23,8 +23,8 @@
 //! `encode_str` and `decode_to_string` provide convenience wrappers
 //! that convert from and to Rust’s UTF-8 based `str` and `String` types.
 
-use std::u32;
 use std::char;
+use std::u32;
 
 // TODO: Drop following after MIN_RUST_VERSION >= 1.23
 #[allow(unused_imports)]

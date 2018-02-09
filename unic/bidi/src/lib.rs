@@ -77,8 +77,8 @@ extern crate serde;
 #[cfg(all(feature = "serde", test))]
 extern crate serde_test;
 
-pub use unic_ucd_bidi::UNICODE_VERSION;
 pub use unic_ucd_bidi::{bidi_class, BidiClass, BidiClassCategory};
+pub use unic_ucd_bidi::UNICODE_VERSION;
 
 mod pkg_info;
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

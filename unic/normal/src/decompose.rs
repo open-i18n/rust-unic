@@ -9,8 +9,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use std::fmt::{self, Write};
 use std::collections::VecDeque;
+use std::fmt::{self, Write};
 
 use unic_ucd_normal::{decompose_canonical, decompose_compatible, CanonicalCombiningClass};
 use unic_ucd_normal::canonical_combining_class::values as ccc;

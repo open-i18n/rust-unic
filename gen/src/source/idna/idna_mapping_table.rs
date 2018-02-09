@@ -9,8 +9,8 @@
 // except according to those terms.
 
 use std::char;
-use std::str::FromStr;
 use std::collections::BTreeMap;
+use std::str::FromStr;
 
 use regex::Regex;
 

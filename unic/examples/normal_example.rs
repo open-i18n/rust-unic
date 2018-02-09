@@ -13,8 +13,8 @@
 
 extern crate unic;
 
-use unic::ucd::normal::compose;
 use unic::normal::StrNormalForm;
+use unic::ucd::normal::compose;
 
 fn main() {
     assert_eq!(compose('A', '\u{30a}'), Some('Å'));
