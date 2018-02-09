@@ -10,8 +10,8 @@
 // except according to those terms.
 
 #![forbid(future_incompatible, missing_debug_implementations, missing_docs,
-          unconditional_recursion, unsafe_code, unused, unused_imports)]
-#![deny(bad_style)]
+          unconditional_recursion, unsafe_code, unused_imports)]
+#![deny(bad_style, unused)]
 
 //! # UNIC — Unicode Bidirectional Algorithm
 //!
