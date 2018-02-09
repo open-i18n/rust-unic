@@ -62,40 +62,35 @@ impl Name {
             &Name::HangulSyllable(ch) => {
                 let mut len = PREFIX_HANGUL_SYLLABLE.len();
                 // FIXME: use decomposed jamo short names instead
-                len += self.num_of_hex_digits(ch as u32);
+                len += Name::number_of_hex_digits(ch);
                 len
             }
             &Name::CJKUnifiedIdeograph(ch) => {
                 let mut len = PREFIX_CJK_UNIFIED_IDEOGRAPH.len();
-                len += self.num_of_hex_digits(ch as u32);
+                len += Name::number_of_hex_digits(ch);
                 len
             }
             &Name::TangutIdieograph(ch) => {
                 let mut len = PREFIX_TANGUT_IDEOGRAPH.len();
-                len += self.num_of_hex_digits(ch as u32);
+                len += Name::number_of_hex_digits(ch);
                 len
             }
             &Name::NushuCharacter(ch) => {
                 let mut len = PREFIX_NUSHU_CHARACTER.len();
-                len += self.num_of_hex_digits(ch as u32);
+                len += Name::number_of_hex_digits(ch);
                 len
             }
             &Name::CJKCompatibilityIdeograph(ch) => {
                 let mut len = PREFIX_CJK_COMPATIBILITY_IDEOGRAPH.len();
-                len += self.num_of_hex_digits(ch as u32);
+                len += Name::number_of_hex_digits(ch);
                 len
             }
         }
     }
 
-    fn num_of_hex_digits(&self, code_point: u32) -> usize {
-        let mut num = code_point;
-        let mut digits = 0;
-        while num > 0 {
-            num /= 16;
-            digits += 1;
-        }
-        digits
+    #[inline(always)]
+    fn number_of_hex_digits(ch: char) -> usize {
+        (32 - u32::leading_zeros(ch as u32) as usize + 3) / 4
     }
 }
 
