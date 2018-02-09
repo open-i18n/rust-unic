@@ -25,11 +25,19 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Steps
 
-# Package all components
+# Check all components
 for component in $COMPONENTS; do
-    pkg_file="$component/src/pkg_info.rs"
-    if [ ! -f "$pkg_file" ]
-    then
-        echo "Missing pkg_file: $component"
+
+    # Require Documentation
+    lib_rs="$component/src/lib.rs"
+    if grep --quiet 'missing_docs' $lib_rs; then true; else
+        echo "$component: missing 'missing_docs' forbid/deny"
     fi
+
+    # Package Info
+    pkg_info_rs="$component/src/pkg_info.rs"
+    if [ ! -f "$pkg_info_rs" ]; then
+        echo "$component: missing 'pkg_info.rs'"
+    fi
+
 done
