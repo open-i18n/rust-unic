@@ -27,15 +27,20 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Check all components
 for component in $COMPONENTS; do
-
-    # Require Documentation
     lib_rs="$component/src/lib.rs"
+    pkg_info_rs="$component/src/pkg_info.rs"
+
+    # Require Documentation Enforcement
     if grep --quiet 'missing_docs' $lib_rs; then true; else
-        echo "$component: missing 'missing_docs' forbid/deny"
+        echo "$component: missing 'missing_docs' config"
+    fi
+
+    # Require Safety Enforcement
+    if grep --quiet 'unsafe_code' $lib_rs; then true; else
+        echo "$component: missing 'unsafe_code' config"
     fi
 
     # Package Info
-    pkg_info_rs="$component/src/pkg_info.rs"
     if [ ! -f "$pkg_info_rs" ]; then
         echo "$component: missing 'pkg_info.rs'"
     fi
