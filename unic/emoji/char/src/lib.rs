@@ -9,7 +9,7 @@
 // except according to those terms.
 
 #![forbid(bad_style, future_incompatible, missing_debug_implementations, unconditional_recursion,
-          unsafe_code, unused_imports)]
+          unsafe_code)]
 #![deny(missing_docs, unused)]
 
 //! # UNIC — Unicode Emoji — Emoji Character Properties

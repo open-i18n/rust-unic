@@ -10,7 +10,7 @@
 
 #![no_std]
 #![forbid(bad_style, future_incompatible, missing_debug_implementations, unconditional_recursion,
-          unsafe_code, unused, unused_imports)]
+          unsafe_code, unused)]
 #![deny(missing_docs)]
 
 //! # UNIC — UCD — Character Age

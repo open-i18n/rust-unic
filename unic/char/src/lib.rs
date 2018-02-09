@@ -13,7 +13,7 @@
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
 
 #![forbid(bad_style, future_incompatible, missing_debug_implementations, missing_docs,
-          unconditional_recursion, unused, unused_imports)]
+          unconditional_recursion, unused)]
 #![deny(unsafe_code)]
 
 pub extern crate unic_char_property as property;

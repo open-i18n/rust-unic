@@ -10,7 +10,7 @@
 // except according to those terms.
 
 #![forbid(bad_style, future_incompatible, missing_debug_implementations, missing_docs,
-          unconditional_recursion, unsafe_code, unused, unused_imports)]
+          unconditional_recursion, unsafe_code, unused)]
 
 //! # UNIC - IDNA - IDNA Mapping Table
 //!

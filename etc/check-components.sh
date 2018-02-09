@@ -29,6 +29,11 @@ for component in $COMPONENTS; do
     pkg_info_rs="$component/src/pkg_info.rs"
 
     # Require library attribute settings
+    # TODO:
+    #   warnings (all lints that are set to issue warnings)
+    #   missing-copy-implementations
+    #   unreachable-pub
+    #   unused-results
     ATTRS='
         bad_style
         future_incompatible
@@ -37,7 +42,6 @@ for component in $COMPONENTS; do
         unconditional_recursion
         unsafe_code
         unused
-        unused_imports
     '
     for attr in $ATTRS; do
         if grep --quiet "$attr" $lib_rs; then true; else
