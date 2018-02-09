@@ -9,6 +9,12 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+#![forbid(bad_style, future_incompatible, missing_docs, unconditional_recursion, unsafe_code,
+          unused_imports)]
+#![deny(unused)]
+// FIXME: Impl Debug
+#![allow(missing_debug_implementations)]
+
 //! # UNIC — Unicode Text Segmentation Algorithms
 //!
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
@@ -69,8 +75,6 @@
 //!     ]
 //! );
 //! ```
-
-#![forbid(unsafe_code, missing_docs)]
 
 extern crate unic_ucd_segment;
 

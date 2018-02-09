@@ -9,7 +9,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![forbid(unsafe_code, missing_docs)]
+#![forbid(bad_style, future_incompatible, missing_debug_implementations, missing_docs,
+          unconditional_recursion, unsafe_code, unused_imports)]
+#![deny(unused)]
 
 //! # UNIC — Unicode Normalization Forms
 //!

@@ -273,7 +273,7 @@ fn processing(domain: &str, flags: Flags, errors: &mut Vec<Error>) -> String {
 }
 
 /// Optional settings for processing and conversion algorithms.
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 pub struct Flags {
     /// *UseSTD3ASCIIRules* flag.
     ///

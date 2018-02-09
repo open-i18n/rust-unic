@@ -9,7 +9,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![forbid(unsafe_code, missing_docs)]
+#![forbid(future_incompatible, missing_debug_implementations, missing_docs,
+          unconditional_recursion, unsafe_code, unused, unused_imports)]
+#![deny(bad_style)]
 
 //! # UNIC — Unicode Bidirectional Algorithm
 //!

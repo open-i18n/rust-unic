@@ -9,8 +9,9 @@
 // except according to those terms.
 
 #![no_std]
-#![forbid(unsafe_code, unconditional_recursion)]
-#![deny(missing_docs)]
+#![forbid(future_incompatible, missing_debug_implementations, unconditional_recursion,
+          unsafe_code, unused_imports)]
+#![deny(bad_style, missing_docs, unused)]
 
 //! # UNIC — UCD — Segmentation Properties"
 //!

@@ -34,14 +34,14 @@ fn canonical_sort(comb: &mut VecDeque<(char, CanonicalCombiningClass)>) {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 enum DecompositionType {
     Canonical,
     Compatible,
 }
 
 /// External iterator for a string decomposition's characters.
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Decompositions<I> {
     kind: DecompositionType,
     iter: I,

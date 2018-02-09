@@ -9,7 +9,9 @@
 // except according to those terms.
 
 #![no_std]
-#![forbid(unsafe_code)]
+#![forbid(bad_style, future_incompatible, missing_debug_implementations, unconditional_recursion,
+          unsafe_code, unused_imports)]
+#![deny(unused)]
 // FIXME: Add docs
 #![allow(missing_docs)]
 
