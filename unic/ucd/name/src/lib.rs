@@ -9,6 +9,9 @@
 // except according to those terms.
 
 #![no_std]
+#![forbid(unsafe_code)]
+// FIXME: Add docs
+#![allow(missing_docs)]
 
 extern crate unic_char_property;
 extern crate unic_ucd_version;
