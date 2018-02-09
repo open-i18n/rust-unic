@@ -1,8 +1,8 @@
-array_layout = "Block"
-array_width = 80
-fn_args_layout = "Block"
-fn_brace_style = "SameLineWhere"
-fn_call_style = "Block"
-generics_indent = "Block"
+brace_style = "SameLineWhere"
 imports_indent = "Block"
 imports_layout = "HorizontalVertical"
+indent_style = "Block"
+max_width = 100
+reorder_imported_names = true
+reorder_imports = true
+reorder_imports_in_group = true
