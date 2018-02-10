@@ -61,9 +61,7 @@ fn main() {
     ]);
     */
 
-    // TODO: Re-enable after rust-1.20.0
-    //string.chars().for_each(|chr| {
-    for chr in string.chars() {
+    string.chars().for_each(|chr| {
         let name = Name::of(chr)
             .map(|n| n.to_string())
             .unwrap_or("<none>".to_owned());
@@ -74,7 +72,7 @@ fn main() {
             l   -> &name,
             l   -> &GeneralCategory::of(chr).long_name()
         ]);
-    }
+    });
 
     table.printstd();
 }

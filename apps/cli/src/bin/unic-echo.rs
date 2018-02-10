@@ -59,13 +59,12 @@ unic_arg_enum!{
         // Braces Escape All
         BracesEscapeAll,
         Js6EscapeAll,
-        RustEscapeAll
-        /* TODO: Re-enable after rust-1.20.0
+        RustEscapeAll,
+
         // Braces Escape Control
         BracesEscapeControl,
         Js6EscapeControl,
         RustEscapeControl
-        */
     }
 }
 
@@ -184,13 +183,12 @@ fn run() -> Result<()> {
         OutputFormat::BracesEscapeAll
         | OutputFormat::Js6EscapeAll
         | OutputFormat::RustEscapeAll => writers::write_with_all_braces_escape(&mut output, chars)?,
-        /* TODO: Re-enable after rust-1.20.0
-        OutputFormat::BracesEscapeControl |
-        OutputFormat::Js6EscapeControl |
-        OutputFormat::RustEscapeControl => {
+
+        OutputFormat::BracesEscapeControl
+        | OutputFormat::Js6EscapeControl
+        | OutputFormat::RustEscapeControl => {
             writers::write_with_control_braces_escape(&mut output, chars)?
         }
-        */
     };
 
     if !matches.is_present("no_newline") {

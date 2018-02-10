@@ -13,7 +13,7 @@ use std::str::Chars;
 
 use super::Result;
 
-// TODO: Replace with char::MAX_UTF*_LEN when available.
+// TODO(FUTURE_RUST): Replace with char::MAX_UTF*_LEN when available.
 const MAX_UTF8_LEN: usize = 4; // x u8 per char
 const MAX_UTF16_LEN: usize = 2; // x u16 per char
 
@@ -79,7 +79,6 @@ pub fn write_with_control_n_unicode_braces_escape<'a, W: io::Write>(
     Ok(())
 }
 
-/* TODO: Re-enable after rust-1.20.0
 pub fn write_with_control_braces_escape<'a, W: io::Write>(
     output: &mut W,
     chars: Chars<'a>,
@@ -91,7 +90,6 @@ pub fn write_with_control_braces_escape<'a, W: io::Write>(
     write!(output, "\"")?;
     Ok(())
 }
-*/
 
 pub fn write_with_all_braces_escape<'a, W: io::Write>(
     output: &mut W,
