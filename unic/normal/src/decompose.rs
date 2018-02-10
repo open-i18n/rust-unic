@@ -13,7 +13,6 @@ use std::collections::VecDeque;
 use std::fmt::{self, Write};
 
 use unic_ucd_normal::{decompose_canonical, decompose_compatible, CanonicalCombiningClass};
-use unic_ucd_normal::canonical_combining_class::values as ccc;
 
 // Helper functions used for Unicode normalization
 fn canonical_sort(comb: &mut VecDeque<(char, CanonicalCombiningClass)>) {
@@ -77,7 +76,7 @@ impl<I: Iterator<Item = char>> Iterator for Decompositions<I> {
         use self::DecompositionType::*;
 
         match self.buffer.front() {
-            Some(&(c, ccc::NotReordered)) => {
+            Some(&(c, CanonicalCombiningClass::NotReordered)) => {
                 self.sorted = false;
                 self.buffer.pop_front();
                 return Some(c);
@@ -122,7 +121,7 @@ impl<I: Iterator<Item = char>> Iterator for Decompositions<I> {
             None
         } else {
             match self.buffer.pop_front() {
-                Some((c, ccc::NotReordered)) => {
+                Some((c, CanonicalCombiningClass::NotReordered)) => {
                     self.sorted = false;
                     Some(c)
                 }
