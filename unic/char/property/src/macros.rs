@@ -135,8 +135,8 @@ macro_rules! char_property {
         char_property! {
             __impl FromStr for $prop_name;
             $(
-                $variant_abbr => $prop_name::$variant_name;
-                $variant_long => $prop_name::$variant_name;
+                stringify!($variant_abbr) => $prop_name::$variant_name;
+                stringify!($variant_long) => $prop_name::$variant_name;
             )*
         }
 
@@ -216,15 +216,15 @@ macro_rules! char_property {
         char_property! {
             __impl FromStr for $prop_name;
             // Yes
-            y => $prop_name(true);
-            yes => $prop_name(true);
-            t => $prop_name(true);
-            true => $prop_name(true);
+            "y" => $prop_name(true);
+            "yes" => $prop_name(true);
+            "t" => $prop_name(true);
+            "true" => $prop_name(true);
             // No
-            n => $prop_name(false);
-            no => $prop_name(false);
-            f => $prop_name(false);
-            false => $prop_name(false);
+            "n" => $prop_name(false);
+            "no" => $prop_name(false);
+            "f" => $prop_name(false);
+            "false" => $prop_name(false);
         }
 
         char_property! {
@@ -268,7 +268,7 @@ macro_rules! char_property {
 
     (
         __impl FromStr for $prop_name:ident;
-        $( $id:ident => $value:expr; )*
+        $( $id:expr => $value:expr; )*
     ) => {
         #[allow(unreachable_patterns)]
         impl $crate::__str::FromStr for $prop_name {
@@ -335,11 +335,8 @@ macro_rules! char_property {
 
 
                 match s {
-                    // This stringify! should be moved out of this block to the call site. See the
-                    // test failure https://travis-ci.org/behnam/rust-unic/builds/275758001 for why
-                    // this is done here. This can be reverted at 1.20 adoption time.
-                    $( stringify!($id) => Ok($value), )*
-                    $( s if str_eq_ignore_ascii_case(s, stringify!($id)) => Ok($value), )*
+                    $( $id => Ok($value), )*
+                    $( s if str_eq_ignore_ascii_case(s, $id) => Ok($value), )*
                     _ => Err(()),
                 }
             }
