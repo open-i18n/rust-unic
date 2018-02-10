@@ -20,7 +20,7 @@ use std::cmp;
 use unic_ucd_segment::GraphemeClusterBreak as GCB;
 
 /// External iterator for grapheme clusters and byte offsets.
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct GraphemeIndices<'a> {
     start_offset: usize,
     iter: Graphemes<'a>,
@@ -90,7 +90,7 @@ impl<'a> DoubleEndedIterator for GraphemeIndices<'a> {
 
 /// External iterator for a string's
 /// [grapheme clusters](https://www.unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries).
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Graphemes<'a> {
     string: &'a str,
     cursor: GraphemeCursor,
@@ -175,7 +175,7 @@ impl<'a> DoubleEndedIterator for Graphemes<'a> {
 
 // maybe unify with PairResult?
 // An enum describing information about a potential boundary.
-#[derive(PartialEq, Eq, Clone)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 enum GraphemeState {
     // No information is known.
     Unknown,
@@ -192,7 +192,7 @@ enum GraphemeState {
 }
 
 /// Cursor-based segmenter for grapheme clusters.
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct GraphemeCursor {
     /// Current cursor position.
     offset: usize,
@@ -228,7 +228,7 @@ pub struct GraphemeCursor {
 
 /// An error return indicating that not enough content was available in the
 /// provided chunk to satisfy the query, and that more content must be provided.
-#[derive(PartialEq, Eq, Debug)]
+#[derive(Debug, Eq, PartialEq)]
 pub enum GraphemeIncomplete {
     /// More pre-context is needed. The caller should call `provide_context`
     /// with a chunk ending at the offset given, then retry the query. This
@@ -251,7 +251,7 @@ pub enum GraphemeIncomplete {
 }
 
 // An enum describing the result from lookup of a pair of categories.
-#[derive(PartialEq, Eq)]
+#[derive(Eq, PartialEq)]
 enum PairResult {
     /// definitely not a break
     NotBreak,

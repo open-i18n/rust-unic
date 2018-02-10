@@ -24,6 +24,7 @@ use unic_ucd_segment::WordBreak as WB;
 /// boundaries](https://www.unicode.org/reports/tr29/#Word_Boundaries), contain any characters with
 /// the [Alphabetic](http://unicode.org/reports/tr44/#Alphabetic) property, or with
 /// [General_Category=Number](http://unicode.org/reports/tr44/#General_Category_Values).
+#[derive(Debug)]
 pub struct Words<'a> {
     inner: Filter<WordBounds<'a>, fn(&&str) -> bool>,
 }
@@ -56,7 +57,7 @@ impl<'a> Words<'a> {
 
 /// External iterator for a string's
 /// [word boundaries](https://www.unicode.org/reports/tr29/#Word_Boundaries).
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct WordBounds<'a> {
     string: &'a str,
     cat: Option<WB>,
@@ -64,7 +65,7 @@ pub struct WordBounds<'a> {
 }
 
 /// External iterator for word boundaries and byte offsets.
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct WordBoundIndices<'a> {
     start_offset: usize,
     iter: WordBounds<'a>,
@@ -125,7 +126,7 @@ impl<'a> DoubleEndedIterator for WordBoundIndices<'a> {
 }
 
 // state machine for word boundary rules
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
 enum WordBoundsState {
     Start,
     Letter,
@@ -140,7 +141,7 @@ enum WordBoundsState {
 }
 
 // subtypes for FormatExtend state in WordBoundsState
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
 enum FormatExtendType {
     AcceptAny,
     AcceptNone,
@@ -150,7 +151,7 @@ enum FormatExtendType {
     RequireNumeric,
 }
 
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
 enum RegionalState {
     Half,
     Full,
