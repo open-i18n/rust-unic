@@ -36,12 +36,7 @@ pub trait PartialCharProperty: Copy {
 /// A Character Property defined on all characters.
 ///
 /// Examples: `Age`, `Name`, `General_Category`, `Bidi_Class`
-// Because of rustc bug, we cannot rely on inheritance for the moment.
-// See: <https://github.com/rust-lang/rust/issues/43777>
-// See: <https://github.com/rust-lang/rust/issues/43784>
-// TODO: Drop extra super-traits after the bugs are fixed.
-//pub trait TotalCharProperty: PartialCharProperty + Default {
-pub trait TotalCharProperty: PartialCharProperty + Copy + Default {
+pub trait TotalCharProperty: PartialCharProperty + Default {
     /// The property value for the character.
     fn of(ch: char) -> Self;
 }
