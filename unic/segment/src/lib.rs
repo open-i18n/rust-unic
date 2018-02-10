@@ -9,10 +9,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![forbid(bad_style, future_incompatible, missing_docs, unconditional_recursion, unsafe_code)]
+#![forbid(bad_style, future_incompatible, missing_docs, unconditional_recursion, unsafe_code,
+          missing_debug_implementations)]
 #![deny(unused)]
-// FIXME: Impl Debug
-#![allow(missing_debug_implementations)]
 
 //! # UNIC — Unicode Text Segmentation Algorithms
 //!

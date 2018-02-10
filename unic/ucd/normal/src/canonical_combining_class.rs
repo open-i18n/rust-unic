@@ -50,62 +50,6 @@ impl NumericCharProperty<u8> for CanonicalCombiningClass {
     }
 }
 
-// TODO: Once we fully adopt 1.20 change these to associated consts on CanonicalCombiningClass
-/// `Canonical_Combining_Class` values by their name
-#[allow(non_upper_case_globals)]
-pub mod values {
-    use super::CanonicalCombiningClass as CCC;
-
-    /// Spacing and enclosing marks; also many vowel and consonant signs, even if nonspacing
-    pub const NotReordered: CCC = CCC(0);
-    /// Marks which overlay a base letter or symbol
-    pub const Overlay: CCC = CCC(1);
-    /// Diacritic nukta marks in Brahmi-derived scripts
-    pub const Nukta: CCC = CCC(7);
-    /// Hiragana/Katakana voicing marks
-    pub const KanaVoicing: CCC = CCC(8);
-    /// Viramas
-    pub const Virama: CCC = CCC(9);
-    /// Marks attached at the bottom left
-    pub const AttatchedBelowLeft: CCC = CCC(200);
-    /// Marks attached directly below
-    pub const AttachedBelow: CCC = CCC(202);
-    /// Marks attached at the bottom right
-    pub const AttachedBelowRight: CCC = CCC(204);
-    /// Marks attached to the left
-    pub const AttachedLeft: CCC = CCC(208);
-    /// Marks attached to the right
-    pub const AttachedRight: CCC = CCC(210);
-    /// Marks attached at the top left
-    pub const AttachedAboveLeft: CCC = CCC(212);
-    /// Marks attached directly above
-    pub const AttatchedAbove: CCC = CCC(214);
-    /// Marks attached at the top right
-    pub const AttatchedAboveRight: CCC = CCC(216);
-    /// Distinct marks at the bottom left
-    pub const BelowLeft: CCC = CCC(218);
-    /// Distinct marks directly below
-    pub const Below: CCC = CCC(220);
-    /// Distinct marks at the bottom right
-    pub const BelowRight: CCC = CCC(222);
-    /// Distinct marks to the left
-    pub const Left: CCC = CCC(224);
-    /// Distinct marks to the right
-    pub const Right: CCC = CCC(226);
-    /// Distinct marks at the top left
-    pub const AboveLeft: CCC = CCC(228);
-    /// Distinct marks directly above
-    pub const Above: CCC = CCC(230);
-    /// Distinct marks at the top right
-    pub const AboveRight: CCC = CCC(232);
-    /// Distinct marks subtending two bases
-    pub const DoubleBelow: CCC = CCC(233);
-    /// Distinct marks extending above two bases
-    pub const DoubleAbove: CCC = CCC(234);
-    /// Greek iota subscript only
-    pub const IotaSubscript: CCC = CCC(240);
-}
-
 mod data {
     use super::CanonicalCombiningClass;
     use unic_char_property::tables::CharDataTable;
@@ -113,11 +57,64 @@ mod data {
         include!("../tables/canonical_combining_class_values.rsv");
 }
 
+#[allow(non_upper_case_globals)]
 impl CanonicalCombiningClass {
+
     /// Find the character `Canonical_Combining_Class` property value.
     pub fn of(ch: char) -> CanonicalCombiningClass {
         data::CANONICAL_COMBINING_CLASS_VALUES.find_or_default(ch)
     }
+
+    // == Named values ==
+    // TODO(DOCS): Add reference.
+    /// Spacing and enclosing marks; also many vowel and consonant signs, even if nonspacing
+    pub const NotReordered: CanonicalCombiningClass = CanonicalCombiningClass(0);
+    /// Marks which overlay a base letter or symbol
+    pub const Overlay: CanonicalCombiningClass = CanonicalCombiningClass(1);
+    /// Diacritic nukta marks in Brahmi-derived scripts
+    pub const Nukta: CanonicalCombiningClass = CanonicalCombiningClass(7);
+    /// Hiragana/Katakana voicing marks
+    pub const KanaVoicing: CanonicalCombiningClass = CanonicalCombiningClass(8);
+    /// Viramas
+    pub const Virama: CanonicalCombiningClass = CanonicalCombiningClass(9);
+    /// Marks attached at the bottom left
+    pub const AttatchedBelowLeft: CanonicalCombiningClass = CanonicalCombiningClass(200);
+    /// Marks attached directly below
+    pub const AttachedBelow: CanonicalCombiningClass = CanonicalCombiningClass(202);
+    /// Marks attached at the bottom right
+    pub const AttachedBelowRight: CanonicalCombiningClass = CanonicalCombiningClass(204);
+    /// Marks attached to the left
+    pub const AttachedLeft: CanonicalCombiningClass = CanonicalCombiningClass(208);
+    /// Marks attached to the right
+    pub const AttachedRight: CanonicalCombiningClass = CanonicalCombiningClass(210);
+    /// Marks attached at the top left
+    pub const AttachedAboveLeft: CanonicalCombiningClass = CanonicalCombiningClass(212);
+    /// Marks attached directly above
+    pub const AttatchedAbove: CanonicalCombiningClass = CanonicalCombiningClass(214);
+    /// Marks attached at the top right
+    pub const AttatchedAboveRight: CanonicalCombiningClass = CanonicalCombiningClass(216);
+    /// Distinct marks at the bottom left
+    pub const BelowLeft: CanonicalCombiningClass = CanonicalCombiningClass(218);
+    /// Distinct marks directly below
+    pub const Below: CanonicalCombiningClass = CanonicalCombiningClass(220);
+    /// Distinct marks at the bottom right
+    pub const BelowRight: CanonicalCombiningClass = CanonicalCombiningClass(222);
+    /// Distinct marks to the left
+    pub const Left: CanonicalCombiningClass = CanonicalCombiningClass(224);
+    /// Distinct marks to the right
+    pub const Right: CanonicalCombiningClass = CanonicalCombiningClass(226);
+    /// Distinct marks at the top left
+    pub const AboveLeft: CanonicalCombiningClass = CanonicalCombiningClass(228);
+    /// Distinct marks directly above
+    pub const Above: CanonicalCombiningClass = CanonicalCombiningClass(230);
+    /// Distinct marks at the top right
+    pub const AboveRight: CanonicalCombiningClass = CanonicalCombiningClass(232);
+    /// Distinct marks subtending two bases
+    pub const DoubleBelow: CanonicalCombiningClass = CanonicalCombiningClass(233);
+    /// Distinct marks extending above two bases
+    pub const DoubleAbove: CanonicalCombiningClass = CanonicalCombiningClass(234);
+    /// Greek iota subscript only
+    pub const IotaSubscript: CanonicalCombiningClass = CanonicalCombiningClass(240);
 }
 
 impl fmt::Display for CanonicalCombiningClass {
@@ -146,35 +143,34 @@ impl CanonicalCombiningClass {
 #[cfg(test)]
 mod tests {
     use super::CanonicalCombiningClass as CCC;
-    use super::values as ccc;
 
     #[test]
     fn test_ascii() {
-        assert_eq!(CCC::of('\u{0000}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{0040}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{0041}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{0062}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{007F}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{0000}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{0040}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{0041}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{0062}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{007F}'), CCC::NotReordered);
     }
 
     #[test]
     fn test_bmp() {
         // Combining Diacritical Marks
-        assert_eq!(CCC::of('\u{0300}'), ccc::Above);
-        assert_eq!(CCC::of('\u{0314}'), ccc::Above);
-        assert_eq!(CCC::of('\u{0315}'), ccc::AboveRight);
-        assert_eq!(CCC::of('\u{0316}'), ccc::Below);
-        assert_eq!(CCC::of('\u{0319}'), ccc::Below);
+        assert_eq!(CCC::of('\u{0300}'), CCC::Above);
+        assert_eq!(CCC::of('\u{0314}'), CCC::Above);
+        assert_eq!(CCC::of('\u{0315}'), CCC::AboveRight);
+        assert_eq!(CCC::of('\u{0316}'), CCC::Below);
+        assert_eq!(CCC::of('\u{0319}'), CCC::Below);
 
         // Hebrew
-        assert_eq!(CCC::of('\u{0590}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{05D0}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{05D1}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{05FF}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{0590}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{05D0}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{05D1}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{05FF}'), CCC::NotReordered);
 
         // Arabic
-        assert_eq!(CCC::of('\u{0600}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{0627}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{0600}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{0627}'), CCC::NotReordered);
         assert_eq!(CCC::of('\u{064B}'), CCC(27));
         assert_eq!(CCC::of('\u{064C}'), CCC(28));
         assert_eq!(CCC::of('\u{064D}'), CCC(29));
@@ -184,70 +180,70 @@ mod tests {
         assert_eq!(CCC::of('\u{0651}'), CCC(33));
         assert_eq!(CCC::of('\u{0652}'), CCC(34));
 
-        assert_eq!(CCC::of('\u{07BF}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{07C0}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{085F}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{0860}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{0870}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{089F}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{08A0}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{089F}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{08FF}'), ccc::Above);
+        assert_eq!(CCC::of('\u{07BF}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{07C0}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{085F}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{0860}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{0870}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{089F}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{08A0}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{089F}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{08FF}'), CCC::Above);
 
         //  Currency Symbols
-        assert_eq!(CCC::of('\u{20A0}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{20CF}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{20A0}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{20CF}'), CCC::NotReordered);
 
         // Arabic Presentation Forms
-        assert_eq!(CCC::of('\u{FB1D}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{FB4F}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{FB50}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{FDCF}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{FDF0}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{FDFF}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{FE70}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{FEFE}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{FEFF}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{FB1D}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{FB4F}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{FB50}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{FDCF}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{FDF0}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{FDFF}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{FE70}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{FEFE}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{FEFF}'), CCC::NotReordered);
 
         // noncharacters
-        assert_eq!(CCC::of('\u{FDD0}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{FDD1}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{FDEE}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{FDEF}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{FFFE}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{FFFF}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{FDD0}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{FDD1}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{FDEE}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{FDEF}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{FFFE}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{FFFF}'), CCC::NotReordered);
     }
 
     #[test]
     fn test_smp() {
-        assert_eq!(CCC::of('\u{10000}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{101fc}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{101fd}'), ccc::Below);
-        assert_eq!(CCC::of('\u{101fe}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{10000}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{101fc}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{101fd}'), CCC::Below);
+        assert_eq!(CCC::of('\u{101fe}'), CCC::NotReordered);
 
-        assert_eq!(CCC::of('\u{1e000}'), ccc::Above);
+        assert_eq!(CCC::of('\u{1e000}'), CCC::Above);
 
-        assert_eq!(CCC::of('\u{1e949}'), ccc::Above);
+        assert_eq!(CCC::of('\u{1e949}'), CCC::Above);
         assert_eq!(CCC::of('\u{1e94a}'), CCC(7));
-        assert_eq!(CCC::of('\u{1e94b}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{1e94b}'), CCC::NotReordered);
 
-        assert_eq!(CCC::of('\u{1efff}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{1efff}'), CCC::NotReordered);
 
         // noncharacters
-        assert_eq!(CCC::of('\u{1fffe}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{1ffff}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{1fffe}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{1ffff}'), CCC::NotReordered);
     }
 
     #[test]
     fn test_unassigned_planes() {
-        assert_eq!(CCC::of('\u{30000}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{40000}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{50000}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{60000}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{70000}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{80000}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{90000}'), ccc::NotReordered);
-        assert_eq!(CCC::of('\u{a0000}'), ccc::NotReordered);
+        assert_eq!(CCC::of('\u{30000}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{40000}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{50000}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{60000}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{70000}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{80000}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{90000}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{a0000}'), CCC::NotReordered);
     }
 
     #[test]

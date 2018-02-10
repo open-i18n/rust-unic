@@ -93,3 +93,46 @@ Please consider running through these steps before submitting a PR for UNIC:
 7.  For pre-`1.0.0` development, we try to have a new release after each new
     Rust release. Therefore, there's no need to make new releases after each
     major or minor component, and as a result, no reason to bump verion in PRs.
+
+## Miscellaneous
+
+### TODO/FIXME Tags
+
+Use the `FIXME` comment tag to mark something that's broken. The only data after
+a `FIXME` tag would be the detail of what's broken.
+
+Use the `TODO` comment tag to describe what needs to be done in the future. You
+can also mark different kinds of `TODO` items, as shown below.
+
+If no metadata, leave the tag empty.
+
+```rust
+// TODO: Add more tests for this and that case.
+```
+
+Mark GitHub issues/pulls with the `GH-` prefix, which is more portable/readable
+that the previous `#nnn` format.
+
+```rust
+// TODO(GH-205): Write more on FIXME/TODO tags.
+```
+
+For work depending or waiting on updates to Rust, mark them with:
+-   `MIN_RUST_VERSION`, if the feature is already stable;
+-   `FUTURE_RUST`, if the feature is yet unstable (nightly-only).
+
+```rust
+// TODO(MIN_RUST_VERSION): Drop this after Rust 1.23.0.
+...
+
+// TODO(FUTURE_RUST): Replace with char::MAX_UTF*_LEN when available.
+...
+```
+
+If no other context/metadata, but a specific person is expected to follow-up,
+add their username.
+
+```rust
+// TODO(behnam): Write more on FIXME/TODO tags.
+```
+

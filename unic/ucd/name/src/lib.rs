@@ -12,7 +12,7 @@
 #![forbid(bad_style, future_incompatible, missing_debug_implementations, unconditional_recursion,
           unsafe_code)]
 #![deny(unused)]
-// FIXME: Add docs
+// TODO(GH-171): Add docs
 #![allow(missing_docs)]
 
 extern crate unic_char_property;

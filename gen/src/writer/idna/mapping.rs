@@ -29,7 +29,7 @@ pub fn emit_idna_mapping(dir: &Path) {
             entry.status,
             "Mapped" | "Deviation" | "DisallowedStd3Mapped"
         ) {
-            // TODO: use str::escape_unicode when stable
+            // TODO(NIGHTLY_RUST): Use str::escape_unicode()
             write!(f, "(\"")?;
             if let Some(ref s) = entry.mapping {
                 for ch in s.chars() {

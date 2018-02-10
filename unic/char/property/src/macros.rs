@@ -135,8 +135,8 @@ macro_rules! char_property {
         char_property! {
             __impl FromStr for $prop_name;
             $(
-                $variant_abbr => $prop_name::$variant_name;
-                $variant_long => $prop_name::$variant_name;
+                stringify!($variant_abbr) => $prop_name::$variant_name;
+                stringify!($variant_long) => $prop_name::$variant_name;
             )*
         }
 
@@ -216,15 +216,15 @@ macro_rules! char_property {
         char_property! {
             __impl FromStr for $prop_name;
             // Yes
-            y => $prop_name(true);
-            yes => $prop_name(true);
-            t => $prop_name(true);
-            true => $prop_name(true);
+            "y" => $prop_name(true);
+            "yes" => $prop_name(true);
+            "t" => $prop_name(true);
+            "true" => $prop_name(true);
             // No
-            n => $prop_name(false);
-            no => $prop_name(false);
-            f => $prop_name(false);
-            false => $prop_name(false);
+            "n" => $prop_name(false);
+            "no" => $prop_name(false);
+            "f" => $prop_name(false);
+            "false" => $prop_name(false);
         }
 
         char_property! {
@@ -268,7 +268,7 @@ macro_rules! char_property {
 
     (
         __impl FromStr for $prop_name:ident;
-        $( $id:ident => $value:expr; )*
+        $( $id:expr => $value:expr; )*
     ) => {
         #[allow(unreachable_patterns)]
         impl $crate::__str::FromStr for $prop_name {
@@ -277,7 +277,8 @@ macro_rules! char_property {
                 // This is a temporary solution to enable case-insensitive matching under `no_std`
                 // mode. Work is in progress to provide these functionalities under `libcore`.
                 //
-                // TODO: Drop whenever case-insensitive str matching is available in `libcore`.
+                // TODO(MIN_RUST_VERSION): Drop whenever case-insensitive str matching is available in
+                // `libcore`, and without `AsciiExt`.
                 //
                 // See: <https://github.com/rust-lang/rust/pull/44042>
                 pub fn str_eq_ignore_ascii_case(this: &str, that: &str) -> bool {
@@ -288,7 +289,7 @@ macro_rules! char_property {
                 }
 
                 // From: <https://github.com/rust-lang/rust/.../src/libcore/num/mod.rs#L3473>
-                // TODO: Drop after rust 1.21.0.
+                // TODO(MIN_RUST_VERSION): Drop after rust 1.23.0.
                 static ASCII_LOWERCASE_MAP: [u8; 256] = [
                     0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
                     0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f,
@@ -327,7 +328,7 @@ macro_rules! char_property {
                 ];
 
                 // From: <https://github.com/rust-lang/rust/../src/libcore/num/mod.rs#L2321>
-                // TODO: Drop after rust 1.21.0.
+                // TODO(MIN_RUST_VERSION): Drop after rust 1.23.0.
                 #[inline]
                 pub fn u8_to_ascii_lowercase(this: u8) -> u8 {
                     ASCII_LOWERCASE_MAP[this as usize]
@@ -335,11 +336,8 @@ macro_rules! char_property {
 
 
                 match s {
-                    // This stringify! should be moved out of this block to the call site. See the
-                    // test failure https://travis-ci.org/behnam/rust-unic/builds/275758001 for why
-                    // this is done here. This can be reverted at 1.20 adoption time.
-                    $( stringify!($id) => Ok($value), )*
-                    $( s if str_eq_ignore_ascii_case(s, stringify!($id)) => Ok($value), )*
+                    $( $id => Ok($value), )*
+                    $( s if str_eq_ignore_ascii_case(s, $id) => Ok($value), )*
                     _ => Err(()),
                 }
             }

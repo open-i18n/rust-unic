@@ -67,20 +67,19 @@ fn test_decomposition_type_conformance() {
             let exp_dt = Some(fields[1].parse().expect("Invalid Decomposition Type"));
 
             for codepoint in input_range {
-                // TODO: We should be safe to use from_u32_unsafe
-                if let Some(char) = char::from_u32(codepoint) {
-                    let actual_dt = DT::of(char);
+                if let Some(ch) = char::from_u32(codepoint) {
+                    let actual_dt = DT::of(ch);
                     if actual_dt != exp_dt {
                         failures.push(Fail {
                             line_num: Some(line_idx + 1),
-                            char,
+                            char: ch,
                             exp_dt,
                             actual_dt,
                         });
                     } else {
                         passed_num += 1;
                     }
-                    to_consider.remove(&char);
+                    to_consider.remove(&ch);
                 }
             }
         }
