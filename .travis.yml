@@ -46,10 +46,9 @@ script:
 
 # TODO: - rustdoc --test README.md -L target/debug -L target/debug/deps
 
-# TODO: Enable auto update for gh-pages
-#after_success: |
-#  cargo doc && \
-#  echo '<meta http-equiv="refresh" content="0;url=YOURLIBNAME/index.html">' > target/doc/index.html && \
-#  sudo pip install ghp-import && \
-#  ghp-import -n target/doc && \
-#  git push -qf https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages
+after_success:
+  # upload gh-pages documentation
+  - test "$TRAVIS_RUST_VERSION" != "nightly" ||
+    (cargo doc --verbose --all --all-features &&
+     cargo install cargo-travis &&
+     cargo doc-upload --branch master)
