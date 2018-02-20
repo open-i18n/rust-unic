@@ -46,6 +46,7 @@ mod data {
 impl Mapping {
     /// Get Mapping status of the character.
     pub fn of(ch: char) -> Mapping {
+        use unic_char_property::tables::TCharDataTable;
         data::MAPPING.find(ch).expect("Table is missing value")
     }
 }

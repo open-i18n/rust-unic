@@ -27,6 +27,7 @@ pub enum Name {
 #[cfg_attr(feature = "clippy", allow(len_without_is_empty))]
 impl Name {
     pub fn of(ch: char) -> Option<Name> {
+        use unic_char_property::tables::TCharDataTable;
         match ch {
             '\u{AC00}'...'\u{D7A3}' => Some(Name::NR1(ch)),
             '\u{3400}'...'\u{4DB5}'

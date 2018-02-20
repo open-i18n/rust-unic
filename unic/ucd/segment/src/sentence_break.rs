@@ -257,7 +257,8 @@ mod data {
 impl SentenceBreak {
     /// Find the character *Sentence_Break* property value.
     pub fn of(ch: char) -> SentenceBreak {
-        data::SENTENCE_BREAK_TABLE.find_or_default(ch)
+        use unic_char_property::tables::TCharDataTable;
+        data::SENTENCE_BREAK_TABLE.find(ch).unwrap_or_default()
     }
 }
 

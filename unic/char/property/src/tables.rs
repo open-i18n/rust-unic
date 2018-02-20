@@ -12,6 +12,12 @@
 
 use unic_char_range::CharRange;
 
+pub trait TCharDataTable {
+    type Item;
+    fn contains(&self, needle: char) -> bool;
+    fn find(&self, needle: char) -> Option<Self::Item>;
+}
+
 /// A mapping from characters to some associated data.
 ///
 /// For the set case, use `()` as the associated value.
@@ -31,7 +37,7 @@ impl<V> Default for CharDataTable<V> {
 
 impl<V> CharDataTable<V> {
     /// Does this table contain a mapping for a character?
-    pub fn contains(&self, needle: char) -> bool {
+    pub fn contains_impl(&self, needle: char) -> bool {
         match *self {
             CharDataTable::Direct(table) => {
                 table.binary_search_by_key(&needle, |&(k, _)| k).is_ok()
@@ -45,7 +51,7 @@ impl<V> CharDataTable<V> {
 
 impl<V: Copy> CharDataTable<V> {
     /// Find the associated data for a character in this table.
-    pub fn find(&self, needle: char) -> Option<V> {
+    pub fn find_impl(&self, needle: char) -> Option<V> {
         match *self {
             CharDataTable::Direct(table) => table
                 .binary_search_by_key(&needle, |&(k, _)| k)
@@ -59,10 +65,13 @@ impl<V: Copy> CharDataTable<V> {
     }
 }
 
-impl<V: Copy + Default> CharDataTable<V> {
-    /// Find the associated data for a character in this table, or the default value if not entered.
-    pub fn find_or_default(&self, needle: char) -> V {
-        self.find(needle).unwrap_or_else(Default::default)
+impl<V: Copy> TCharDataTable for CharDataTable<V> {
+    type Item = V;
+    fn contains(&self, needle: char) -> bool {
+        self.contains_impl(needle)
+    }
+    fn find(&self, needle: char) -> Option<Self::Item> {
+        self.find_impl(needle)
     }
 }
 

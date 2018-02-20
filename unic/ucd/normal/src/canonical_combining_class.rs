@@ -62,7 +62,8 @@ impl CanonicalCombiningClass {
 
     /// Find the character `Canonical_Combining_Class` property value.
     pub fn of(ch: char) -> CanonicalCombiningClass {
-        data::CANONICAL_COMBINING_CLASS_VALUES.find_or_default(ch)
+        use unic_char_property::tables::TCharDataTable;
+        data::CANONICAL_COMBINING_CLASS_VALUES.find(ch).unwrap_or_default()
     }
 
     // == Named values ==

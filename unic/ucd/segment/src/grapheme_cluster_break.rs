@@ -342,7 +342,8 @@ mod data {
 impl GraphemeClusterBreak {
     /// Find the character *Grapheme_Cluster_Break* property value.
     pub fn of(ch: char) -> GraphemeClusterBreak {
-        data::GRAPHEME_CLUSTER_BREAK_TABLE.find_or_default(ch)
+        use unic_char_property::tables::TCharDataTable;
+        data::GRAPHEME_CLUSTER_BREAK_TABLE.find(ch).unwrap_or_default()
     }
 }
 
