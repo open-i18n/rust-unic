@@ -10,6 +10,8 @@
 
 //! Character data tables used in UNIC.
 
+use core::ops::Range;
+
 use unic_char_range::CharRange;
 
 pub trait TCharDataTable {
@@ -25,7 +27,9 @@ impl<V: 'static> Default for CharDataTableDirect<V> {
 impl<V: 'static + Copy> TCharDataTable for CharDataTableDirect<V> {
     type Item = V;
     fn contains(&self, needle: char) -> bool {
-        self.0.binary_search_by_key(&needle, |&(k, _)| k).is_ok()
+        self.0
+            .binary_search_by_key(&needle, |&(k, _)| k)
+            .is_ok()
     }
     fn find(&self, needle: char) -> Option<V> {
         self.0
@@ -50,6 +54,37 @@ impl<V: 'static + Copy> TCharDataTable for CharDataTableRange<V> {
         self.0
             .binary_search_by(|&(range, _)| range.cmp(needle))
             .map(|idx| self.0[idx].1)
+            .ok()
+    }
+}
+
+pub struct CharDataTableDirectSlice<V: 'static> {
+    #[doc(hidden)]
+    table: &'static [(char, Range<u32>)],
+    refdata: &'static [V],
+}
+impl<V: 'static> Default for CharDataTableDirectSlice<V> {
+    fn default() -> CharDataTableDirectSlice<V> {
+        CharDataTableDirectSlice {
+            table: &[],
+            refdata: &[],
+        }
+    }
+}
+impl<V: 'static> TCharDataTable for CharDataTableDirectSlice<V> {
+    type Item = &'static [V];
+    fn contains(&self, needle: char) -> bool {
+        self.table
+            .binary_search_by_key(&needle, |&(k, _)| k)
+            .is_ok()
+    }
+    fn find(&self, needle: char) -> Option<&'static [V]> {
+        self.table
+            .binary_search_by_key(&needle, |&(k, _)| k)
+            .map(|idx| {
+                let range = self.table[idx].1.clone();
+                &self.refdata[range.start as usize..range.end as usize]
+            })
             .ok()
     }
 }
