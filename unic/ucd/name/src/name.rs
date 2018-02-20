@@ -146,7 +146,7 @@ impl PartialOrd for Name {
 }
 
 mod data {
-    use unic_char_property::tables::CharDataTable;
+    use unic_char_property::tables::CharDataTableDirect;
     include!("../tables/name_values.rsd");
-    pub const NAMES: CharDataTable<&[&str]> = include!("../tables/name_map.rsv");
+    pub const NAMES: CharDataTableDirect<&[&str]> = include!("../tables/name_map.rsv");
 }
