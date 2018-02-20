@@ -18,6 +18,42 @@ pub trait TCharDataTable {
     fn find(&self, needle: char) -> Option<Self::Item>;
 }
 
+pub struct CharDataTableDirect<V: 'static>(#[doc(hidden)] pub &'static [(char, V)]);
+impl<V: 'static> Default for CharDataTableDirect<V> {
+    fn default() -> CharDataTableDirect<V> { CharDataTableDirect(&[]) }
+}
+impl<V: 'static + Copy> TCharDataTable for CharDataTableDirect<V> {
+    type Item = V;
+    fn contains(&self, needle: char) -> bool {
+        self.0.binary_search_by_key(&needle, |&(k, _)| k).is_ok()
+    }
+    fn find(&self, needle: char) -> Option<V> {
+        self.0
+            .binary_search_by_key(&needle, |&(k, _)| k)
+            .map(|idx| self.0[idx].1)
+            .ok()
+    }
+}
+
+pub struct CharDataTableRange<V: 'static>(#[doc(hidden)] pub &'static [(CharRange, V)]);
+impl<V: 'static> Default for CharDataTableRange<V> {
+    fn default() -> CharDataTableRange<V> { CharDataTableRange(&[]) }
+}
+impl<V: 'static + Copy> TCharDataTable for CharDataTableRange<V> {
+    type Item = V;
+    fn contains(&self, needle: char) -> bool {
+        self.0
+            .binary_search_by(|&(range, _)| range.cmp(needle))
+            .is_ok()
+    }
+    fn find(&self, needle: char) -> Option<V> {
+        self.0
+            .binary_search_by(|&(range, _)| range.cmp(needle))
+            .map(|idx| self.0[idx].1)
+            .ok()
+    }
+}
+
 /// A mapping from characters to some associated data.
 ///
 /// For the set case, use `()` as the associated value.
