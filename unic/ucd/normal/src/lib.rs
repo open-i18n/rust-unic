@@ -54,6 +54,7 @@ mod decomposition_type;
 pub use decomposition_type::DecompositionType;
 
 mod hangul;
+pub use hangul::decompose as decompose_hangul_syllable;
 
 /// Compose two characters into a single character, if possible.
 /// See [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/)

@@ -18,7 +18,7 @@ fn test_name_str() {
 
     assert_eq!(
         Name::of('곲').unwrap().to_string(),
-        "HANGUL SYLLABLE ACF2" // FIXME: use decomposed jamo short names instead
+        "HANGUL SYLLABLE GOBS"
     );
 
     // == NR2: Ideographs ==
@@ -62,7 +62,6 @@ fn test_name_cmp() {
 
     // == NR1 ==
 
-    // FIXME: use decomposed jamo short names instead
     name_cmp_assert!('곲', >, '가');
     name_cmp_assert!('곲', >, '言');
     name_cmp_assert!('곲', >, '理');

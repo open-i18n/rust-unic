@@ -13,6 +13,7 @@ exclude = []
 
 [dependencies]
 unic-ucd-version = { path = "../version/", version = "0.7.0" }
+unic-ucd-normal = { path = "../normal/", version = "0.7.0" }
 unic-char-property = { path = "../../char/property/", version = "0.7.0" }
 
 [badges]
