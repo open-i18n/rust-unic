@@ -75,8 +75,8 @@ impl Name {
 
     /// Length of the name in bytes.
     pub fn len(&self) -> usize {
-        match self {
-            &Name::NR1(ch) => {
+        match *self {
+            Name::NR1(ch) => {
                 let mut len = PREFIX_HANGUL_SYLLABLE.len();
                 {
                     let mut count_jamos = |_| len += 1;
@@ -84,12 +84,12 @@ impl Name {
                 }
                 len
             }
-            &Name::NR2(prefix, ch) => {
+            Name::NR2(prefix, ch) => {
                 let mut len = prefix.len();
                 len += Name::number_of_hex_digits(ch);
                 len
             }
-            &Name::NR3(pieces) => {
+            Name::NR3(pieces) => {
                 // start with spaces
                 let mut len = pieces.len().saturating_sub(1);
                 for piece in pieces {
@@ -128,8 +128,8 @@ impl Name {
 
 impl fmt::Display for Name {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            &Name::NR1(ch) => {
+        match *self {
+            Name::NR1(ch) => {
                 f.write_str(PREFIX_HANGUL_SYLLABLE)?;
                 let mut result = Ok(());
                 {
@@ -143,11 +143,11 @@ impl fmt::Display for Name {
                 }
                 result
             }
-            &Name::NR2(prefix, ch) => {
+            Name::NR2(prefix, ch) => {
                 f.write_str(prefix)?;
                 write!(f, "{:X}", ch as u32)
             }
-            &Name::NR3(pieces) => {
+            Name::NR3(pieces) => {
                 let (first, rest) = pieces.split_first().unwrap();
                 f.write_str(first)?;
                 for piece in rest {
@@ -162,39 +162,39 @@ impl fmt::Display for Name {
 
 impl Ord for Name {
     fn cmp(&self, other: &Name) -> Ordering {
-        match self {
-            &Name::NR1(ch) => match other {
-                &Name::NR1(other_ch) => {
-                    let self_jamos = Name::collect_jamo_short_names(ch);
+        match *self {
+            Name::NR1(ch) => match *other {
+                Name::NR1(other_ch) => {
+                    let jamos = Name::collect_jamo_short_names(ch);
                     let other_jamos = Name::collect_jamo_short_names(other_ch);
-                    self_jamos.cmp(&other_jamos)
-                },
-                &Name::NR2(other_prefix, _) => PREFIX_HANGUL_SYLLABLE.cmp(other_prefix),
-                &Name::NR3(other_pieces) => {
+                    jamos.cmp(&other_jamos)
+                }
+                Name::NR2(other_prefix, _) => PREFIX_HANGUL_SYLLABLE.cmp(other_prefix),
+                Name::NR3(other_pieces) => {
                     let (first, _) = other_pieces.split_first().unwrap();
                     PREFIX_HANGUL_SYLLABLE.cmp(first)
                 }
             },
-            &Name::NR2(prefix, ch) => match other {
-                &Name::NR1(_) => prefix.cmp(PREFIX_HANGUL_SYLLABLE),
-                &Name::NR2(other_prefix, other_ch) => {
+            Name::NR2(prefix, ch) => match *other {
+                Name::NR1(_) => prefix.cmp(PREFIX_HANGUL_SYLLABLE),
+                Name::NR2(other_prefix, other_ch) => {
                     if prefix == other_prefix {
                         ch.cmp(&other_ch)
                     } else {
                         prefix.cmp(other_prefix)
                     }
                 }
-                &Name::NR3(other_pieces) => {
+                Name::NR3(other_pieces) => {
                     let (first, _) = other_pieces.split_first().unwrap();
                     prefix.cmp(first)
                 }
             },
-            &Name::NR3(pieces) => {
+            Name::NR3(pieces) => {
                 let (first, _) = pieces.split_first().unwrap();
-                match other {
-                    &Name::NR1(_) => first.cmp(&PREFIX_HANGUL_SYLLABLE),
-                    &Name::NR2(other_prefix, _) => first.cmp(&other_prefix),
-                    &Name::NR3(other_pieces) => pieces.cmp(other_pieces),
+                match *other {
+                    Name::NR1(_) => first.cmp(&PREFIX_HANGUL_SYLLABLE),
+                    Name::NR2(other_prefix, _) => first.cmp(&other_prefix),
+                    Name::NR3(other_pieces) => pieces.cmp(other_pieces),
                 }
             }
         }
