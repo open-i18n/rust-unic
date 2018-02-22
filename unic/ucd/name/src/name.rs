@@ -23,10 +23,31 @@ pub static PREFIX_TANGUT_IDEOGRAPH: &'static str = "TANGUT IDEOGRAPH-";
 pub static PREFIX_NUSHU_CHARACTER: &'static str = "NUSHU CHARACTER-";
 pub static PREFIX_CJK_COMPATIBILITY_IDEOGRAPH: &'static str = "CJK COMPATIBILITY IDEOGRAPH-";
 
+/// Representes values of the Unicode character property
+/// [*Name*](https://www.unicode.org/reports/tr44/#Name).
+///
+/// Note: NR4 is omitted in this implementation because it can be represented by `None`.
+///
+/// See *Section 4.8* in [*Unicode*](http://www.unicode.org/versions/Unicode10.0.0/ch04.pdf)
+/// for a full specification of all name derivation rules.
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
 pub enum Name {
+    /// NR1: For Hangul syllables, the Name is derived by rule,
+    /// as specified in *Section 3.12* in [*Unicode*](http://www.unicode.org/versions/Unicode10.0.0/ch03.pdf)
+    /// by concatenating a fixed prefix string "HANGUL SYLLABLE" and appropriate values of the
+    /// [*Jamo_Short_Name*](http://www.unicode.org/Public/UCD/latest/ucd/Jamo.txt) property.
     NR1(char),
+
+    /// NR2: For most ideographs, the Name is derived by
+    /// concatenating a script-specific prefix string, as specified in
+    /// [*Unicode*](http://www.unicode.org/versions/Unicode10.0.0/ch04.pdf),
+    /// to the code point, expressed in hexadecimal, with the usual
+    /// 4- to 6-digit convention.
     NR2(&'static str, char),
+
+    /// NR3: For all other Graphic characters and for all Format characters,
+    /// the Name is as explicitly listed in Field 1 of
+    /// [*UnicodeData.txt*](https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt).
     NR3(&'static [&'static str]),
 }
 
