@@ -16,10 +16,7 @@ use unic_ucd_name::Name;
 fn test_name_str() {
     // == NR1: Hangul Syllable ==
 
-    assert_eq!(
-        Name::of('곲').unwrap().to_string(),
-        "HANGUL SYLLABLE GOBS"
-    );
+    assert_eq!(Name::of('곲').unwrap().to_string(), "HANGUL SYLLABLE GOBS");
 
     // == NR2: Ideographs ==
 

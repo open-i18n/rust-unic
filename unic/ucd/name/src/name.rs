@@ -33,7 +33,8 @@ pub static PREFIX_CJK_COMPATIBILITY_IDEOGRAPH: &'static str = "CJK COMPATIBILITY
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
 pub enum Name {
     /// NR1: For Hangul syllables, the Name is derived by rule,
-    /// as specified in *Section 3.12* in [*Unicode*](http://www.unicode.org/versions/Unicode10.0.0/ch03.pdf)
+    /// as specified in *Section 3.12* in
+    /// [*Unicode*](http://www.unicode.org/versions/Unicode10.0.0/ch03.pdf)
     /// by concatenating a fixed prefix string "HANGUL SYLLABLE" and appropriate values of the
     /// [*Jamo_Short_Name*](http://www.unicode.org/Public/UCD/latest/ucd/Jamo.txt) property.
     NR1(char),
@@ -106,7 +107,9 @@ impl Name {
     }
 
     fn jamo_short_name(ch: char) -> &'static str {
-        data::JAMO_SHORT_NAMES.find(ch).expect("Unexpected jamo character")
+        data::JAMO_SHORT_NAMES
+            .find(ch)
+            .expect("Unexpected jamo character")
     }
 
     fn collect_jamo_short_names(ch: char) -> [&'static str; 3] {
