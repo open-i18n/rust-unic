@@ -14,6 +14,7 @@
 #![deny(unused)]
 
 extern crate unic_char_property;
+extern crate unic_ucd_normal;
 extern crate unic_ucd_version;
 
 mod pkg_info;

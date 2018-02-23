@@ -13,9 +13,7 @@
 
 use core::cmp::Ordering;
 use core::fmt;
-
-extern crate unic_ucd_normal;
-use self::unic_ucd_normal::decompose_hangul_syllable;
+use unic_ucd_normal::decompose_hangul_syllable;
 
 pub static PREFIX_HANGUL_SYLLABLE: &'static str = "HANGUL SYLLABLE ";
 pub static PREFIX_CJK_UNIFIED_IDEOGRAPH: &'static str = "CJK UNIFIED IDEOGRAPH-";
