@@ -110,12 +110,12 @@ impl Name {
             .expect("Unexpected jamo character")
     }
 
-    fn collect_jamo_short_names(ch: char) -> [&'static str; 3] {
-        let mut jamos = [""; 3];
+    fn collect_jamo_short_names(ch: char) -> [Option<&'static str>; 3] {
+        let mut jamos = [None; 3];
         {
             let mut index = 0;
             let mut collect_jamos = |jamo| {
-                jamos[index] = Name::jamo_short_name(jamo);
+                jamos[index] = Some(Name::jamo_short_name(jamo));
                 index += 1;
             };
             decompose_hangul_syllable(ch, &mut collect_jamos);
