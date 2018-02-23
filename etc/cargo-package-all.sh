@@ -10,7 +10,7 @@
 # option. This file may not be copied, modified, or distributed
 # except according to those terms.
 
-# Since `cargo publish --all` does not exist yet, we use this dumb alternative
+# Since `cargo package --all` does not exist yet, we use this dumb alternative
 # solution for now.
 #
 # Main downside of this approch is that there are separate `target/`
