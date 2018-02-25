@@ -77,7 +77,10 @@ impl Name {
             Name::NR1(ch) => {
                 let mut len = PREFIX_HANGUL_SYLLABLE.len();
                 {
-                    let mut count_jamos = |_| len += 1;
+                    let mut count_jamos = |jamo| {
+                        let jamo_name = Name::jamo_short_name(jamo);
+                        len += jamo_name.len();
+                    };
                     decompose_hangul_syllable(ch, &mut count_jamos);
                 }
                 len
