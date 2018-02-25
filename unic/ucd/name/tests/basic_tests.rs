@@ -59,7 +59,9 @@ fn test_name_cmp() {
 
     // == NR1 ==
 
-    name_cmp_assert!('곲', >, '가');
+    name_cmp_assert!('곲', >, '가'); // GOBS > GA
+    name_cmp_assert!('갆', <, '뉆'); // GANH < NWELM
+    name_cmp_assert!('둉', <, '럋'); // DYONG < RYAC
     name_cmp_assert!('곲', >, '言');
     name_cmp_assert!('곲', >, '理');
     name_cmp_assert!('곲', <, '\u{17005}');
