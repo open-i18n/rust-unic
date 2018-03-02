@@ -35,8 +35,8 @@ impl FromStr for JamoData {
             static ref REGEX: Regex = Regex::new(
                 r"(?xm)^              # every line
                   ([[:xdigit:]]{4,6}) # codepoint
-                  ;[[:blank:]]*
-                  ([[:alpha:]]*)      # jamos
+                  ;[[:blank:]]*       # separator
+                  ([[:alpha:]]*)      # jamo short name
                 ",
             ).unwrap();
         }
