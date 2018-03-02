@@ -13,6 +13,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::Write;
 use std::path::Path;
 
+use source::ucd::jamo::JAMO_DATA;
 use source::ucd::readme::UNICODE_VERSION;
 use source::ucd::unicode_data::UNICODE_DATA;
 
@@ -23,6 +24,7 @@ use writer::utils::write;
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
     emit_name_tables(dir);
+    emit_jamo_tables(dir);
 }
 
 #[derive(Clone, Debug)]
@@ -68,6 +70,16 @@ fn emit_name_tables(dir: &Path) {
                     .collect::<Vec<_>>()
                     .join(", ")
             )
+        }),
+    );
+}
+
+fn emit_jamo_tables(dir: &Path) {
+    write(
+        dir,
+        "jamo.rsv",
+        &JAMO_DATA.map.to_direct_char_table(|record, f| {
+            write!(f, "\"{}\"", record)
         }),
     );
 }
