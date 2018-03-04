@@ -37,7 +37,7 @@ impl<V> CharDataTable<V> {
                 table.binary_search_by_key(&needle, |&(k, _)| k).is_ok()
             }
             CharDataTable::Range(table) => table
-                .binary_search_by(|&(range, _)| range.cmp(needle))
+                .binary_search_by(|&(range, _)| range.cmp_char(needle))
                 .is_ok(),
         }
     }
@@ -52,7 +52,7 @@ impl<V: Copy> CharDataTable<V> {
                 .map(|idx| table[idx].1)
                 .ok(),
             CharDataTable::Range(table) => table
-                .binary_search_by(|&(range, _)| range.cmp(needle))
+                .binary_search_by(|&(range, _)| range.cmp_char(needle))
                 .map(|idx| table[idx].1)
                 .ok(),
         }
