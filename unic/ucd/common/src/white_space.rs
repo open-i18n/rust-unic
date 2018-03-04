@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Unicode *White_Space* Character Property.
+//! Unicode `White_Space` Character Property.
 
 char_property! {
     /// Represents values of the Unicode character property

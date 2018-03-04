@@ -23,7 +23,7 @@ use unic_ucd_segment::WordBreak as WB;
 /// An iterator over the substrings of a string which, after splitting the string on [word
 /// boundaries](https://www.unicode.org/reports/tr29/#Word_Boundaries), contain any characters with
 /// the [Alphabetic](http://unicode.org/reports/tr44/#Alphabetic) property, or with
-/// [General_Category=Number](http://unicode.org/reports/tr44/#General_Category_Values).
+/// [`General_Category=Number`](http://unicode.org/reports/tr44/#General_Category_Values).
 #[derive(Debug)]
 pub struct Words<'a> {
     inner: Filter<WordBounds<'a>, fn(&&str) -> bool>,
@@ -48,7 +48,7 @@ impl<'a> DoubleEndedIterator for Words<'a> {
 impl<'a> Words<'a> {
     /// Create new iterator for *words*.
     #[inline]
-    pub fn new<'b>(s: &'b str, filter: fn(&&str) -> bool) -> Words<'b> {
+    pub fn new(s: &str, filter: fn(&&str) -> bool) -> Words {
         Words {
             inner: WordBounds::new(s).filter(filter),
         }
@@ -74,7 +74,7 @@ pub struct WordBoundIndices<'a> {
 impl<'a> WordBoundIndices<'a> {
     /// Create new iterator for *word boundries and their indices*.
     #[inline]
-    pub fn new<'b>(s: &'b str) -> WordBoundIndices<'b> {
+    pub fn new(s: &str) -> WordBoundIndices {
         WordBoundIndices {
             start_offset: s.as_ptr() as usize,
             iter: WordBounds::new(s),
@@ -168,6 +168,7 @@ impl<'a> Iterator for WordBounds<'a> {
     }
 
     #[inline]
+    #[cfg_attr(feature = "cargo-clippy", allow(match_same_arms))]
     fn next(&mut self) -> Option<&'a str> {
         use self::FormatExtendType::*;
         use self::WordBoundsState::*;
@@ -400,6 +401,7 @@ impl<'a> Iterator for WordBounds<'a> {
 
 impl<'a> DoubleEndedIterator for WordBounds<'a> {
     #[inline]
+    #[cfg_attr(feature = "cargo-clippy", allow(cyclomatic_complexity))]
     fn next_back(&mut self) -> Option<&'a str> {
         use self::FormatExtendType::*;
         use self::WordBoundsState::*;

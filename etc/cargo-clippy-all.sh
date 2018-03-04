@@ -29,6 +29,6 @@ ROOT="$DIR/.."
 
 for component in $COMPONENTS; do
     - cd "$ROOT/$component"
-    - cargo clippy --verbose
+    - cargo clippy
     - cd "$ROOT"
 done

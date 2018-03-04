@@ -22,7 +22,7 @@ const DT_TEST_DATA: &str = include_str!("../../../../data/ucd/test/Decomposition
 #[derive(Debug)]
 struct Fail {
     pub line_num: Option<usize>,
-    pub char: char,
+    pub ch: char,
     pub exp_dt: Option<DT>,
     pub actual_dt: Option<DT>,
 }
@@ -72,7 +72,7 @@ fn test_decomposition_type_conformance() {
                     if actual_dt != exp_dt {
                         failures.push(Fail {
                             line_num: Some(line_idx + 1),
-                            char: ch,
+                            ch,
                             exp_dt,
                             actual_dt,
                         });
@@ -86,13 +86,13 @@ fn test_decomposition_type_conformance() {
     }
 
     // Defaults
-    for char in to_consider {
+    for ch in to_consider {
         let exp_dt = None;
-        let actual_dt = DT::of(char);
+        let actual_dt = DT::of(ch);
         if actual_dt != exp_dt {
             failures.push(Fail {
                 line_num: None,
-                char,
+                ch,
                 exp_dt,
                 actual_dt,
             });
