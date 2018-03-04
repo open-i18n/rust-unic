@@ -19,14 +19,16 @@
 
 set -e
 
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ROOT="$DIR/.."
 . "$DIR/common.sh"
 
 
-# Steps
+- cargo clean --verbose
 
-# Package all components
 for component in $COMPONENTS; do
-    - cargo update  --verbose --manifest-path "$component/Cargo.toml"
-    - cargo package --verbose --manifest-path "$component/Cargo.toml"
+    - cd "$ROOT/$component"
+    - cargo clippy
+    - cd "$ROOT"
 done

@@ -29,7 +29,7 @@ pub struct GraphemeIndices<'a> {
 impl<'a> GraphemeIndices<'a> {
     /// Create new iterator for *extended grapheme clusters*.
     #[inline]
-    pub fn new<'b>(s: &'b str) -> GraphemeIndices<'b> {
+    pub fn new(s: &str) -> GraphemeIndices {
         GraphemeIndices {
             start_offset: s.as_ptr() as usize,
             iter: Graphemes::new(s),
@@ -38,7 +38,7 @@ impl<'a> GraphemeIndices<'a> {
 
     /// Create new iterator for *legacy grapheme clusters*.
     #[inline]
-    pub fn new_legacy<'b>(s: &'b str) -> GraphemeIndices<'b> {
+    pub fn new_legacy(s: &str) -> GraphemeIndices {
         GraphemeIndices {
             start_offset: s.as_ptr() as usize,
             iter: Graphemes::new_legacy(s),
@@ -100,7 +100,7 @@ pub struct Graphemes<'a> {
 impl<'a> Graphemes<'a> {
     /// Create new iterator for *extended grapheme clusters*.
     #[inline]
-    pub fn new<'b>(s: &'b str) -> Graphemes<'b> {
+    pub fn new(s: &str) -> Graphemes {
         let len = s.len();
         Graphemes {
             string: s,
@@ -111,7 +111,7 @@ impl<'a> Graphemes<'a> {
 
     /// Create new iterator for *legacy grapheme clusters*.
     #[inline]
-    pub fn new_legacy<'b>(s: &'b str) -> Graphemes<'b> {
+    pub fn new_legacy(s: &str) -> Graphemes {
         let len = s.len();
         Graphemes {
             string: s,
@@ -272,6 +272,7 @@ enum PairResult {
 fn check_pair(before: GCB, after: GCB) -> PairResult {
     use self::PairResult::*;
 
+    #[cfg_attr(feature = "cargo-clippy", allow(match_same_arms))]
     match (before, after) {
         // Do not break between a CR and LF. Otherwise, break before and after controls.
         (GCB::CR, GCB::LF) => NotBreak, // GB3
@@ -338,9 +339,9 @@ impl GraphemeCursor {
             GraphemeState::Unknown
         };
         GraphemeCursor {
-            offset: offset,
-            len: len,
-            state: state,
+            offset,
+            len,
+            state,
             is_extended: true,
             cat_before: None,
             cat_after: None,
@@ -368,9 +369,9 @@ impl GraphemeCursor {
             GraphemeState::Unknown
         };
         GraphemeCursor {
-            offset: offset,
-            len: len,
-            state: state,
+            offset,
+            len,
+            state,
             is_extended: false,
             cat_before: None,
             cat_after: None,
@@ -528,6 +529,10 @@ impl GraphemeCursor {
         self.pre_context_offset = Some(chunk_start);
     }
 
+    // TODO(clippy): Fix clippy warning or leave it as allowed if really needed.
+    // `warning: methods called `is_*` usually take self by reference or no self; consider choosing
+    // a less ambiguous name`
+    #[cfg_attr(feature = "cargo-clippy", allow(wrong_self_convention))]
     /// Determine whether the current cursor location is a grapheme cluster boundary.
     /// Only a part of the string need be supplied. If `chunk_start` is nonzero or
     /// the length of `chunk` is not equal to `len` on creation, then this method
@@ -562,10 +567,9 @@ impl GraphemeCursor {
         if self.state == GraphemeState::NotBreak {
             return Ok(false);
         }
-        if self.offset < chunk_start || self.offset >= chunk_start + chunk.len() {
-            if self.offset > chunk_start + chunk.len() || self.cat_after.is_none() {
-                return Err(GraphemeIncomplete::InvalidOffset);
-            }
+        if (self.offset < chunk_start || self.offset >= chunk_start + chunk.len()) &&
+            (self.offset > chunk_start + chunk.len() || self.cat_after.is_none()) {
+            return Err(GraphemeIncomplete::InvalidOffset);
         }
         if let Some(pre_context_offset) = self.pre_context_offset {
             return Err(GraphemeIncomplete::PreContext(pre_context_offset));
@@ -592,11 +596,11 @@ impl GraphemeCursor {
             self.cat_before = Some(GCB::of(ch));
         }
         match check_pair(self.cat_before.unwrap(), self.cat_after.unwrap()) {
-            PairResult::NotBreak => return self.decision(false),
-            PairResult::Break => return self.decision(true),
+            PairResult::NotBreak => self.decision(false),
+            PairResult::Break => self.decision(true),
             PairResult::Extended => {
                 let is_extended = self.is_extended;
-                return self.decision(!is_extended);
+                self.decision(!is_extended)
             }
             PairResult::Regional => {
                 if let Some(ris_count) = self.ris_count {

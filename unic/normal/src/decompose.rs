@@ -51,7 +51,7 @@ pub struct Decompositions<I> {
 #[inline]
 pub fn new_canonical<I: Iterator<Item = char>>(iter: I) -> Decompositions<I> {
     Decompositions {
-        iter: iter,
+        iter,
         buffer: VecDeque::new(),
         sorted: false,
         kind: self::DecompositionType::Canonical,
@@ -61,7 +61,7 @@ pub fn new_canonical<I: Iterator<Item = char>>(iter: I) -> Decompositions<I> {
 #[inline]
 pub fn new_compatible<I: Iterator<Item = char>>(iter: I) -> Decompositions<I> {
     Decompositions {
-        iter: iter,
+        iter,
         buffer: VecDeque::new(),
         sorted: false,
         kind: self::DecompositionType::Compatible,

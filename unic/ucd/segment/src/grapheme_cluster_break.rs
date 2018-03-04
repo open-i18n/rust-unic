@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Unicode *Grapheme_Cluster_Break* Character Property.
+//! Unicode `Grapheme_Cluster_Break` Character Property.
 //!
 //! ## References
 //!
@@ -20,7 +20,7 @@ use unic_char_property::TotalCharProperty;
 
 char_property! {
     /// Represents the Unicode character
-    /// [*Grapheme_Cluster_Break*](https://www.unicode.org/reports/tr44/#Grapheme_Cluster_Break)
+    /// [`Grapheme_Cluster_Break`](https://www.unicode.org/reports/tr44/#Grapheme_Cluster_Break)
     /// property.
     ///
     /// ## References
@@ -302,7 +302,7 @@ char_property! {
     }
 
     /// Abbreviated name aliases for the
-    /// [*Grapheme_Cluster_Break*](https://www.unicode.org/reports/tr44/#Grapheme_Cluster_Break)
+    /// [`Grapheme_Cluster_Break`](https://www.unicode.org/reports/tr44/#Grapheme_Cluster_Break)
     /// property.
     ///
     /// ## See Also
@@ -311,7 +311,7 @@ char_property! {
     pub mod abbr_names for abbr;
 
     /// Long name aliases for the
-    /// [*Grapheme_Cluster_Break*](https://www.unicode.org/reports/tr44/#Grapheme_Cluster_Break)
+    /// [`Grapheme_Cluster_Break`](https://www.unicode.org/reports/tr44/#Grapheme_Cluster_Break)
     /// property.
     ///
     /// ## See Also
@@ -340,7 +340,7 @@ mod data {
 }
 
 impl GraphemeClusterBreak {
-    /// Find the character *Grapheme_Cluster_Break* property value.
+    /// Find the character `Grapheme_Cluster_Break` property value.
     pub fn of(ch: char) -> GraphemeClusterBreak {
         data::GRAPHEME_CLUSTER_BREAK_TABLE.find_or_default(ch)
     }

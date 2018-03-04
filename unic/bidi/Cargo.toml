@@ -15,9 +15,6 @@ exclude = [
     "benches/bidi_udhr_benches.rs",
 ]
 
-[badges]
-travis-ci = { repository = "behnam/rust-unic", branch = "master" }
-
 [features]
 default = []
 bench_it = []
@@ -31,3 +28,10 @@ unic-ucd-bidi = { path = "../ucd/bidi/", version = "0.7.0" }
 serde_test = ">=0.8, <2.0"
 unic-char-property = { path = "../char/property/", version = "0.7.0" }
 unic-ucd-version = { path = "../ucd/version/", version = "0.7.0" }
+
+[badges]
+maintenance = { status = "actively-developed" }
+is-it-maintained-issue-resolution = { repository = "behnam/rust-unic" }
+is-it-maintained-open-issues = { repository = "behnam/rust-unic" }
+appveyor = { repository = "behnam/rust-unic", branch = "master", service = "github" }
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }

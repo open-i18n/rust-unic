@@ -8,11 +8,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Unicode *Emoji_Component* Character Property.
+//! Unicode `Emoji_Component` Character Property.
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*Emoji_Component*](https://www.unicode.org/reports/tr51/#Emoji_Properties).
+    /// [`Emoji_Component`](https://www.unicode.org/reports/tr51/#Emoji_Properties).
     ///
     /// The value is `true` for characters that normally do not appear on emoji keyboards as
     /// separate choices, such as Keycap base characters, Regional_Indicators, …, `false` otherwise.

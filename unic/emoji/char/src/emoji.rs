@@ -8,11 +8,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Unicode *Emoji* Character Property.
+//! Unicode `Emoji` Character Property.
 
 char_property! {
     /// Represents values of the Unicode character property
-    /// [*Emoji*](https://www.unicode.org/reports/tr51/#Emoji_Properties).
+    /// [`Emoji`](https://www.unicode.org/reports/tr51/#Emoji_Properties).
     ///
     /// The value is `true` for characters that are emoji.
     pub struct Emoji(bool) {

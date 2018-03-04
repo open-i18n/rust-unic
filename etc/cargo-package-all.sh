@@ -10,7 +10,7 @@
 # option. This file may not be copied, modified, or distributed
 # except according to those terms.
 
-# Since `cargo publish --all` does not exist yet, we use this dumb alternative
+# Since `cargo package --all` does not exist yet, we use this dumb alternative
 # solution for now.
 #
 # Main downside of this approch is that there are separate `target/`
@@ -19,16 +19,14 @@
 
 set -e
 
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-ROOT="$DIR/.."
 . "$DIR/common.sh"
 
 
-- cargo clean --verbose
+# Steps
 
+# Package all components
 for component in $COMPONENTS; do
-    - cd "$ROOT/$component"
-    - cargo clippy --verbose
-    - cd "$ROOT"
+    - cargo update  --verbose --manifest-path "$component/Cargo.toml"
+    - cargo package --verbose --manifest-path "$component/Cargo.toml"
 done

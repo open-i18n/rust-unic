@@ -21,6 +21,9 @@ exact-size-is-empty = []
 fused = []
 trusted-len = []
 
-
 [badges]
+maintenance = { status = "actively-developed" }
+is-it-maintained-issue-resolution = { repository = "behnam/rust-unic" }
+is-it-maintained-open-issues = { repository = "behnam/rust-unic" }
+appveyor = { repository = "behnam/rust-unic", branch = "master", service = "github" }
 travis-ci = { repository = "behnam/rust-unic", branch = "master" }

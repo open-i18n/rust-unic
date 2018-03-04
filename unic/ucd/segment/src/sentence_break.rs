@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Unicode *Sentence_Break* Character Property.
+//! Unicode `Sentence_Break` Character Property.
 //!
 //! ## References
 //!
@@ -20,7 +20,7 @@ use unic_char_property::TotalCharProperty;
 
 char_property! {
     /// Represents the Unicode character
-    /// [*Sentence_Break*](https://www.unicode.org/reports/tr44/#Sentence_Break)
+    /// [`Sentence_Break`](https://www.unicode.org/reports/tr44/#Sentence_Break)
     /// property.
     ///
     /// ## References
@@ -217,7 +217,7 @@ char_property! {
     }
 
     /// Abbreviated name aliases for the
-    /// [*Sentence_Break*](https://www.unicode.org/reports/tr44/#Sentence_Break)
+    /// [`Sentence_Break`](https://www.unicode.org/reports/tr44/#Sentence_Break)
     /// property.
     ///
     /// ## See Also
@@ -226,7 +226,7 @@ char_property! {
     pub mod abbr_names for abbr;
 
     /// Long name aliases for the
-    /// [*Sentence_Break*](https://www.unicode.org/reports/tr44/#Sentence_Break)
+    /// [`Sentence_Break`](https://www.unicode.org/reports/tr44/#Sentence_Break)
     /// property.
     ///
     /// ## See Also
@@ -255,7 +255,7 @@ mod data {
 }
 
 impl SentenceBreak {
-    /// Find the character *Sentence_Break* property value.
+    /// Find the character `Sentence_Break` property value.
     pub fn of(ch: char) -> SentenceBreak {
         data::SENTENCE_BREAK_TABLE.find_or_default(ch)
     }

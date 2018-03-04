@@ -277,8 +277,8 @@ macro_rules! char_property {
                 // This is a temporary solution to enable case-insensitive matching under `no_std`
                 // mode. Work is in progress to provide these functionalities under `libcore`.
                 //
-                // TODO(MIN_RUST_VERSION): Drop whenever case-insensitive str matching is available in
-                // `libcore`, and without `AsciiExt`.
+                // TODO(MIN_RUST_VERSION): Drop whenever case-insensitive str matching is available
+                // in `libcore`, and without `AsciiExt`.
                 //
                 // See: <https://github.com/rust-lang/rust/pull/44042>
                 pub fn str_eq_ignore_ascii_case(this: &str, that: &str) -> bool {

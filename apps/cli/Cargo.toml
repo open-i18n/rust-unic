@@ -9,7 +9,6 @@ keywords = ["text", "unicode", "internationalization"]
 categories = ["internationalization", "text-processing", "parsing", "command-line-utilities"]
 readme = "README.md"
 
-
 [dependencies]
 unic = { path = "../../unic/", version = "0.7.0" }
 
@@ -21,3 +20,10 @@ regex = "0.2"
 [dev-dependencies]
 assert_cli = "0.5"
 quickcheck = "0.6"
+
+[badges]
+maintenance = { status = "actively-developed" }
+is-it-maintained-issue-resolution = { repository = "behnam/rust-unic" }
+is-it-maintained-open-issues = { repository = "behnam/rust-unic" }
+appveyor = { repository = "behnam/rust-unic", branch = "master", service = "github" }
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }

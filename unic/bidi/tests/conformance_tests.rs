@@ -93,7 +93,7 @@ fn test_basic_conformance() {
                 if levels != exp_levels {
                     fails.push(Fail {
                         line_num: line_idx + 1,
-                        input_base_level: input_base_level,
+                        input_base_level,
                         input_classes: input_classes.iter().map(|x| x.to_string()).collect(),
                         input_string: input_string.to_owned(),
                         exp_base_level: None,
@@ -185,7 +185,7 @@ fn test_character_conformance() {
             if levels != exp_levels {
                 fails.push(Fail {
                     line_num: line_idx + 1,
-                    input_base_level: input_base_level,
+                    input_base_level,
                     input_classes: vec![],
                     input_string: input_string.to_owned(),
                     exp_base_level: Some(exp_base_level),

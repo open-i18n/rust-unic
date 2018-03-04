@@ -8,6 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+// TODO(MIN_RUST_VERSION): Drop &s in match variants after Rust 1.24.0
+#![cfg_attr(feature = "cargo-clippy", allow(match_ref_pats))]
+
 use core::cmp::Ordering;
 use core::fmt;
 
@@ -24,7 +27,7 @@ pub enum Name {
     NR3(&'static [&'static str]),
 }
 
-#[cfg_attr(feature = "clippy", allow(len_without_is_empty))]
+#[cfg_attr(feature = "cargo-clippy", allow(len_without_is_empty))]
 impl Name {
     pub fn of(ch: char) -> Option<Name> {
         match ch {
@@ -70,6 +73,7 @@ impl Name {
         }
     }
 
+    #[cfg_attr(feature = "cargo-clippy", allow(inline_always))]
     #[inline(always)]
     fn number_of_hex_digits(ch: char) -> usize {
         (32 - u32::leading_zeros(ch as u32) as usize + 3) / 4
@@ -106,19 +110,19 @@ impl Ord for Name {
         match self {
             &Name::NR1(ch) => match other {
                 &Name::NR1(other_ch) => ch.cmp(&other_ch),
-                &Name::NR2(other_prefix, _) => PREFIX_HANGUL_SYLLABLE.cmp(&other_prefix),
+                &Name::NR2(other_prefix, _) => PREFIX_HANGUL_SYLLABLE.cmp(other_prefix),
                 &Name::NR3(other_pieces) => {
                     let (first, _) = other_pieces.split_first().unwrap();
                     PREFIX_HANGUL_SYLLABLE.cmp(first)
                 }
             },
             &Name::NR2(prefix, ch) => match other {
-                &Name::NR1(_) => prefix.cmp(&PREFIX_HANGUL_SYLLABLE),
+                &Name::NR1(_) => prefix.cmp(PREFIX_HANGUL_SYLLABLE),
                 &Name::NR2(other_prefix, other_ch) => {
                     if prefix == other_prefix {
                         ch.cmp(&other_ch)
                     } else {
-                        prefix.cmp(&other_prefix)
+                        prefix.cmp(other_prefix)
                     }
                 }
                 &Name::NR3(other_pieces) => {
@@ -131,7 +135,7 @@ impl Ord for Name {
                 match other {
                     &Name::NR1(_) => first.cmp(&PREFIX_HANGUL_SYLLABLE),
                     &Name::NR2(other_prefix, _) => first.cmp(&other_prefix),
-                    &Name::NR3(other_pieces) => pieces.cmp(&other_pieces),
+                    &Name::NR3(other_pieces) => pieces.cmp(other_pieces),
                 }
             }
         }
