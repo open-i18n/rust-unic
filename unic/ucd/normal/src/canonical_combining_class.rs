@@ -59,7 +59,6 @@ mod data {
 
 #[allow(non_upper_case_globals)]
 impl CanonicalCombiningClass {
-
     /// Find the character `Canonical_Combining_Class` property value.
     pub fn of(ch: char) -> CanonicalCombiningClass {
         data::CANONICAL_COMBINING_CLASS_VALUES.find_or_default(ch)
