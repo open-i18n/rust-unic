@@ -16,6 +16,7 @@
           unconditional_recursion, unused)]
 #![deny(unsafe_code)]
 
+pub extern crate unic_char_basics as basics;
 pub extern crate unic_char_property as property;
 pub extern crate unic_char_range as range;
 
