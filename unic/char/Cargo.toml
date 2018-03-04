@@ -16,9 +16,13 @@ exclude = []
 default = []
 std = ["unic-char-range/std"]
 
-[badges]
-travis-ci = { repository = "behnam/rust-unic", branch = "master" }
-
 [dependencies]
 unic-char-property = { path = "property/", version = "0.7.0" }
 unic-char-range = { path = "range/", version = "0.7.0" }
+
+[badges]
+maintenance = { status = "actively-developed" }
+is-it-maintained-issue-resolution = { repository = "behnam/rust-unic" }
+is-it-maintained-open-issues = { repository = "behnam/rust-unic" }
+appveyor = { repository = "behnam/rust-unic", branch = "master", service = "github" }
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }

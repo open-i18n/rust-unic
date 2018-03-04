@@ -7,9 +7,6 @@ license = "MIT/Apache-2.0"
 description = "UNIC - Table Generation"
 publish = false
 
-[badges]
-travis-ci = { repository = "behnam/rust-unic", branch = "master" }
-
 [dependencies]
 unic-char-range = { path = "../unic/char/range/", version = "0.7.0" }
 

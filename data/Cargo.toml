@@ -7,9 +7,6 @@ license = "MIT/Apache-2.0"
 description = "UNIC - Source Data Download Script"
 publish = false
 
-[badges]
-travis-ci = { repository = "behnam/rust-unic", branch = "master" }
-
 [dependencies]
 
 # Command line argument parsing

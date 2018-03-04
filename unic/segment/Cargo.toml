@@ -12,12 +12,16 @@ readme = "README.md"
 # No tests/benches that depends on /data/
 exclude = []
 
-[badges]
-travis-ci = { repository = "behnam/rust-unic", branch = "master" }
-
 [dependencies]
 unic-ucd-segment = { path = "../ucd/segment/", version = "0.7.0" }
 
 [dev-dependencies]
 quickcheck = "0.6"
 unic-ucd-common = { path = "../ucd/common/", version = "0.7.0" }
+
+[badges]
+maintenance = { status = "actively-developed" }
+is-it-maintained-issue-resolution = { repository = "behnam/rust-unic" }
+is-it-maintained-open-issues = { repository = "behnam/rust-unic" }
+appveyor = { repository = "behnam/rust-unic", branch = "master", service = "github" }
+travis-ci = { repository = "behnam/rust-unic", branch = "master" }
