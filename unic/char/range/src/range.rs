@@ -121,7 +121,7 @@ impl CharRange {
     /// Construct a range of characters from bounds.
     pub fn bound(start: Bound<char>, stop: Bound<char>) -> CharRange {
         let start = if start == Bound::Unbounded {
-            Bound::Included('\0')
+            Bound::Included('\u{0}')
         } else {
             start
         };
@@ -139,9 +139,27 @@ impl CharRange {
         }
     }
 
-    /// Construct a range over all characters.
+    /// Construct a range over all Unicode characters (Unicode Scalar Values).
     pub fn all() -> CharRange {
-        CharRange::closed('\0', char::MAX)
+        CharRange::closed('\u{0}', char::MAX)
+    }
+
+    /// Construct a range over all characters of *assigned* Unicode Planes.
+    ///
+    /// Assigned *normal* (non-special) Unicode Planes are:
+    /// - Plane 0: *Basic Multilingual Plane* (BMP)
+    /// - Plane 1: *Supplementary Multilingual Plane* (SMP)
+    /// - Plane 2: *Supplementary Ideographic Plane* (SIP)
+    ///
+    /// Unicode Plane 14, *Supplementary Special-purpose Plane* (SSP), is not included in this
+    /// range, mainly because of the limit of `CharRange` only supporting a continuous range.
+    ///
+    /// Unicode Planes 3 to 13 are *Unassigned* planes and therefore excluded.
+    ///
+    /// Unicode Planes 15 and 16 are *Private Use Area* planes and won't have Unicode-assigned
+    /// characters.
+    pub fn assigned_normal_planes() -> CharRange {
+        CharRange::closed('\u{0}', '\u{2_FFFF}')
     }
 }
 
