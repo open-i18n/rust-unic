@@ -1,4 +1,4 @@
-// Copyright 2017 The UNIC Project Developers.
+// Copyright 2018 The UNIC Project Developers.
 //
 // See the COPYRIGHT file at the top-level directory of this distribution.
 //
@@ -8,10 +8,11 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+#![no_std]
 #![forbid(bad_style, missing_debug_implementations, unconditional_recursion, missing_docs,
           unsafe_code, unused, future_incompatible)]
 
-//! # UNIC — Unicode Characters — Basic Stable Character Properties
+//! # UNIC — Unicode Character Tools — Basic Stable Character Properties
 //!
 //! A simple way to control iteration over a range of characters.
 //!
@@ -64,8 +65,11 @@ extern crate core;
 mod pkg_info;
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
-mod noncharacter;
+pub mod noncharacter;
 pub use noncharacter::is_noncharacter;
 
-mod private_use;
+pub mod private_use;
 pub use private_use::is_private_use;
+
+pub mod notation;
+pub use notation::unicode_notation;

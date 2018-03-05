@@ -1,4 +1,4 @@
-// Copyright 2017 The UNIC Project Developers.
+// Copyright 2018 The UNIC Project Developers.
 //
 // See the COPYRIGHT file at the top-level directory of this distribution.
 //
@@ -12,15 +12,40 @@
           unsafe_code, unused, future_incompatible)]
 
 extern crate unic_char_basics;
-extern crate unic_char_range;
 
-use unic_char_basics::{is_noncharacter, is_private_use};
-use unic_char_range::CharRange;
+use unic_char_basics::unicode_notation;
 
-/// Verify no code-point is both *Noncharacter* and *Private Use*.
+/// Test Unicode Notation formatting for samples from Unicode Scalar Value range.
 #[test]
-fn test_overlap() {
-    for codepoint in CharRange::all() {
-        assert!(!(is_noncharacter(codepoint) && is_private_use(codepoint)));
+fn test_unicode_notation() {
+    fn format(codepoint: char) -> String {
+        unicode_notation(codepoint).to_string()
     }
+
+    // Plane 0 (BMP)
+    assert_eq!(format('\u{0}'), "U+0000");
+    assert_eq!(format('\u{20}'), "U+0020");
+    assert_eq!(format('\u{41}'), "U+0041");
+    assert_eq!(format('\u{80}'), "U+0080");
+    assert_eq!(format('\u{200c}'), "U+200C");
+    assert_eq!(format('\u{d7ff}'), "U+D7FF");
+
+    assert_eq!(format('\u{fffe}'), "U+FFFE");
+    assert_eq!(format('\u{ffff}'), "U+FFFF");
+
+    // Plane 1 (SMP)
+    assert_eq!(format('\u{1_0000}'), "U+10000");
+    assert_eq!(format('\u{1_ffff}'), "U+1FFFF");
+
+    // Plane 14 (SSP)
+    assert_eq!(format('\u{e_0000}'), "U+E0000");
+    assert_eq!(format('\u{e_ffff}'), "U+EFFFF");
+
+    // Plane 15 (PUA-A)
+    assert_eq!(format('\u{f_0000}'), "U+F0000");
+    assert_eq!(format('\u{f_ffff}'), "U+FFFFF");
+
+    // Plane 16 (PUA-B)
+    assert_eq!(format('\u{10_0000}'), "U+100000");
+    assert_eq!(format('\u{10_ffff}'), "U+10FFFF");
 }

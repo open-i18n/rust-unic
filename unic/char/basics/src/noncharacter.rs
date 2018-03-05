@@ -1,4 +1,4 @@
-// Copyright 2017 The UNIC Project Developers.
+// Copyright 2018 The UNIC Project Developers.
 //
 // See the COPYRIGHT file at the top-level directory of this distribution.
 //

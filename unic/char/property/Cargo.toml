@@ -4,7 +4,7 @@ version = "0.7.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
-description = "UNIC — Unicode Characters — Character Property taxonomy, contracts and build macros"
+description = "UNIC — Unicode Character Tools — Character Property taxonomy, contracts and build macros"
 keywords = ["text", "unicode", "character-property"]
 categories = ["internationalization", "text-processing", "parsing"]
 
