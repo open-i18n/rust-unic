@@ -12,7 +12,7 @@
 #![forbid(bad_style, future_incompatible, missing_debug_implementations, missing_docs,
           unconditional_recursion, unsafe_code, unused)]
 
-//! # UNIC - IDNA - IDNA Mapping Table
+//! # UNIC — IDNA — IDNA Mapping Table
 //!
 //! Mapping each Unicode codepoint to an IDNA status.
 //!

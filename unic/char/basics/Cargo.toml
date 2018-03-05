@@ -1,18 +1,19 @@
 [package]
-name = "unic-emoji"
+name = "unic-char-basics"
 version = "0.7.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
-description = "UNIC — Unicode Emoji"
-keywords = ["text", "unicode", "character-property", "emoji"]
-categories = ["internationalization", "text-processing", "parsing", "rendering"]
+description = "UNIC — Unicode Character Tools — Basic Stable Character Properties"
+keywords = ["text", "unicode", "utilities", "iteration"]
+categories = ["internationalization", "text-processing"]
+readme = "README.md"
 
 # No tests/benches that depends on /data/
 exclude = []
 
-[dependencies]
-unic-emoji-char = { path = "char/", version = "0.7.0" }
+[dev-dependencies]
+unic-char-range = { path = "../range/", version = "0.7.0" }
 
 [badges]
 maintenance = { status = "actively-developed" }

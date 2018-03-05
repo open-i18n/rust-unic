@@ -17,6 +17,7 @@ default = []
 std = ["unic-char-range/std"]
 
 [dependencies]
+unic-char-basics = { path = "basics/", version = "0.7.0" }
 unic-char-property = { path = "property/", version = "0.7.0" }
 unic-char-range = { path = "range/", version = "0.7.0" }
 

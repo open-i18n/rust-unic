@@ -567,8 +567,9 @@ impl GraphemeCursor {
         if self.state == GraphemeState::NotBreak {
             return Ok(false);
         }
-        if (self.offset < chunk_start || self.offset >= chunk_start + chunk.len()) &&
-            (self.offset > chunk_start + chunk.len() || self.cat_after.is_none()) {
+        if (self.offset < chunk_start || self.offset >= chunk_start + chunk.len())
+            && (self.offset > chunk_start + chunk.len() || self.cat_after.is_none())
+        {
             return Err(GraphemeIncomplete::InvalidOffset);
         }
         if let Some(pre_context_offset) = self.pre_context_offset {

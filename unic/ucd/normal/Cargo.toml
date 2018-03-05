@@ -4,7 +4,7 @@ version = "0.7.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
-description = "UNIC - Unicode Character Database - Normalization Properties"
+description = "UNIC — Unicode Character Database — Normalization Properties"
 keywords = ["text", "unicode", "normalization"]
 categories = ["internationalization", "text-processing", "parsing", "rendering"]
 

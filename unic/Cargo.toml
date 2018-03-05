@@ -4,7 +4,7 @@ version = "0.7.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/behnam/rust-unic/"
 license = "MIT/Apache-2.0"
-description = "UNIC - Unicode and Internationalization Crates"
+description = "UNIC: Unicode and Internationalization Crates"
 keywords = ["text", "unicode", "internationalization"]
 categories = ["internationalization", "text-processing", "parsing", "rendering"]
 readme = "README.md"
@@ -27,6 +27,9 @@ unic-idna = { path = "idna/", version = "0.7.0" }
 unic-normal = { path = "normal/", version = "0.7.0" }
 unic-segment = { path = "segment/", version = "0.7.0" }
 unic-ucd = { path = "ucd/", version = "0.7.0" }
+
+[dev-dependencies]
+unic-char-range = { path = "char/range/", version = "0.7.0" }
 
 [badges]
 maintenance = { status = "actively-developed" }
