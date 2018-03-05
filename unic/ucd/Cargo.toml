@@ -25,9 +25,10 @@ unic-ucd-segment = { path = "segment/", version = "0.7.0" }
 unic-ucd-version = { path = "version/", version = "0.7.0" }
 
 [dev-dependencies]
-unic-char-range = { path = "../char/range/", version = "0.7.0" }
-unic-char-property = { path = "../char/property/", version = "0.7.0" }
 matches = "0.1"
+unic-char-basics = { path = "../char/basics/", version = "0.7.0" }
+unic-char-property = { path = "../char/property/", version = "0.7.0" }
+unic-char-range = { path = "../char/range/", version = "0.7.0" }
 
 [badges]
 maintenance = { status = "actively-developed" }
