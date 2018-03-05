@@ -32,10 +32,11 @@ fn test_char_range_assigned_normal_planes() {
     let assigned_normal_planes = CharRange::assigned_normal_planes();
 
     for codepoint in CharRange::all() {
+        let notation = unicode_notation(codepoint).to_string();
         // Any character is either...
         assert_eq!(
             (
-                unicode_notation(codepoint).to_string(),
+                &notation,
                 (
                     // assigned in a normal plane
                     assigned_normal_planes.contains(codepoint)
@@ -53,7 +54,7 @@ fn test_char_range_assigned_normal_planes() {
                     || chars!('\u{e0000}'..='\u{e01ef}').contains(codepoint)
                 )
             ),
-            (unicode_notation(codepoint).to_string(), true)
+            (&notation, true)
         );
     }
 }
