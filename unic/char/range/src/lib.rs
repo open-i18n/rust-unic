@@ -15,7 +15,7 @@
 #![forbid(bad_style, missing_debug_implementations, unconditional_recursion)]
 #![deny(missing_docs, unsafe_code, unused, future_incompatible)]
 
-//! # UNIC — Unicode Character Tools - Character Range
+//! # UNIC — Unicode Character Tools — Character Range
 //!
 //! A simple way to control iteration over a range of characters.
 //!
