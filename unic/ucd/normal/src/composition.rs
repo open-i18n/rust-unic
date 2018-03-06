@@ -9,17 +9,17 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use unic_char_property::tables::CharDataTable;
+use unic_char_property::tables::{CharDataTable, TCharDataTable};
 
 pub mod data {
     use DecompositionType;
     use decomposition_type::long_names::*;
-    use unic_char_property::tables::CharDataTable;
+    use unic_char_property::tables::{CharDataTable, CharDataTableDirect};
 
     pub const CANONICAL_COMPOSITION_MAPPING: CharDataTable<CharDataTable<char>> =
         include!("../tables/canonical_composition_mapping.rsv");
 
-    pub const CANONICAL_DECOMPOSITION_MAPPING: CharDataTable<&[char]> =
+    pub const CANONICAL_DECOMPOSITION_MAPPING: CharDataTableDirect<&[char]> =
         include!("../tables/canonical_decomposition_mapping.rsv");
 
     #[cfg_attr(rustfmt, rustfmt_skip)]

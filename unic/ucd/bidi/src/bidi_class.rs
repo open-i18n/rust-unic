@@ -231,7 +231,8 @@ mod data {
 impl BidiClass {
     /// Find the character `Bidi_Class` property value.
     pub fn of(ch: char) -> BidiClass {
-        data::BIDI_CLASS_TABLE.find_or_default(ch)
+        use unic_char_property::tables::TCharDataTable;
+        data::BIDI_CLASS_TABLE.find(ch).unwrap_or_default()
     }
 
     /// If the `BidiClass` has strong or explicit Left-to-Right direction.

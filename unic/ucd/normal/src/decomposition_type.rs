@@ -162,6 +162,7 @@ impl PartialCharProperty for DecompositionType {
 impl DecompositionType {
     /// Find the DecompositionType of the character.
     pub fn of(ch: char) -> Option<DecompositionType> {
+        use unic_char_property::tables::TCharDataTable;
         // First, check for Hangul Syllables and other canonical decompositions
         if hangul::is_syllable(ch) || canonical_decomposition(ch).is_some() {
             return Some(DecompositionType::Canonical);

@@ -30,6 +30,7 @@ pub enum Name {
 #[cfg_attr(feature = "cargo-clippy", allow(len_without_is_empty))]
 impl Name {
     pub fn of(ch: char) -> Option<Name> {
+        use unic_char_property::tables::TCharDataTable;
         match ch {
             '\u{AC00}'...'\u{D7A3}' => Some(Name::NR1(ch)),
             '\u{3400}'...'\u{4DB5}'
@@ -149,7 +150,7 @@ impl PartialOrd for Name {
 }
 
 mod data {
-    use unic_char_property::tables::CharDataTable;
+    use unic_char_property::tables::CharDataTableDirect;
     include!("../tables/name_values.rsd");
-    pub const NAMES: CharDataTable<&[&str]> = include!("../tables/name_map.rsv");
+    pub const NAMES: CharDataTableDirect<&[&str]> = include!("../tables/name_map.rsv");
 }

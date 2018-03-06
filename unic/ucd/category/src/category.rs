@@ -259,7 +259,8 @@ mod data {
 impl GeneralCategory {
     /// Find the `GeneralCategory` of a single char.
     pub fn of(ch: char) -> GeneralCategory {
-        data::GENERAL_CATEGORY_TABLE.find_or_default(ch)
+        use unic_char_property::tables::TCharDataTable;
+        data::GENERAL_CATEGORY_TABLE.find(ch).unwrap_or_default()
     }
 }
 

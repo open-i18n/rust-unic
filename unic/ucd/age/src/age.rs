@@ -74,6 +74,7 @@ mod data {
 impl Age {
     /// Find the character *Age* property value.
     pub fn of(ch: char) -> Option<Age> {
+        use unic_char_property::tables::TCharDataTable;
         data::AGE_TABLE.find(ch).map(Age)
     }
 

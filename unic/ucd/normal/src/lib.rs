@@ -59,6 +59,7 @@ mod hangul;
 /// See [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/)
 /// for more information.
 pub fn compose(a: char, b: char) -> Option<char> {
+    use unic_char_property::tables::TCharDataTable;
     hangul::compose(a, b).or_else(|| canonical_composition(a).and_then(|table| table.find(b)))
 }
 

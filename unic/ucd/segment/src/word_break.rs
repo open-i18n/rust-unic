@@ -350,7 +350,8 @@ mod data {
 impl WordBreak {
     /// Find the character `Word_Break` property value.
     pub fn of(ch: char) -> WordBreak {
-        data::WORD_BREAK_TABLE.find_or_default(ch)
+        use unic_char_property::tables::TCharDataTable;
+        data::WORD_BREAK_TABLE.find(ch).unwrap_or_default()
     }
 }
 
