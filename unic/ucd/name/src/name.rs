@@ -13,6 +13,7 @@
 
 use core::cmp::Ordering;
 use core::fmt;
+use unic_ucd_normal::decompose_hangul_syllable;
 
 pub static PREFIX_HANGUL_SYLLABLE: &'static str = "HANGUL SYLLABLE ";
 pub static PREFIX_CJK_UNIFIED_IDEOGRAPH: &'static str = "CJK UNIFIED IDEOGRAPH-";
@@ -20,10 +21,34 @@ pub static PREFIX_TANGUT_IDEOGRAPH: &'static str = "TANGUT IDEOGRAPH-";
 pub static PREFIX_NUSHU_CHARACTER: &'static str = "NUSHU CHARACTER-";
 pub static PREFIX_CJK_COMPATIBILITY_IDEOGRAPH: &'static str = "CJK COMPATIBILITY IDEOGRAPH-";
 
+const JAMO_BUFFER_SIZE: usize = 3;
+
+/// Representes values of the Unicode character property
+/// [*Name*](https://www.unicode.org/reports/tr44/#Name).
+///
+/// Note: NR4 is omitted in this implementation because it can be represented by `None`.
+///
+/// See *Section 4.8* in [*Unicode*](http://www.unicode.org/versions/Unicode10.0.0/ch04.pdf)
+/// for a full specification of all name derivation rules.
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
 pub enum Name {
+    /// NR1: For Hangul syllables, the Name is derived by rule,
+    /// as specified in *Section 3.12* in
+    /// [*Unicode*](http://www.unicode.org/versions/Unicode10.0.0/ch03.pdf)
+    /// by concatenating a fixed prefix string "HANGUL SYLLABLE" and appropriate values of the
+    /// [*Jamo_Short_Name*](http://www.unicode.org/Public/UCD/latest/ucd/Jamo.txt) property.
     NR1(char),
+
+    /// NR2: For most ideographs, the Name is derived by
+    /// concatenating a script-specific prefix string, as specified in
+    /// [*Unicode*](http://www.unicode.org/versions/Unicode10.0.0/ch04.pdf),
+    /// to the code point, expressed in hexadecimal, with the usual
+    /// 4- to 6-digit convention.
     NR2(&'static str, char),
+
+    /// NR3: For all other Graphic characters and for all Format characters,
+    /// the Name is as explicitly listed in Field 1 of
+    /// [*UnicodeData.txt*](https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt).
     NR3(&'static [&'static str]),
 }
 
@@ -50,19 +75,24 @@ impl Name {
 
     /// Length of the name in bytes.
     pub fn len(&self) -> usize {
-        match self {
-            &Name::NR1(ch) => {
+        match *self {
+            Name::NR1(ch) => {
                 let mut len = PREFIX_HANGUL_SYLLABLE.len();
-                // FIXME: use decomposed jamo short names instead
-                len += Name::number_of_hex_digits(ch);
+                {
+                    let mut count_jamos = |jamo| {
+                        let jamo_name = Name::jamo_short_name(jamo);
+                        len += jamo_name.len();
+                    };
+                    decompose_hangul_syllable(ch, &mut count_jamos);
+                }
                 len
             }
-            &Name::NR2(prefix, ch) => {
+            Name::NR2(prefix, ch) => {
                 let mut len = prefix.len();
                 len += Name::number_of_hex_digits(ch);
                 len
             }
-            &Name::NR3(pieces) => {
+            Name::NR3(pieces) => {
                 // start with spaces
                 let mut len = pieces.len().saturating_sub(1);
                 for piece in pieces {
@@ -78,21 +108,53 @@ impl Name {
     fn number_of_hex_digits(ch: char) -> usize {
         (32 - u32::leading_zeros(ch as u32) as usize + 3) / 4
     }
+
+    fn jamo_short_name(ch: char) -> &'static str {
+        data::JAMO_SHORT_NAMES
+            .find(ch)
+            .expect("Unexpected jamo character")
+    }
+
+    fn collect_jamo_short_names(ch: char) -> [Option<&'static str>; JAMO_BUFFER_SIZE] {
+        let mut jamos = [None; JAMO_BUFFER_SIZE];
+        {
+            let mut index = 0;
+            let mut collect_jamos = |jamo| {
+                debug_assert!(
+                    index < JAMO_BUFFER_SIZE,
+                    "Decomposed hangul jamos exceed buffer size limit",
+                );
+                jamos[index] = Some(Name::jamo_short_name(jamo));
+                index += 1;
+            };
+            decompose_hangul_syllable(ch, &mut collect_jamos);
+        }
+        jamos
+    }
 }
 
 impl fmt::Display for Name {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            &Name::NR1(ch) => {
+        match *self {
+            Name::NR1(ch) => {
                 f.write_str(PREFIX_HANGUL_SYLLABLE)?;
-                // FIXME: use decomposed jamo short names instead
-                write!(f, "{:X}", ch as u32)
+                let mut result = Ok(());
+                {
+                    let mut write_jamos = |jamo| {
+                        let write_result = f.write_str(Name::jamo_short_name(jamo));
+                        if write_result.is_err() {
+                            result = write_result;
+                        }
+                    };
+                    decompose_hangul_syllable(ch, &mut write_jamos);
+                }
+                result
             }
-            &Name::NR2(prefix, ch) => {
+            Name::NR2(prefix, ch) => {
                 f.write_str(prefix)?;
                 write!(f, "{:X}", ch as u32)
             }
-            &Name::NR3(pieces) => {
+            Name::NR3(pieces) => {
                 let (first, rest) = pieces.split_first().unwrap();
                 f.write_str(first)?;
                 for piece in rest {
@@ -107,35 +169,39 @@ impl fmt::Display for Name {
 
 impl Ord for Name {
     fn cmp(&self, other: &Name) -> Ordering {
-        match self {
-            &Name::NR1(ch) => match other {
-                &Name::NR1(other_ch) => ch.cmp(&other_ch),
-                &Name::NR2(other_prefix, _) => PREFIX_HANGUL_SYLLABLE.cmp(other_prefix),
-                &Name::NR3(other_pieces) => {
+        match *self {
+            Name::NR1(ch) => match *other {
+                Name::NR1(other_ch) => {
+                    let jamos = Name::collect_jamo_short_names(ch);
+                    let other_jamos = Name::collect_jamo_short_names(other_ch);
+                    jamos.cmp(&other_jamos)
+                }
+                Name::NR2(other_prefix, _) => PREFIX_HANGUL_SYLLABLE.cmp(other_prefix),
+                Name::NR3(other_pieces) => {
                     let (first, _) = other_pieces.split_first().unwrap();
                     PREFIX_HANGUL_SYLLABLE.cmp(first)
                 }
             },
-            &Name::NR2(prefix, ch) => match other {
-                &Name::NR1(_) => prefix.cmp(PREFIX_HANGUL_SYLLABLE),
-                &Name::NR2(other_prefix, other_ch) => {
+            Name::NR2(prefix, ch) => match *other {
+                Name::NR1(_) => prefix.cmp(PREFIX_HANGUL_SYLLABLE),
+                Name::NR2(other_prefix, other_ch) => {
                     if prefix == other_prefix {
                         ch.cmp(&other_ch)
                     } else {
                         prefix.cmp(other_prefix)
                     }
                 }
-                &Name::NR3(other_pieces) => {
+                Name::NR3(other_pieces) => {
                     let (first, _) = other_pieces.split_first().unwrap();
                     prefix.cmp(first)
                 }
             },
-            &Name::NR3(pieces) => {
+            Name::NR3(pieces) => {
                 let (first, _) = pieces.split_first().unwrap();
-                match other {
-                    &Name::NR1(_) => first.cmp(&PREFIX_HANGUL_SYLLABLE),
-                    &Name::NR2(other_prefix, _) => first.cmp(&other_prefix),
-                    &Name::NR3(other_pieces) => pieces.cmp(other_pieces),
+                match *other {
+                    Name::NR1(_) => first.cmp(&PREFIX_HANGUL_SYLLABLE),
+                    Name::NR2(other_prefix, _) => first.cmp(&other_prefix),
+                    Name::NR3(other_pieces) => pieces.cmp(other_pieces),
                 }
             }
         }
@@ -152,4 +218,5 @@ mod data {
     use unic_char_property::tables::CharDataTable;
     include!("../tables/name_values.rsd");
     pub const NAMES: CharDataTable<&[&str]> = include!("../tables/name_map.rsv");
+    pub const JAMO_SHORT_NAMES: CharDataTable<&str> = include!("../tables/jamo.rsv");
 }

@@ -16,10 +16,7 @@ use unic_ucd_name::Name;
 fn test_name_str() {
     // == NR1: Hangul Syllable ==
 
-    assert_eq!(
-        Name::of('곲').unwrap().to_string(),
-        "HANGUL SYLLABLE ACF2" // FIXME: use decomposed jamo short names instead
-    );
+    assert_eq!(Name::of('곲').unwrap().to_string(), "HANGUL SYLLABLE GOBS");
 
     // == NR2: Ideographs ==
 
@@ -62,8 +59,9 @@ fn test_name_cmp() {
 
     // == NR1 ==
 
-    // FIXME: use decomposed jamo short names instead
-    name_cmp_assert!('곲', >, '가');
+    name_cmp_assert!('곲', >, '가'); // GOBS > GA
+    name_cmp_assert!('갆', <, '뉆'); // GANH < NWELM
+    name_cmp_assert!('둉', <, '럋'); // DYONG < RYAC
     name_cmp_assert!('곲', >, '言');
     name_cmp_assert!('곲', >, '理');
     name_cmp_assert!('곲', <, '\u{17005}');

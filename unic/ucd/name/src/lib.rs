@@ -12,10 +12,9 @@
 #![forbid(bad_style, future_incompatible, missing_debug_implementations, unconditional_recursion,
           unsafe_code)]
 #![deny(unused)]
-// TODO(GH-171): Add docs
-#![allow(missing_docs)]
 
 extern crate unic_char_property;
+extern crate unic_ucd_normal;
 extern crate unic_ucd_version;
 
 mod pkg_info;

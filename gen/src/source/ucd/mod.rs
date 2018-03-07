@@ -14,6 +14,7 @@ pub mod derived_age;
 pub mod derived_core_properties;
 pub mod derived_normalization_props;
 pub mod grapheme_break_property;
+pub mod jamo;
 pub mod prop_list;
 pub mod readme;
 pub mod sentence_break_property;

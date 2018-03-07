@@ -54,6 +54,8 @@ mod decomposition_type;
 pub use decomposition_type::DecompositionType;
 
 mod hangul;
+// TODO(GH-209): Drop after unic-ucd-hangul is available
+pub use hangul::decompose as decompose_hangul_syllable;
 
 /// Compose two characters into a single character, if possible.
 /// See [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/)
