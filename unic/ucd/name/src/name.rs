@@ -21,6 +21,8 @@ pub static PREFIX_TANGUT_IDEOGRAPH: &'static str = "TANGUT IDEOGRAPH-";
 pub static PREFIX_NUSHU_CHARACTER: &'static str = "NUSHU CHARACTER-";
 pub static PREFIX_CJK_COMPATIBILITY_IDEOGRAPH: &'static str = "CJK COMPATIBILITY IDEOGRAPH-";
 
+const JAMO_BUFFER_SIZE: usize = 3;
+
 /// Representes values of the Unicode character property
 /// [*Name*](https://www.unicode.org/reports/tr44/#Name).
 ///
@@ -113,11 +115,15 @@ impl Name {
             .expect("Unexpected jamo character")
     }
 
-    fn collect_jamo_short_names(ch: char) -> [Option<&'static str>; 3] {
-        let mut jamos = [None; 3];
+    fn collect_jamo_short_names(ch: char) -> [Option<&'static str>; JAMO_BUFFER_SIZE] {
+        let mut jamos = [None; JAMO_BUFFER_SIZE];
         {
             let mut index = 0;
             let mut collect_jamos = |jamo| {
+                debug_assert!(
+                    index < JAMO_BUFFER_SIZE,
+                    "Decomposed hangul jamos exceed buffer size limit",
+                );
                 jamos[index] = Some(Name::jamo_short_name(jamo));
                 index += 1;
             };
