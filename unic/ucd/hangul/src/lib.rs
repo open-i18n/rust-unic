@@ -1,3 +1,4 @@
+// Copyright 2012-2015 The Rust Project Developers.
 // Copyright 2017 The UNIC Project Developers.
 //
 // See the COPYRIGHT file at the top-level directory of this distribution.
@@ -9,21 +10,16 @@
 // except according to those terms.
 
 #![no_std]
-#![forbid(bad_style, future_incompatible, missing_debug_implementations, unconditional_recursion,
-          unsafe_code)]
-#![deny(unused)]
+#![forbid(future_incompatible, missing_debug_implementations, unconditional_recursion, unsafe_code)]
+#![deny(bad_style, unsafe_code, unused)]
 
-extern crate unic_char_property;
-extern crate unic_ucd_hangul;
 extern crate unic_ucd_version;
+use unic_ucd_version::UnicodeVersion;
+
+pub mod hangul;
 
 mod pkg_info;
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
-
-mod name;
-pub use name::Name;
-
-use unic_ucd_version::UnicodeVersion;
 
 /// The [Unicode version](https://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

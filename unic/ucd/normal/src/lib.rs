@@ -33,6 +33,7 @@
 extern crate unic_char_property;
 #[macro_use]
 extern crate unic_char_range;
+extern crate unic_ucd_hangul;
 extern crate unic_ucd_version;
 
 mod pkg_info;
@@ -53,10 +54,7 @@ pub use gen_cat::is_combining_mark;
 mod decomposition_type;
 pub use decomposition_type::DecompositionType;
 
-mod hangul;
-// TODO(GH-209): Drop after unic-ucd-hangul is available
-pub use hangul::decompose as decompose_hangul_syllable;
-
+use unic_ucd_hangul::hangul;
 /// Compose two characters into a single character, if possible.
 /// See [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/)
 /// for more information.

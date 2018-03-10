@@ -12,7 +12,8 @@
 use core::ops::FnMut;
 
 use composition::{canonical_decomposition, compatibility_decomposition};
-use hangul;
+
+use unic_ucd_hangul::hangul;
 
 /// Compute canonical Unicode decomposition for character.
 ///

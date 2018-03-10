@@ -12,9 +12,9 @@
 //! Accessor for `Decomposition_Type` (dt) property
 
 use unic_char_property::PartialCharProperty;
+use unic_ucd_hangul::hangul;
 
 use composition::{canonical_decomposition, data};
-use hangul;
 
 char_property! {
     /// Represents the Unicode character
