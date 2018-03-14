@@ -8,22 +8,13 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![no_std]
-#![forbid(bad_style, future_incompatible, missing_debug_implementations, unconditional_recursion,
-          unsafe_code)]
-#![deny(unused)]
-
-extern crate unic_char_property;
 extern crate unic_ucd_hangul;
 extern crate unic_ucd_version;
 
-mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
-
-mod name;
-pub use name::Name;
-
-use unic_ucd_version::UnicodeVersion;
-
-/// The [Unicode version](https://www.unicode.org/versions/) of data
-pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");
+#[test]
+fn test_unicode_version_against_ucd_version() {
+    assert_eq!(
+        unic_ucd_hangul::UNICODE_VERSION,
+        unic_ucd_version::UNICODE_VERSION
+    )
+}
