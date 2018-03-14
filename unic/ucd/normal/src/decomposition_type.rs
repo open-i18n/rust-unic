@@ -12,7 +12,7 @@
 //! Accessor for `Decomposition_Type` (dt) property
 
 use unic_char_property::PartialCharProperty;
-use unic_ucd_hangul::hangul;
+use unic_ucd_hangul::is_syllable;
 
 use composition::{canonical_decomposition, data};
 
@@ -163,7 +163,7 @@ impl DecompositionType {
     /// Find the DecompositionType of the character.
     pub fn of(ch: char) -> Option<DecompositionType> {
         // First, check for Hangul Syllables and other canonical decompositions
-        if hangul::is_syllable(ch) || canonical_decomposition(ch).is_some() {
+        if is_syllable(ch) || canonical_decomposition(ch).is_some() {
             return Some(DecompositionType::Canonical);
         }
         data::COMPATIBILITY_DECOMPOSITION_MAPPING

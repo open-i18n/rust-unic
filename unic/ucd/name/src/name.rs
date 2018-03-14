@@ -13,7 +13,7 @@
 
 use core::cmp::Ordering;
 use core::fmt;
-use unic_ucd_hangul::hangul::decompose;
+use unic_ucd_hangul::decompose_syllable;
 
 pub static PREFIX_HANGUL_SYLLABLE: &'static str = "HANGUL SYLLABLE ";
 pub static PREFIX_CJK_UNIFIED_IDEOGRAPH: &'static str = "CJK UNIFIED IDEOGRAPH-";
@@ -83,7 +83,7 @@ impl Name {
                         let jamo_name = Name::jamo_short_name(jamo);
                         len += jamo_name.len();
                     };
-                    decompose(ch, &mut count_jamos);
+                    decompose_syllable(ch, &mut count_jamos);
                 }
                 len
             }
@@ -127,7 +127,7 @@ impl Name {
                 jamos[index] = Some(Name::jamo_short_name(jamo));
                 index += 1;
             };
-            decompose(ch, &mut collect_jamos);
+            decompose_syllable(ch, &mut collect_jamos);
         }
         jamos
     }
@@ -146,7 +146,7 @@ impl fmt::Display for Name {
                             result = write_result;
                         }
                     };
-                    decompose(ch, &mut write_jamos);
+                    decompose_syllable(ch, &mut write_jamos);
                 }
                 result
             }

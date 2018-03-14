@@ -13,7 +13,7 @@ use core::ops::FnMut;
 
 use composition::{canonical_decomposition, compatibility_decomposition};
 
-use unic_ucd_hangul::hangul;
+use unic_ucd_hangul::{is_syllable, decompose_syllable};
 
 /// Compute canonical Unicode decomposition for character.
 ///
@@ -47,8 +47,8 @@ where
     }
 
     // Perform decomposition for Hangul
-    if hangul::is_syllable(ch) {
-        hangul::decompose(ch, callback);
+    if is_syllable(ch) {
+        decompose_syllable(ch, callback);
         return;
     }
 

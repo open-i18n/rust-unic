@@ -35,7 +35,7 @@ pub fn is_syllable(ch: char) -> bool {
 // FIXME: This is a workaround, we should use `F` instead of `&mut F`
 #[allow(unsafe_code)]
 #[inline]
-pub fn decompose<F>(syllable: char, f: &mut F)
+pub fn decompose_syllable<F>(syllable: char, f: &mut F)
 where
     F: FnMut(char),
 {
@@ -58,7 +58,7 @@ where
 /// Compose a pair of Hangul Jamo
 #[allow(unsafe_code)]
 #[inline]
-pub fn compose(jamo1: char, jamo2: char) -> Option<char> {
+pub fn compose_syllable(jamo1: char, jamo2: char) -> Option<char> {
     let l = jamo1 as u32;
     let v = jamo2 as u32;
     // Compose an LPart and a VPart

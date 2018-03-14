@@ -54,12 +54,13 @@ pub use gen_cat::is_combining_mark;
 mod decomposition_type;
 pub use decomposition_type::DecompositionType;
 
-use unic_ucd_hangul::hangul;
+use unic_ucd_hangul::compose_syllable;
+
 /// Compose two characters into a single character, if possible.
 /// See [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/)
 /// for more information.
 pub fn compose(a: char, b: char) -> Option<char> {
-    hangul::compose(a, b).or_else(|| canonical_composition(a).and_then(|table| table.find(b)))
+    compose_syllable(a, b).or_else(|| canonical_composition(a).and_then(|table| table.find(b)))
 }
 
 use unic_ucd_version::UnicodeVersion;

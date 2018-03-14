@@ -16,7 +16,8 @@
 extern crate unic_ucd_version;
 use unic_ucd_version::UnicodeVersion;
 
-pub mod hangul;
+mod hangul;
+pub use hangul::{is_syllable, compose_syllable, decompose_syllable};
 
 mod pkg_info;
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

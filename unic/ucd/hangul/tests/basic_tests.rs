@@ -9,13 +9,13 @@
 // except according to those terms.
 
 extern crate unic_ucd_hangul;
-use unic_ucd_hangul::hangul;
+use unic_ucd_hangul::{is_syllable, compose_syllable, decompose_syllable};
 
 #[test]
 fn test_is_syllable() {
-    assert!(hangul::is_syllable('갏'));
-    assert!(!hangul::is_syllable('A'));
-    assert!(!hangul::is_syllable('韩'));
+    assert!(is_syllable('갏'));
+    assert!(!is_syllable('A'));
+    assert!(!is_syllable('韩'));
 }
 
 #[test]
@@ -25,7 +25,7 @@ fn test_decompose() {
         let mut collect_decomposed = |chr| {
             decomposed_lv.push(chr);
         };
-        hangul::decompose('쮀', &mut collect_decomposed);
+        decompose_syllable('쮀', &mut collect_decomposed);
     }
     assert_eq!(decomposed_lv, ['ᄍ', 'ᅰ']);
 
@@ -34,7 +34,7 @@ fn test_decompose() {
         let mut collect_decomposed = |chr| {
             decomposed_lvt.push(chr);
         };
-        hangul::decompose('퓛', &mut collect_decomposed);
+        decompose_syllable('퓛', &mut collect_decomposed);
     }
     assert_eq!(decomposed_lvt, ['ᄑ', 'ᅱ', 'ᆶ']);
 }
@@ -45,9 +45,9 @@ fn test_compose() {
     let v = 'ᅱ';
     let t = 'ᆶ';
 
-    let lv = hangul::compose(l, v).unwrap();
+    let lv = compose_syllable(l, v).unwrap();
     assert_eq!(lv, '퓌');
 
-    let lvt = hangul::compose(lv, t).unwrap();
+    let lvt = compose_syllable(lv, t).unwrap();
     assert_eq!(lvt, '퓛');
 }
