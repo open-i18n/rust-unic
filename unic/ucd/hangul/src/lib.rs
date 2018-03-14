@@ -24,22 +24,21 @@
 //! ```rust
 //! # use unic_ucd_hangul::{is_syllable, compose_syllable, decompose_syllable};
 //!
-//! assert!(is_syllable('갏'));
-//! assert!(!is_syllable('A'));
+//! let sample_hangul = '갓';
+//! assert!(is_syllable(sample_hangul));
 //!
-//! let mut decomposed_lv = vec![];
+//! let mut decomposed = vec![];
 //! {
 //!     let mut collect_decomposed = |chr| {
-//!         decomposed_lv.push(chr);
+//!         decomposed.push(chr);
 //!     };
-//!     decompose_syllable('쮀', &mut collect_decomposed);
+//!     decompose_syllable(sample_hangul, &mut collect_decomposed);
 //! }
-//! assert_eq!(decomposed_lv, ['ᄍ', 'ᅰ']);
+//! assert_eq!(decomposed, ['ᄀ', 'ᅡ', 'ᆺ']);
 //!
-//! assert_eq!(
-//!     compose_syllable('ᄑ', 'ᅱ').unwrap(),
-//!     '퓌',
-//! );
+//! let composed_lv = compose_syllable(decomposed[0], decomposed[1]).unwrap();
+//! let composed = compose_syllable(composed_lv, decomposed[2]).unwrap();
+//! assert_eq!(composed, sample_hangul);
 //! ```
 
 extern crate unic_ucd_version;

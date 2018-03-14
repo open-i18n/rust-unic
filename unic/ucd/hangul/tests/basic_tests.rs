@@ -51,3 +51,22 @@ fn test_compose() {
     let lvt = compose_syllable(lv, t).unwrap();
     assert_eq!(lvt, '퓛');
 }
+
+#[test]
+fn test_decompose_then_compose() {
+    let sample_hangul = '갓';
+    assert!(is_syllable(sample_hangul));
+
+    let mut decomposed = vec![];
+    {
+        let mut collect_decomposed = |chr| {
+            decomposed.push(chr);
+        };
+        decompose_syllable(sample_hangul, &mut collect_decomposed);
+    }
+    assert_eq!(decomposed, ['ᄀ', 'ᅡ', 'ᆺ']);
+
+    let composed_lv = compose_syllable(decomposed[0], decomposed[1]).unwrap();
+    let composed = compose_syllable(composed_lv, decomposed[2]).unwrap();
+    assert_eq!(composed, sample_hangul);
+}
