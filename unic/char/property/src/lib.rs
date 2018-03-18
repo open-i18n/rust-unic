@@ -32,7 +32,6 @@
 //!
 //! * [PropertyAliases.txt](https://www.unicode.org/Public/UCD/latest/ucd/PropertyAliases.txt).
 
-#[macro_use]
 extern crate unic_char_range;
 
 mod pkg_info;

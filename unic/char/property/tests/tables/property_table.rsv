@@ -1,3 +1,4 @@
-CharDataTable::Range(&[
-    (chars!(' '..='~'), ()),
-])
+CharRangeMap {
+    ranges: &[chars!(' '..='~')],
+    values: &[()],
+}

@@ -204,8 +204,9 @@ macro_rules! char_property {
         impl $prop_name {
             /// Get (struct) property value of the character.
             pub fn of(ch: char) -> Self {
-                use $crate::tables::CharDataTable;
-                const TABLE: CharDataTable<()> = include!($data_path);
+                // TODO(CAD97): Force BoolTrie (currently RangeMap) or allow specification?
+                use $crate::tables::CharRangeMap;
+                const TABLE: CharRangeMap<()> = include!($data_path);
                 $prop_name(TABLE.contains(ch))
             }
 
