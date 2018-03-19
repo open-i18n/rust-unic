@@ -11,7 +11,7 @@
 extern crate unic_char_property;
 extern crate unic_ucd_segment;
 
-use unic_char_property::tables::CharDataTable;
+use unic_char_property::tables::CharMap;
 
 use unic_ucd_segment::grapheme_cluster_break::{self, GraphemeClusterBreak};
 use unic_ucd_segment::word_break::{self, WordBreak};
@@ -21,11 +21,11 @@ fn test_grapheme_cluster_break_conformance() {
     use grapheme_cluster_break::abbr_names::*;
     use grapheme_cluster_break::long_names::*;
 
-    const TEST_DATA: CharDataTable<GraphemeClusterBreak> =
+    const TEST_DATA: CharMap<GraphemeClusterBreak> =
         include!("tables/grapheme_cluster_break_test_data.rsv");
 
     for (ch, gcb) in TEST_DATA.iter() {
-        assert_eq!(GraphemeClusterBreak::of(ch.low), gcb);
+        assert_eq!(GraphemeClusterBreak::of(ch), gcb);
     }
 }
 
@@ -36,9 +36,9 @@ fn test_word_break_conformance() {
     // The test data file uses some unexpected names for some values
     use word_break::long_names::{Extend as Extend_FE, Format as Format_FE, ZWJ as ZWJ_FE};
 
-    const TEST_DATA: CharDataTable<WordBreak> = include!("tables/word_break_test_data.rsv");
+    const TEST_DATA: CharMap<WordBreak> = include!("tables/word_break_test_data.rsv");
 
     for (ch, gcb) in TEST_DATA.iter() {
-        assert_eq!(WordBreak::of(ch.low), gcb);
+        assert_eq!(WordBreak::of(ch), gcb);
     }
 }

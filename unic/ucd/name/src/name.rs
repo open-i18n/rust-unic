@@ -212,8 +212,8 @@ impl PartialOrd for Name {
 }
 
 mod data {
-    use unic_char_property::tables::CharDataTable;
+    use unic_char_property::tables::CharMap;
     include!("../tables/name_values.rsd");
-    pub const NAMES: CharDataTable<&[&str]> = include!("../tables/name_map.rsv");
-    pub const JAMO_SHORT_NAMES: CharDataTable<&str> = include!("../tables/jamo.rsv");
+    pub const NAMES: CharMap<&[&str]> = include!("../tables/name_map.rsv");
+    pub const JAMO_SHORT_NAMES: CharMap<&str> = include!("../tables/jamo.rsv");
 }

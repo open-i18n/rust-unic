@@ -52,8 +52,8 @@ impl NumericCharProperty<u8> for CanonicalCombiningClass {
 
 mod data {
     use super::CanonicalCombiningClass;
-    use unic_char_property::tables::CharDataTable;
-    pub const CANONICAL_COMBINING_CLASS_VALUES: CharDataTable<CanonicalCombiningClass> =
+    use unic_char_property::tables::CharRangeMap;
+    pub const CANONICAL_COMBINING_CLASS_VALUES: CharRangeMap<CanonicalCombiningClass> =
         include!("../tables/canonical_combining_class_values.rsv");
 }
 
@@ -62,7 +62,7 @@ mod data {
 impl CanonicalCombiningClass {
     /// Find the character `Canonical_Combining_Class` property value.
     pub fn of(ch: char) -> CanonicalCombiningClass {
-        data::CANONICAL_COMBINING_CLASS_VALUES.find_or_default(ch)
+        data::CANONICAL_COMBINING_CLASS_VALUES.find(ch).unwrap_or_default()
     }
 
     // == Named values ==

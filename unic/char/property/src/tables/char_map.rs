@@ -26,6 +26,15 @@ pub struct CharMap<V: Copy + 'static> {
     pub values: &'static [V],
 }
 
+impl<V: Copy + 'static> Default for CharMap<V> {
+    fn default() -> Self {
+        CharMap {
+            chars: &[],
+            values: &[],
+        }
+    }
+}
+
 impl<V: Copy + 'static> CharMap<V> {
     /// Does this map contain a mapping for this codepoint?
     pub fn contains(&self, needle: char) -> bool {

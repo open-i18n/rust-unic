@@ -342,15 +342,15 @@ impl Default for WordBreak {
 
 mod data {
     use super::long_names as WB;
-    use unic_char_property::tables::CharDataTable;
-    pub const WORD_BREAK_TABLE: CharDataTable<super::WordBreak> =
+    use unic_char_property::tables::CharRangeMap;
+    pub const WORD_BREAK_TABLE: CharRangeMap<super::WordBreak> =
         include!("../tables/word_break.rsv");
 }
 
 impl WordBreak {
     /// Find the character `Word_Break` property value.
     pub fn of(ch: char) -> WordBreak {
-        data::WORD_BREAK_TABLE.find_or_default(ch)
+        data::WORD_BREAK_TABLE.find(ch).unwrap_or_default()
     }
 }
 

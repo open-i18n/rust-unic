@@ -29,6 +29,15 @@ pub struct CharRangeMap<V: Copy + 'static> {
     pub values: &'static [V],
 }
 
+impl<V: Copy + 'static> Default for CharRangeMap<V> {
+    fn default() -> Self {
+        CharRangeMap {
+            ranges: &[],
+            values: &[],
+        }
+    }
+}
+
 impl<V: Copy + 'static> CharRangeMap<V> {
     /// Does this map contain a mapping for this codepoint?
     pub fn contains(&self, needle: char) -> bool {

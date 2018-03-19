@@ -223,15 +223,15 @@ impl Default for BidiClass {
 
 mod data {
     use super::abbr_names::*;
-    use unic_char_property::tables::CharDataTable;
-    pub const BIDI_CLASS_TABLE: CharDataTable<super::BidiClass> =
+    use unic_char_property::tables::CharRangeMap;
+    pub const BIDI_CLASS_TABLE: CharRangeMap<super::BidiClass> =
         include!("../tables/bidi_class.rsv");
 }
 
 impl BidiClass {
     /// Find the character `Bidi_Class` property value.
     pub fn of(ch: char) -> BidiClass {
-        data::BIDI_CLASS_TABLE.find_or_default(ch)
+        data::BIDI_CLASS_TABLE.find(ch).unwrap_or_default()
     }
 
     /// If the `BidiClass` has strong or explicit Left-to-Right direction.

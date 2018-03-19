@@ -251,15 +251,15 @@ impl Default for GeneralCategory {
 
 mod data {
     use super::abbr_names::*;
-    use unic_char_property::tables::CharDataTable;
-    pub const GENERAL_CATEGORY_TABLE: CharDataTable<super::GeneralCategory> =
+    use unic_char_property::tables::CharRangeMap;
+    pub const GENERAL_CATEGORY_TABLE: CharRangeMap<super::GeneralCategory> =
         include!("../tables/general_category.rsv");
 }
 
 impl GeneralCategory {
     /// Find the `GeneralCategory` of a single char.
     pub fn of(ch: char) -> GeneralCategory {
-        data::GENERAL_CATEGORY_TABLE.find_or_default(ch)
+        data::GENERAL_CATEGORY_TABLE.find(ch).unwrap_or_default()
     }
 }
 
