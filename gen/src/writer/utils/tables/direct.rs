@@ -26,19 +26,22 @@ impl<T> ToDirectCharTable<T> for BTreeMap<char, T> {
     where
         F: Fn(&T, &mut fmt::Formatter) -> fmt::Result,
     {
-        let entries = self.iter();
-        let mut out = String::from("CharDataTable::Direct(&[\n");
+        let mut out = String::from("CharMap {\n");
 
-        for (char, property) in entries {
-            writeln!(
-                out,
-                "    ('{}', {}),",
-                char.escape_unicode(),
-                DisplayWrapper(property, &display_fn)
-            ).expect("`String` `Write` failed");
+        out.push_str("    chars: &[\n");
+        for ch in self.keys() {
+            writeln!(out, "        '{}',", ch.escape_unicode()).expect("`String` `Write` failed");
         }
+        out.push_str("    ],\n");
 
-        out.push_str("])");
+        out.push_str("    values: &[\n");
+        for val in self.values() {
+            writeln!(out, "        {},", DisplayWrapper(val, &display_fn))
+                .expect("`String` `Write` failed");
+        }
+        out.push_str("    ],\n");
+
+        out.push_str("}");
         out
     }
 }
@@ -61,14 +64,24 @@ mod test {
         assert_eq!(
             map.to_direct_char_table(Display::fmt),
             "\
-CharDataTable::Direct(&[
-    ('\\u{61}', A),
-    ('\\u{62}', B),
-    ('\\u{63}', C),
-    ('\\u{78}', X),
-    ('\\u{79}', Y),
-    ('\\u{7a}', Z),
-])"
+CharMap {
+    chars: &[
+        '\\u{61}',
+        '\\u{62}',
+        '\\u{63}',
+        '\\u{78}',
+        '\\u{79}',
+        '\\u{7a}',
+    ],
+    values: &[
+        A,
+        B,
+        C,
+        X,
+        Y,
+        Z,
+    ],
+}"
         );
     }
 }

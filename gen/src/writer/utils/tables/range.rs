@@ -8,10 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+use super::DisplayWrapper;
 use std::collections::BTreeMap;
 use std::fmt::{self, Write};
-
-use super::DisplayWrapper;
 
 /// Create the source for a `CharDataTable`, using `CharRange`s to deduplicate data.
 pub trait ToRangeCharTable<T: Eq> {
@@ -26,38 +25,48 @@ impl<T: Eq> ToRangeCharTable<T> for BTreeMap<char, T> {
     where
         F: Fn(&T, &mut fmt::Formatter) -> fmt::Result,
     {
-        let mut entries = self.iter();
-        let mut out = String::from("CharDataTable::Range(&[\n");
+        let mut range_map = vec![];
 
+        let mut entries = self.iter();
         if let Some((&low, mut value)) = entries.next() {
             let (mut low, mut high) = (low, low);
 
-            let append_entry = |out: &mut String, low: char, high: char, c: &T| {
-                writeln!(
-                    out,
-                    "    (chars!('{}'..='{}'), {}),",
-                    low.escape_unicode(),
-                    high.escape_unicode(),
-                    DisplayWrapper(c, &display_fn),
-                ).expect("`String` `Write` failed");
-            };
-
-            for (&char, property) in entries {
-                if property != value || (char as u32) > (high as u32 + 1) {
-                    append_entry(&mut out, low, high, value);
-                    low = char;
-                    high = char;
+            for (&codepoint, property) in entries {
+                if property != value || (codepoint as u32) > (high as u32 + 1) {
+                    range_map.push(((low, high), value));
+                    low = codepoint;
+                    high = codepoint;
                     value = property;
                 } else {
-                    assert_eq!(char as u32, high as u32 + 1);
-                    high = char;
+                    assert_eq!(codepoint as u32, high as u32 + 1);
+                    high = codepoint;
                 }
             }
 
-            append_entry(&mut out, low, high, value);
+            range_map.push(((low, high), value));
         }
 
-        out.push_str("])");
+        let mut out = String::from("CharRangeMap {\n");
+
+        out.push_str("    ranges: &[\n");
+        for &((low, high), _) in range_map.iter() {
+            writeln!(
+                out,
+                "        chars!('{}'..='{}'),",
+                low.escape_unicode(),
+                high.escape_unicode(),
+            ).expect("`String` `Write` failed");
+        }
+        out.push_str("    ],\n");
+
+        out.push_str("    values: &[\n");
+        for &(_, val) in range_map.iter() {
+            writeln!(out, "        {},", DisplayWrapper(val, &display_fn))
+                .expect("`String` `Write` failed");
+        }
+        out.push_str("    ],\n");
+
+        out.push_str("}");
         out
     }
 }
@@ -83,11 +92,18 @@ mod test {
         assert_eq!(
             map.to_range_char_table(Display::fmt),
             "\
-CharDataTable::Range(&[
-    (chars!('\\u{61}'..='\\u{63}'), Low),
-    (chars!('\\u{64}'..='\\u{66}'), Mid),
-    (chars!('\\u{78}'..='\\u{7a}'), High),
-])"
+CharRangeMap {
+    ranges: &[
+        chars!('\\u{61}'..='\\u{63}'),
+        chars!('\\u{64}'..='\\u{66}'),
+        chars!('\\u{78}'..='\\u{7a}'),
+    ],
+    values: &[
+        Low,
+        Mid,
+        High,
+    ],
+}"
         );
     }
 }
