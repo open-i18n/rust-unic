@@ -11,14 +11,14 @@
 
 #[cfg(not(feature = "unic-ucd-category"))]
 mod mark {
-    use unic_char_property::tables::CharDataTable;
+    use unic_char_property::tables::CharRangeMap;
 
-    const GENERAL_CATEGORY_MARK: CharDataTable<()> =
+    const GENERAL_CATEGORY_MARK: CharRangeMap<()> =
         include!("../tables/general_category_mark.rsv");
 
     /// Return whether the given character is a combining mark (`General_Category=Mark`)
     pub fn is_combining_mark(c: char) -> bool {
-        CharDataTable::<()>::find(&GENERAL_CATEGORY_MARK, c).is_some()
+        GENERAL_CATEGORY_MARK.find(c).is_some()
     }
 }
 
