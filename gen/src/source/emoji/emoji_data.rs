@@ -41,6 +41,9 @@ pub struct EmojiData {
     /// Characters that normally do not appear on emoji keyboards as separate choices, such as
     /// Keycap base characters, Regional_Indicators, ….
     pub emoji_component: BTreeSet<char>,
+
+    /// Characters that are used to ‘future-proof’ segmentation.
+    pub extended_pictographic: BTreeSet<char>,
 }
 
 impl FromStr for EmojiData {
@@ -64,6 +67,7 @@ impl FromStr for EmojiData {
                 "Emoji_Modifier" => props.emoji_modifier.extend(range),
                 "Emoji_Modifier_Base" => props.emoji_modifier_base.extend(range),
                 "Emoji_Component" => props.emoji_component.extend(range),
+                "Extended_Pictographic" => props.extended_pictographic.extend(range),
                 prop => panic!("Unsupported EmojiData property `{}`", prop),
             }
         }
