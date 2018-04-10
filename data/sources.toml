@@ -19,6 +19,8 @@ specs = [
 "SentenceBreakProperty.txt"     = "auxiliary/SentenceBreakProperty.txt"
 "WordBreakProperty.txt"         = "auxiliary/WordBreakProperty.txt"
 
+"Unihan.zip"                    = "Unihan.zip"
+
 [ucd.test_resources]
 "BidiCharacterTest.txt"         = "BidiCharacterTest.txt"
 "BidiTest.txt"                  = "BidiTest.txt"

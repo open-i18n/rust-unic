@@ -30,6 +30,7 @@ extern crate clap;
 extern crate futures;
 extern crate hyper;
 extern crate tokio_core;
+extern crate zip;
 
 #[macro_use]
 extern crate serde_derive;
@@ -38,6 +39,7 @@ extern crate toml;
 
 mod client;
 mod config;
+mod unzipper;
 
 use std::fs;
 
@@ -63,6 +65,7 @@ fn main() {
     }
 
     client::download_all(&download_maps).expect("Download error");
+    unzipper::unzip_all(&download_maps).expect("Unzip error");
 }
 
 fn clean_dirs(download_maps: &[DownloadMap]) {

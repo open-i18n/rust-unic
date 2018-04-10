@@ -17,6 +17,9 @@ futures = "0.1"
 hyper = "0.11"
 tokio-core = "0.1"
 
+# Parsing zip files in UCD
+zip = "0.3"
+
 # Config parsing
 serde = "1.0"
 serde_derive = "1.0"
