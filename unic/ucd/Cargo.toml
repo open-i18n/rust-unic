@@ -23,6 +23,7 @@ unic-ucd-ident = { path = "ident/", version = "0.7.0" }
 unic-ucd-name = { path = "name/", version = "0.7.0" }
 unic-ucd-normal = { path = "normal/", version = "0.7.0", features = ["unic-ucd-category"] }
 unic-ucd-segment = { path = "segment/", version = "0.7.0" }
+unic-ucd-unihan = { path = "unihan/", version = "0.7.0" }
 unic-ucd-version = { path = "version/", version = "0.7.0" }
 
 [dev-dependencies]
