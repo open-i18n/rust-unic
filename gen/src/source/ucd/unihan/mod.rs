@@ -33,7 +33,9 @@ pub trait DataEntry {
 }
 
 pub fn parse_entries_from_str<T>(str: &str) -> Vec<T>
-where T: DataEntry + Clone {
+where
+    T: DataEntry + Clone
+{
     let mut entry_map: BTreeMap<char, T> = BTreeMap::default();
 
     for capture in UNIHAN_DATA_ENTRY_REGEX.captures_iter(str) {
