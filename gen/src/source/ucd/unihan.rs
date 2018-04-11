@@ -51,7 +51,12 @@ impl UnihanDataEntry {
     }
 
     pub fn update<'a>(&mut self, key: &'a str, value: &'a str) {
-
+        match key {
+            "kAccountingNumeric" => self.accounting_numeric = value.parse::<u64>().ok(),
+            "kOtherNumeric" => self.other_numeric = value.parse::<u64>().ok(),
+            "kPrimaryNumeric" => self.primary_numeric = value.parse::<u64>().ok(),
+            _ => println!("Key {} is not handled", key),
+        }
     }
 }
 
@@ -104,5 +109,36 @@ impl FromStr for UnihanData {
                               .collect::<Vec<UnihanDataEntry>>()
                               .into_boxed_slice(),
         })
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::{UnihanData, UnihanDataEntry};
+
+    #[test]
+    fn unihan_data_entry_parse() {
+        let mut entry1 = UnihanDataEntry::new('\u{3405}');
+        entry1.other_numeric = Some(5);
+
+        let mut entry2 = UnihanDataEntry::new('\u{4EDF}');
+        entry2.accounting_numeric = Some(1000);
+
+        let mut entry3 = UnihanDataEntry::new('\u{5146}');
+        entry3.primary_numeric = Some(1000000000000);
+
+        let entries = vec![
+            entry1,
+            entry2,
+            entry3
+        ];
+
+        assert_eq!(
+            "U+3405	kOtherNumeric	5\n\
+             U+4EDF	kAccountingNumeric	1000\n\
+             U+5146	kPrimaryNumeric	1000000000000\n\
+             ".parse(),
+            Ok(UnihanData { entries: entries.into_boxed_slice() })
+        );
     }
 }
