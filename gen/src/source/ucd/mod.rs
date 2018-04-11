@@ -19,7 +19,7 @@ pub mod prop_list;
 pub mod readme;
 pub mod sentence_break_property;
 pub mod unicode_data;
-pub mod unihan;
+pub mod unihan_numeric_values;
 pub mod word_break_property;
 
 use regex::Regex;
@@ -32,5 +32,17 @@ lazy_static! {
           \s+;\s+
           (\w+)                      # property
          ",
+    ).unwrap();
+}
+
+lazy_static! {
+    pub static ref UNIHAN_DATA_ENTRY_REGEX: Regex = Regex::new(
+        r"(?xm)^ # every line
+          U\+([[:xdigit:]]{4,6}) # [1]codepoint
+          \t                     # separator
+          (k[a-zA-Z0-9_]+)       # [2]field key
+          \t                     # separator
+          (.*)                   # [3]field value
+        ",
     ).unwrap();
 }

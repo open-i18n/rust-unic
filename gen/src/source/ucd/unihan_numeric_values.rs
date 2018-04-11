@@ -12,37 +12,28 @@ use std::char;
 use std::collections::BTreeMap;
 use std::str::FromStr;
 
-use regex::Regex;
-
 use source::utils::read;
 
+use super::UNIHAN_DATA_ENTRY_REGEX;
+
 lazy_static! {
-    pub static ref UNIHAN_DATA: UnihanData = {
-        let mut unihan_data_files = "".to_string();
-        unihan_data_files += &read("data/ucd/Unihan/Unihan_DictionaryIndices.txt");
-        unihan_data_files += &read("data/ucd/Unihan/Unihan_DictionaryLikeData.txt");
-        unihan_data_files += &read("data/ucd/Unihan/Unihan_IRGSources.txt");
-        unihan_data_files += &read("data/ucd/Unihan/Unihan_NumericValues.txt");
-        unihan_data_files += &read("data/ucd/Unihan/Unihan_OtherMappings.txt");
-        unihan_data_files += &read("data/ucd/Unihan/Unihan_RadicalStrokeCounts.txt");
-        unihan_data_files += &read("data/ucd/Unihan/Unihan_Readings.txt");
-        unihan_data_files += &read("data/ucd/Unihan/Unihan_Variants.txt");
-        unihan_data_files.parse().unwrap()
+    /// [Numeric values]: http://www.unicode.org/reports/tr38/#N1024D
+    pub static ref UNIHAN_NUMERIC_VALUES_DATA: UnihanNumericValuesData = {
+        read("data/ucd/Unihan/Unihan_NumericValues.txt").parse().unwrap()
     };
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
-pub struct UnihanDataEntry {
+pub struct UnihanNumericValuesDataEntry {
     pub character: char,
-
     pub accounting_numeric: Option<u64>,
     pub other_numeric: Option<u64>,
     pub primary_numeric: Option<u64>,
 }
 
-impl UnihanDataEntry {
-    pub fn new(character: char) -> UnihanDataEntry {
-        UnihanDataEntry {
+impl UnihanNumericValuesDataEntry {
+    pub fn new(character: char) -> UnihanNumericValuesDataEntry {
+        UnihanNumericValuesDataEntry {
             character: character,
             accounting_numeric: None,
             other_numeric: None,
@@ -55,35 +46,23 @@ impl UnihanDataEntry {
             "kAccountingNumeric" => self.accounting_numeric = value.parse::<u64>().ok(),
             "kOtherNumeric" => self.other_numeric = value.parse::<u64>().ok(),
             "kPrimaryNumeric" => self.primary_numeric = value.parse::<u64>().ok(),
-            _ => println!("Key {} is not handled", key),
+            _ => {},
         }
     }
 }
 
 #[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
-pub struct UnihanData {
-   pub entries: Box<[UnihanDataEntry]>,
+pub struct UnihanNumericValuesData {
+   pub entries: Box<[UnihanNumericValuesDataEntry]>,
 }
 
-impl FromStr for UnihanData {
+impl FromStr for UnihanNumericValuesData {
     type Err = ();
 
     fn from_str(str: &str) -> Result<Self, Self::Err> {
-        lazy_static! {
-            static ref REGEX: Regex = Regex::new(
-                r"(?xm)^ # every line
-                  U\+([[:xdigit:]]{4,6}) # [1]codepoint
-                  \t                     # separator
-                  (k[a-zA-Z0-9_]+)       # [2]field key
-                  \t                     # separator
-                  (.*)                   # [3]field value
-                ",
-            ).unwrap();
-        }
+        let mut entry_map: BTreeMap<char, UnihanNumericValuesDataEntry> = BTreeMap::default();
 
-        let mut entry_map: BTreeMap<char, UnihanDataEntry> = BTreeMap::new();
-
-        for capture in REGEX.captures_iter(str) {
+        for capture in UNIHAN_DATA_ENTRY_REGEX.captures_iter(str) {
             let code_point = u32::from_str_radix(&capture[1], 16).unwrap();
             let chr = char::from_u32(code_point).unwrap();
 
@@ -92,7 +71,7 @@ impl FromStr for UnihanData {
 
             match entry_map.get(&chr) {
                 None => {
-                    let mut entry = UnihanDataEntry::new(chr);
+                    let mut entry = UnihanNumericValuesDataEntry::new(chr);
                     entry.update(key, value);
                     entry_map.insert(chr, entry);
                 },
@@ -103,10 +82,10 @@ impl FromStr for UnihanData {
             }
         }
 
-        Ok(UnihanData {
+        Ok(UnihanNumericValuesData {
             entries: entry_map.values()
                               .cloned()
-                              .collect::<Vec<UnihanDataEntry>>()
+                              .collect::<Vec<UnihanNumericValuesDataEntry>>()
                               .into_boxed_slice(),
         })
     }
@@ -114,17 +93,17 @@ impl FromStr for UnihanData {
 
 #[cfg(test)]
 mod test {
-    use super::{UnihanData, UnihanDataEntry};
+    use super::{UnihanNumericValuesData, UnihanNumericValuesDataEntry};
 
     #[test]
-    fn unihan_data_entry_parse() {
-        let mut entry1 = UnihanDataEntry::new('\u{3405}');
+    fn unihan_numeric_values_data_entry_parse() {
+        let mut entry1 = UnihanNumericValuesDataEntry::new('\u{3405}');
         entry1.other_numeric = Some(5);
 
-        let mut entry2 = UnihanDataEntry::new('\u{4EDF}');
+        let mut entry2 = UnihanNumericValuesDataEntry::new('\u{4EDF}');
         entry2.accounting_numeric = Some(1000);
 
-        let mut entry3 = UnihanDataEntry::new('\u{5146}');
+        let mut entry3 = UnihanNumericValuesDataEntry::new('\u{5146}');
         entry3.primary_numeric = Some(1000000000000);
 
         let entries = vec![
@@ -138,7 +117,7 @@ mod test {
              U+4EDF	kAccountingNumeric	1000\n\
              U+5146	kPrimaryNumeric	1000000000000\n\
              ".parse(),
-            Ok(UnihanData { entries: entries.into_boxed_slice() })
+            Ok(UnihanNumericValuesData { entries: entries.into_boxed_slice() })
         );
     }
 }
