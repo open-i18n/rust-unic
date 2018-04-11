@@ -70,7 +70,7 @@ mod test {
     use super::{NumericValuesData, NumericValuesDataEntry};
 
     #[test]
-    fn unihan_numeric_values_data_entry_parse() {
+    fn data_entry_parse() {
         let mut entry1 = NumericValuesDataEntry::new('\u{3405}');
         entry1.other_numeric = Some(5);
 
