@@ -12,7 +12,7 @@ use std::collections::BTreeMap;
 use std::path::Path;
 
 use source::ucd::readme::UNICODE_VERSION;
-use source::ucd::unihan_numeric_values::UNIHAN_NUMERIC_VALUES_DATA;
+use source::ucd::unihan::numeric_values::UNIHAN_NUMERIC_VALUES_DATA;
 
 use writer::common::emit_unicode_version;
 use writer::utils::tables::ToDirectCharTable;
