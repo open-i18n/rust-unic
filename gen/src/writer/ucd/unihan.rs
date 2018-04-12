@@ -14,6 +14,7 @@ use std::path::Path;
 use source::ucd::readme::UNICODE_VERSION;
 use source::ucd::unihan::numeric_values::UNIHAN_NUMERIC_VALUES_DATA;
 use source::ucd::unihan::readings::UNIHAN_READINGS_DATA;
+use source::ucd::unihan::variants::UNIHAN_VARIANTS_DATA;
 
 use writer::common::emit_unicode_version;
 use writer::utils::tables::ToDirectCharTable;
@@ -23,6 +24,7 @@ pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
     emit_unihan_numeric_values_tables(dir);
     emit_unihan_readings_tables(dir);
+    emit_unihan_variants_tables(dir);
 }
 
 fn emit_unihan_numeric_values_tables(dir: &Path) {
@@ -171,5 +173,57 @@ fn emit_unihan_readings_tables(dir: &Path) {
         dir,
         "xhc_1983_map.rsv",
         &xhc_1983_map.to_direct_char_table(|record, f| write!(f, "\"{}\"", record)),
+    );
+}
+
+fn emit_unihan_variants_tables(dir: &Path) {
+    let mut semantic_variants_map = BTreeMap::default();
+    let mut simplified_variant_map = BTreeMap::default();
+    let mut specialized_semantic_variants_map = BTreeMap::default();
+    let mut traditional_variant_map = BTreeMap::default();
+    let mut z_variants_map = BTreeMap::default();
+
+    for entry in UNIHAN_VARIANTS_DATA.entries.iter() {
+        if let Some(ref value) = entry.semantic_variants {
+            semantic_variants_map.insert(entry.character, value);
+        }
+        if let Some(ref value) = entry.simplified_variant {
+            simplified_variant_map.insert(entry.character, value);
+        }
+        if let Some(ref value) = entry.specialized_semantic_variants {
+            specialized_semantic_variants_map.insert(entry.character, value);
+        }
+        if let Some(ref value) = entry.traditional_variant {
+            traditional_variant_map.insert(entry.character, value);
+        }
+        if let Some(ref value) = entry.z_variants {
+            z_variants_map.insert(entry.character, value);
+        }
+    }
+
+    write(
+        dir,
+        "semantic_variants_map.rsv",
+        &semantic_variants_map.to_direct_char_table(|record, f| write!(f, "{:?}", record)),
+    );
+    write(
+        dir,
+        "simplified_variant_map.rsv",
+        &simplified_variant_map.to_direct_char_table(|record, f| write!(f, "'{}'", record)),
+    );
+    write(
+        dir,
+        "specialized_semantic_variants_map.rsv",
+        &specialized_semantic_variants_map.to_direct_char_table(|record, f| write!(f, "{:?}", record)),
+    );
+    write(
+        dir,
+        "traditional_variant_map.rsv",
+        &traditional_variant_map.to_direct_char_table(|record, f| write!(f, "'{}'", record)),
+    );
+    write(
+        dir,
+        "z_variants_map.rsv",
+        &z_variants_map.to_direct_char_table(|record, f| write!(f, "{:?}", record)),
     );
 }

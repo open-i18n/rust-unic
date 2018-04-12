@@ -10,6 +10,7 @@
 
 pub mod numeric_values;
 pub mod readings;
+pub mod variants;
 
 use std::char;
 use std::collections::BTreeMap;
