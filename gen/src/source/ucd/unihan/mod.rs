@@ -9,6 +9,7 @@
 // except according to those terms.
 
 pub mod numeric_values;
+pub mod readings;
 
 use std::char;
 use std::collections::BTreeMap;
