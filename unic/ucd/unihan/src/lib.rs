@@ -14,6 +14,11 @@
 #![deny(bad_style, unsafe_code, unused)]
 
 extern crate unic_ucd_version;
+extern crate unic_char_property;
+
+mod readings;
+pub use readings::{definition_of, mandarin_of};
+
 use unic_ucd_version::UnicodeVersion;
 
 mod pkg_info;
