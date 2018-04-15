@@ -70,3 +70,6 @@ mod iter_fused;
 
 #[cfg(feature = "trusted-len")]
 mod iter_trusted_len;
+
+#[cfg(feature = "rayon")]
+mod par_iter;
