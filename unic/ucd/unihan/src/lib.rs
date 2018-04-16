@@ -19,6 +19,9 @@ extern crate unic_char_property;
 mod readings;
 pub use readings::{definition_of, mandarin_of};
 
+mod variants;
+pub use variants::{simplified_variant_of, traditional_variant_of};
+
 use unic_ucd_version::UnicodeVersion;
 
 mod pkg_info;

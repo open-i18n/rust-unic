@@ -10,7 +10,12 @@
 
 extern crate unic_ucd_unihan;
 
-use unic_ucd_unihan::{definition_of, mandarin_of};
+use unic_ucd_unihan::{
+    definition_of,
+    mandarin_of,
+    simplified_variant_of,
+    traditional_variant_of,
+};
 
 #[test]
 fn test_definition() {
@@ -22,4 +27,16 @@ fn test_definition() {
 fn test_mandarin() {
     assert_eq!(mandarin_of('\u{0001}'), None);
     assert_eq!(mandarin_of('\u{340c}'), Some("yí"));
+}
+
+#[test]
+fn test_simplified_variant() {
+    assert_eq!(simplified_variant_of('\u{0001}'), None);
+    assert_eq!(simplified_variant_of('\u{380f}'), Some('\u{37c6}'));
+}
+
+#[test]
+fn test_traditional_variant() {
+    assert_eq!(traditional_variant_of('\u{0001}'), None);
+    assert_eq!(traditional_variant_of('\u{37c6}'), Some('\u{380f}'));
 }
