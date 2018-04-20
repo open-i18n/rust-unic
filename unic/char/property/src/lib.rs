@@ -20,7 +20,7 @@
 //!
 //! ## References
 //!
-//! * [Unicode UTR #23: The Unicode Character Property Model](http://unicode.org/reports/tr23/>).
+//! * [Unicode UTR #23: The Unicode Character Property Model](http://unicode.org/reports/tr23/).
 //!
 //! * [Unicode UAX #44: Unicode Character Database](http://unicode.org/reports/tr44/).
 //!
