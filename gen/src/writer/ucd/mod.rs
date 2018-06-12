@@ -10,6 +10,7 @@
 
 mod age;
 mod bidi;
+mod blocks;
 mod case;
 mod category;
 mod common;
@@ -26,6 +27,7 @@ use writer::utils::clean_dir;
 pub fn generate() {
     age::generate(&clean_dir("unic/ucd/age/tables"));
     bidi::generate(&clean_dir("unic/ucd/bidi/tables"));
+    blocks::generate(&clean_dir("unic/ucd/block/tables"));
     case::generate(&clean_dir("unic/ucd/case/tables"));
     category::generate(&clean_dir("unic/ucd/category/tables"));
     common::generate(&clean_dir("unic/ucd/common/tables"));
