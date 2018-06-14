@@ -13,14 +13,18 @@
 #![forbid(future_incompatible, missing_debug_implementations, unconditional_recursion, unsafe_code)]
 #![deny(bad_style, unsafe_code, unused)]
 
+#[macro_use]
+extern crate unic_char_range;
+extern crate unic_char_property;
 extern crate unic_ucd_version;
-use unic_ucd_version::UnicodeVersion;
 
 mod block;
-// TODO: export block APIs
+pub use block::{Block, BlockIter};
 
 mod pkg_info;
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+
+use unic_ucd_version::UnicodeVersion;
 
 /// The [Unicode version](https://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");
