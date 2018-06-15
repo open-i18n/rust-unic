@@ -19,6 +19,10 @@ pub struct Block {
 }
 
 impl Block {
+    pub fn of(chr: char) -> Option<Block> {
+        Block::new(data::BLOCKS.find_with_range(chr))
+    }
+
     fn new(raw_block: Option<(CharRange, &'static str)>) -> Option<Block> {
         match raw_block {
             None => None,

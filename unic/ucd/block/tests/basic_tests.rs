@@ -9,10 +9,18 @@
 // except according to those terms.
 
 extern crate unic_ucd_block;
-use unic_ucd_block::BlockIter;
+use unic_ucd_block::{Block, BlockIter};
 
 #[test]
-fn test_all() {
+fn test_block_of() {
+    let latin_1 = Block::of('\u{00a9}').unwrap(); // ©, COPYRIGHT SIGN
+    assert_eq!(latin_1.range.low, '\u{0080}');
+    assert_eq!(latin_1.range.high, '\u{00ff}');
+    assert_eq!(latin_1.name, "Latin-1 Supplement");
+}
+
+#[test]
+fn test_block_iter() {
     assert_eq!(BlockIter::new().count(), 277);
 
     let basic_latin = BlockIter::new().nth(0).unwrap();
