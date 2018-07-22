@@ -47,7 +47,7 @@ specs = [
 
 
 [emoji]
-version = "5.0"
+version = "11.0"
 base_url = "http://www.unicode.org/Public/emoji/{version}/"
 specs = [
     "http://www.unicode.org/reports/tr51/",

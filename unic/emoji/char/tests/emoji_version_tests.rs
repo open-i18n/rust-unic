@@ -13,7 +13,5 @@ extern crate unic_ucd_version;
 
 #[test]
 fn test_emoji_data_version_against_ucd_version() {
-    // At the moment, Emoji Version is strictly smaller than Unicode Version. Emoji Version is going
-    // to be *synced* with Unicode Version, but may receive minor updates separately.
-    assert!(unic_emoji_char::EMOJI_VERSION.major <= unic_ucd_version::UNICODE_VERSION.major);
+    assert!(unic_emoji_char::EMOJI_VERSION == unic_ucd_version::UNICODE_VERSION);
 }
