@@ -32,15 +32,22 @@ pub struct EmojiData {
     /// Characters that have emoji presentation by default.
     pub emoji_presentation: BTreeSet<char>,
 
-    /// Characters that are emoji modifiers
+    /// Characters that are emoji modifiers.
     pub emoji_modifier: BTreeSet<char>,
 
     /// Characters that can serve as a base for emoji modifiers.
     pub emoji_modifier_base: BTreeSet<char>,
 
     /// Characters that normally do not appear on emoji keyboards as separate choices, such as
-    /// Keycap base characters, Regional_Indicators, ….
+    /// keycap base characters or Regional_Indicator characters. All characters in emoji sequences
+    /// are either Emoji or Emoji_Component. Implementations must not, however, assume that all
+    /// Emoji_Component characters are also Emoji. There are some non-emoji characters that are used
+    /// in various emoji sequences, such as tag characters and ZWJ.
     pub emoji_component: BTreeSet<char>,
+
+    /// Characters that are used to future-proof segmentation. The Extended_Pictographic characters
+    /// contain all the Emoji characters except for some Emoji_Component characters.
+    pub extended_pictographic: BTreeSet<char>
 }
 
 impl FromStr for EmojiData {
@@ -64,6 +71,7 @@ impl FromStr for EmojiData {
                 "Emoji_Modifier" => props.emoji_modifier.extend(range),
                 "Emoji_Modifier_Base" => props.emoji_modifier_base.extend(range),
                 "Emoji_Component" => props.emoji_component.extend(range),
+                "Extended_Pictographic" => props.extended_pictographic.extend(range),
                 prop => panic!("Unsupported EmojiData property `{}`", prop),
             }
         }

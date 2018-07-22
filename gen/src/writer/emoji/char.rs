@@ -23,6 +23,7 @@ pub fn generate(dir: &Path) {
     emit_emoji_modifier(dir);
     emit_emoji_modifier_base(dir);
     emit_emoji_component(dir);
+    emit_extended_pictographic(dir);
 }
 
 pub fn emit_emoji_data_version(dir: &Path, emoji_version: &EmojiDataVersion) {
@@ -69,5 +70,13 @@ pub fn emit_emoji_component(dir: &Path) {
         dir,
         "emoji_component.rsv",
         &EMOJI_DATA.emoji_component.to_range_char_set(),
+    );
+}
+
+pub fn emit_extended_pictographic(dir: &Path) {
+    write(
+        dir,
+        "extended_pictographic.rsv",
+        &EMOJI_DATA.extended_pictographic.to_range_char_set(),
     );
 }
