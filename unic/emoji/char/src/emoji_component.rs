@@ -15,7 +15,13 @@ char_property! {
     /// [`Emoji_Component`](https://www.unicode.org/reports/tr51/#Emoji_Properties).
     ///
     /// The value is `true` for characters that normally do not appear on emoji keyboards as
-    /// separate choices, such as Keycap base characters, Regional_Indicators, …, `false` otherwise.
+    /// separate choices, such as keycap base characters or Regional_Indicator characters, `false`
+    /// otherwise.
+    ///
+    /// All characters in emoji sequences are either Emoji or Emoji_Component. Implementations must
+    /// not, however, assume that all Emoji_Component characters are also Emoji. There are some
+    /// non-emoji characters that are used in various emoji sequences, such as tag characters and
+    /// ZWJ.
     pub struct EmojiComponent(bool) {
         abbr => "Emoji_Component";
         long => "Emoji_Component";
@@ -25,7 +31,13 @@ char_property! {
     }
 
     /// The value is `true` for characters that normally do not appear on emoji keyboards as
-    /// separate choices, such as Keycap base characters, Regional_Indicators, …, `false` otherwise.
+    /// separate choices, such as keycap base characters or Regional_Indicator characters, `false`
+    /// otherwise.
+    ///
+    /// All characters in emoji sequences are either Emoji or Emoji_Component. Implementations must
+    /// not, however, assume that all Emoji_Component characters are also Emoji. There are some
+    /// non-emoji characters that are used in various emoji sequences, such as tag characters and
+    /// ZWJ.
     pub fn is_emoji_component(char) -> bool;
 }
 
@@ -59,7 +71,7 @@ mod tests {
         assert_eq!(is_emoji_component('\u{061c}'), false);
         assert_eq!(is_emoji_component('\u{061d}'), false);
 
-        assert_eq!(is_emoji_component('\u{200d}'), false);
+        assert_eq!(is_emoji_component('\u{200d}'), true);
         assert_eq!(is_emoji_component('\u{200e}'), false);
         assert_eq!(is_emoji_component('\u{200f}'), false);
         assert_eq!(is_emoji_component('\u{2010}'), false);
