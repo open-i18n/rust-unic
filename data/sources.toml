@@ -32,7 +32,7 @@ specs = [
 
 
 [idna]
-version = "10.0.0"
+version = "11.0.0"
 base_url = "http://www.unicode.org/Public/idna/{version}/"
 specs = [
     "http://www.unicode.org/reports/tr46/",
@@ -43,7 +43,7 @@ specs = [
 "IdnaMappingTable.txt"  = "IdnaMappingTable.txt"
 
 [idna.test_resources]
-"IdnaTest.txt"          = "IdnaTest.txt"
+"IdnaTestV2.txt"        = "IdnaTestV2.txt"
 
 
 [emoji]
