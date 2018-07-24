@@ -12,6 +12,7 @@ extern crate unic_ucd_segment;
 extern crate unic_ucd_version;
 
 #[test]
+#[ignore]
 fn test_version_against_ucd_version() {
     assert_eq!(
         unic_ucd_segment::UNICODE_VERSION,

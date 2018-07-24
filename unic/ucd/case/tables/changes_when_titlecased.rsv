@@ -599,6 +599,7 @@ CharDataTable::Range(&[
     (chars!('\u{a7a9}'..='\u{a7a9}'), ()),
     (chars!('\u{a7b5}'..='\u{a7b5}'), ()),
     (chars!('\u{a7b7}'..='\u{a7b7}'), ()),
+    (chars!('\u{a7b9}'..='\u{a7b9}'), ()),
     (chars!('\u{ab53}'..='\u{ab53}'), ()),
     (chars!('\u{ab70}'..='\u{abbf}'), ()),
     (chars!('\u{fb00}'..='\u{fb06}'), ()),
@@ -608,5 +609,6 @@ CharDataTable::Range(&[
     (chars!('\u{104d8}'..='\u{104fb}'), ()),
     (chars!('\u{10cc0}'..='\u{10cf2}'), ()),
     (chars!('\u{118c0}'..='\u{118df}'), ()),
+    (chars!('\u{16e60}'..='\u{16e7f}'), ()),
     (chars!('\u{1e922}'..='\u{1e943}'), ()),
 ])
