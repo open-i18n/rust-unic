@@ -16,13 +16,13 @@
 //! digits are used, as required.
 //!
 //! References:
-//! - https://www.unicode.org/versions/Unicode10.0.0/appA.pdf
+//! - https://www.unicode.org/versions/Unicode11.0.0/appA.pdf
 
 use core::fmt;
 
 /// Represent the Unicode Notation of a code-point.
 ///
-/// - https://www.unicode.org/versions/Unicode10.0.0/appA.pdf
+/// - https://www.unicode.org/versions/Unicode11.0.0/appA.pdf
 #[derive(Debug)]
 pub struct UnicodeNotation {
     codepoint: char,

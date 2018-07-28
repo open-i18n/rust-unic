@@ -35,7 +35,7 @@
 //! usual categorization of a character.
 //! >
 //! > For more information about the `General_Category` property, see [Chapter 4, Character
-//! Properties in the Unicode Standard](https://www.unicode.org/versions/Unicode10.0.0/ch04.pdf).
+//! Properties in the Unicode Standard](https://www.unicode.org/versions/Unicode11.0.0/ch04.pdf).
 //!
 //! -- [Unicode® Standard Annex #44 - Unicode Character Database](http://unicode.org/reports/tr44/)
 
