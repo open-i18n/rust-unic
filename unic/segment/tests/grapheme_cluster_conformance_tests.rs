@@ -28,25 +28,46 @@ const EXTRA_TEST_DATA: TestData = include!("extra_grapheme_cluster_break_test_da
 fn test_graphemes_conformance() {
     let tests = TEST_DATA.iter().chain(EXTRA_TEST_DATA);
     for &(input, graphemes, legacy_graphemes) in tests {
+        macro_rules! assert_ {
+            ($test:expr, $exp:expr, $name:expr) => {
+                // collect into vector for better diagnostics in failure case
+                let testing = $test.collect::<Vec<_>>();
+                let expected = $exp.collect::<Vec<_>>();
+                assert_eq!(
+                    testing, expected,
+                    "{} test for testcase ({:?}, {:?}, legacy: {:?}) failed.",
+                    $name, input, graphemes, legacy_graphemes
+                )
+            };
+        }
+
         let legacy_graphemes = match legacy_graphemes {
             Some(s) => s,
             None => graphemes,
         };
 
         // test forward iterator
-        assert!(Graphemes::new(input).eq(graphemes.iter().cloned()));
-        assert!(Graphemes::new_legacy(input).eq(legacy_graphemes.iter().cloned()));
+        assert_!(
+            Graphemes::new(input),
+            graphemes.iter().cloned(),
+            "Forward grapheme boundaries"
+        );
+        assert_!(
+            Graphemes::new_legacy(input),
+            legacy_graphemes.iter().cloned(),
+            "Forward legacy grapheme boundaries"
+        );
 
         // test reverse iterator
-        assert!(
-            Graphemes::new(input)
-                .rev()
-                .eq(graphemes.iter().rev().cloned())
+        assert_!(
+            Graphemes::new(input).rev(),
+            graphemes.iter().rev().cloned(),
+            "Reverse grapheme boundaries"
         );
-        assert!(
-            Graphemes::new_legacy(input)
-                .rev()
-                .eq(legacy_graphemes.iter().rev().cloned())
+        assert_!(
+            Graphemes::new_legacy(input).rev(),
+            legacy_graphemes.iter().rev().cloned(),
+            "Reverse legacy grapheme boundaries"
         );
     }
 }
