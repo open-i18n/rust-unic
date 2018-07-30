@@ -32,10 +32,20 @@ fn emit_grapheme_cluster_break_test_data(dir: &Path) {
             ..
         } = *case;
 
+
         for (i, ch) in chars.iter().enumerate() {
-            let ref gcb = char_gcbs[i];
+            let gcb = match char_gcbs[i].as_str() {
+                // Corresponds to \p{Extended_Pictographic}, not an actual grapheme cluster property
+                "ExtPict" => continue,
+
+                "Extend_ExtCccZwj" => "Extend",
+                "ZWJ_ExtCccZwj" => "ZWJ",
+                c => c
+            };
+
+
             if map.contains_key(ch) {
-                assert_eq!(map[ch], *gcb);
+                assert_eq!(map[ch], gcb);
             } else {
                 map.insert(*ch, gcb.clone());
             }
@@ -60,9 +70,14 @@ fn emit_word_break_test_data(dir: &Path) {
         } = *case;
 
         for (i, ch) in chars.iter().enumerate() {
-            let ref gcb = char_gcbs[i];
+            let gcb = match char_gcbs[i].as_str() {
+                // Corresponds to \p{Extended_Pictographic}, not an actual word break property
+                "ExtPict" => continue,
+                c => c
+            };
+
             if map.contains_key(ch) {
-                assert_eq!(map[ch], *gcb);
+                assert_eq!(map[ch], gcb);
             } else {
                 map.insert(*ch, gcb.clone());
             }
