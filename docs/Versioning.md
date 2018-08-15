@@ -26,7 +26,7 @@ policies are followed with respect to new Unicode versions.
 
 This allows applications to *intentionally* opt-in for Unicode version upgrades, if needed, by
 fixating on UNIC minor versions. This can be useful and important for some applications, like
-search indices, as there as Unicode text processing algorithms that are not promissed to be
+search indices, as there as Unicode text processing algorithms that are not promised to be
 stable between Unicode versions. See [Unicode Character Encoding Stability
 Policies](http://unicode.org/policies/stability_policy.html) for more details.
 

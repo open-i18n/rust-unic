@@ -17,7 +17,7 @@
 to provide high-quality and easy-to-use crates for Unicode
 and Internationalization data and algorithms. In other words, it's like
 [ICU](http://site.icu-project.org/) for Rust, written completely in Rust, mostly
-in *safe* mode, but also benifiting from performance gains of *unsafe* mode when
+in *safe* mode, but also benefiting from performance gains of *unsafe* mode when
 possible.
 
 ## Project Goal
@@ -38,7 +38,7 @@ Please see [open issues](https://github.com/open-i18n/rust-unic/issues) for chan
 planed.
 
 We expect to have the `1.0` version released in 2018 and maintain a stable API
-afterwards, with possibly one or two API udpates per year for the first couple
+afterwards, with possibly one or two API updates per year for the first couple
 of years.
 
 ## Design Goals
@@ -138,10 +138,10 @@ Some of the reasons to have a combined repository these components are:
     cross-depend only on what they need, allow users to only bring in what they
     consume in their project.
 
-*   **Shared bootstraping.** Considerable amount of extending Unicode/i18n
+*   **Shared bootstrapping.** Considerable amount of extending Unicode/i18n
     functionalities depends on converting source Unicode/locale data into
     structured formats for the destination programming language. In a combined
-    repository, it's easier to maining these bootstraping tools, expand
+    repository, it's easier to maintain these bootstrapping tools, expand
     coverage, and use better data structures for more efficiency.
 
 ## Documentation
