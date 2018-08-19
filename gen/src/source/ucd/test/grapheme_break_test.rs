@@ -45,6 +45,7 @@ pub struct GraphemeBreakTest {
 
 impl FromStr for GraphemeBreakTests {
     type Err = ();
+
     fn from_str(string: &str) -> Result<GraphemeBreakTests, ()> {
         lazy_static! {
             static ref LINE_RE: Regex = Regex::new(

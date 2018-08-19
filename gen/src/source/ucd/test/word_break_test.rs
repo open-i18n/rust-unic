@@ -45,6 +45,7 @@ pub struct WordBreakTest {
 
 impl FromStr for WordBreakTests {
     type Err = ();
+
     fn from_str(string: &str) -> Result<WordBreakTests, ()> {
         lazy_static! {
             static ref LINE_RE: Regex = Regex::new(

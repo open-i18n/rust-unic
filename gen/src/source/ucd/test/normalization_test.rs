@@ -34,6 +34,7 @@ pub struct NormalizationTest {
 
 impl FromStr for NormalizationTests {
     type Err = ();
+
     fn from_str(str: &str) -> Result<NormalizationTests, ()> {
         lazy_static! {
             static ref REGEX: Regex = Regex::new(

@@ -1,6 +1,3 @@
-brace_style = "SameLineWhere"
-imports_indent = "Block"
 imports_layout = "HorizontalVertical"
-indent_style = "Block"
 max_width = 100
-reorder_imports = true
+reorder_impl_items = true
