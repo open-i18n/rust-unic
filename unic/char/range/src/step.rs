@@ -10,8 +10,8 @@
 
 use core::char;
 
-const BEFORE_SURROGATE: char = '\u{D7FF}';
-const AFTER_SURROGATE: char = '\u{E000}';
+pub const BEFORE_SURROGATE: char = '\u{D7FF}';
+pub const AFTER_SURROGATE: char = '\u{E000}';
 
 #[inline]
 #[allow(unsafe_code)]

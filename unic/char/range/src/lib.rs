@@ -68,6 +68,7 @@ pub use iter::CharIter;
 mod range;
 pub use range::CharRange;
 
+#[macro_use]
 mod macros;
 
 mod step;
@@ -77,3 +78,6 @@ mod iter_fused;
 
 #[cfg(feature = "trusted-len")]
 mod iter_trusted_len;
+
+#[cfg(feature = "rayon")]
+mod par_iter;

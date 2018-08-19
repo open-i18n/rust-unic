@@ -11,6 +11,9 @@ categories = ["internationalization", "text-processing"]
 # No tests/benches that depends on /data/
 exclude = []
 
+[dependencies]
+rayon = { version = "1.0", optional = true }
+
 [features]
 default = []
 std = []
