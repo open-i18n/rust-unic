@@ -1,17 +1,17 @@
 # UNIC: Unicode and Internationalization Crates for Rust
 
-[![UNIC-logo](docs/images/UNIC-logo.png)](https://github.com/behnam/rust-unic/)
+[![UNIC-logo](docs/images/UNIC-logo.png)](https://github.com/open-i18n/rust-unic/)
 
-[![Travis](https://img.shields.io/travis/behnam/rust-unic/master.svg?label=Linux%20build)](https://travis-ci.org/behnam/rust-unic/)
-[![AppVeyor](https://img.shields.io/appveyor/ci/behnam/rust-unic/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/behnam/rust-unic)
-[![Rust-1.22.0+](https://img.shields.io/badge/rustc-1.22+-red.svg#MIN_RUST_VERSION)](https://www.rust-lang.org/)
+[![Travis](https://img.shields.io/travis/open-i18n/rust-unic/master.svg?label=Linux%20build)](https://travis-ci.org/open-i18n/rust-unic/)
+[![AppVeyor](https://img.shields.io/appveyor/ci/open-i18n/rust-unic/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/open-i18n/rust-unic)
+[![Rust-1.24.0+](https://img.shields.io/badge/rustc-1.24+-red.svg#MIN_RUST_VERSION)](https://www.rust-lang.org/)
 [![Unicode-10.0.0](https://img.shields.io/badge/unicode-10.0.0-red.svg)](https://www.unicode.org/versions/Unicode10.0.0/)
-[![Release](https://img.shields.io/github/release/behnam/rust-unic.svg)](https://github.com/behnam/rust-unic/)
+[![Release](https://img.shields.io/github/release/open-i18n/rust-unic.svg)](https://github.com/open-i18n/rust-unic/)
 [![Crates.io](https://img.shields.io/crates/v/unic.svg)](https://crates.io/crates/unic/)
 [![Documentation](https://docs.rs/unic/badge.svg)](https://docs.rs/unic/)
-[![Gitter](https://img.shields.io/gitter/room/behnam/rust-unic.svg)](https://gitter.im/behnam/rust-unic)
+[![Gitter](https://img.shields.io/gitter/room/open-i18n/rust-unic.svg)](https://gitter.im/open-i18n/rust-unic)
 
-<https://github.com/behnam/rust-unic>
+<https://github.com/open-i18n/rust-unic>
 
 **UNIC** is a project to develop components for the Rust programming language
 to provide high-quality and easy-to-use crates for Unicode
@@ -34,7 +34,7 @@ needed by Unicode/CLDR components, or common demand.
 
 At the moment UNIC is under heavy development: the API is updated frequently on
 `master` branch, and there will be API breakage between each `0.x` release.
-Please see [open issues](https://github.com/behnam/rust-unic/issues) for changes
+Please see [open issues](https://github.com/open-i18n/rust-unic/issues) for changes
 planed.
 
 We expect to have the `1.0` version released in 2018 and maintain a stable API

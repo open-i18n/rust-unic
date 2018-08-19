@@ -8,9 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+mod direct;
 mod range;
 mod set;
-mod direct;
 
 use std::fmt;
 

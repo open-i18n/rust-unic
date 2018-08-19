@@ -21,21 +21,33 @@ fn test_general_category_major_groups() {
     for gc in GeneralCategory::all_values() {
         if gc.is_cased_letter() {
             assert!(
-                gc.is_letter() && !gc.is_mark() && !gc.is_number() && !gc.is_punctuation()
-                    && !gc.is_symbol() && !gc.is_separator() && !gc.is_other(),
+                gc.is_letter()
+                    && !gc.is_mark()
+                    && !gc.is_number()
+                    && !gc.is_punctuation()
+                    && !gc.is_symbol()
+                    && !gc.is_separator()
+                    && !gc.is_other(),
                 "GC: `{:?}`",
                 gc
             );
         } else if gc.is_letter() {
             assert!(
-                !gc.is_mark() && !gc.is_number() && !gc.is_punctuation() && !gc.is_symbol()
-                    && !gc.is_separator() && !gc.is_other(),
+                !gc.is_mark()
+                    && !gc.is_number()
+                    && !gc.is_punctuation()
+                    && !gc.is_symbol()
+                    && !gc.is_separator()
+                    && !gc.is_other(),
                 "GC: `{:?}`",
                 gc
             );
         } else if gc.is_mark() {
             assert!(
-                !gc.is_number() && !gc.is_punctuation() && !gc.is_symbol() && !gc.is_separator()
+                !gc.is_number()
+                    && !gc.is_punctuation()
+                    && !gc.is_symbol()
+                    && !gc.is_separator()
                     && !gc.is_other(),
                 "GC: `{:?}`",
                 gc

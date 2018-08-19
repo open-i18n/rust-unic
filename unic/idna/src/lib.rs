@@ -9,8 +9,14 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![forbid(bad_style, future_incompatible, missing_debug_implementations, missing_docs,
-          unconditional_recursion, unsafe_code, unused)]
+#![forbid(
+    bad_style,
+    future_incompatible,
+    missing_debug_implementations,
+    missing_docs,
+    unconditional_recursion,
+    unsafe_code,
+)]
 #![deny(unused_imports)]
 
 //! # UNIC — Unicode IDNA Compatibility Processing
@@ -56,6 +62,6 @@ pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 pub use mapping::UNICODE_VERSION;
 
 mod process;
-pub use process::{Errors, Flags};
-pub use process::{to_ascii, to_unicode};
 pub use process::PUNYCODE_PREFIX;
+pub use process::{to_ascii, to_unicode};
+pub use process::{Errors, Flags};

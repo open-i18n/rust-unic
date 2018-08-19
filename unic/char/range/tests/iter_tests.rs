@@ -10,7 +10,7 @@
 
 extern crate unic_char_range;
 
-use std::{char, vec, u32};
+use std::{char, u32, vec};
 
 use unic_char_range::CharRange;
 

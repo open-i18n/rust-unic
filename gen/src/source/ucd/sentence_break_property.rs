@@ -18,7 +18,9 @@ use source::utils::read;
 
 lazy_static! {
     pub static ref SENTENCE_BREAK_DATA: SentenceBreakData = {
-        read("data/ucd/SentenceBreakProperty.txt").parse().expect("Failed parsing source data")
+        read("data/ucd/SentenceBreakProperty.txt")
+            .parse()
+            .expect("Failed parsing source data")
     };
 }
 

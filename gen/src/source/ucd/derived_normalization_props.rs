@@ -18,7 +18,9 @@ use source::utils::read;
 
 lazy_static! {
     pub static ref COMPOSITION_EXCLUSIONS: CompositionExclusions = {
-        read("data/ucd/DerivedNormalizationProps.txt").parse().unwrap()
+        read("data/ucd/DerivedNormalizationProps.txt")
+            .parse()
+            .unwrap()
     };
 }
 

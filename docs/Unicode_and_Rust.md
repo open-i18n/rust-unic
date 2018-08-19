@@ -119,4 +119,4 @@ any mixing, or ensure and verify that it is safe to do so.
 -   [unicode-rs](https://github.com/unicode-rs)
 
 -   [UNIC: Unicode and Internationalization Crates for
-    Rust](https://github.com/behnam/rust-unic/)
+    Rust](https://github.com/open-i18n/rust-unic/)

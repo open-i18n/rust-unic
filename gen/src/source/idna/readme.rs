@@ -12,7 +12,6 @@ use source::common::unicode_version::UnicodeVersion;
 use source::utils::read;
 
 lazy_static! {
-    pub static ref UNICODE_VERSION: UnicodeVersion = {
-        read("data/idna/ReadMe.txt").parse().unwrap()
-    };
+    pub static ref UNICODE_VERSION: UnicodeVersion =
+        { read("data/idna/ReadMe.txt").parse().unwrap() };
 }

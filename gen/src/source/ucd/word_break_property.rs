@@ -18,7 +18,9 @@ use source::utils::read;
 
 lazy_static! {
     pub static ref WORD_BREAK_DATA: WordBreakData = {
-        read("data/ucd/WordBreakProperty.txt").parse().expect("Failed parsing source data")
+        read("data/ucd/WordBreakProperty.txt")
+            .parse()
+            .expect("Failed parsing source data")
     };
 }
 

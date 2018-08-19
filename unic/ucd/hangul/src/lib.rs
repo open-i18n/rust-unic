@@ -10,8 +10,13 @@
 // except according to those terms.
 
 #![no_std]
-#![forbid(future_incompatible, missing_debug_implementations, unconditional_recursion, unsafe_code)]
-#![deny(bad_style, unsafe_code, unused)]
+#![forbid(
+    future_incompatible,
+    missing_debug_implementations,
+    unconditional_recursion,
+    unsafe_code,
+)]
+#![deny(bad_style, unsafe_code)]
 
 //! # UNIC - UCD - Hangul Syllable Composition & Decomposition
 //!
@@ -45,7 +50,7 @@ extern crate unic_ucd_version;
 use unic_ucd_version::UnicodeVersion;
 
 mod hangul;
-pub use hangul::{is_syllable, compose_syllable, decompose_syllable};
+pub use hangul::{compose_syllable, decompose_syllable, is_syllable};
 
 mod pkg_info;
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

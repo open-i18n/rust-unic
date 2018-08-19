@@ -9,10 +9,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-// TODO: Drop following after MIN_RUST_VERSION >= 1.23
-#[allow(unused_imports)]
-use std::ascii::AsciiExt;
-
 use unic_normal::StrNormalForm;
 use unic_ucd_bidi::{bidi_class, BidiClass};
 use unic_ucd_normal::is_combining_mark;

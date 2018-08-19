@@ -27,7 +27,9 @@ const TEST_DATA: &[TestDatum] = include!("tables/conformance_tests_data.rsv");
 #[test]
 fn test_nfc_nfd_nfkc_nfkd() {
     macro_rules! norm_string {
-        ($method: ident, $input: expr) => { $input.$method().collect::<String>() }
+        ($method: ident, $input: expr) => {
+            $input.$method().collect::<String>()
+        };
     }
 
     for &(s1, s2, s3, s4, s5) in TEST_DATA {

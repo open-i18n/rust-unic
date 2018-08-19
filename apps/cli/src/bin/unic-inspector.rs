@@ -18,8 +18,8 @@ extern crate unic;
 extern crate unic_cli;
 
 use clap::Arg;
-use prettytable::Table;
 use prettytable::format::TableFormat;
+use prettytable::Table;
 
 use unic::char::property::EnumeratedCharProperty;
 use unic::ucd::{GeneralCategory, Name};
@@ -30,8 +30,7 @@ fn main() {
             env!("CARGO_PKG_DESCRIPTION"),
             "\n\n",
             "Inspect characters and their properties",
-        ))
-        .arg(
+        )).arg(
             Arg::with_name("STRINGS")
                 .help("Input strings (expected valid Unicode)")
                 .multiple(true),

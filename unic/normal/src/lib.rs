@@ -9,9 +9,14 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![forbid(bad_style, future_incompatible, missing_debug_implementations, missing_docs,
-          unconditional_recursion, unsafe_code)]
-#![deny(unused)]
+#![forbid(
+    bad_style,
+    future_incompatible,
+    missing_debug_implementations,
+    missing_docs,
+    unconditional_recursion,
+    unsafe_code,
+)]
 
 //! # UNIC — Unicode Normalization Forms
 //!
@@ -126,8 +131,11 @@ mod tests {
                 assert_eq!($input.nfd().to_string(), $expected);
                 // A dummy iterator that is not std::str::Chars directly;
                 // note that `id_func` is used to ensure `Clone` implementation
-                assert_eq!($input.chars().map(|c| c).nfd().collect::<String>(), $expected);
-            }
+                assert_eq!(
+                    $input.chars().map(|c| c).nfd().collect::<String>(),
+                    $expected
+                );
+            };
         }
         nfg_eq!("abc", "abc");
         nfg_eq!("\u{1e0b}\u{1c4}", "d\u{307}\u{1c4}");
@@ -146,7 +154,7 @@ mod tests {
         macro_rules! nfkd_eq {
             ($input: expr, $expected: expr) => {
                 assert_eq!($input.nfkd().to_string(), $expected);
-            }
+            };
         }
         nfkd_eq!("abc", "abc");
         nfkd_eq!("\u{1e0b}\u{1c4}", "d\u{307}DZ\u{30c}");
@@ -165,7 +173,7 @@ mod tests {
         macro_rules! nfc_eq {
             ($input: expr, $expected: expr) => {
                 assert_eq!($input.nfc().to_string(), $expected);
-            }
+            };
         }
         nfc_eq!("abc", "abc");
         nfc_eq!("\u{1e0b}\u{1c4}", "\u{1e0b}\u{1c4}");
@@ -188,7 +196,7 @@ mod tests {
         macro_rules! nfkc_eq {
             ($input: expr, $expected: expr) => {
                 assert_eq!($input.nfkc().to_string(), $expected);
-            }
+            };
         }
         nfkc_eq!("abc", "abc");
         nfkc_eq!("\u{1e0b}\u{1c4}", "\u{1e0b}D\u{17d}");

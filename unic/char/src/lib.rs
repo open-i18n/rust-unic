@@ -13,8 +13,13 @@
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
 
 #![cfg_attr(not(feature = "std"), no_std)]
-#![forbid(bad_style, future_incompatible, missing_debug_implementations, missing_docs,
-          unconditional_recursion, unused)]
+#![forbid(
+    bad_style,
+    future_incompatible,
+    missing_debug_implementations,
+    missing_docs,
+    unconditional_recursion,
+)]
 #![deny(unsafe_code)]
 
 pub extern crate unic_char_basics as basics;

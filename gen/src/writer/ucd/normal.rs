@@ -17,8 +17,8 @@ use source::ucd::readme::UNICODE_VERSION;
 use source::ucd::unicode_data::UNICODE_DATA;
 
 use writer::common::emit_unicode_version;
-use writer::utils::{capitalize, write};
 use writer::utils::tables::{ToDirectCharTable, ToRangeCharSet, ToRangeCharTable};
+use writer::utils::{capitalize, write};
 
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
@@ -56,14 +56,12 @@ fn emit_canonical_combining_class(dir: &Path) {
 }
 
 fn decomposition_map<'a>() -> &'a BTreeMap<char, Box<[char]>> {
-    lazy_static!{
+    lazy_static! {
         static ref MAP: BTreeMap<char, Box<[char]>> = {
             UNICODE_DATA
                 .entries
                 .iter()
-                .filter(|x| {
-                    x.decomposition_type.is_none() && x.decomposition_mapping.is_some()
-                })
+                .filter(|x| x.decomposition_type.is_none() && x.decomposition_mapping.is_some())
                 .map(|x| (x.character, x.decomposition_mapping.clone().unwrap()))
                 .collect()
         };
@@ -136,8 +134,7 @@ fn emit_compatibility_decomposition_mapping(dir: &Path) {
                 }
             }
             None
-        })
-        .collect();
+        }).collect();
 
     write(
         dir,

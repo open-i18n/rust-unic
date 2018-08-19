@@ -39,8 +39,7 @@ pub fn codepoints(string: &str) -> String {
                 .expect(&format!("Cannot parse token as hex number: {}", token));
             char::from_u32(codepoint) //.
                 .expect(&format!("Invalid Unicode Scalar Value code-point: {}", codepoint))
-        })
-        .collect::<String>()
+        }).collect::<String>()
 }
 
 pub fn utf8_hex(string: &str) -> String {

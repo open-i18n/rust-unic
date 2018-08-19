@@ -12,10 +12,8 @@
 
 use core::fmt;
 
-/* TODO(behnam)
 #[cfg(feature = "unstable")]
 use core::char;
-*/
 
 /// Represents a *Unicode Version* type.
 ///
@@ -47,7 +45,6 @@ impl fmt::Display for UnicodeVersion {
     }
 }
 
-/* TODO(behnam): Fails with "ambiguous associated type"
 #[cfg(feature = "unstable")]
 /// Convert from Rust's internal Unicode Version.
 impl From<char::UnicodeVersion> for UnicodeVersion {
@@ -59,11 +56,9 @@ impl From<char::UnicodeVersion> for UnicodeVersion {
         }
     }
 }
-*/
 
 #[cfg(test)]
 mod tests {
-    /* TODO(behnam)
     #[cfg(feature = "unstable")]
     #[test]
     fn test_against_rust_internal() {
@@ -71,8 +66,7 @@ mod tests {
 
         use super::UnicodeVersion;
 
-        let core: UnicodeVersion = char::UNICODE_VERSION.into();
-        assert!(core.major >= 10);
+        let core_unicode_version: UnicodeVersion = char::UNICODE_VERSION.into();
+        assert!(core_unicode_version.major >= 10);
     }
-    */
 }

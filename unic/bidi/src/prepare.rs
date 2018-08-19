@@ -16,8 +16,8 @@
 use std::cmp::max;
 use std::ops::Range;
 
-use unic_ucd_bidi::BidiClass;
 use unic_ucd_bidi::bidi_class::abbr_names::*;
+use unic_ucd_bidi::BidiClass;
 
 use super::level::Level;
 
@@ -131,8 +131,7 @@ pub fn isolating_run_sequences(
                 sos: max(seq_level, pred_level).bidi_class(),
                 eos: max(seq_level, succ_level).bidi_class(),
             }
-        })
-        .collect()
+        }).collect()
 }
 
 /// Finds the level runs in a paragraph.
@@ -360,7 +359,7 @@ mod tests {
     #[test]
     fn test_not_removed_by_x9() {
         let non_x9_classes = &[
-            L, R, AL, EN, ES, ET, AN, CS, NSM, B, S, WS, ON, LRI, RLI, FSI, PDI
+            L, R, AL, EN, ES, ET, AN, CS, NSM, B, S, WS, ON, LRI, RLI, FSI, PDI,
         ];
         for x in non_x9_classes {
             assert_eq!(not_removed_by_x9(&x), true);

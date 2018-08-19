@@ -10,8 +10,13 @@
 // except according to those terms.
 
 #![no_std]
-#![forbid(future_incompatible, missing_debug_implementations, unconditional_recursion, unsafe_code)]
-#![deny(bad_style, unsafe_code, missing_docs, unused)]
+#![forbid(
+    future_incompatible,
+    missing_debug_implementations,
+    unconditional_recursion,
+    unsafe_code,
+)]
+#![deny(bad_style, unsafe_code, missing_docs)]
 
 //! # UNIC — UCD — Normalization
 //!
@@ -43,7 +48,11 @@ pub mod canonical_combining_class;
 pub use canonical_combining_class::CanonicalCombiningClass;
 
 mod composition;
-pub use composition::{canonical_composition, canonical_decomposition, compatibility_decomposition};
+pub use composition::{
+    canonical_composition,
+    canonical_decomposition,
+    compatibility_decomposition,
+};
 
 mod decomposition;
 pub use decomposition::{decompose_canonical, decompose_compatible};

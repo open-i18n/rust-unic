@@ -16,9 +16,9 @@ extern crate unic;
 use unic::bidi::BidiInfo;
 use unic::normal::StrNormalForm;
 use unic::segment::{GraphemeIndices, Graphemes, WordBoundIndices, WordBounds, Words};
-use unic::ucd::{is_cased, Age, BidiClass, CharAge, CharBidiClass, StrBidiClass, UnicodeVersion};
 use unic::ucd::common::is_alphanumeric;
 use unic::ucd::normal::compose;
+use unic::ucd::{is_cased, Age, BidiClass, CharAge, CharBidiClass, StrBidiClass, UnicodeVersion};
 
 #[cfg_attr(rustfmt, rustfmt_skip)]
 #[test]

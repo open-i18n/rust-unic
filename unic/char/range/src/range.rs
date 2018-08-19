@@ -216,8 +216,8 @@ impl CharRange {
 }
 
 impl IntoIterator for CharRange {
-    type Item = char;
     type IntoIter = CharIter;
+    type Item = char;
 
     fn into_iter(self) -> CharIter {
         self.iter()

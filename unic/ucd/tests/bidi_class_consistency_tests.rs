@@ -118,10 +118,16 @@ fn test_from_bidi_class() {
             BC::OtherNeutral => {
                 assert!(!matches!(
                     GC::of(cp),
-                    GC::UppercaseLetter | GC::LowercaseLetter | GC::TitlecaseLetter
-                        | GC::OtherLetter | GC::NonspacingMark | GC::SpacingMark
-                        | GC::EnclosingMark | GC::DecimalNumber
-                        | GC::SpaceSeparator | GC::LineSeparator
+                    GC::UppercaseLetter
+                        | GC::LowercaseLetter
+                        | GC::TitlecaseLetter
+                        | GC::OtherLetter
+                        | GC::NonspacingMark
+                        | GC::SpacingMark
+                        | GC::EnclosingMark
+                        | GC::DecimalNumber
+                        | GC::SpaceSeparator
+                        | GC::LineSeparator
                         | GC::ParagraphSeparator
                 ));
             }

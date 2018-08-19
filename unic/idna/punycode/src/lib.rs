@@ -9,8 +9,13 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![forbid(bad_style, future_incompatible, missing_debug_implementations, missing_docs,
-          unconditional_recursion, unused)]
+#![forbid(
+    bad_style,
+    future_incompatible,
+    missing_debug_implementations,
+    missing_docs,
+    unconditional_recursion,
+)]
 #![deny(unsafe_code, unused_imports)]
 
 //! # UNIC — IDNA — Punycode (RFC 3492)
@@ -26,10 +31,6 @@
 
 use std::char;
 use std::u32;
-
-// TODO: Drop following after MIN_RUST_VERSION >= 1.23
-#[allow(unused_imports)]
-use std::ascii::AsciiExt;
 
 mod pkg_info;
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
