@@ -27,7 +27,7 @@ following *assignment* statuses:
 -   **assigned character**, code points that are marked to be an *Encoded Character*,
 
 
-    Chatacter*, or
+    Character*, or
 
 -   **unassigned** or **reserved**, code points that can become an *Encoded Character* in the
     future.
@@ -86,16 +86,16 @@ because of any limitations with upgrading its code to a newer version of the com
 
 And a peculiar case for keeping the Unicode version of the data separate from the code is when
 it gets to *Private-Use Code Points*. These code points (like any other code point) receive
-*default* character properties, which are specified by the Unicode Stanard. However, they *can*
+*default* character properties, which are specified by the Unicode Standard. However, they *can*
 be assigned non-default property values, as deemed by the application. This is something that
 should never affect how source code is being compiled, or a compiler being deployed, but only
-the data being processed an application with clear boundries for the Private-Use code points.
+the data being processed an application with clear boundaries for the Private-Use code points.
 
-## Tehnical Challenges
+## Technical Challenges
 
 A big technical challenge with having more than one library (a language core library and some
 third-party libraries) for basic character/string functionalities and text processing for
-handling text is the *possiblity* of them getting mixed up. This is where every programmer need
+handling text is the *possibility* of them getting mixed up. This is where every programmer need
 to pay attention to which library to use in every situation.
 
 That is why having **one** library that provides majority of functionalities and enforces
@@ -103,7 +103,7 @@ consistency between its components is important in this area. UNIC has a goal to
 consistency during its own development time (via integration tests), as well as in application
 runtime (assertion in debug mode).
 
-Still, there is one sutation that is not aviodable by third-parties: mixing core library and
+Still, there is one situation that is not avoidable by third-parties: mixing core library and
 third-party library in one process.  Here, the burden is on the application developer to avoid
 any mixing, or ensure and verify that it is safe to do so.
 

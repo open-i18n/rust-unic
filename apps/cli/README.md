@@ -2,7 +2,7 @@
 
 [![Crates.io](https://img.shields.io/crates/v/unic-cli.svg)](https://crates.io/crates/unic-cli)
 
-This package provides comman-line tools for developers, helping with common
+This package provides command-line tools for developers, helping with common
 Unicode tasks, like generating, transforming, and inspecting strings.
 
 
@@ -102,4 +102,4 @@ $ unic-inspector Hello سلام
 ```
 
 Soon, this tool will allow selecting which properties to show, as well as
-support grouping characters by Grapheme Clusters, Words, Sentenses, etc.
+support grouping characters by Grapheme Clusters, Words, Sentences, etc.
