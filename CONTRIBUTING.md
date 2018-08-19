@@ -4,14 +4,14 @@ Thank you for your interest in contributing to UNIC! There are many ways to
 contribute, and we appreciate all of them.
 
 If you have questions, please ask on the [Gitter
-room](https://gitter.im/behnam/rust-unic) or join the [IRC channel
+room](https://gitter.im/open-i18n/rust-unic) or join the [IRC channel
 \#unic](http://chat.mibbit.com/?server=irc.mozilla.org&channel=%23unic).
 
 ## Feature Requests and Bug Reports
 
 To request for new components or new features for the existing components, or to
 report a bug, please [file an issue on
-GitHub](https://github.com/behnam/rust-unic/issues/new).
+GitHub](https://github.com/open-i18n/rust-unic/issues/new).
 
 ## Code Organization
 
