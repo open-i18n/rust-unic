@@ -8,8 +8,13 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![forbid(bad_style, future_incompatible, missing_debug_implementations, unconditional_recursion,
-          unsafe_code)]
+#![forbid(
+    bad_style,
+    future_incompatible,
+    missing_debug_implementations,
+    unconditional_recursion,
+    unsafe_code
+)]
 #![deny(missing_docs, unused)]
 
 //! # UNIC — Unicode Emoji — Emoji Character Properties

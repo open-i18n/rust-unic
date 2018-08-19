@@ -17,9 +17,8 @@ use source::utils::read;
 use super::BINARY_PROPERTIES_REGEX;
 
 lazy_static! {
-    pub static ref DERIVED_CORE_PROPERTIES: DerivedCoreProperties = {
-        read("data/ucd/DerivedCoreProperties.txt").parse().unwrap()
-    };
+    pub static ref DERIVED_CORE_PROPERTIES: DerivedCoreProperties =
+        { read("data/ucd/DerivedCoreProperties.txt").parse().unwrap() };
 }
 
 #[derive(Clone, Debug, Default)]

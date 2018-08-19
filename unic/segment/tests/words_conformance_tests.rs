@@ -31,11 +31,11 @@ fn test_words_conformance() {
                 let testing = $test.collect::<Vec<_>>();
                 let expected = $exp.collect::<Vec<_>>();
                 assert_eq!(
-                    testing,
-                    expected,
-                    "{} test for testcase ({:?}, {:?}) failed.", $name, input, words
-                    )
-            }
+                    testing, expected,
+                    "{} test for testcase ({:?}, {:?}) failed.",
+                    $name, input, words
+                )
+            };
         }
 
         // test forward word boundaries

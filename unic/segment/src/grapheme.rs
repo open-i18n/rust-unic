@@ -165,7 +165,8 @@ impl<'a> DoubleEndedIterator for Graphemes<'a> {
         if end == self.cursor.cur_cursor() {
             return None;
         }
-        let prev = self.cursor_back
+        let prev = self
+            .cursor_back
             .prev_boundary(self.string, 0)
             .unwrap()
             .unwrap();

@@ -42,8 +42,7 @@ fn emit_name_tables(dir: &Path) {
             let pieces = x.name.split_whitespace().collect::<Vec<_>>();
             values.extend(pieces.iter());
             (x.character, NameRecord { pieces })
-        })
-        .collect();
+        }).collect();
 
     let mut values_contents = String::new();
     for piece in values.iter() {
@@ -78,8 +77,8 @@ fn emit_jamo_tables(dir: &Path) {
     write(
         dir,
         "jamo.rsv",
-        &JAMO_DATA.map.to_direct_char_table(|record, f| {
-            write!(f, "\"{}\"", record)
-        }),
+        &JAMO_DATA
+            .map
+            .to_direct_char_table(|record, f| write!(f, "\"{}\"", record)),
     );
 }

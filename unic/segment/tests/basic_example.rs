@@ -37,16 +37,12 @@ fn test_all() {
             "The quick (\"brown\") fox can't jump 32.3 feet, right?",
             |s: &&str| s.chars().any(is_alphanumeric),
         ).collect::<Vec<&str>>(),
-        &[
-            "The", "quick", "brown", "fox", "can't", "jump", "32.3", "feet", "right"
-        ]
+        &["The", "quick", "brown", "fox", "can't", "jump", "32.3", "feet", "right"]
     );
 
     assert_eq!(
         WordBounds::new("The quick (\"brown\")  fox").collect::<Vec<&str>>(),
-        &[
-            "The", " ", "quick", " ", "(", "\"", "brown", "\"", ")", " ", " ", "fox"
-        ]
+        &["The", " ", "quick", " ", "(", "\"", "brown", "\"", ")", " ", " ", "fox"]
     );
 
     assert_eq!(

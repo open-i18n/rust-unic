@@ -9,7 +9,7 @@
 // except according to those terms.
 
 extern crate unic_ucd_hangul;
-use unic_ucd_hangul::{is_syllable, compose_syllable, decompose_syllable};
+use unic_ucd_hangul::{compose_syllable, decompose_syllable, is_syllable};
 
 #[test]
 fn test_is_syllable() {

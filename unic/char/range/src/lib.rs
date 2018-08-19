@@ -9,10 +9,17 @@
 // except according to those terms.
 
 #![cfg_attr(not(feature = "std"), no_std)]
-#![cfg_attr(feature = "exact-size-is-empty", feature(exact_size_is_empty))]
+#![cfg_attr(
+    feature = "exact-size-is-empty",
+    feature(exact_size_is_empty)
+)]
 #![cfg_attr(feature = "fused", feature(fused))]
 #![cfg_attr(feature = "trusted-len", feature(trusted_len))]
-#![forbid(bad_style, missing_debug_implementations, unconditional_recursion)]
+#![forbid(
+    bad_style,
+    missing_debug_implementations,
+    unconditional_recursion
+)]
 #![deny(missing_docs, unsafe_code, unused, future_incompatible)]
 
 //! # UNIC — Unicode Character Tools — Character Range

@@ -9,8 +9,15 @@
 // except according to those terms.
 
 #![no_std]
-#![forbid(bad_style, future_incompatible, missing_debug_implementations, missing_docs,
-          unconditional_recursion, unsafe_code, unused)]
+#![forbid(
+    bad_style,
+    future_incompatible,
+    missing_debug_implementations,
+    missing_docs,
+    unconditional_recursion,
+    unsafe_code,
+    unused
+)]
 
 //! # UNIC — UCD — Core
 //!

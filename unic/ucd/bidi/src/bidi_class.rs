@@ -373,8 +373,8 @@ impl StrBidiClass for str {
 
 #[cfg(test)]
 mod tests {
-    use super::BidiClass;
     use super::abbr_names::*;
+    use super::BidiClass;
     use unic_char_property::EnumeratedCharProperty;
 
     #[test]

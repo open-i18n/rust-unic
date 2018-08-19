@@ -9,8 +9,14 @@
 // except according to those terms.
 
 #![no_std]
-#![forbid(bad_style, future_incompatible, missing_debug_implementations, missing_docs,
-          unconditional_recursion, unsafe_code)]
+#![forbid(
+    bad_style,
+    future_incompatible,
+    missing_debug_implementations,
+    missing_docs,
+    unconditional_recursion,
+    unsafe_code
+)]
 #![deny(unused)]
 
 //! # UNIC — UCD — Case Character Properties

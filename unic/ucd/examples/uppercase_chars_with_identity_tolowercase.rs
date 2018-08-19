@@ -18,9 +18,7 @@ use unic_char_range::CharRange;
 use unic_ucd_category::GeneralCategory;
 
 fn main() {
-    println!(
-        "# Characters with General_Category(ch) == Uppercase_Letter && toLowercase(ch) == ch"
-    );
+    println!("# Characters with General_Category(ch) == Uppercase_Letter && toLowercase(ch) == ch");
 
     let mut total_count = 0;
     let mut cond_count = 0;
@@ -38,5 +36,8 @@ fn main() {
         }
     }
     println!();
-    println!("# Count: {} out of {} Uppercase_Letter characters", cond_count, total_count);
+    println!(
+        "# Count: {} out of {} Uppercase_Letter characters",
+        cond_count, total_count
+    );
 }

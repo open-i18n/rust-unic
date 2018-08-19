@@ -8,8 +8,15 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-#![forbid(bad_style, missing_debug_implementations, unconditional_recursion, missing_docs,
-          unsafe_code, unused, future_incompatible)]
+#![forbid(
+    bad_style,
+    missing_debug_implementations,
+    unconditional_recursion,
+    missing_docs,
+    unsafe_code,
+    unused,
+    future_incompatible
+)]
 
 extern crate unic_char_basics;
 

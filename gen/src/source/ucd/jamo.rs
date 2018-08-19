@@ -17,9 +17,7 @@ use regex::Regex;
 use source::utils::read;
 
 lazy_static! {
-    pub static ref JAMO_DATA: JamoData = {
-        read("data/ucd/Jamo.txt").parse().unwrap()
-    };
+    pub static ref JAMO_DATA: JamoData = { read("data/ucd/Jamo.txt").parse().unwrap() };
 }
 
 #[derive(Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]

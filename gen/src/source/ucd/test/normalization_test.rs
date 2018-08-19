@@ -16,9 +16,8 @@ use source::utils::read;
 use regex::Regex;
 
 lazy_static! {
-    pub static ref NORMALIZATION_TESTS: NormalizationTests = {
-        read("data/ucd/test/NormalizationTest.txt").parse().unwrap()
-    };
+    pub static ref NORMALIZATION_TESTS: NormalizationTests =
+        { read("data/ucd/test/NormalizationTest.txt").parse().unwrap() };
 }
 
 pub struct NormalizationTests {

@@ -18,9 +18,8 @@ use source::utils::read;
 use regex::Regex;
 
 lazy_static! {
-    pub static ref WORD_BREAK_TESTS: WordBreakTests = {
-        read("data/ucd/test/WordBreakTest.txt").parse().unwrap()
-    };
+    pub static ref WORD_BREAK_TESTS: WordBreakTests =
+        { read("data/ucd/test/WordBreakTest.txt").parse().unwrap() };
 }
 
 pub struct WordBreakTests {
@@ -58,7 +57,6 @@ impl FromStr for WordBreakTests {
                     (.*)                  # comment captured
                 \s*$"
             ).unwrap();
-
             static ref COMMENT_RE: Regex = Regex::new(
                 r"(?x)
                     \s+ [ \w\s<>\(\) -]+     # char name
@@ -98,8 +96,7 @@ impl FromStr for WordBreakTests {
                         "÷" => true,
                         "×" => false,
                         t => panic!("Invalid token: {:?}", t),
-                    })
-                    .collect();
+                    }).collect();
                 assert_eq!(breaks.len(), chars.len() - 1);
 
                 let comment_items_captured = COMMENT_RE.captures_iter(&line[2]).collect::<Vec<_>>();
@@ -135,8 +132,7 @@ impl FromStr for WordBreakTests {
                     breaks,
                     rules,
                 })
-            })
-            .collect();
+            }).collect();
 
         Ok(WordBreakTests { entries })
     }

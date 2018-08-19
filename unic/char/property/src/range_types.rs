@@ -86,8 +86,7 @@ impl NumericCharPropertyValue for u8 {}
 /// A Character Property with numeric values.
 ///
 /// Examples: `Numeric_Value`, `Canonical_Combining_Class`
-pub trait NumericCharProperty<NumericValue: NumericCharPropertyValue>
-    : CharProperty {
+pub trait NumericCharProperty<NumericValue: NumericCharPropertyValue>: CharProperty {
     /// The numeric value for the property value.
     fn number(&self) -> NumericValue;
 }

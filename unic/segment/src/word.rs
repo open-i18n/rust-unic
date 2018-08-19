@@ -599,7 +599,10 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
 
         if let FormatExtend(t) = state {
             // if we required something but didn't find it, backtrack
-            if t == RequireLetter || t == RequireHLetter || t == RequireNumeric || t == AcceptNone
+            if t == RequireLetter
+                || t == RequireHLetter
+                || t == RequireNumeric
+                || t == AcceptNone
                 || t == AcceptQLetter
             {
                 previdx = saveidx;
@@ -685,9 +688,7 @@ mod tests {
     fn test_word_bounds() {
         assert_eq!(
             WordBounds::new("The quick (\"brown\")  fox").collect::<Vec<&str>>(),
-            &[
-                "The", " ", "quick", " ", "(", "\"", "brown", "\"", ")", " ", " ", "fox"
-            ]
+            &["The", " ", "quick", " ", "(", "\"", "brown", "\"", ")", " ", " ", "fox"]
         );
     }
 
@@ -698,9 +699,7 @@ mod tests {
                 "The quick (\"brown\") fox can't jump 32.3 feet, right?",
                 |s: &&str| s.chars().any(is_alphanumeric),
             ).collect::<Vec<&str>>(),
-            &[
-                "The", "quick", "brown", "fox", "can't", "jump", "32.3", "feet", "right"
-            ]
+            &["The", "quick", "brown", "fox", "can't", "jump", "32.3", "feet", "right"]
         );
     }
 }

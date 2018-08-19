@@ -15,8 +15,8 @@ use std::fmt;
 use std::iter::repeat;
 use std::ops::Range;
 
-use unic_ucd_bidi::BidiClass;
 use unic_ucd_bidi::bidi_class::abbr_names::*;
+use unic_ucd_bidi::BidiClass;
 
 use explicit;
 use format_chars;
@@ -420,12 +420,10 @@ mod tests {
             InitialInfo {
                 text: &text,
                 original_classes: vec![L, EN],
-                paragraphs: vec![
-                    ParagraphInfo {
-                        range: 0..2,
-                        level: LTR_LEVEL,
-                    },
-                ],
+                paragraphs: vec![ParagraphInfo {
+                    range: 0..2,
+                    level: LTR_LEVEL,
+                },],
             }
         );
 
@@ -435,12 +433,10 @@ mod tests {
             InitialInfo {
                 text: &text,
                 original_classes: vec![AL, AL, WS, R, R],
-                paragraphs: vec![
-                    ParagraphInfo {
-                        range: 0..5,
-                        level: RTL_LEVEL,
-                    },
-                ],
+                paragraphs: vec![ParagraphInfo {
+                    range: 0..5,
+                    level: RTL_LEVEL,
+                },],
             }
         );
 
@@ -469,12 +465,10 @@ mod tests {
             InitialInfo {
                 text: &text,
                 original_classes: vec![RLI, RLI, RLI, R, R, PDI, PDI, PDI, L],
-                paragraphs: vec![
-                    ParagraphInfo {
-                        range: 0..9,
-                        level: LTR_LEVEL,
-                    },
-                ],
+                paragraphs: vec![ParagraphInfo {
+                    range: 0..9,
+                    level: LTR_LEVEL,
+                },],
             }
         );
     }
@@ -488,12 +482,10 @@ mod tests {
                 text: &text,
                 levels: Level::vec(&[0, 0, 0, 0, 0, 0]),
                 original_classes: vec![L, L, L, EN, EN, EN],
-                paragraphs: vec![
-                    ParagraphInfo {
-                        range: 0..6,
-                        level: LTR_LEVEL,
-                    },
-                ],
+                paragraphs: vec![ParagraphInfo {
+                    range: 0..6,
+                    level: LTR_LEVEL,
+                },],
             }
         );
 
@@ -504,12 +496,10 @@ mod tests {
                 text: &text,
                 levels: Level::vec(&[0, 0, 0, 0, 1, 1, 1, 1, 1, 1]),
                 original_classes: vec![L, L, L, WS, R, R, R, R, R, R],
-                paragraphs: vec![
-                    ParagraphInfo {
-                        range: 0..10,
-                        level: LTR_LEVEL,
-                    },
-                ],
+                paragraphs: vec![ParagraphInfo {
+                    range: 0..10,
+                    level: LTR_LEVEL,
+                },],
             }
         );
         assert_eq!(
@@ -518,12 +508,10 @@ mod tests {
                 text: &text,
                 levels: Level::vec(&[2, 2, 2, 1, 1, 1, 1, 1, 1, 1]),
                 original_classes: vec![L, L, L, WS, R, R, R, R, R, R],
-                paragraphs: vec![
-                    ParagraphInfo {
-                        range: 0..10,
-                        level: RTL_LEVEL,
-                    },
-                ],
+                paragraphs: vec![ParagraphInfo {
+                    range: 0..10,
+                    level: RTL_LEVEL,
+                },],
             }
         );
 
@@ -534,12 +522,10 @@ mod tests {
                 text: &text,
                 levels: Level::vec(&[1, 1, 1, 1, 1, 1, 0, 0, 0, 0]),
                 original_classes: vec![R, R, R, R, R, R, WS, L, L, L],
-                paragraphs: vec![
-                    ParagraphInfo {
-                        range: 0..10,
-                        level: LTR_LEVEL,
-                    },
-                ],
+                paragraphs: vec![ParagraphInfo {
+                    range: 0..10,
+                    level: LTR_LEVEL,
+                },],
             }
         );
         assert_eq!(
@@ -548,12 +534,10 @@ mod tests {
                 text: &text,
                 levels: Level::vec(&[1, 1, 1, 1, 1, 1, 1, 2, 2, 2]),
                 original_classes: vec![R, R, R, R, R, R, WS, L, L, L],
-                paragraphs: vec![
-                    ParagraphInfo {
-                        range: 0..10,
-                        level: RTL_LEVEL,
-                    },
-                ],
+                paragraphs: vec![ParagraphInfo {
+                    range: 0..10,
+                    level: RTL_LEVEL,
+                },],
             }
         );
 
@@ -564,12 +548,10 @@ mod tests {
                 text: &text,
                 levels: Level::vec(&[1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1]),
                 original_classes: vec![AL, AL, EN, AL, AL, WS, R, R, EN, R, R],
-                paragraphs: vec![
-                    ParagraphInfo {
-                        range: 0..11,
-                        level: LTR_LEVEL,
-                    },
-                ],
+                paragraphs: vec![ParagraphInfo {
+                    range: 0..11,
+                    level: LTR_LEVEL,
+                },],
             }
         );
 
