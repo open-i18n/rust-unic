@@ -8,9 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-// TODO(MIN_RUST_VERSION): Drop &s in match variants after Rust 1.24.0
-#![cfg_attr(feature = "cargo-clippy", allow(match_ref_pats))]
-
 use core::cmp::Ordering;
 use core::fmt;
 use unic_ucd_hangul::decompose_syllable;

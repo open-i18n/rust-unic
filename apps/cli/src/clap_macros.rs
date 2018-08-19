@@ -20,10 +20,6 @@ macro_rules! unic_arg_enum {
             type Err = String;
 
             fn from_str(s: &str) -> ::std::result::Result<Self,Self::Err> {
-                // TODO(MIN_RUST_VERSION): Drop following after >= 1.23
-                #[allow(unused_imports)]
-                use ::std::ascii::AsciiExt;
-
                 match s {
                     $(stringify!($v) |
                     _ if s.replace("-", "").eq_ignore_ascii_case(stringify!($v)) => Ok($e::$v)),+,

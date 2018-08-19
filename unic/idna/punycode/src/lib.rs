@@ -33,10 +33,6 @@
 use std::char;
 use std::u32;
 
-// TODO: Drop following after MIN_RUST_VERSION >= 1.23
-#[allow(unused_imports)]
-use std::ascii::AsciiExt;
-
 mod pkg_info;
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
