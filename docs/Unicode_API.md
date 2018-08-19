@@ -16,7 +16,7 @@ more in *Unicode Character Database (UCD)* ([UAX\#44](http://www.unicode.org/rep
 
 Some of these properties are now *deprecated*, meaning that they are no longer recommended for
 use. Some other properties are considered *contributory* properties. Neither of these groups of
-properties will be support in UNIC, unless there is clear demand for them.
+properties will be supported in UNIC, unless there is clear demand for them.
 
 Other specifications published by the Unicode Consortium, like the *Unicode IDNA Compatibility
 Processing* ([UTS\#46](www.unicode.org/reports/tr46/)) and the *Unicode Emoji*
@@ -28,14 +28,14 @@ implemented by UNIC. See the [Unicode Technical Reports](http://www.unicode.org/
 for a complete list of these specifications and their current status.
 
 
-### Naming Convension
+### Naming Convention
 
-The character properties defined in Unicode specifications follow a common naming convension.
-Each charcter property and (non-numeric) property value has a name and an abbreviation.
+The character properties defined in Unicode specifications follow a common naming convention.
+Each character property and (non-numeric) property value has a name and an abbreviation.
 
-The UNIC API for character properties is based on this convension and tries to stay as close as
+The UNIC API for character properties is based on this convention and tries to stay as close as
 possible to this naming schemes, making it easier to use the library when familiar with the
-Unicode convensions.
+Unicode conventions.
 
 NOTE: Since Rust does not support aliases for `enum` variants, only the *long names* are
 supported in UNIC components. Property abbreviation names are provided in the documentation (to

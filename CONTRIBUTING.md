@@ -92,7 +92,7 @@ Please consider running through these steps before submitting a PR for UNIC:
 
 7.  For pre-`1.0.0` development, we try to have a new release after each new
     Rust release. Therefore, there's no need to make new releases after each
-    major or minor component, and as a result, no reason to bump verion in PRs.
+    major or minor component, and as a result, no reason to bump version in PRs.
 
 ## Miscellaneous
 
