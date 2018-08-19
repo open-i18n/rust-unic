@@ -12,12 +12,11 @@
 #![forbid(
     bad_style,
     future_incompatible,
+    missing_debug_implementations,
     missing_docs,
     unconditional_recursion,
     unsafe_code,
-    missing_debug_implementations
 )]
-#![deny(unused)]
 
 //! # UNIC — Unicode Text Segmentation Algorithms
 //!

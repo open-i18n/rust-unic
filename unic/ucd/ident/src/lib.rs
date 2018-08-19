@@ -16,9 +16,7 @@
     missing_docs,
     unconditional_recursion,
     unsafe_code,
-    unused
 )]
-#![deny(unused)]
 
 //! # UNIC — UCD — Identifier Properties
 //!

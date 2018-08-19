@@ -15,9 +15,8 @@
     missing_debug_implementations,
     missing_docs,
     unconditional_recursion,
-    unsafe_code
+    unsafe_code,
 )]
-#![deny(unused)]
 
 //! # UNIC — UCD — Case Character Properties
 //!

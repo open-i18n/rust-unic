@@ -15,7 +15,6 @@
     missing_docs,
     unconditional_recursion,
     unsafe_code,
-    unused
 )]
 
 extern crate unic_char;

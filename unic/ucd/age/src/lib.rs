@@ -15,7 +15,6 @@
     missing_debug_implementations,
     unconditional_recursion,
     unsafe_code,
-    unused
 )]
 #![deny(missing_docs)]
 

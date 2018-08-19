@@ -14,9 +14,9 @@
     future_incompatible,
     missing_debug_implementations,
     unconditional_recursion,
-    unsafe_code
+    unsafe_code,
 )]
-#![deny(bad_style, unsafe_code, unused)]
+#![deny(bad_style, unsafe_code)]
 
 //! # UNIC - UCD - Hangul Syllable Composition & Decomposition
 //!

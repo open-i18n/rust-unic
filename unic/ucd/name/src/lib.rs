@@ -14,9 +14,8 @@
     future_incompatible,
     missing_debug_implementations,
     unconditional_recursion,
-    unsafe_code
+    unsafe_code,
 )]
-#![deny(unused)]
 
 extern crate unic_char_property;
 extern crate unic_ucd_hangul;

@@ -20,7 +20,7 @@
     missing_debug_implementations,
     unconditional_recursion
 )]
-#![deny(missing_docs, unsafe_code, unused, future_incompatible)]
+#![deny(missing_docs, unsafe_code, future_incompatible)]
 
 //! # UNIC — Unicode Character Tools — Character Range
 //!

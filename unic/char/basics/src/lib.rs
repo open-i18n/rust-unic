@@ -11,12 +11,11 @@
 #![no_std]
 #![forbid(
     bad_style,
+    future_incompatible,
     missing_debug_implementations,
-    unconditional_recursion,
     missing_docs,
+    unconditional_recursion,
     unsafe_code,
-    unused,
-    future_incompatible
 )]
 
 //! # UNIC — Unicode Character Tools — Basic Stable Character Properties

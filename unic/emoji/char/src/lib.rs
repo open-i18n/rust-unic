@@ -13,9 +13,9 @@
     future_incompatible,
     missing_debug_implementations,
     unconditional_recursion,
-    unsafe_code
+    unsafe_code,
 )]
-#![deny(missing_docs, unused)]
+#![deny(missing_docs)]
 
 //! # UNIC — Unicode Emoji — Emoji Character Properties
 //!
