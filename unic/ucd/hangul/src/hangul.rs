@@ -26,6 +26,7 @@ pub const T_COUNT: u32 = 28;
 pub const N_COUNT: u32 = (V_COUNT * T_COUNT);
 pub const S_COUNT: u32 = (L_COUNT * N_COUNT);
 
+/// Whether the character is a (precomposed) Hangul Syllable
 pub fn is_syllable(ch: char) -> bool {
     let cp = ch as u32;
     cp >= S_BASE && cp < (S_BASE + S_COUNT)

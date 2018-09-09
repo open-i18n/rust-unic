@@ -18,6 +18,12 @@
 )]
 #![forbid(unsafe_code)]
 
+//! # UNIC — UCD — Name
+//!
+//! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
+//!
+//! Accessor for character Name properties from Unicode Character Database (UCD)
+
 extern crate unic_char_property;
 extern crate unic_ucd_hangul;
 extern crate unic_ucd_version;
