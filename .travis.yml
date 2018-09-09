@@ -7,7 +7,7 @@ rust:
   - nightly
   - beta
   - stable
-  - 1.24.0  # = MIN_RUST_VERSION
+  - 1.26.0  # = MIN_RUST_VERSION
 
 branches:
   except:

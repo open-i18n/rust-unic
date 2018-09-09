@@ -13,14 +13,15 @@
     feature = "exact-size-is-empty",
     feature(exact_size_is_empty)
 )]
-#![cfg_attr(feature = "fused", feature(fused))]
 #![cfg_attr(feature = "trusted-len", feature(trusted_len))]
-#![forbid(
+#![warn(
     bad_style,
+    future_incompatible,
     missing_debug_implementations,
-    unconditional_recursion
+    missing_docs,
+    unconditional_recursion,
 )]
-#![deny(missing_docs, unsafe_code, future_incompatible)]
+#![deny(unsafe_code)]
 
 //! # UNIC — Unicode Character Tools — Character Range
 //!
@@ -48,7 +49,6 @@
 //!
 //! - `unstable`: enables all features
 //! - `exact-size-is-empty`: provide a specific impl of [`ExactSizeIterator::is_empty`][is_empty]
-//! - `fused`: impl the [`FusedIterator`] contract
 //! - `trusted-len`: impl the [`TrustedLen`] contract
 //!
 //! [is_empty]: https://doc.rust-lang.org/std/iter/trait.ExactSizeIterator.html#method.is_empty
@@ -73,7 +73,6 @@ mod macros;
 
 mod step;
 
-#[cfg(feature = "fused")]
 mod iter_fused;
 
 #[cfg(feature = "trusted-len")]

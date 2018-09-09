@@ -51,6 +51,7 @@ pub enum Name {
 
 #[cfg_attr(feature = "cargo-clippy", allow(len_without_is_empty))]
 impl Name {
+    /// Find the character `Name` property value.
     pub fn of(ch: char) -> Option<Name> {
         match ch {
             '\u{AC00}'...'\u{D7A3}' => Some(Name::NR1(ch)),
