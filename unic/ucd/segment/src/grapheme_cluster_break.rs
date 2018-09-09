@@ -334,15 +334,15 @@ impl Default for GraphemeClusterBreak {
 
 mod data {
     use super::long_names as GCB;
-    use unic_char_property::tables::CharDataTable;
-    pub const GRAPHEME_CLUSTER_BREAK_TABLE: CharDataTable<super::GraphemeClusterBreak> =
+    use unic_char_property::tables::CharRangeMap;
+    pub const GRAPHEME_CLUSTER_BREAK_TABLE: CharRangeMap<super::GraphemeClusterBreak> =
         include!("../tables/grapheme_cluster_break.rsv");
 }
 
 impl GraphemeClusterBreak {
     /// Find the character `Grapheme_Cluster_Break` property value.
     pub fn of(ch: char) -> GraphemeClusterBreak {
-        data::GRAPHEME_CLUSTER_BREAK_TABLE.find_or_default(ch)
+        data::GRAPHEME_CLUSTER_BREAK_TABLE.find(ch).unwrap_or_default()
     }
 }
 

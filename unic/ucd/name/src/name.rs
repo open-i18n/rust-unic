@@ -34,19 +34,19 @@ pub enum Name {
     /// [*Unicode*](http://www.unicode.org/versions/Unicode10.0.0/ch03.pdf)
     /// by concatenating a fixed prefix string "HANGUL SYLLABLE" and appropriate values of the
     /// [*Jamo_Short_Name*](http://www.unicode.org/Public/UCD/latest/ucd/Jamo.txt) property.
-    NR1(char),
+    NR1(#[doc(hidden)] char),
 
     /// NR2: For most ideographs, the Name is derived by
     /// concatenating a script-specific prefix string, as specified in
     /// [*Unicode*](http://www.unicode.org/versions/Unicode10.0.0/ch04.pdf),
     /// to the code point, expressed in hexadecimal, with the usual
     /// 4- to 6-digit convention.
-    NR2(&'static str, char),
+    NR2(#[doc(hidden)] &'static str, #[doc(hidden)] char),
 
     /// NR3: For all other Graphic characters and for all Format characters,
     /// the Name is as explicitly listed in Field 1 of
     /// [*UnicodeData.txt*](https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt).
-    NR3(&'static [&'static str]),
+    NR3(#[doc(hidden)] &'static str),
 }
 
 #[cfg_attr(feature = "cargo-clippy", allow(len_without_is_empty))]
@@ -90,13 +90,8 @@ impl Name {
                 len += Name::number_of_hex_digits(ch);
                 len
             }
-            Name::NR3(pieces) => {
-                // start with spaces
-                let mut len = pieces.len().saturating_sub(1);
-                for piece in pieces {
-                    len += piece.len();
-                }
-                len
+            Name::NR3(name) => {
+                name.len()
             }
         }
     }
@@ -152,14 +147,8 @@ impl fmt::Display for Name {
                 f.write_str(prefix)?;
                 write!(f, "{:X}", ch as u32)
             }
-            Name::NR3(pieces) => {
-                let (first, rest) = pieces.split_first().unwrap();
-                f.write_str(first)?;
-                for piece in rest {
-                    f.write_str(" ")?;
-                    f.write_str(piece)?;
-                }
-                Ok(())
+            Name::NR3(name) => {
+                f.write_str(name)
             }
         }
     }
@@ -175,9 +164,8 @@ impl Ord for Name {
                     jamos.cmp(&other_jamos)
                 }
                 Name::NR2(other_prefix, _) => PREFIX_HANGUL_SYLLABLE.cmp(other_prefix),
-                Name::NR3(other_pieces) => {
-                    let (first, _) = other_pieces.split_first().unwrap();
-                    PREFIX_HANGUL_SYLLABLE.cmp(first)
+                Name::NR3(name) => {
+                    PREFIX_HANGUL_SYLLABLE.cmp(name)
                 }
             },
             Name::NR2(prefix, ch) => match *other {
@@ -189,17 +177,15 @@ impl Ord for Name {
                         prefix.cmp(other_prefix)
                     }
                 }
-                Name::NR3(other_pieces) => {
-                    let (first, _) = other_pieces.split_first().unwrap();
-                    prefix.cmp(first)
+                Name::NR3(name) => {
+                    prefix.cmp(name)
                 }
             },
-            Name::NR3(pieces) => {
-                let (first, _) = pieces.split_first().unwrap();
+            Name::NR3(name) => {
                 match *other {
-                    Name::NR1(_) => first.cmp(&PREFIX_HANGUL_SYLLABLE),
-                    Name::NR2(other_prefix, _) => first.cmp(&other_prefix),
-                    Name::NR3(other_pieces) => pieces.cmp(other_pieces),
+                    Name::NR1(_) => name.cmp(&PREFIX_HANGUL_SYLLABLE),
+                    Name::NR2(other_prefix, _) => name.cmp(&other_prefix),
+                    Name::NR3(other_name) => name.cmp(other_name),
                 }
             }
         }
@@ -213,8 +199,8 @@ impl PartialOrd for Name {
 }
 
 mod data {
-    use unic_char_property::tables::CharDataTable;
-    include!("../tables/name_values.rsd");
-    pub const NAMES: CharDataTable<&[&str]> = include!("../tables/name_map.rsv");
-    pub const JAMO_SHORT_NAMES: CharDataTable<&str> = include!("../tables/jamo.rsv");
+    use unic_char_property::tables::CharMap;
+    // include!("../tables/name_values.rsd");
+    pub const NAMES: CharMap<&str> = include!("../tables/name_map.rsv");
+    pub const JAMO_SHORT_NAMES: CharMap<&str> = include!("../tables/jamo.rsv");
 }

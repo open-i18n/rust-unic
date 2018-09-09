@@ -19,36 +19,46 @@ pub trait ToRangeCharSet {
 
 impl ToRangeCharSet for BTreeSet<char> {
     fn to_range_char_set(&self) -> String {
-        let mut entries = self.iter();
-        let mut out = String::from("CharDataTable::Range(&[\n");
+        let mut range_map = vec![];
 
+        let mut entries = self.iter();
         if let Some(&low) = entries.next() {
             let (mut low, mut high) = (low, low);
 
-            let append_entry = |out: &mut String, low: char, high: char| {
-                writeln!(
-                    out,
-                    "    (chars!('{}'..='{}'), ()),",
-                    low.escape_unicode(),
-                    high.escape_unicode(),
-                ).expect("`String` `Write` failed");
-            };
-
-            for &char in entries {
-                if (char as u32) > (high as u32 + 1) {
-                    append_entry(&mut out, low, high);
-                    low = char;
-                    high = char;
+            for &codepoint in entries {
+                if (codepoint as u32) > (high as u32 + 1) {
+                    range_map.push((low, high));
+                    low = codepoint;
+                    high = codepoint;
                 } else {
-                    assert_eq!(char as u32, high as u32 + 1);
-                    high = char;
+                    assert_eq!(codepoint as u32, high as u32 + 1);
+                    high = codepoint;
                 }
             }
 
-            append_entry(&mut out, low, high);
+            range_map.push((low, high));
         }
 
-        out.push_str("])");
+        let mut out = String::from("CharRangeMap {\n");
+
+        out.push_str("    ranges: &[\n");
+        for &(low, high) in range_map.iter() {
+            writeln!(
+                out,
+                "        chars!('{}'..='{}'),",
+                low.escape_unicode(),
+                high.escape_unicode(),
+            ).expect("`String` `Write` failed");
+        }
+        out.push_str("    ],\n");
+
+        out.push_str("    values: &[\n");
+        for _ in range_map.iter() {
+            out.push_str("        (),\n");
+        }
+        out.push_str("    ],\n");
+
+        out.push_str("}");
         out
     }
 }
@@ -72,10 +82,16 @@ mod test {
         assert_eq!(
             set.to_range_char_set(),
             "\
-CharDataTable::Range(&[
-    (chars!('\\u{61}'..='\\u{66}'), ()),
-    (chars!('\\u{78}'..='\\u{7a}'), ()),
-])"
+CharRangeMap {
+    ranges: &[
+        chars!('\\u{61}'..='\\u{66}'),
+        chars!('\\u{78}'..='\\u{7a}'),
+    ],
+    values: &[
+        (),
+        (),
+    ],
+}"
         );
     }
 }

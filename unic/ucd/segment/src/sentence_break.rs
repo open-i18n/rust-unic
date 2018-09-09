@@ -249,15 +249,15 @@ impl Default for SentenceBreak {
 
 mod data {
     use super::long_names as SB;
-    use unic_char_property::tables::CharDataTable;
-    pub const SENTENCE_BREAK_TABLE: CharDataTable<super::SentenceBreak> =
+    use unic_char_property::tables::CharRangeMap;
+    pub const SENTENCE_BREAK_TABLE: CharRangeMap<super::SentenceBreak> =
         include!("../tables/sentence_break.rsv");
 }
 
 impl SentenceBreak {
     /// Find the character `Sentence_Break` property value.
     pub fn of(ch: char) -> SentenceBreak {
-        data::SENTENCE_BREAK_TABLE.find_or_default(ch)
+        data::SENTENCE_BREAK_TABLE.find(ch).unwrap_or_default()
     }
 }
 

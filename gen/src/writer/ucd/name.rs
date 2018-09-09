@@ -9,8 +9,8 @@
 // except according to those terms.
 
 use std::char;
-use std::collections::{BTreeMap, BTreeSet};
-use std::fmt::Write;
+use std::collections::{BTreeMap, /*BTreeSet*/};
+// use std::fmt::Write;
 use std::path::Path;
 
 use source::ucd::jamo::JAMO_DATA;
@@ -29,31 +29,30 @@ pub fn generate(dir: &Path) {
 
 #[derive(Clone, Debug)]
 struct NameRecord<'a> {
-    pieces: Vec<&'a str>,
+    name: &'a str,
 }
 
 fn emit_name_tables(dir: &Path) {
-    let mut values: BTreeSet<&str> = BTreeSet::default();
+    // let mut values: BTreeSet<&str> = BTreeSet::default();
     let map: BTreeMap<char, NameRecord> = UNICODE_DATA
         .entries
         .iter()
         .filter(|x| !x.name.starts_with('<'))
         .map(|x| {
-            let pieces = x.name.split_whitespace().collect::<Vec<_>>();
-            values.extend(pieces.iter());
-            (x.character, NameRecord { pieces })
-        }).collect();
+            (x.character, NameRecord { name: &x.name })
+        })
+        .collect();
 
-    let mut values_contents = String::new();
-    for piece in values.iter() {
-        writeln!(
-            values_contents,
-            "const {}: &str = \"{}\";",
-            piece.replace('-', "_"),
-            piece
-        ).unwrap();
-    }
-    write(dir, "name_values.rsd", &values_contents);
+    // let mut values_contents = String::new();
+    // for piece in values.iter() {
+    //     writeln!(
+    //         values_contents,
+    //         "const {}: &str = \"{}\";",
+    //         piece.replace('-', "_"),
+    //         piece
+    //     ).unwrap();
+    // }
+    // write(dir, "name_values.rsd", &values_contents);
 
     write(
         dir,
@@ -61,13 +60,8 @@ fn emit_name_tables(dir: &Path) {
         &map.to_direct_char_table(|record, f| {
             write!(
                 f,
-                "&[{}]",
-                record
-                    .pieces
-                    .iter()
-                    .map(|s| s.replace('-', "_"))
-                    .collect::<Vec<_>>()
-                    .join(", ")
+                "\"{}\"",
+                record.name
             )
         }),
     );

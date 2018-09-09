@@ -9,26 +9,26 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use unic_char_property::tables::CharDataTable;
+use unic_char_property::tables::CharMap;
 
 pub mod data {
     use decomposition_type::long_names::*;
-    use unic_char_property::tables::CharDataTable;
+    use unic_char_property::tables::CharMap;
     use DecompositionType;
 
-    pub const CANONICAL_COMPOSITION_MAPPING: CharDataTable<CharDataTable<char>> =
+    pub const CANONICAL_COMPOSITION_MAPPING: CharMap<CharMap<char>> =
         include!("../tables/canonical_composition_mapping.rsv");
 
-    pub const CANONICAL_DECOMPOSITION_MAPPING: CharDataTable<&[char]> =
+    pub const CANONICAL_DECOMPOSITION_MAPPING: CharMap<&[char]> =
         include!("../tables/canonical_decomposition_mapping.rsv");
 
     #[cfg_attr(rustfmt, rustfmt_skip)]
-    pub const COMPATIBILITY_DECOMPOSITION_MAPPING: CharDataTable<(DecompositionType, &[char])> =
+    pub const COMPATIBILITY_DECOMPOSITION_MAPPING: CharMap<(DecompositionType, &[char])> =
         include!("../tables/compatibility_decomposition_mapping.rsv");
 }
 
 /// Canonical Composition of the character.
-pub fn canonical_composition(c: char) -> Option<CharDataTable<char>> {
+pub fn canonical_composition(c: char) -> Option<CharMap<char>> {
     data::CANONICAL_COMPOSITION_MAPPING.find(c)
 }
 

@@ -109,16 +109,16 @@ fn emit_canonical_composition_mapping(dir: &Path) {
         dir,
         "canonical_composition_mapping.rsv",
         &map.to_direct_char_table(|val, f| {
-            write!(f, "CharDataTable::Direct(&[")?;
+            // TODO(CAD97): get this using the traits so it doesn't break on refactor
+            write!(f, "CharMap{{chars:&[")?;
             for pair in val.iter() {
-                write!(
-                    f,
-                    "('{}','{}'),",
-                    pair.0.escape_unicode(),
-                    pair.1.escape_unicode(),
-                )?;
+                write!(f, "'{}',", pair.0.escape_unicode(), )?;
             }
-            write!(f, "])")
+            write!(f, "],values:&[")?;
+            for pair in val.iter() {
+                write!(f, "'{}',", pair.1.escape_unicode(), )?;
+            }
+            write!(f, "]}}")
         }),
     );
 }

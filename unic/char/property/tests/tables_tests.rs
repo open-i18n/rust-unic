@@ -13,33 +13,36 @@ extern crate unic_char_range;
 
 extern crate unic_char_property;
 
-use unic_char_property::tables::CharDataTable;
+use unic_char_property::tables::CharRangeMap;
 
 #[test]
 fn test_range_value_table() {
-    const TABLE: CharDataTable<u32> = CharDataTable::Range(&[
-        (chars!('a'..='g'), 1),
-        (chars!('j'..='q'), 2),
-        (chars!('w'..='z'), 3),
-    ]);
+    const TABLE: CharRangeMap<u32> = CharRangeMap {
+        ranges: &[
+            chars!('a'..='g'),
+            chars!('j'..='q'),
+            chars!('w'..='z'),
+        ],
+        values: &[1, 2, 3],
+    };
     for ch in chars!('a'..='g') {
         assert_eq!(TABLE.find(ch), Some(1));
-        assert_eq!(TABLE.find_or_default(ch), 1);
+        assert_eq!(TABLE.find(ch).unwrap_or_default(), 1);
     }
     for ch in chars!('h'..='i') {
         assert_eq!(TABLE.find(ch), None);
-        assert_eq!(TABLE.find_or_default(ch), 0);
+        assert_eq!(TABLE.find(ch).unwrap_or_default(), 0);
     }
     for ch in chars!('j'..='q') {
         assert_eq!(TABLE.find(ch), Some(2));
-        assert_eq!(TABLE.find_or_default(ch), 2);
+        assert_eq!(TABLE.find(ch).unwrap_or_default(), 2);
     }
     for ch in chars!('r'..='v') {
         assert_eq!(TABLE.find(ch), None);
-        assert_eq!(TABLE.find_or_default(ch), 0);
+        assert_eq!(TABLE.find(ch).unwrap_or_default(), 0);
     }
     for ch in chars!('x'..='z') {
         assert_eq!(TABLE.find(ch), Some(3));
-        assert_eq!(TABLE.find_or_default(ch), 3);
+        assert_eq!(TABLE.find(ch).unwrap_or_default(), 3);
     }
 }
