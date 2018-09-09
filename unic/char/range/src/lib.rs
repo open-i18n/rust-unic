@@ -13,9 +13,6 @@
     feature = "exact-size-is-empty",
     feature(exact_size_is_empty)
 )]
-// TODO(MIN_RUST_VERSION): Drop this for Rust >= 1.26.0.
-#![allow(stable_features)]
-#![cfg_attr(feature = "fused", feature(fused))]
 #![cfg_attr(feature = "trusted-len", feature(trusted_len))]
 #![warn(
     bad_style,
@@ -52,7 +49,6 @@
 //!
 //! - `unstable`: enables all features
 //! - `exact-size-is-empty`: provide a specific impl of [`ExactSizeIterator::is_empty`][is_empty]
-//! - `fused`: impl the [`FusedIterator`] contract
 //! - `trusted-len`: impl the [`TrustedLen`] contract
 //!
 //! [is_empty]: https://doc.rust-lang.org/std/iter/trait.ExactSizeIterator.html#method.is_empty
@@ -77,7 +73,6 @@ mod macros;
 
 mod step;
 
-#[cfg(feature = "fused")]
 mod iter_fused;
 
 #[cfg(feature = "trusted-len")]
