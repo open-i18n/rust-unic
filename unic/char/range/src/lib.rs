@@ -17,12 +17,14 @@
 #![allow(stable_features)]
 #![cfg_attr(feature = "fused", feature(fused))]
 #![cfg_attr(feature = "trusted-len", feature(trusted_len))]
-#![forbid(
+#![warn(
     bad_style,
+    future_incompatible,
     missing_debug_implementations,
-    unconditional_recursion
+    missing_docs,
+    unconditional_recursion,
 )]
-#![deny(missing_docs, unsafe_code, future_incompatible)]
+#![deny(unsafe_code)]
 
 //! # UNIC — Unicode Character Tools — Character Range
 //!
