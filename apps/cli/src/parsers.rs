@@ -35,10 +35,12 @@ pub fn codepoints(string: &str) -> String {
             if CODEPOINT_PREFIX.is_match(token) {
                 token = &token[2..];
             }
-            let codepoint = u32::from_str_radix(token, 16) //.
+            let codepoint = u32::from_str_radix(token, 16)
                 .expect(&format!("Cannot parse token as hex number: {}", token));
-            char::from_u32(codepoint) //.
-                .expect(&format!("Invalid Unicode Scalar Value code-point: {}", codepoint))
+            char::from_u32(codepoint).expect(&format!(
+                "Invalid Unicode Scalar Value code-point: {}",
+                codepoint
+            ))
         }).collect::<String>()
 }
 
