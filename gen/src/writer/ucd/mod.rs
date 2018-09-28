@@ -18,6 +18,7 @@ mod core;
 mod hangul;
 mod ident;
 mod name;
+mod name_aliases;
 mod normal;
 mod segment;
 mod segment_tests;
@@ -35,6 +36,7 @@ pub fn generate() {
     hangul::generate(&clean_dir("unic/ucd/hangul/tables"));
     ident::generate(&clean_dir("unic/ucd/ident/tables"));
     name::generate(&clean_dir("unic/ucd/name/tables"));
+    name_aliases::generate(&clean_dir("unic/ucd/name_aliases/tables"));
     normal::generate(&clean_dir("unic/ucd/normal/tables"));
     segment::generate(&clean_dir("unic/ucd/segment/tables"));
     segment_tests::generate(&clean_dir("unic/ucd/segment/tests/tables"));
