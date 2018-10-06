@@ -9,10 +9,12 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+/// An English definition for the given character
 pub fn definition_of(ch: char) -> Option<&'static str> {
     data::DEFINITIONS.find(ch)
 }
 
+/// The most customary pinyin reading for the given character
 pub fn mandarin_of(ch: char) -> Option<&'static str> {
     // TODO: When there are two values, then the first is preferred for
     // zh-Hans (CN) and the second is preferred for zh-Hant (TW).

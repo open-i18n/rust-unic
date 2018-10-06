@@ -8,19 +8,15 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate unic_ucd_unihan;
-
-use unic_ucd_unihan::{
-    definition_of,
-    mandarin_of,
-    simplified_variant_of,
-    traditional_variant_of,
-};
+use unic_ucd_unihan::{definition_of, mandarin_of, simplified_variant_of, traditional_variant_of};
 
 #[test]
 fn test_definition() {
     assert_eq!(definition_of('\u{0001}'), None);
-    assert_eq!(definition_of('\u{340c}'), Some("a tribe of savages in South China"));
+    assert_eq!(
+        definition_of('\u{340c}'),
+        Some("a tribe of savages in South China")
+    );
 }
 
 #[test]

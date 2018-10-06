@@ -19,14 +19,15 @@ use regex::Regex;
 
 lazy_static! {
     pub static ref UNIHAN_DATA_ENTRY_REGEX: Regex = Regex::new(
-        r"(?xm)^ # every line
+        r"(?xm)^                 # every line
           U\+([[:xdigit:]]{4,6}) # [1]codepoint
           \t                     # separator
           (k[a-zA-Z0-9_]+)       # [2]field key
           \t                     # separator
           (.*)                   # [3]field value
         ",
-    ).unwrap();
+    )
+    .unwrap();
 }
 
 pub trait DataEntry {
@@ -36,7 +37,7 @@ pub trait DataEntry {
 
 pub fn parse_entries_from_str<T>(str: &str) -> Vec<T>
 where
-    T: DataEntry + Clone
+    T: DataEntry + Clone,
 {
     let mut entry_map: BTreeMap<char, T> = BTreeMap::default();
 
@@ -52,11 +53,11 @@ where
                 let mut entry = T::new(chr);
                 entry.update(key, value);
                 entry_map.insert(chr, entry);
-            },
+            }
             Some(_) => {
-                let mut entry = entry_map.get_mut(&chr).unwrap();
+                let entry = entry_map.get_mut(&chr).unwrap();
                 entry.update(key, value);
-            },
+            }
         }
     }
 

@@ -10,14 +10,14 @@
 
 use std::str::FromStr;
 
-use source::utils::read;
+use crate::source::utils::read;
 
-use super::{DataEntry, parse_entries_from_str};
+use super::{parse_entries_from_str, DataEntry};
 
 lazy_static! {
     /// [Numeric values]: http://www.unicode.org/reports/tr38/#N1024D
     pub static ref UNIHAN_NUMERIC_VALUES_DATA: NumericValuesData = {
-        read("data/ucd/Unihan/Unihan_NumericValues.txt").parse().unwrap()
+        read("external/unicode/ucd/data/Unihan/Unihan_NumericValues.txt").parse().unwrap()
     };
 }
 
@@ -44,14 +44,14 @@ impl DataEntry for NumericValuesDataEntry {
             "kAccountingNumeric" => self.accounting_numeric = value.parse::<u64>().ok(),
             "kOtherNumeric" => self.other_numeric = value.parse::<u64>().ok(),
             "kPrimaryNumeric" => self.primary_numeric = value.parse::<u64>().ok(),
-            _ => {},
+            _ => {}
         }
     }
 }
 
 #[derive(Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct NumericValuesData {
-   pub entries: Box<[NumericValuesDataEntry]>,
+    pub entries: Box<[NumericValuesDataEntry]>,
 }
 
 impl FromStr for NumericValuesData {
@@ -80,17 +80,14 @@ mod test {
         let mut entry3 = NumericValuesDataEntry::new('\u{5146}');
         entry3.primary_numeric = Some(1000000000000);
 
-        let entries = vec![
-            entry1,
-            entry2,
-            entry3
-        ];
+        let entries = vec![entry1, entry2, entry3];
 
         assert_eq!(
             "U+3405	kOtherNumeric	5\n\
              U+4EDF	kAccountingNumeric	1000\n\
              U+5146	kPrimaryNumeric	1000000000000\n\
-             ".parse(),
+             "
+            .parse(),
             Ok(NumericValuesData {
                 entries: entries.into_boxed_slice(),
             }),

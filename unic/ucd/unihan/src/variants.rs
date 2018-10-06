@@ -9,10 +9,12 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+/// The Unicode value(s) for the simplified Chinese variant(s) for the given character
 pub fn simplified_variant_of(ch: char) -> Option<char> {
     data::SIMPLIFIED_VARIANT.find(ch)
 }
 
+/// The Unicode value(s) for the traditional Chinese variant(s) for the given character
 pub fn traditional_variant_of(ch: char) -> Option<char> {
     data::TRADITIONAL_VARIANT.find(ch)
 }

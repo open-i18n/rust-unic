@@ -11,14 +11,18 @@
 use std::collections::BTreeMap;
 use std::path::Path;
 
-use source::ucd::readme::UNICODE_VERSION;
-use source::ucd::unihan::numeric_values::UNIHAN_NUMERIC_VALUES_DATA;
-use source::ucd::unihan::readings::UNIHAN_READINGS_DATA;
-use source::ucd::unihan::variants::UNIHAN_VARIANTS_DATA;
+use crate::source::ucd::{
+    readme::UNICODE_VERSION,
+    unihan::{
+        numeric_values::UNIHAN_NUMERIC_VALUES_DATA, readings::UNIHAN_READINGS_DATA,
+        variants::UNIHAN_VARIANTS_DATA,
+    },
+};
 
-use writer::common::emit_unicode_version;
-use writer::utils::tables::ToDirectCharTable;
-use writer::utils::write;
+use crate::writer::{
+    common::emit_unicode_version,
+    utils::{tables::ToDirectCharTable, write},
+};
 
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
@@ -214,7 +218,8 @@ fn emit_unihan_variants_tables(dir: &Path) {
     write(
         dir,
         "specialized_semantic_variants_map.rsv",
-        &specialized_semantic_variants_map.to_direct_char_table(|record, f| write!(f, "{:?}", record)),
+        &specialized_semantic_variants_map
+            .to_direct_char_table(|record, f| write!(f, "{:?}", record)),
     );
     write(
         dir,

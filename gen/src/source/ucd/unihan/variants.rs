@@ -13,14 +13,14 @@ use std::str::FromStr;
 
 use regex::Regex;
 
-use source::utils::read;
+use crate::source::utils::read;
 
-use super::{DataEntry, parse_entries_from_str};
+use super::{parse_entries_from_str, DataEntry};
 
 lazy_static! {
     /// [Variants]: http://www.unicode.org/reports/tr38/#N10211
     pub static ref UNIHAN_VARIANTS_DATA: VariantsData = {
-        read("data/ucd/Unihan/Unihan_Variants.txt").parse().unwrap()
+        read("external/unicode/ucd/data/Unihan/Unihan_Variants.txt").parse().unwrap()
     };
 
     pub static ref VALUE_REGEX: Regex = Regex::new(
@@ -75,20 +75,24 @@ impl DataEntry for VariantsDataEntry {
 
     fn update<'a>(&mut self, key: &'a str, value: &'a str) {
         match key {
-            "kSemanticVariant" =>
+            "kSemanticVariant" => {
                 self.semantic_variants =
-                    Some(VariantsDataEntry::parse_values_with_additional_data(value)),
-            "kSimplifiedVariant" =>
-                self.simplified_variant = Some(VariantsDataEntry::parse_value(value)),
-            "kSpecializedSemanticVariant" =>
+                    Some(VariantsDataEntry::parse_values_with_additional_data(value))
+            }
+            "kSimplifiedVariant" => {
+                self.simplified_variant = Some(VariantsDataEntry::parse_value(value))
+            }
+            "kSpecializedSemanticVariant" => {
                 self.specialized_semantic_variants =
-                    Some(VariantsDataEntry::parse_values_with_additional_data(value)),
-            "kTraditionalVariant" =>
-                self.traditional_variant = Some(VariantsDataEntry::parse_value(value)),
-            "kZVariant" =>
-                self.z_variants =
-                    Some(VariantsDataEntry::parse_values_with_additional_data(value)),
-            _ => {},
+                    Some(VariantsDataEntry::parse_values_with_additional_data(value))
+            }
+            "kTraditionalVariant" => {
+                self.traditional_variant = Some(VariantsDataEntry::parse_value(value))
+            }
+            "kZVariant" => {
+                self.z_variants = Some(VariantsDataEntry::parse_values_with_additional_data(value))
+            }
+            _ => {}
         }
     }
 }

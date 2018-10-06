@@ -10,22 +10,30 @@
 // except according to those terms.
 
 #![no_std]
-#![forbid(future_incompatible, missing_debug_implementations, unconditional_recursion, unsafe_code)]
-#![deny(bad_style, unsafe_code, unused)]
+#![warn(
+    bad_style,
+    missing_debug_implementations,
+    missing_docs,
+    unconditional_recursion
+)]
+#![forbid(unsafe_code)]
 
-extern crate unic_ucd_version;
-extern crate unic_char_property;
+//! # UNIC - UCD - Unihan
+//!
+//! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
+//!
+//! Accessor for Unicode Han Database (Unihan)
 
 mod readings;
-pub use readings::{definition_of, mandarin_of};
+pub use crate::readings::{definition_of, mandarin_of};
 
 mod variants;
-pub use variants::{simplified_variant_of, traditional_variant_of};
+pub use crate::variants::{simplified_variant_of, traditional_variant_of};
 
 use unic_ucd_version::UnicodeVersion;
 
 mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
 /// The [Unicode version](https://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

@@ -10,14 +10,14 @@
 
 use std::str::FromStr;
 
-use source::utils::read;
+use crate::source::utils::read;
 
-use super::{DataEntry, parse_entries_from_str};
+use super::{parse_entries_from_str, DataEntry};
 
 lazy_static! {
     /// [Readings]: http://www.unicode.org/reports/tr38/#N1019C
     pub static ref UNIHAN_READINGS_DATA: ReadingsData = {
-        read("data/ucd/Unihan/Unihan_Readings.txt").parse().unwrap()
+        read("external/unicode/ucd/data/Unihan/Unihan_Readings.txt").parse().unwrap()
     };
 }
 
@@ -71,7 +71,7 @@ impl DataEntry for ReadingsDataEntry {
             "kTang" => self.tang = Some(value.to_owned()),
             "kVietnamese" => self.vietnamese = Some(value.to_owned()),
             "kXHC1983" => self.xhc_1983 = Some(value.to_owned()),
-            _ => {},
+            _ => {}
         }
     }
 }
