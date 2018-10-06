@@ -28,6 +28,7 @@ pub extern crate unic_ucd_ident as ident;
 pub extern crate unic_ucd_name as name;
 pub extern crate unic_ucd_normal as normal;
 pub extern crate unic_ucd_segment as segment;
+pub extern crate unic_ucd_unihan as unihan;
 pub extern crate unic_ucd_version as version;
 
 pub use version::UnicodeVersion;
@@ -69,6 +70,8 @@ pub use name::Name;
 pub use normal::CanonicalCombiningClass;
 
 pub use segment::{GraphemeClusterBreak, SentenceBreak, WordBreak};
+
+pub use unihan::{definition_of, mandarin_of, simplified_variant_of, traditional_variant_of};
 
 mod pkg_info;
 pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
