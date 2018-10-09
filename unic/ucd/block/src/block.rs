@@ -20,17 +20,24 @@ pub struct Block {
 
 impl Block {
     pub fn of(chr: char) -> Option<Block> {
-        Block::new(data::BLOCKS.find_with_range(chr))
+        match data::BLOCKS.find_with_range(chr) {
+            None => None,
+            Some((range, name)) => Some(Block::new(range, name)),
+        }
     }
 
-    fn new(raw_block: Option<(CharRange, &'static str)>) -> Option<Block> {
-        match raw_block {
-            None => None,
-            Some((range, name)) => Some(Block { range, name }),
+    pub fn new(range: CharRange, name: &'static str) -> Block {
+        Block {
+            range: range,
+            name: name,
         }
     }
 }
 
+/// Iterator for all assigned Unicode blocks, except:
+/// - U+D800..U+DB7F, High Surrogates
+/// - U+DB80..U+DBFF, High Private Use Surrogates
+/// - U+DC00..U+DFFF, Low Surrogates
 #[derive(Debug)]
 pub struct BlockIter<'a> {
     iter: CharDataTableIter<'a, &'static str>,
@@ -48,7 +55,10 @@ impl<'a> Iterator for BlockIter<'a> {
     type Item = Block;
 
     fn next(&mut self) -> Option<Block> {
-        Block::new(self.iter.next()) 
+        match self.iter.next() {
+            None => None,
+            Some((range, name)) => Some(Block::new(range, name)),
+        }
     }
 }
 
