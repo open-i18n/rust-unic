@@ -10,8 +10,20 @@
 // except according to those terms.
 
 #![no_std]
-#![forbid(future_incompatible, missing_debug_implementations, unconditional_recursion, unsafe_code)]
-#![deny(bad_style, unsafe_code, unused)]
+#![warn(
+    bad_style,
+    future_incompatible,
+    missing_debug_implementations,
+    missing_docs,
+    unconditional_recursion,
+)]
+#![forbid(unsafe_code)]
+
+//! # UNIC - UCD - Block
+//!
+//! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
+//!
+//! Accessor for code blocks from Unicode Character Database (UCD)
 
 #[macro_use]
 extern crate unic_char_range;
