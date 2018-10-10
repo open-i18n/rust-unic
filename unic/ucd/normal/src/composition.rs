@@ -12,9 +12,9 @@
 use unic_char_property::tables::CharDataTable;
 
 pub mod data {
-    use decomposition_type::long_names::*;
+    use crate::decomposition_type::long_names::*;
     use unic_char_property::tables::CharDataTable;
-    use DecompositionType;
+    use crate::DecompositionType;
 
     pub const CANONICAL_COMPOSITION_MAPPING: CharDataTable<CharDataTable<char>> =
         include!("../tables/canonical_composition_mapping.rsv");

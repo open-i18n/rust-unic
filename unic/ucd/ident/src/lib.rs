@@ -41,7 +41,7 @@ extern crate unic_char_range;
 extern crate unic_ucd_version;
 
 mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
 #[cfg(feature = "xid")]
 mod xid {
@@ -73,7 +73,7 @@ mod xid {
     }
 }
 #[cfg(feature = "xid")]
-pub use xid::{is_xid_continue, is_xid_start, XidContinue, XidStart};
+pub use crate::xid::{is_xid_continue, is_xid_start, XidContinue, XidStart};
 
 #[cfg(feature = "id")]
 mod id {

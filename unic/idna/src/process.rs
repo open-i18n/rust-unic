@@ -13,8 +13,8 @@ use unic_normal::StrNormalForm;
 use unic_ucd_bidi::{bidi_class, BidiClass};
 use unic_ucd_normal::is_combining_mark;
 
-use mapping::Mapping;
-use punycode;
+use crate::mapping::Mapping;
+use crate::punycode;
 
 /// Prefix used in Punycode encoding.
 pub static PUNYCODE_PREFIX: &'static str = "xn--";

@@ -14,7 +14,7 @@
 use unic_char_property::PartialCharProperty;
 use unic_ucd_hangul::is_syllable;
 
-use composition::{canonical_decomposition, data};
+use crate::composition::{canonical_decomposition, data};
 
 char_property! {
     /// Represents the Unicode character

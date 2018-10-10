@@ -14,7 +14,7 @@ use core::{char, cmp};
 use std::collections::Bound;
 
 use self::cmp::Ordering;
-use CharIter;
+use crate::CharIter;
 
 /// A range of unicode code points.
 ///
