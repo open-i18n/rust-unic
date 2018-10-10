@@ -27,4 +27,4 @@ pub extern crate unic_char_property as property;
 pub extern crate unic_char_range as range;
 
 mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

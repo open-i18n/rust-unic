@@ -51,10 +51,10 @@ extern crate unic_ucd_version;
 use unic_ucd_version::UnicodeVersion;
 
 mod hangul;
-pub use hangul::{compose_syllable, decompose_syllable, is_syllable};
+pub use crate::hangul::{compose_syllable, decompose_syllable, is_syllable};
 
 mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
 /// The [Unicode version](https://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");
