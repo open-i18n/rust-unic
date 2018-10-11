@@ -20,7 +20,7 @@ pub static PREFIX_CJK_COMPATIBILITY_IDEOGRAPH: &'static str = "CJK COMPATIBILITY
 
 const JAMO_BUFFER_SIZE: usize = 3;
 
-/// Representes values of the Unicode character property
+/// Represents values of the Unicode character property
 /// [*Name*](https://www.unicode.org/reports/tr44/#Name).
 ///
 /// Note: NR4 is omitted in this implementation because it can be represented by `None`.

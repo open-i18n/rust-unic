@@ -10,6 +10,7 @@
 
 pub mod test;
 
+pub mod blocks;
 pub mod derived_age;
 pub mod derived_core_properties;
 pub mod derived_normalization_props;

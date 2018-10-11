@@ -1,0 +1,24 @@
+[package]
+name = "unic-ucd-block"
+version = "0.7.0"
+authors = ["The UNIC Project Developers"]
+repository = "https://github.com/open-i18n/rust-unic/"
+license = "MIT/Apache-2.0"
+description = "UNIC — Unicode Character Database — Unicode Blocks"
+keywords = ["text", "unicode", "block"]
+categories = ["internationalization", "text-processing", "parsing", "rendering"]
+
+# No tests/benches that depends on /data/
+exclude = []
+
+[dependencies]
+unic-char-property = { path = "../../char/property/", version = "0.7.0" }
+unic-char-range = { path = "../../char/range/", version = "0.7.0" }
+unic-ucd-version = { path = "../version/", version = "0.7.0" }
+
+[badges]
+maintenance = { status = "actively-developed" }
+is-it-maintained-issue-resolution = { repository = "open-i18n/rust-unic" }
+is-it-maintained-open-issues = { repository = "open-i18n/rust-unic" }
+appveyor = { repository = "open-i18n/rust-unic", branch = "master", service = "github" }
+travis-ci = { repository = "open-i18n/rust-unic", branch = "master" }

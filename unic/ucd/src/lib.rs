@@ -27,6 +27,7 @@
 
 pub extern crate unic_ucd_age as age;
 pub extern crate unic_ucd_bidi as bidi;
+pub extern crate unic_ucd_block as block;
 pub extern crate unic_ucd_case as case;
 pub extern crate unic_ucd_category as category;
 pub extern crate unic_ucd_common as common;
@@ -42,6 +43,8 @@ pub use version::UnicodeVersion;
 pub use version::UNICODE_VERSION;
 
 pub use age::{Age, CharAge};
+
+pub use block::{Block, BlockIter};
 
 pub use bidi::{is_bidi_mirrored, BidiClass, CharBidiClass, StrBidiClass};
 

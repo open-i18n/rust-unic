@@ -57,6 +57,17 @@ impl<V: Copy> CharDataTable<V> {
                 .ok(),
         }
     }
+
+    /// Find the range and the associated data for a character in the range table.
+    pub fn find_with_range(&self, needle: char) -> Option<(CharRange, V)> {
+        match *self {
+            CharDataTable::Direct(_) => None,
+            CharDataTable::Range(table) => table
+                .binary_search_by(|&(range, _)| range.cmp_char(needle))
+                .map(|idx| table[idx])
+                .ok(),
+        }
+    }
 }
 
 impl<V: Copy + Default> CharDataTable<V> {

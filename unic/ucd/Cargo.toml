@@ -15,6 +15,7 @@ exclude = []
 [dependencies]
 unic-ucd-age = { path = "age/", version = "0.7.0" }
 unic-ucd-bidi = { path = "bidi/", version = "0.7.0" }
+unic-ucd-block = { path = "block/", version = "0.7.0" }
 unic-ucd-case = { path = "case/", version = "0.7.0" }
 unic-ucd-category = { path = "category/", version = "0.7.0" }
 unic-ucd-common = { path = "common/", version = "0.7.0" }
