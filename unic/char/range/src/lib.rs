@@ -13,7 +13,6 @@
 #![cfg_attr(feature = "trusted-len", feature(trusted_len))]
 #![warn(
     bad_style,
-    future_incompatible,
     missing_debug_implementations,
     missing_docs,
     unconditional_recursion
