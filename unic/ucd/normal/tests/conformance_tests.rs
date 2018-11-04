@@ -39,7 +39,8 @@ fn test_decomposition_type_conformance() {
             &line[0..idx]
         } else {
             line
-        }.trim();
+        }
+        .trim();
 
         // Ignore empty lines
         if line.is_empty() {

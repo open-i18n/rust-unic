@@ -274,23 +274,9 @@ macro_rules! char_property {
         impl $crate::__str::FromStr for $prop_name {
             type Err = ();
             fn from_str(s: &str) -> Result<Self, Self::Err> {
-                // This is a temporary solution to enable case-insensitive matching under `no_std`
-                // mode. Work is in progress to provide these functionalities under `libcore`.
-                //
-                // TODO(MIN_RUST_VERSION): Drop whenever case-insensitive str matching is available
-                // in `libcore`, and without `AsciiExt`.
-                //
-                // See: <https://github.com/rust-lang/rust/pull/44042>
-                pub fn str_eq_ignore_ascii_case(this: &str, that: &str) -> bool {
-                    this.len() == that.len() &&
-                        this.bytes().zip(that.bytes()).all(|(a, b)| {
-                            a.to_ascii_lowercase() == b.to_ascii_lowercase()
-                        })
-                }
-
                 match s {
                     $( $id => Ok($value), )*
-                    $( s if str_eq_ignore_ascii_case(s, $id) => Ok($value), )*
+                    $( s if s.eq_ignore_ascii_case($id) => Ok($value), )*
                     _ => Err(()),
                 }
             }

@@ -43,9 +43,11 @@ pub fn download_all(download_paths: &[DownloadMap]) -> Result<(), Box<Error>> {
                         .map(move |mut file| {
                             res.body()
                                 .for_each(move |chunk| file.write_all(&chunk).map_err(From::from))
-                        }).expect("Failed to create file")
+                        })
+                        .expect("Failed to create file")
                 })
-            }).expect("Invalid URI")
+            })
+            .expect("Invalid URI")
     });
 
     core.run(join_all(jobs))?;

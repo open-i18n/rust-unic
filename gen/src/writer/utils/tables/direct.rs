@@ -35,7 +35,8 @@ impl<T> ToDirectCharTable<T> for BTreeMap<char, T> {
                 "    ('{}', {}),",
                 char.escape_unicode(),
                 DisplayWrapper(property, &display_fn)
-            ).expect("`String` `Write` failed");
+            )
+            .expect("`String` `Write` failed");
         }
 
         out.push_str("])");

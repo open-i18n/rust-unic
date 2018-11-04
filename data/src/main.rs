@@ -49,7 +49,8 @@ fn main() {
             (author: "The UNIC Project Developers")
             (about: "Download data files based on sources.toml configuration")
             (@arg sources: ... "Sources to download data from, or all if not set")
-    ).get_matches();
+    )
+    .get_matches();
 
     let sources: Vec<_> = matches.values_of("sources").unwrap_or_default().collect();
     let download_maps = config::get_download_maps(&sources);

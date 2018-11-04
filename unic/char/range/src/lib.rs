@@ -9,17 +9,14 @@
 // except according to those terms.
 
 #![cfg_attr(not(feature = "std"), no_std)]
-#![cfg_attr(
-    feature = "exact-size-is-empty",
-    feature(exact_size_is_empty)
-)]
+#![cfg_attr(feature = "exact-size-is-empty", feature(exact_size_is_empty))]
 #![cfg_attr(feature = "trusted-len", feature(trusted_len))]
 #![warn(
     bad_style,
     future_incompatible,
     missing_debug_implementations,
     missing_docs,
-    unconditional_recursion,
+    unconditional_recursion
 )]
 #![deny(unsafe_code)]
 

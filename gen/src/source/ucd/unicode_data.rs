@@ -208,7 +208,8 @@ impl FromStr for UnicodeData {
                   ([[:xdigit:]]{4,6})?;                          # simple_lowercase_mapping (option)
                   ([[:xdigit:]]{4,6})?                           # simple_titlecase_mapping (option)
                 $",
-            ).unwrap();
+            )
+            .unwrap();
         }
 
         // ## Implementation Note
@@ -307,7 +308,8 @@ mod test {
              2D01;GEORGIAN SMALL LETTER BAN;Ll;0;L;;;;;N;;;10A1;;10A1\n\
              13060;EGYPTIAN HIEROGLYPH C004;Lo;0;L;;;;;N;;;;;\n\
              1B042;HENTAIGANA LETTER SA-7;Lo;0;L;;;;;N;;;;;\n\
-             ".parse(),
+             "
+            .parse(),
             Ok(UnicodeData {
                 entries: vec![
                     UnicodeDataEntry {
@@ -402,7 +404,8 @@ mod test {
                         simple_lowercase_mapping: None,
                         simple_titlecase_mapping: None,
                     },
-                ].into_boxed_slice(),
+                ]
+                .into_boxed_slice(),
             })
         );
     }

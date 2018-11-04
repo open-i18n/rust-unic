@@ -134,7 +134,8 @@ fn emit_compatibility_decomposition_mapping(dir: &Path) {
                 }
             }
             None
-        }).collect();
+        })
+        .collect();
 
     write(
         dir,

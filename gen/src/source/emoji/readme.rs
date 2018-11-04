@@ -39,6 +39,7 @@ impl FromStr for EmojiDataVersion {
                 major: m[1].parse().unwrap(),
                 minor: m[2].parse().unwrap(),
                 micro: 0,
-            }).ok_or(())
+            })
+            .ok_or(())
     }
 }

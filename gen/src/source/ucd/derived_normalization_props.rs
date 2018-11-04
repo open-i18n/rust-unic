@@ -40,7 +40,8 @@ impl FromStr for CompositionExclusions {
                   [[:space:]]*;
                   \x20Full_Composition_Exclusion\x20
                 \#",
-            ).unwrap();
+            )
+            .unwrap();
         }
 
         let mut exclusions = BTreeSet::default();

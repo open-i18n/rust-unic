@@ -31,7 +31,8 @@ impl ToRangeCharSet for BTreeSet<char> {
                     "    (chars!('{}'..='{}'), ()),",
                     low.escape_unicode(),
                     high.escape_unicode(),
-                ).expect("`String` `Write` failed");
+                )
+                .expect("`String` `Write` failed");
             };
 
             for &char in entries {

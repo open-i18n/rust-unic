@@ -32,6 +32,7 @@ impl FromStr for UnicodeVersion {
                 major: m[1].parse().unwrap(),
                 minor: m[2].parse().unwrap(),
                 micro: m[3].parse().unwrap(),
-            }).ok_or(())
+            })
+            .ok_or(())
     }
 }

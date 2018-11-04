@@ -43,7 +43,8 @@ impl FromStr for WordBreakData {
                   [[:blank:]]*;[[:blank:]]*  # separator
                   ([[:word:]]+)              # value
                 ",
-            ).expect("Bad regex");
+            )
+            .expect("Bad regex");
         }
 
         for capture in REGEX.captures_iter(str) {

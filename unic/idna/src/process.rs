@@ -24,11 +24,13 @@ fn map_char(codepoint: char, flags: Flags, output: &mut String, errors: &mut Vec
         Mapping::Valid => output.push(codepoint),
         Mapping::Ignored => {}
         Mapping::Mapped(slice) => output.push_str(slice),
-        Mapping::Deviation(slice) => if flags.transitional_processing {
-            output.push_str(slice)
-        } else {
-            output.push(codepoint)
-        },
+        Mapping::Deviation(slice) => {
+            if flags.transitional_processing {
+                output.push_str(slice)
+            } else {
+                output.push(codepoint)
+            }
+        }
         Mapping::Disallowed => {
             errors.push(Error::DissallowedCharacter);
             output.push(codepoint);
@@ -104,7 +106,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
             let mut found_an = false;
 
             // Rule 2
-            while let Some(c) = chars.next() {
+            for c in chars {
                 let char_class = BidiClass::of(c);
 
                 if char_class == EN {
@@ -118,6 +120,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
                     return false;
                 }
             }
+
             // Rule 3
             let mut rev_chars = label.chars().rev();
             let mut last = rev_chars.next();
@@ -156,8 +159,10 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
 }
 
 // https://www.unicode.org/reports/tr46/#Validity_Criteria
+#[cfg_attr(feature = "cargo-clippy", allow(if_same_then_else))]
 fn validate(label: &str, is_bidi_domain: bool, flags: Flags, errors: &mut Vec<Error>) {
     let first_char = label.chars().next();
+
     if first_char == None {
         // Empty string, pass
     }
@@ -227,12 +232,14 @@ fn processing(domain: &str, flags: Flags, errors: &mut Vec<Error>) -> String {
         for label in normalized.split('.') {
             if label.starts_with(PUNYCODE_PREFIX) {
                 match punycode::decode_to_string(&label[PUNYCODE_PREFIX.len()..]) {
-                    Some(decoded_label) => if decoded_label
-                        .chars()
-                        .any(|c| matches!(BidiClass::of(c), R | AL | AN))
-                    {
-                        is_bidi_domain = true;
-                    },
+                    Some(decoded_label) => {
+                        if decoded_label
+                            .chars()
+                            .any(|c| matches!(BidiClass::of(c), R | AL | AN))
+                        {
+                            is_bidi_domain = true;
+                        }
+                    }
                     None => {
                         is_bidi_domain = true;
                     }
@@ -289,6 +296,7 @@ pub struct Flags {
 }
 
 /// Error types recorded during UTS #46 processing.
+#[cfg_attr(feature = "cargo-clippy", allow(enum_variant_names))]
 #[derive(PartialEq, Eq, Clone, Copy, Debug)]
 enum Error {
     PunycodeError,
@@ -336,7 +344,7 @@ pub fn to_ascii(domain: &str, flags: Flags) -> Result<String, Errors> {
         } else {
             &*result
         };
-        if domain.len() < 1 || domain.split('.').any(|label| label.len() < 1) {
+        if domain.is_empty() || domain.split('.').any(|label| label.is_empty()) {
             errors.push(Error::TooShortForDns)
         }
         if domain.len() > 253 || domain.split('.').any(|label| label.len() > 63) {
