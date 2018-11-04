@@ -9,32 +9,48 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use unic_char_property::tables::CharDataTableIter;
+use unic_char_property::{tables::CharDataTableIter, PartialCharProperty};
 use unic_char_range::CharRange;
 
-#[derive(Debug)]
+/// A Unicode Block.
+///
+/// Blocks are contiguous range of code points, uniquely named, and have no overlaps.
+///
+/// All Assigned characters have a Block property value, but Reserved characters may or may not
+/// have a Block.
+#[derive(Clone, Copy, Debug)]
 pub struct Block {
+    /// The Character range of the Block.
     pub range: CharRange,
+
+    /// The unique name of the Block.
     pub name: &'static str,
+
+    // Private field to keep struct expandable.
+    _priv: (),
 }
 
 impl Block {
-    pub fn of(chr: char) -> Option<Block> {
-        match data::BLOCKS.find_with_range(chr) {
+    /// Find the character `Block` property value.
+    pub fn of(ch: char) -> Option<Block> {
+        match data::BLOCKS.find_with_range(ch) {
             None => None,
-            Some((range, name)) => Some(Block::new(range, name)),
-        }
-    }
-
-    pub fn new(range: CharRange, name: &'static str) -> Block {
-        Block {
-            range: range,
-            name: name,
+            Some((range, name)) => Some(Block {
+                range,
+                name,
+                _priv: (),
+            }),
         }
     }
 }
 
-/// Iterator for all assigned Unicode blocks, except:
+impl PartialCharProperty for Block {
+    fn of(ch: char) -> Option<Self> {
+        Self::of(ch)
+    }
+}
+
+/// Iterator for all assigned Unicode Blocks, except:
 /// - U+D800..U+DB7F, High Surrogates
 /// - U+DB80..U+DBFF, High Private Use Surrogates
 /// - U+DC00..U+DFFF, Low Surrogates
@@ -44,6 +60,7 @@ pub struct BlockIter<'a> {
 }
 
 impl<'a> BlockIter<'a> {
+    /// Create a new Block Iterator.
     pub fn new() -> BlockIter<'a> {
         BlockIter {
             iter: data::BLOCKS.iter(),
@@ -57,7 +74,11 @@ impl<'a> Iterator for BlockIter<'a> {
     fn next(&mut self) -> Option<Block> {
         match self.iter.next() {
             None => None,
-            Some((range, name)) => Some(Block::new(range, name)),
+            Some((range, name)) => Some(Block {
+                range,
+                name,
+                _priv: (),
+            }),
         }
     }
 }
