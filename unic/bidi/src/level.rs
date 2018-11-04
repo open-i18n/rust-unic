@@ -124,12 +124,14 @@ impl Level {
     #[inline]
     pub fn raise(&mut self, amount: u8) -> Result<(), Error> {
         match self.0.checked_add(amount) {
-            Some(number) => if number <= MAX_IMPLICIT_DEPTH {
-                self.0 = number;
-                Ok(())
-            } else {
-                Err(Error::OutOfRangeNumber)
-            },
+            Some(number) => {
+                if number <= MAX_IMPLICIT_DEPTH {
+                    self.0 = number;
+                    Ok(())
+                } else {
+                    Err(Error::OutOfRangeNumber)
+                }
+            }
             None => Err(Error::OutOfRangeNumber),
         }
     }
@@ -138,12 +140,14 @@ impl Level {
     #[inline]
     pub fn raise_explicit(&mut self, amount: u8) -> Result<(), Error> {
         match self.0.checked_add(amount) {
-            Some(number) => if number <= MAX_EXPLICIT_DEPTH {
-                self.0 = number;
-                Ok(())
-            } else {
-                Err(Error::OutOfRangeNumber)
-            },
+            Some(number) => {
+                if number <= MAX_EXPLICIT_DEPTH {
+                    self.0 = number;
+                    Ok(())
+                } else {
+                    Err(Error::OutOfRangeNumber)
+                }
+            }
             None => Err(Error::OutOfRangeNumber),
         }
     }

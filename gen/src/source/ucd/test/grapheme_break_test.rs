@@ -57,7 +57,8 @@ impl FromStr for GraphemeBreakTests {
                     \s* ÷ \s+ \[0\.2\]    # comment begin
                     (.*)                  # comment captured
                 \s*$"
-            ).unwrap();
+            )
+            .unwrap();
             static ref COMMENT_RE: Regex = Regex::new(
                 r"(?x)
                     \s+ [ \w\s<>\(\) -]+     # char name
@@ -65,7 +66,8 @@ impl FromStr for GraphemeBreakTests {
                     \s+ ( [÷×] )            # break opportunity or not
                     \s+ \[ ( [^\]]+ ) \]    # rule id
                 "
-            ).unwrap();
+            )
+            .unwrap();
         }
 
         let entries = LINE_RE
@@ -97,7 +99,8 @@ impl FromStr for GraphemeBreakTests {
                         "÷" => true,
                         "×" => false,
                         t => panic!("Invalid token: {:?}", t),
-                    }).collect();
+                    })
+                    .collect();
                 assert_eq!(breaks.len(), chars.len() - 1);
 
                 let comment_items_captured = COMMENT_RE.captures_iter(&line[2]).collect::<Vec<_>>();
@@ -133,7 +136,8 @@ impl FromStr for GraphemeBreakTests {
                     breaks,
                     rules,
                 })
-            }).collect();
+            })
+            .collect();
 
         Ok(GraphemeBreakTests { entries })
     }

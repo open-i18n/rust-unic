@@ -32,5 +32,6 @@ lazy_static! {
           \s+;\s+
           (\w+)                      # property
          ",
-    ).unwrap();
+    )
+    .unwrap();
 }

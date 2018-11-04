@@ -32,11 +32,12 @@ fn test_earliest_assigned_age() {
     for ch in chars!(..) {
         if let Some(age) = Age::of(ch) {
             assert!(
-                age.actual() >= UnicodeVersion {
-                    major: 1,
-                    minor: 1,
-                    micro: 0,
-                }
+                age.actual()
+                    >= UnicodeVersion {
+                        major: 1,
+                        minor: 1,
+                        micro: 0,
+                    }
             );
         }
     }

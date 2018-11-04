@@ -30,7 +30,8 @@ fn main() {
             env!("CARGO_PKG_DESCRIPTION"),
             "\n\n",
             "Inspect characters and their properties",
-        )).arg(
+        ))
+        .arg(
             Arg::with_name("STRINGS")
                 .help("Input strings (expected valid Unicode)")
                 .multiple(true),

@@ -38,15 +38,11 @@ fn test_graphemes_conformance() {
         assert!(Graphemes::new_legacy(input).eq(legacy_graphemes.iter().cloned()));
 
         // test reverse iterator
-        assert!(
-            Graphemes::new(input)
-                .rev()
-                .eq(graphemes.iter().rev().cloned())
-        );
-        assert!(
-            Graphemes::new_legacy(input)
-                .rev()
-                .eq(legacy_graphemes.iter().rev().cloned())
-        );
+        assert!(Graphemes::new(input)
+            .rev()
+            .eq(graphemes.iter().rev().cloned()));
+        assert!(Graphemes::new_legacy(input)
+            .rev()
+            .eq(legacy_graphemes.iter().rev().cloned()));
     }
 }

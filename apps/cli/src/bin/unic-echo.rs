@@ -101,30 +101,35 @@ fn run() -> Result<()> {
             env!("CARGO_PKG_DESCRIPTION"),
             "\n\n",
             "Write arguments to the standard output",
-        )).arg(
+        ))
+        .arg(
             Arg::with_name("no_newline")
                 .short("n")
                 .long("no-newline")
                 .help("No trailing newline"),
-        ).arg(
+        )
+        .arg(
             Arg::with_name("STRINGS")
                 .multiple(true)
                 .help("Input strings (expected valid Unicode)"),
-        ).arg(
+        )
+        .arg(
             Arg::with_name("input_format")
                 .short("i")
                 .long("input")
                 .takes_value(true)
                 .value_name("FORMAT")
                 .help("Specify input format (see list below)"),
-        ).arg(
+        )
+        .arg(
             Arg::with_name("output_format")
                 .short("o")
                 .long("output")
                 .takes_value(true)
                 .value_name("FORMAT")
                 .help("Specify output format (see list below)"),
-        ).after_help(concat!(input_formats_help!(), "\n", output_formats_help!()));
+        )
+        .after_help(concat!(input_formats_help!(), "\n", output_formats_help!()));
     let matches = app.get_matches();
 
     // == Read input ==

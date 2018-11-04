@@ -43,7 +43,8 @@ fn main() {
         (author: "The UNIC Project Developers")
         (about: "Parse source data and generate data tables for UNIC crates")
         (@arg components: ...  {validate_component_name} "Components to generate tables for")
-    ).get_matches();
+    )
+    .get_matches();
 
     let components: Vec<_> = matches
         .values_of("components")

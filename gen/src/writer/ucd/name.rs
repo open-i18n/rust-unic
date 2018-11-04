@@ -42,7 +42,8 @@ fn emit_name_tables(dir: &Path) {
             let pieces = x.name.split_whitespace().collect::<Vec<_>>();
             values.extend(pieces.iter());
             (x.character, NameRecord { pieces })
-        }).collect();
+        })
+        .collect();
 
     let mut values_contents = String::new();
     for piece in values.iter() {
@@ -51,7 +52,8 @@ fn emit_name_tables(dir: &Path) {
             "const {}: &str = \"{}\";",
             piece.replace('-', "_"),
             piece
-        ).unwrap();
+        )
+        .unwrap();
     }
     write(dir, "name_values.rsd", &values_contents);
 

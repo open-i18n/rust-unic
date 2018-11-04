@@ -46,7 +46,8 @@ impl FromStr for NormalizationTests {
                   ([[:xdigit:]]{4,6} (?:\x20[[:xdigit:]]{4,6})*); # nfkd
                   \x20
                 \#"
-            ).unwrap();
+            )
+            .unwrap();
         }
 
         // estimate of number of test cases

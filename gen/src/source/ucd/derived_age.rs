@@ -39,7 +39,8 @@ impl FromStr for AgeData {
                   \.([[:digit:]]+)           # minor version
                   (?:\.([[:digit:]]+))?      # micro version (option)
                 ",
-            ).unwrap();
+            )
+            .unwrap();
         }
 
         let mut map = BTreeMap::default();

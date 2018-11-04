@@ -39,7 +39,8 @@ impl<T: Eq> ToRangeCharTable<T> for BTreeMap<char, T> {
                     low.escape_unicode(),
                     high.escape_unicode(),
                     DisplayWrapper(c, &display_fn),
-                ).expect("`String` `Write` failed");
+                )
+                .expect("`String` `Write` failed");
             };
 
             for (&char, property) in entries {

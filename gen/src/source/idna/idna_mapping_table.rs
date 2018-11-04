@@ -60,7 +60,8 @@ impl FromStr for IdnaMapping {
                     )?
                   )?
                 \#"
-            ).unwrap();
+            )
+            .unwrap();
         }
 
         let mut map = BTreeMap::new();

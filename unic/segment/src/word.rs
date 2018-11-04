@@ -698,7 +698,8 @@ mod tests {
             Words::new(
                 "The quick (\"brown\") fox can't jump 32.3 feet, right?",
                 |s: &&str| s.chars().any(is_alphanumeric),
-            ).collect::<Vec<&str>>(),
+            )
+            .collect::<Vec<&str>>(),
             &["The", "quick", "brown", "fox", "can't", "jump", "32.3", "feet", "right"]
         );
     }

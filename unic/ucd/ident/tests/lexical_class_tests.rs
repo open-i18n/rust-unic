@@ -41,7 +41,8 @@ fn test_id_derivation() {
               \s+;\s+
               Other_ID_Start             # property
              ",
-        ).unwrap()
+        )
+        .unwrap()
         .captures_iter(include_str!("../../../../data/ucd/PropList.txt"))
         .flat_map(|cap: regex::Captures| {
             let low = char::from_u32(u32::from_str_radix(&cap[1], 16).unwrap()).unwrap();
@@ -51,7 +52,8 @@ fn test_id_derivation() {
                 .map(|u| char::from_u32(u).unwrap())
                 .unwrap_or(low);
             chars!(low..=high)
-        }).collect()
+        })
+        .collect()
     };
 
     let other_continue: BTreeSet<char> = {
@@ -62,7 +64,8 @@ fn test_id_derivation() {
               \s+;\s+
               Other_ID_Continue          # property
              ",
-        ).unwrap()
+        )
+        .unwrap()
         .captures_iter(include_str!("../../../../data/ucd/PropList.txt"))
         .flat_map(|cap: regex::Captures| {
             let low = char::from_u32(u32::from_str_radix(&cap[1], 16).unwrap()).unwrap();
@@ -72,7 +75,8 @@ fn test_id_derivation() {
                 .map(|u| char::from_u32(u).unwrap())
                 .unwrap_or(low);
             chars!(low..=high)
-        }).collect()
+        })
+        .collect()
     };
 
     let is_id_start_derived = |ch| {

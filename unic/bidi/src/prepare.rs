@@ -131,7 +131,8 @@ pub fn isolating_run_sequences(
                 sos: max(seq_level, pred_level).bidi_class(),
                 eos: max(seq_level, succ_level).bidi_class(),
             }
-        }).collect()
+        })
+        .collect()
 }
 
 /// Finds the level runs in a paragraph.

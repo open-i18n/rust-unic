@@ -24,11 +24,13 @@ fn map_char(codepoint: char, flags: Flags, output: &mut String, errors: &mut Vec
         Mapping::Valid => output.push(codepoint),
         Mapping::Ignored => {}
         Mapping::Mapped(slice) => output.push_str(slice),
-        Mapping::Deviation(slice) => if flags.transitional_processing {
-            output.push_str(slice)
-        } else {
-            output.push(codepoint)
-        },
+        Mapping::Deviation(slice) => {
+            if flags.transitional_processing {
+                output.push_str(slice)
+            } else {
+                output.push(codepoint)
+            }
+        }
         Mapping::Disallowed => {
             errors.push(Error::DissallowedCharacter);
             output.push(codepoint);
@@ -227,12 +229,14 @@ fn processing(domain: &str, flags: Flags, errors: &mut Vec<Error>) -> String {
         for label in normalized.split('.') {
             if label.starts_with(PUNYCODE_PREFIX) {
                 match punycode::decode_to_string(&label[PUNYCODE_PREFIX.len()..]) {
-                    Some(decoded_label) => if decoded_label
-                        .chars()
-                        .any(|c| matches!(BidiClass::of(c), R | AL | AN))
-                    {
-                        is_bidi_domain = true;
-                    },
+                    Some(decoded_label) => {
+                        if decoded_label
+                            .chars()
+                            .any(|c| matches!(BidiClass::of(c), R | AL | AN))
+                        {
+                            is_bidi_domain = true;
+                        }
+                    }
                     None => {
                         is_bidi_domain = true;
                     }

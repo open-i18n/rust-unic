@@ -41,7 +41,8 @@ pub fn codepoints(string: &str) -> String {
                 "Invalid Unicode Scalar Value code-point: {}",
                 codepoint
             ))
-        }).collect::<String>()
+        })
+        .collect::<String>()
 }
 
 pub fn utf8_hex(string: &str) -> String {

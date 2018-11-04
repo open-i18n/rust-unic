@@ -36,7 +36,8 @@ impl FromStr for JamoData {
                   ;[[:blank:]]*       # separator
                   ([[:alpha:]]*)      # jamo short name
                 ",
-            ).unwrap();
+            )
+            .unwrap();
         }
 
         let mut map = BTreeMap::default();

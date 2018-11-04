@@ -116,14 +116,16 @@ fn test_codepoints_input() {
     // One arg
     run(&[
         "48 U+65 U+006c U+0006c U+000000000006f", // Hello
-    ]).stdout()
+    ])
+    .stdout()
     .is("Hello")
     .unwrap();
 
     // Non-ASCII
     run(&[
         "633 0644 000627 0000000000000645", // سلام
-    ]).stdout()
+    ])
+    .stdout()
     .is("سلام")
     .unwrap();
 }
@@ -140,7 +142,8 @@ fn test_utf8_hex_input() {
     // One arg
     run(&[
         "48 65 6c 6c 6f", // Hello
-    ]).stdout()
+    ])
+    .stdout()
     .is("Hello")
     .unwrap();
 
@@ -149,21 +152,24 @@ fn test_utf8_hex_input() {
         "48 65 6c 6c 6f",           // Hello
         "20",                       // SPACE
         "0x57 0x6f 0x72 0x6c 0x64", // World
-    ]).stdout()
+    ])
+    .stdout()
     .is("Hello World")
     .unwrap();
 
     // Missing trailing low digit
     run(&[
         "48 65 6c 6c 6", // Hell_
-    ]).stdout()
+    ])
+    .stdout()
     .is("Hell\u{6}")
     .unwrap();
 
     // Non-ASCII
     run(&[
         "D8 B3 D9 84 D8 A7 D9 85 0A", // سلام
-    ]).stdout()
+    ])
+    .stdout()
     .is("سلام")
     .stdout()
     .contains("سلام\n")
@@ -179,7 +185,8 @@ fn test_utf16_hex_input() {
     // Non-ASCII
     run(&[
         "0633 0x0644 0627,0645", // سلام
-    ]).stdout()
+    ])
+    .stdout()
     .is("سلام")
     .stdout()
     .contains("سلام\n")

@@ -19,7 +19,8 @@ use unic_idna_punycode::{decode, encode_str};
 fn test_punycode_js_data() {
     let tests = match Json::from_str(include_str!(
         "../../../../data/punycode/test/punycode.js_data.json"
-    )).unwrap()
+    ))
+    .unwrap()
     {
         Json::Array(tests) => tests,
         _ => panic!("Bad JSON tests data"),
