@@ -36,11 +36,9 @@ pub fn codepoints(string: &str) -> String {
                 token = &token[2..];
             }
             let codepoint = u32::from_str_radix(token, 16)
-                .expect(&format!("Cannot parse token as hex number: {}", token));
-            char::from_u32(codepoint).expect(&format!(
-                "Invalid Unicode Scalar Value code-point: {}",
-                codepoint
-            ))
+                .unwrap_or_else(|_| panic!("Cannot parse token as hex number: {}", token));
+            char::from_u32(codepoint)
+                .unwrap_or_else(|| panic!("Invalid Unicode Scalar Value code-point: {}", codepoint))
         })
         .collect::<String>()
 }
@@ -52,7 +50,7 @@ pub fn utf8_hex(string: &str) -> String {
             token = &token[2..];
         }
         u8::from_str_radix(token, 16)
-            .expect(&format!("Cannot parse token as hex byte value: {}", token))
+            .unwrap_or_else(|_| panic!("Cannot parse token as hex byte value: {}", token))
     });
 
     String::from_utf8(utf8.collect()).expect("Invalid UTF-8 sequence")
@@ -65,7 +63,7 @@ pub fn utf16_hex(string: &str) -> String {
             token = &token[2..];
         }
         u16::from_str_radix(token, 16)
-            .expect(&format!("Cannot parse token as hex byte value: {}", token))
+            .unwrap_or_else(|_| panic!("Cannot parse token as hex byte value: {}", token))
     });
 
     char::decode_utf16(utf16)

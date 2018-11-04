@@ -64,7 +64,7 @@ fn main() {
     string.chars().for_each(|chr| {
         let name = Name::of(chr)
             .map(|n| n.to_string())
-            .unwrap_or("<none>".to_owned());
+            .unwrap_or_else(|| "<none>".to_owned());
 
         table.add_row(row![
             cb  -> &format!("{}", chr),

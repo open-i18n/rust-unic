@@ -57,22 +57,18 @@ pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 pub trait StrNormalForm<I: Iterator<Item = char>> {
     /// Returns an iterator over the string in Unicode Normalization Form D
     /// (canonical decomposition).
-    #[inline]
     fn nfd(self) -> Decompositions<I>;
 
     /// Returns an iterator over the string in Unicode Normalization Form KD
     /// (compatibility decomposition).
-    #[inline]
     fn nfkd(self) -> Decompositions<I>;
 
     /// An Iterator over the string in Unicode Normalization Form C
     /// (canonical decomposition followed by canonical composition).
-    #[inline]
     fn nfc(self) -> Recompositions<I>;
 
     /// An Iterator over the string in Unicode Normalization Form KC
     /// (compatibility decomposition followed by canonical composition).
-    #[inline]
     fn nfkc(self) -> Recompositions<I>;
 }
 

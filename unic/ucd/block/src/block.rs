@@ -68,6 +68,12 @@ impl<'a> BlockIter<'a> {
     }
 }
 
+impl<'a> Default for BlockIter<'a> {
+    fn default() -> Self {
+        BlockIter::new()
+    }
+}
+
 impl<'a> Iterator for BlockIter<'a> {
     type Item = Block;
 
