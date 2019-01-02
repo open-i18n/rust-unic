@@ -163,7 +163,7 @@ impl CharRange {
     }
 }
 
-/// Collection-like fn
+/// Collection-like fns
 impl CharRange {
     /// Does this range include a character?
     ///

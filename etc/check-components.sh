@@ -27,13 +27,13 @@ for component in $COMPONENTS; do
     #   missing-copy-implementations
     #   unreachable-pub
     #   unused-results
+    #   unused
     ATTRS='
         bad_style
         missing_debug_implementations
         missing_docs
         unconditional_recursion
         unsafe_code
-        unused
     '
     for attr in $ATTRS; do
         if grep --quiet "$attr" $lib_rs; then true; else

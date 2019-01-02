@@ -19,4 +19,4 @@ ROOT="$DIR/.."
 
 
 cd $ROOT
-- cargo fmt --all
+- cargo +nightly fmt --all
