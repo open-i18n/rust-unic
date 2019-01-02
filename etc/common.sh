@@ -19,22 +19,26 @@ export COMPONENTS="
 
     unic/char/basics
     unic/char/range
+
     unic/char/property
+
     unic/char
 
     unic/ucd/version
-    unic/ucd/common
+
+    unic/ucd/category
+    unic/ucd/hangul
 
     unic/ucd/age
     unic/ucd/bidi
     unic/ucd/block
     unic/ucd/case
-    unic/ucd/category
-    unic/ucd/hangul
+    unic/ucd/common
     unic/ucd/ident
     unic/ucd/name
     unic/ucd/normal
     unic/ucd/segment
+
     unic/ucd
 
     unic/bidi
