@@ -1,6 +1,6 @@
 [package]
 name = "unic-ucd-ident"
-version = "0.7.0"
+version = "0.8.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/open-i18n/rust-unic/"
 license = "MIT/Apache-2.0"
@@ -19,12 +19,12 @@ xid = []
 id = []
 
 [dependencies]
-unic-char-property = { path = "../../char/property/", version = "0.7.0" }
-unic-char-range = { path = "../../char/range", version = "0.7.0" }
-unic-ucd-version = { path = "../version/", version = "0.7.0" }
+unic-char-property = { path = "../../char/property/", version = "0.8.0" }
+unic-char-range = { path = "../../char/range", version = "0.8.0" }
+unic-ucd-version = { path = "../version/", version = "0.8.0" }
 
 [dev-dependencies]
-unic-ucd-category = { path = "../category/", version = "0.7.0" }
+unic-ucd-category = { path = "../category/", version = "0.8.0" }
 regex = "0.2"
 matches = "0.1"
 
