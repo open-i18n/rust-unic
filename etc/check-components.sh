@@ -17,9 +17,9 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 
 # Check all components
-for component in $COMPONENTS; do
-    lib_rs="$component/src/lib.rs"
-    pkg_info_rs="$component/src/pkg_info.rs"
+for crate in $COMPONENTS; do
+    lib_rs="$crate/src/lib.rs"
+    pkg_info_rs="$crate/src/pkg_info.rs"
 
     # Require library attribute settings
     # TODO:
@@ -37,13 +37,13 @@ for component in $COMPONENTS; do
     '
     for attr in $ATTRS; do
         if grep --quiet "$attr" $lib_rs; then true; else
-            echo "$component: missing '$attr' attribute setting"
+            echo "$crate: missing '$attr' attribute setting"
         fi
     done
 
     # Package Info
     if [ ! -f "$pkg_info_rs" ]; then
-        echo "$component: missing 'pkg_info.rs'"
+        echo "$crate: missing 'pkg_info.rs'"
     fi
 
 done

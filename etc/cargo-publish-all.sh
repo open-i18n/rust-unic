@@ -26,15 +26,15 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Steps
 
 # Publish all components
-for component in $COMPONENTS; do
-    - cargo update  --verbose --manifest-path "$component/Cargo.toml"
+for crate in $COMPONENTS; do
+    - cargo update  --verbose --manifest-path "$crate/Cargo.toml"
     # ignore failures, because of the version being released already
-    - cargo publish --verbose --manifest-path "$component/Cargo.toml" || true
+    - cargo publish --verbose --manifest-path "$crate/Cargo.toml" || true
 done
 
 # Publish all apps
-for app in $APPS; do
-    - cargo update  --verbose --manifest-path "$component/Cargo.toml"
+for crate in $APPS; do
+    - cargo update  --verbose --manifest-path "$crate/Cargo.toml"
     # ignore failures, because of the version being released already
-    - cargo publish --verbose --manifest-path "$component/Cargo.toml" || true
+    - cargo publish --verbose --manifest-path "$crate/Cargo.toml" || true
 done
