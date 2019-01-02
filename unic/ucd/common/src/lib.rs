@@ -17,7 +17,7 @@
 )]
 #![forbid(unsafe_code)]
 
-//! # UNIC — UCD — Case Character Properties
+//! # UNIC — UCD — Common Character Properties
 //!
 //! A component of [`unic`: Unicode and Internationalization Crates for Rust](/unic/).
 //!

@@ -16,22 +16,24 @@ Here's a list of components (available or planned) for this super-crate:
 
 - [X] `version`: The [Unicode Version](https://www.unicode.org/versions/) of UCD
   data.
+- [X] `common`: Common properties, such as Alphabetic, White-Space, Control and
+  Numeric.
 
-- [X] `age`: Character Age property.
-- [X] `name`: Character Name property.
-- [X] `category`: Character General_Category property.
-
-- [ ] `block`: Character Block properties
-- [ ] `script`: Character Script properties.
-
-- [X] `normal`: Character Normalization properties.
-- [X] `case`: Character case properties.
-- [X] `segment`: Character Segmentation properties.
-- [ ] `numeric`: Character numeric properties.
-
+- [X] `age`: Age property.
 - [X] `bidi`: Bidirectional properties. (Hebrew, Arabic, ...)
-- [ ] `joining`: Cursive joining properties. (Arabic, Syriac, ...)
+- [X] `block`: Block properties.
+- [X] `case`: Letter Case properties.
+- [X] `category`: General_Category property.
+- [X] `hangul`: Hangul Syllable Composition & Decomposition.
+- [X] `ident`: Identifier properties.
+- [X] `name`: Name property.
+- [X] `normal`: Normalization properties.
+- [X] `segment`: Segmentation properties.
+
 - [ ] `ea-width`: East Asian Width properties.
+- [ ] `joining`: Cursive joining properties. (Arabic, Syriac, ...)
+- [ ] `numeric`: Other character numeric properties.
+- [ ] `script`: Script properties.
 
 See <http://unicode.org/reports/tr44/#Property_List_Table> for the complete
 list of properties defined in UCD. Eventually, all these properties will be

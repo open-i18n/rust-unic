@@ -20,7 +20,7 @@ use clap::{Arg, ErrorKind};
 
 use unic_cli::{parsers, writers, Result};
 
-unic_arg_enum!{
+unic_arg_enum! {
     #[derive(Debug)]
     enum InputFormat {
         Plain,
@@ -43,7 +43,7 @@ macro_rules! input_formats_help {
     };
 }
 
-unic_arg_enum!{
+unic_arg_enum! {
     #[derive(Debug)]
     enum OutputFormat {
         Plain,

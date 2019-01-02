@@ -17,16 +17,20 @@ set -e
 export COMPONENTS="
     unic/common
 
+    unic/char/basics
     unic/char/range
     unic/char/property
     unic/char
 
     unic/ucd/version
+    unic/ucd/common
+
     unic/ucd/age
     unic/ucd/bidi
+    unic/ucd/block
     unic/ucd/case
     unic/ucd/category
-    unic/ucd/common
+    unic/ucd/hangul
     unic/ucd/ident
     unic/ucd/name
     unic/ucd/normal
