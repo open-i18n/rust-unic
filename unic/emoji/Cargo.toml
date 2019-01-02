@@ -1,6 +1,6 @@
 [package]
 name = "unic-emoji"
-version = "0.7.0"
+version = "0.8.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/open-i18n/rust-unic/"
 license = "MIT/Apache-2.0"
@@ -12,7 +12,7 @@ categories = ["internationalization", "text-processing", "parsing", "rendering"]
 exclude = []
 
 [dependencies]
-unic-emoji-char = { path = "char/", version = "0.7.0" }
+unic-emoji-char = { path = "char/", version = "0.8.0" }
 
 [badges]
 maintenance = { status = "actively-developed" }

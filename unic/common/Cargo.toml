@@ -1,6 +1,6 @@
 [package]
 name = "unic-common"
-version = "0.7.0"
+version = "0.8.0"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/open-i18n/rust-unic/"
 license = "MIT/Apache-2.0"
