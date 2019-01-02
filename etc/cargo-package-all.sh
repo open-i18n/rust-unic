@@ -26,7 +26,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Steps
 
 # Package all components
-for component in $COMPONENTS; do
-    - cargo update  --verbose --manifest-path "$component/Cargo.toml"
-    - cargo package --verbose --manifest-path "$component/Cargo.toml"
+for crate in $COMPONENTS; do
+    - cargo update  --verbose --manifest-path "$crate/Cargo.toml"
+    - cargo package --verbose --manifest-path "$crate/Cargo.toml"
 done
