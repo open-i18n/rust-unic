@@ -11,8 +11,6 @@
 #[macro_use]
 extern crate unic_char_range;
 
-extern crate unic_char_property;
-
 use unic_char_property::tables::CharDataTable;
 
 #[test]

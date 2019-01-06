@@ -10,12 +10,12 @@
 
 use std::path::Path;
 
-use source::ucd::blocks::BLOCKS_DATA;
-use source::ucd::readme::UNICODE_VERSION;
+use crate::source::ucd::blocks::BLOCKS_DATA;
+use crate::source::ucd::readme::UNICODE_VERSION;
 
-use writer::common::emit_unicode_version;
-use writer::utils::tables::ToRangeCharTable;
-use writer::utils::write;
+use crate::writer::common::emit_unicode_version;
+use crate::writer::utils::tables::ToRangeCharTable;
+use crate::writer::utils::write;
 
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);

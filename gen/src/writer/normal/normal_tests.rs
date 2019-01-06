@@ -11,9 +11,9 @@
 use std::fmt::Write;
 use std::path::Path;
 
-use source::ucd::test::normalization_test::NORMALIZATION_TESTS;
+use crate::source::ucd::test::normalization_test::NORMALIZATION_TESTS;
 
-use writer::utils::write;
+use crate::writer::utils::write;
 
 pub fn generate(dir: &Path) {
     emit_conformance_tests_data(dir);

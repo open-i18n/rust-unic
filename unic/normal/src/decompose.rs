@@ -138,7 +138,7 @@ impl<I: Iterator<Item = char>> Iterator for Decompositions<I> {
 }
 
 impl<I: Iterator<Item = char> + Clone> fmt::Display for Decompositions<I> {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         for c in self.clone() {
             f.write_char(c)?;
         }

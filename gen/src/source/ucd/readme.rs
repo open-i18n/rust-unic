@@ -8,8 +8,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use source::common::unicode_version::UnicodeVersion;
-use source::utils::read;
+use crate::source::common::unicode_version::UnicodeVersion;
+use crate::source::utils::read;
 
 lazy_static! {
     pub static ref UNICODE_VERSION: UnicodeVersion = {

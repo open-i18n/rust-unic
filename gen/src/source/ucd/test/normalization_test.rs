@@ -11,7 +11,7 @@
 use std::char;
 use std::str::FromStr;
 
-use source::utils::read;
+use crate::source::utils::read;
 
 use regex::Regex;
 

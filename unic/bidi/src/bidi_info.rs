@@ -18,14 +18,14 @@ use std::ops::Range;
 use unic_ucd_bidi::bidi_class::abbr_names::*;
 use unic_ucd_bidi::BidiClass;
 
-use explicit;
-use format_chars;
-use implicit;
-use level;
-use prepare;
+use crate::explicit;
+use crate::format_chars;
+use crate::implicit;
+use crate::level;
+use crate::prepare;
 
-use level::{Level, LTR_LEVEL, RTL_LEVEL};
-use prepare::LevelRun;
+use crate::level::{Level, LTR_LEVEL, RTL_LEVEL};
+use crate::prepare::LevelRun;
 
 /// Bidi information about a single paragraph
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -65,7 +65,7 @@ impl<'text> InitialInfo<'text> {
     /// Also sets the class for each First Strong Isolate initiator (FSI) to LRI or RLI if a strong
     /// character is found before the matching PDI.  If no strong character is found, the class will
     /// remain FSI, and it's up to later stages to treat these as LRI when needed.
-    pub fn new(text: &str, default_para_level: Option<Level>) -> InitialInfo {
+    pub fn new(text: &str, default_para_level: Option<Level>) -> InitialInfo<'_> {
         let mut original_classes = Vec::with_capacity(text.len());
 
         // The stack contains the starting byte index for each nested isolate we're inside.
@@ -174,7 +174,7 @@ impl<'text> BidiInfo<'text> {
     /// text that is entirely LTR.  See the `nsBidi` class from Gecko for comparison.
     ///
     /// TODO: Support auto-RTL base direction
-    pub fn new(text: &str, default_para_level: Option<Level>) -> BidiInfo {
+    pub fn new(text: &str, default_para_level: Option<Level>) -> BidiInfo<'_> {
         let InitialInfo {
             original_classes,
             paragraphs,
@@ -400,7 +400,7 @@ impl<'text> BidiInfo<'text> {
 }
 
 impl<'text> fmt::Display for BidiInfo<'text> {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
             "{} paragraphs with a maximum bidirectional level of {}",
@@ -606,7 +606,7 @@ mod tests {
         assert_eq!(BidiInfo::new("אבּג\n123", None).has_rtl(), true);
     }
 
-    fn reorder_paras(text: &str) -> Vec<Cow<str>> {
+    fn reorder_paras(text: &str) -> Vec<Cow<'_, str>> {
         let bidi_info = BidiInfo::new(text, None);
         bidi_info
             .paragraphs

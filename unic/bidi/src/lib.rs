@@ -71,8 +71,6 @@
 //!
 //! [tr9]: https://www.unicode.org/reports/tr9/
 
-extern crate unic_ucd_bidi;
-
 #[macro_use]
 extern crate matches;
 
@@ -80,26 +78,23 @@ extern crate matches;
 #[macro_use]
 extern crate serde;
 
-#[cfg(all(feature = "serde", test))]
-extern crate serde_test;
-
 pub use unic_ucd_bidi::UNICODE_VERSION;
 pub use unic_ucd_bidi::{bidi_class, BidiClass, BidiClassCategory};
 
 mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
 pub mod format_chars;
 
 pub mod level;
-pub use level::Level;
+pub use crate::level::Level;
 
 mod bidi_info;
-pub use bidi_info::{BidiInfo, ParagraphInfo};
+pub use crate::bidi_info::{BidiInfo, ParagraphInfo};
 
 mod explicit;
 
 mod implicit;
 
 mod prepare;
-pub use prepare::LevelRun;
+pub use crate::prepare::LevelRun;

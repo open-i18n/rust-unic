@@ -10,12 +10,12 @@
 
 use std::path::Path;
 
-use source::idna::idna_mapping_table::IDNA_MAPPING;
-use source::idna::readme::UNICODE_VERSION;
+use crate::source::idna::idna_mapping_table::IDNA_MAPPING;
+use crate::source::idna::readme::UNICODE_VERSION;
 
-use writer::common::emit_unicode_version;
-use writer::utils::tables::ToRangeCharTable;
-use writer::utils::write;
+use crate::writer::common::emit_unicode_version;
+use crate::writer::utils::tables::ToRangeCharTable;
+use crate::writer::utils::write;
 
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);

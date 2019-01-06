@@ -12,8 +12,8 @@ use std::char;
 use std::collections::BTreeSet;
 use std::str::FromStr;
 
-use source::ucd::BINARY_PROPERTIES_REGEX;
-use source::utils::read;
+use crate::source::ucd::BINARY_PROPERTIES_REGEX;
+use crate::source::utils::read;
 
 lazy_static! {
     pub static ref EMOJI_DATA: EmojiData = {

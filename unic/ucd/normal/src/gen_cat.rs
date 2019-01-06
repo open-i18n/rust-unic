@@ -24,7 +24,7 @@ mod mark {
 
 #[cfg(feature = "unic-ucd-category")]
 mod mark {
-    extern crate unic_ucd_category;
+    use unic_ucd_category;
 
     use self::unic_ucd_category::GeneralCategory;
 

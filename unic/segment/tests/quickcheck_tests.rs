@@ -12,8 +12,6 @@
 #[macro_use]
 extern crate quickcheck;
 
-extern crate unic_segment;
-
 use unic_segment::{Graphemes, WordBounds};
 
 // QuickCheck Graphemes

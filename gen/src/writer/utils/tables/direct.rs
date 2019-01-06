@@ -18,13 +18,13 @@ pub trait ToDirectCharTable<T> {
     /// Convert this mapping to a `String`.
     fn to_direct_char_table<F>(&self, display_fn: F) -> String
     where
-        F: Fn(&T, &mut fmt::Formatter) -> fmt::Result;
+        F: Fn(&T, &mut fmt::Formatter<'_>) -> fmt::Result;
 }
 
 impl<T> ToDirectCharTable<T> for BTreeMap<char, T> {
     fn to_direct_char_table<F>(&self, display_fn: F) -> String
     where
-        F: Fn(&T, &mut fmt::Formatter) -> fmt::Result,
+        F: Fn(&T, &mut fmt::Formatter<'_>) -> fmt::Result,
     {
         let entries = self.iter();
         let mut out = String::from("CharDataTable::Direct(&[\n");

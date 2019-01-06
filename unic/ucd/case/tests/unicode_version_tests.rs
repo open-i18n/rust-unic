@@ -8,8 +8,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate unic_ucd_case;
-extern crate unic_ucd_version;
+use unic_ucd_case;
+use unic_ucd_version;
 
 #[test]
 fn test_version_against_ucd_version() {

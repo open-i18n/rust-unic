@@ -26,9 +26,9 @@
 /// - https://www.unicode.org/faq/private_use.html#private_use
 pub fn is_private_use(codepoint: char) -> bool {
     match codepoint {
-        '\u{e000}'...'\u{f8ff}' // 6,400 Plane 0 (BMP) chars
-        | '\u{f_0000}'...'\u{f_fffd}' // 65,534 Plane 15 chars
-        | '\u{10_0000}'...'\u{10_fffd}' // 65,534 Plane 16 chars
+        '\u{e000}'..='\u{f8ff}' // 6,400 Plane 0 (BMP) chars
+        | '\u{f_0000}'..='\u{f_fffd}' // 65,534 Plane 15 chars
+        | '\u{10_0000}'..='\u{10_fffd}' // 65,534 Plane 16 chars
         => {
             true
         }

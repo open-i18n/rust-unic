@@ -29,7 +29,7 @@ pub struct GraphemeIndices<'a> {
 impl<'a> GraphemeIndices<'a> {
     /// Create new iterator for *extended grapheme clusters*.
     #[inline]
-    pub fn new(s: &str) -> GraphemeIndices {
+    pub fn new(s: &str) -> GraphemeIndices<'_> {
         GraphemeIndices {
             start_offset: s.as_ptr() as usize,
             iter: Graphemes::new(s),
@@ -38,7 +38,7 @@ impl<'a> GraphemeIndices<'a> {
 
     /// Create new iterator for *legacy grapheme clusters*.
     #[inline]
-    pub fn new_legacy(s: &str) -> GraphemeIndices {
+    pub fn new_legacy(s: &str) -> GraphemeIndices<'_> {
         GraphemeIndices {
             start_offset: s.as_ptr() as usize,
             iter: Graphemes::new_legacy(s),
@@ -100,7 +100,7 @@ pub struct Graphemes<'a> {
 impl<'a> Graphemes<'a> {
     /// Create new iterator for *extended grapheme clusters*.
     #[inline]
-    pub fn new(s: &str) -> Graphemes {
+    pub fn new(s: &str) -> Graphemes<'_> {
         let len = s.len();
         Graphemes {
             string: s,
@@ -111,7 +111,7 @@ impl<'a> Graphemes<'a> {
 
     /// Create new iterator for *legacy grapheme clusters*.
     #[inline]
-    pub fn new_legacy(s: &str) -> Graphemes {
+    pub fn new_legacy(s: &str) -> Graphemes<'_> {
         let len = s.len();
         Graphemes {
             string: s,

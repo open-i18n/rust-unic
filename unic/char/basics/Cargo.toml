@@ -1,6 +1,7 @@
 [package]
 name = "unic-char-basics"
 version = "0.8.0"
+edition = "2018"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/open-i18n/rust-unic/"
 license = "MIT/Apache-2.0"

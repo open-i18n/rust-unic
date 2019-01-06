@@ -10,9 +10,9 @@
 
 use std::path::Path;
 
-use source::ucd::readme::UNICODE_VERSION;
+use crate::source::ucd::readme::UNICODE_VERSION;
 
-use writer::common::emit_unicode_version;
+use crate::writer::common::emit_unicode_version;
 
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);

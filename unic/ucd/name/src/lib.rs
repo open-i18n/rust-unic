@@ -23,15 +23,11 @@
 //!
 //! Accessor for character Name properties from Unicode Character Database (UCD)
 
-extern crate unic_char_property;
-extern crate unic_ucd_hangul;
-extern crate unic_ucd_version;
-
 mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
 mod name;
-pub use name::Name;
+pub use crate::name::Name;
 
 use unic_ucd_version::UnicodeVersion;
 

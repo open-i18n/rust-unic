@@ -11,9 +11,6 @@
 
 #![cfg(test)]
 
-extern crate unic_bidi;
-extern crate unic_char_property;
-
 use unic_bidi::{format_chars, level, BidiClass, BidiInfo, Level};
 
 const BASIC_TEST_DATA: &str = include_str!("../../../external/unicode/ucd/data/BidiTest.txt");

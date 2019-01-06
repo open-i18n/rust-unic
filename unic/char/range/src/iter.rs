@@ -10,7 +10,7 @@
 
 use core::{char, ops};
 
-use {step, CharRange};
+use crate::{step, CharRange};
 
 const SURROGATE_RANGE: ops::Range<u32> = 0xD800..0xE000;
 

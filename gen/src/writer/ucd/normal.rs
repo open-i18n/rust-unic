@@ -12,13 +12,13 @@ use std::char;
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
 
-use source::ucd::derived_normalization_props::COMPOSITION_EXCLUSIONS;
-use source::ucd::readme::UNICODE_VERSION;
-use source::ucd::unicode_data::UNICODE_DATA;
+use crate::source::ucd::derived_normalization_props::COMPOSITION_EXCLUSIONS;
+use crate::source::ucd::readme::UNICODE_VERSION;
+use crate::source::ucd::unicode_data::UNICODE_DATA;
 
-use writer::common::emit_unicode_version;
-use writer::utils::tables::{ToDirectCharTable, ToRangeCharSet, ToRangeCharTable};
-use writer::utils::{capitalize, write};
+use crate::writer::common::emit_unicode_version;
+use crate::writer::utils::tables::{ToDirectCharTable, ToRangeCharSet, ToRangeCharTable};
+use crate::writer::utils::{capitalize, write};
 
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);

@@ -26,18 +26,16 @@
 //!
 //! * <https://www.unicode.org/reports/tr44/#Character_Age>
 
-extern crate unic_char_property;
 #[macro_use]
 extern crate unic_char_range;
-extern crate unic_ucd_version;
 
 pub use unic_ucd_version::UnicodeVersion;
 
 mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
 mod age;
-pub use age::{Age, CharAge};
+pub use crate::age::{Age, CharAge};
 
 /// The [Unicode version](https://www.unicode.org/versions/) of data
 pub const UNICODE_VERSION: UnicodeVersion = include!("../tables/unicode_version.rsv");

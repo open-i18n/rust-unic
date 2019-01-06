@@ -32,7 +32,7 @@ use std::char;
 use std::u32;
 
 mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
 // Bootstring parameters for Punycode
 static BASE: u32 = 36;
@@ -100,9 +100,9 @@ pub fn decode(input: &str) -> Option<Vec<char>> {
         // which gets added to i.
         loop {
             let digit = match byte {
-                byte @ b'0'...b'9' => byte - b'0' + 26,
-                byte @ b'A'...b'Z' => byte - b'A',
-                byte @ b'a'...b'z' => byte - b'a',
+                byte @ b'0'..=b'9' => byte - b'0' + 26,
+                byte @ b'A'..=b'Z' => byte - b'A',
+                byte @ b'a'..=b'z' => byte - b'a',
                 _ => return None,
             } as u32;
             if digit > (u32::MAX - i) / weight {
@@ -235,8 +235,8 @@ pub fn encode(input: &[char]) -> Option<String> {
 #[inline]
 fn value_to_digit(value: u32) -> char {
     match value {
-        0...25 => (value as u8 + b'a') as char,       // a..=z
-        26...35 => (value as u8 - 26 + b'0') as char, // 0..=9
+        0..=25 => (value as u8 + b'a') as char,       // a..=z
+        26..=35 => (value as u8 - 26 + b'0') as char, // 0..=9
         _ => panic!("Value larger than BASE: {}", value),
     }
 }

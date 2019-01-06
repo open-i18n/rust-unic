@@ -11,8 +11,6 @@
 
 #![forbid(unsafe_code)]
 
-extern crate unic;
-
 use unic::normal::StrNormalForm;
 use unic::ucd::normal::compose;
 

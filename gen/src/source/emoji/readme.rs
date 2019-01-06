@@ -12,7 +12,7 @@ use std::str::FromStr;
 
 use regex::Regex;
 
-use source::utils::read;
+use crate::source::utils::read;
 
 pub struct EmojiDataVersion {
     pub major: u8,

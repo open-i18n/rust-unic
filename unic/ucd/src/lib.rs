@@ -24,32 +24,32 @@
 //! This UNIC component provides access to character properties as defined in the [Unicode
 //! Standard Annex #44 - Unicode Character Database](http://unicode.org/reports/tr44/).
 
-pub extern crate unic_ucd_common as common;
-pub extern crate unic_ucd_version as version;
+pub use unic_ucd_common as common;
+pub use unic_ucd_version as version;
 
-pub extern crate unic_ucd_age as age;
-pub extern crate unic_ucd_bidi as bidi;
-pub extern crate unic_ucd_block as block;
-pub extern crate unic_ucd_case as case;
-pub extern crate unic_ucd_category as category;
-pub extern crate unic_ucd_hangul as hangul;
-pub extern crate unic_ucd_ident as ident;
-pub extern crate unic_ucd_name as name;
-pub extern crate unic_ucd_normal as normal;
-pub extern crate unic_ucd_segment as segment;
+pub use unic_ucd_age as age;
+pub use unic_ucd_bidi as bidi;
+pub use unic_ucd_block as block;
+pub use unic_ucd_case as case;
+pub use unic_ucd_category as category;
+pub use unic_ucd_hangul as hangul;
+pub use unic_ucd_ident as ident;
+pub use unic_ucd_name as name;
+pub use unic_ucd_normal as normal;
+pub use unic_ucd_segment as segment;
 
-pub use version::UnicodeVersion;
+pub use crate::version::UnicodeVersion;
 
 /// The [Unicode version](https://www.unicode.org/versions/) of data
-pub use version::UNICODE_VERSION;
+pub use crate::version::UNICODE_VERSION;
 
-pub use age::{Age, CharAge};
+pub use crate::age::{Age, CharAge};
 
-pub use block::{Block, BlockIter};
+pub use crate::block::{Block, BlockIter};
 
-pub use bidi::{is_bidi_mirrored, BidiClass, CharBidiClass, StrBidiClass};
+pub use crate::bidi::{is_bidi_mirrored, BidiClass, CharBidiClass, StrBidiClass};
 
-pub use case::{
+pub use crate::case::{
     changes_when_casefolded,
     changes_when_casemapped,
     changes_when_lowercased,
@@ -70,15 +70,15 @@ pub use case::{
     Uppercase,
 };
 
-pub use category::GeneralCategory;
+pub use crate::category::GeneralCategory;
 
-pub use common::{is_alphabetic, is_white_space, Alphabetic, WhiteSpace};
+pub use crate::common::{is_alphabetic, is_white_space, Alphabetic, WhiteSpace};
 
-pub use name::Name;
+pub use crate::name::Name;
 
-pub use normal::CanonicalCombiningClass;
+pub use crate::normal::CanonicalCombiningClass;
 
-pub use segment::{GraphemeClusterBreak, SentenceBreak, WordBreak};
+pub use crate::segment::{GraphemeClusterBreak, SentenceBreak, WordBreak};
 
 mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

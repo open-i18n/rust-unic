@@ -10,7 +10,7 @@
 
 mod mapping;
 
-use writer::utils::clean_dir;
+use crate::writer::utils::clean_dir;
 
 pub fn generate() {
     mapping::generate(&clean_dir("unic/idna/mapping/tables"));

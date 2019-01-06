@@ -14,7 +14,7 @@ use std::fmt::{self, Write};
 
 use unic_ucd_normal::{compose, CanonicalCombiningClass};
 
-use decompose::Decompositions;
+use crate::decompose::Decompositions;
 
 #[derive(Clone, Debug)]
 enum RecompositionState {
@@ -136,7 +136,7 @@ impl<I: Iterator<Item = char>> Iterator for Recompositions<I> {
 }
 
 impl<I: Iterator<Item = char> + Clone> fmt::Display for Recompositions<I> {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         for c in self.clone() {
             f.write_char(c)?;
         }

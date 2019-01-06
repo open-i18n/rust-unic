@@ -19,15 +19,15 @@ pub use self::range::ToRangeCharTable;
 pub use self::set::ToRangeCharSet;
 
 #[derive(Debug)]
-struct DisplayWrapper<'a, T: 'a, F: 'a>(&'a T, &'a F)
+struct DisplayWrapper<'a, T, F>(&'a T, &'a F)
 where
-    F: Fn(&T, &mut fmt::Formatter) -> fmt::Result;
+    F: Fn(&T, &mut fmt::Formatter<'_>) -> fmt::Result;
 
 impl<'a, T, F> fmt::Display for DisplayWrapper<'a, T, F>
 where
-    F: Fn(&T, &mut fmt::Formatter) -> fmt::Result,
+    F: Fn(&T, &mut fmt::Formatter<'_>) -> fmt::Result,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         self.1(self.0, f)
     }
 }

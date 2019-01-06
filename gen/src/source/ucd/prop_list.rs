@@ -12,7 +12,7 @@ use std::char;
 use std::collections::BTreeSet;
 use std::str::FromStr;
 
-use source::utils::read;
+use crate::source::utils::read;
 
 use super::BINARY_PROPERTIES_REGEX;
 

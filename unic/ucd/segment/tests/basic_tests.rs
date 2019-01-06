@@ -8,8 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate unic_ucd_segment;
-
 use unic_ucd_segment::grapheme_cluster_break::GraphemeClusterBreak as GCB;
 use unic_ucd_segment::sentence_break::SentenceBreak as SB;
 use unic_ucd_segment::word_break::WordBreak as WB;

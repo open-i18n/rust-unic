@@ -13,7 +13,6 @@
 #![feature(test)]
 
 extern crate test;
-extern crate unic_bidi;
 
 use test::Bencher;
 

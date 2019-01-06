@@ -11,8 +11,6 @@
 #[macro_use]
 extern crate unic_char_range;
 
-extern crate unic_ucd_normal;
-
 use std::collections::HashSet as Set;
 use std::{char, u32};
 use unic_ucd_normal::DecompositionType as DT;

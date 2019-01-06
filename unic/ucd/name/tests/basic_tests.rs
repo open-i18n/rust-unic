@@ -8,8 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate unic_ucd_name;
-
 use unic_ucd_name::Name;
 
 #[test]

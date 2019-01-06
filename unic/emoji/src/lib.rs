@@ -23,9 +23,9 @@
 //! This UNIC component implements character properties and algorithms from [Unicode® Technical
 //! Standard #51 - Unicode Emoji](http://unicode.org/reports/tr51/).
 
-pub extern crate unic_emoji_char as char;
+pub use unic_emoji_char as char;
 
 mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
-pub use char::EMOJI_VERSION;
+pub use crate::char::EMOJI_VERSION;

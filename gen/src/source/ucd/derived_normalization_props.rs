@@ -14,7 +14,7 @@ use std::str::FromStr;
 
 use regex::Regex;
 
-use source::utils::read;
+use crate::source::utils::read;
 
 lazy_static! {
     pub static ref COMPOSITION_EXCLUSIONS: CompositionExclusions = {

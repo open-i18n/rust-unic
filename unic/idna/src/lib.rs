@@ -47,19 +47,15 @@
 #[macro_use]
 extern crate matches;
 
-extern crate unic_normal;
-extern crate unic_ucd_bidi;
-extern crate unic_ucd_normal;
-
-extern crate unic_idna_mapping as mapping;
-extern crate unic_idna_punycode as punycode;
+use unic_idna_mapping as mapping;
+use unic_idna_punycode as punycode;
 
 mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
-pub use mapping::UNICODE_VERSION;
+pub use crate::mapping::UNICODE_VERSION;
 
 mod process;
-pub use process::PUNYCODE_PREFIX;
-pub use process::{to_ascii, to_unicode};
-pub use process::{Errors, Flags};
+pub use crate::process::PUNYCODE_PREFIX;
+pub use crate::process::{to_ascii, to_unicode};
+pub use crate::process::{Errors, Flags};

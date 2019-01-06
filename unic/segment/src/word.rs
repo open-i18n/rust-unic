@@ -48,7 +48,7 @@ impl<'a> DoubleEndedIterator for Words<'a> {
 impl<'a> Words<'a> {
     /// Create new iterator for *words*.
     #[inline]
-    pub fn new(s: &str, filter: fn(&&str) -> bool) -> Words {
+    pub fn new(s: &str, filter: fn(&&str) -> bool) -> Words<'_> {
         Words {
             inner: WordBounds::new(s).filter(filter),
         }
@@ -74,7 +74,7 @@ pub struct WordBoundIndices<'a> {
 impl<'a> WordBoundIndices<'a> {
     /// Create new iterator for *word boundries and their indices*.
     #[inline]
-    pub fn new(s: &str) -> WordBoundIndices {
+    pub fn new(s: &str) -> WordBoundIndices<'_> {
         WordBoundIndices {
             start_offset: s.as_ptr() as usize,
             iter: WordBounds::new(s),
@@ -631,7 +631,7 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
 impl<'a> WordBounds<'a> {
     /// Create new iterator for *word boundries*.
     #[inline]
-    pub fn new(s: &str) -> WordBounds {
+    pub fn new(s: &str) -> WordBounds<'_> {
         WordBounds {
             string: s,
             cat: None,

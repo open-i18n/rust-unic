@@ -54,17 +54,17 @@ impl Name {
     /// Find the character `Name` property value.
     pub fn of(ch: char) -> Option<Name> {
         match ch {
-            '\u{AC00}'...'\u{D7A3}' => Some(Name::NR1(ch)),
-            '\u{3400}'...'\u{4DB5}'
-            | '\u{4E00}'...'\u{9FEA}'
-            | '\u{20000}'...'\u{2A6D6}'
-            | '\u{2A700}'...'\u{2B734}'
-            | '\u{2B740}'...'\u{2B81D}'
-            | '\u{2B820}'...'\u{2CEA1}'
-            | '\u{2CEB0}'...'\u{2EBE0}' => Some(Name::NR2(PREFIX_CJK_UNIFIED_IDEOGRAPH, ch)),
-            '\u{17000}'...'\u{187EC}' => Some(Name::NR2(PREFIX_TANGUT_IDEOGRAPH, ch)),
-            '\u{1B170}'...'\u{1B2FB}' => Some(Name::NR2(PREFIX_NUSHU_CHARACTER, ch)),
-            '\u{F900}'...'\u{FA6D}' | '\u{FA70}'...'\u{FAD9}' | '\u{2F800}'...'\u{2FA1D}' => {
+            '\u{AC00}'..='\u{D7A3}' => Some(Name::NR1(ch)),
+            '\u{3400}'..='\u{4DB5}'
+            | '\u{4E00}'..='\u{9FEA}'
+            | '\u{20000}'..='\u{2A6D6}'
+            | '\u{2A700}'..='\u{2B734}'
+            | '\u{2B740}'..='\u{2B81D}'
+            | '\u{2B820}'..='\u{2CEA1}'
+            | '\u{2CEB0}'..='\u{2EBE0}' => Some(Name::NR2(PREFIX_CJK_UNIFIED_IDEOGRAPH, ch)),
+            '\u{17000}'..='\u{187EC}' => Some(Name::NR2(PREFIX_TANGUT_IDEOGRAPH, ch)),
+            '\u{1B170}'..='\u{1B2FB}' => Some(Name::NR2(PREFIX_NUSHU_CHARACTER, ch)),
+            '\u{F900}'..='\u{FA6D}' | '\u{FA70}'..='\u{FAD9}' | '\u{2F800}'..='\u{2FA1D}' => {
                 Some(Name::NR2(PREFIX_CJK_COMPATIBILITY_IDEOGRAPH, ch))
             }
             _ => data::NAMES.find(ch).map(|pieces| Name::NR3(pieces)),
@@ -132,7 +132,7 @@ impl Name {
 }
 
 impl fmt::Display for Name {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match *self {
             Name::NR1(ch) => {
                 f.write_str(PREFIX_HANGUL_SYLLABLE)?;

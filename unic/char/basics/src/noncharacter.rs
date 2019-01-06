@@ -26,24 +26,24 @@
 /// - https://www.unicode.org/faq/private_use.html#noncharacters
 pub fn is_noncharacter(codepoint: char) -> bool {
     match codepoint {
-        '\u{fdd0}'...'\u{fdef}'
-        | '\u{fffe}'...'\u{ffff}'
-        | '\u{1_fffe}'...'\u{1_ffff}'
-        | '\u{2_fffe}'...'\u{2_ffff}'
-        | '\u{3_fffe}'...'\u{3_ffff}'
-        | '\u{4_fffe}'...'\u{4_ffff}'
-        | '\u{5_fffe}'...'\u{5_ffff}'
-        | '\u{6_fffe}'...'\u{6_ffff}'
-        | '\u{7_fffe}'...'\u{7_ffff}'
-        | '\u{8_fffe}'...'\u{8_ffff}'
-        | '\u{9_fffe}'...'\u{9_ffff}'
-        | '\u{A_fffe}'...'\u{A_ffff}'
-        | '\u{B_fffe}'...'\u{B_ffff}'
-        | '\u{C_fffe}'...'\u{C_ffff}'
-        | '\u{D_fffe}'...'\u{D_ffff}'
-        | '\u{E_fffe}'...'\u{E_ffff}'
-        | '\u{F_fffe}'...'\u{F_ffff}'
-        | '\u{10_fffe}'...'\u{10_ffff}' => true,
+        '\u{fdd0}'..='\u{fdef}'
+        | '\u{fffe}'..='\u{ffff}'
+        | '\u{1_fffe}'..='\u{1_ffff}'
+        | '\u{2_fffe}'..='\u{2_ffff}'
+        | '\u{3_fffe}'..='\u{3_ffff}'
+        | '\u{4_fffe}'..='\u{4_ffff}'
+        | '\u{5_fffe}'..='\u{5_ffff}'
+        | '\u{6_fffe}'..='\u{6_ffff}'
+        | '\u{7_fffe}'..='\u{7_ffff}'
+        | '\u{8_fffe}'..='\u{8_ffff}'
+        | '\u{9_fffe}'..='\u{9_ffff}'
+        | '\u{A_fffe}'..='\u{A_ffff}'
+        | '\u{B_fffe}'..='\u{B_ffff}'
+        | '\u{C_fffe}'..='\u{C_ffff}'
+        | '\u{D_fffe}'..='\u{D_ffff}'
+        | '\u{E_fffe}'..='\u{E_ffff}'
+        | '\u{F_fffe}'..='\u{F_ffff}'
+        | '\u{10_fffe}'..='\u{10_ffff}' => true,
         _ => false,
     }
 }

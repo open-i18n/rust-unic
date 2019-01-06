@@ -13,12 +13,10 @@
 
 #[macro_use]
 extern crate unic_char_range;
-extern crate unic_ucd_category;
-extern crate unic_ucd_ident;
 
 #[macro_use]
 extern crate matches;
-extern crate regex;
+use regex;
 
 use std::char;
 use std::collections::BTreeSet;
@@ -46,7 +44,7 @@ fn test_id_derivation() {
         .captures_iter(include_str!(
             "../../../../external/unicode/ucd/data/PropList.txt"
         ))
-        .flat_map(|cap: regex::Captures| {
+        .flat_map(|cap: regex::Captures<'_>| {
             let low = char::from_u32(u32::from_str_radix(&cap[1], 16).unwrap()).unwrap();
             let high = cap
                 .get(2)
@@ -71,7 +69,7 @@ fn test_id_derivation() {
         .captures_iter(include_str!(
             "../../../../external/unicode/ucd/data/PropList.txt"
         ))
-        .flat_map(|cap: regex::Captures| {
+        .flat_map(|cap: regex::Captures<'_>| {
             let low = char::from_u32(u32::from_str_radix(&cap[1], 16).unwrap()).unwrap();
             let high = cap
                 .get(2)
