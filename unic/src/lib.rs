@@ -171,13 +171,13 @@
 //! }
 //! ```
 
-pub extern crate unic_bidi as bidi;
-pub extern crate unic_char as char;
-pub extern crate unic_emoji as emoji;
-pub extern crate unic_idna as idna;
-pub extern crate unic_normal as normal;
-pub extern crate unic_segment as segment;
-pub extern crate unic_ucd as ucd;
+pub use unic_bidi as bidi;
+pub use unic_char as char;
+pub use unic_emoji as emoji;
+pub use unic_idna as idna;
+pub use unic_normal as normal;
+pub use unic_segment as segment;
+pub use unic_ucd as ucd;
 
 /// The [Unicode version](https://www.unicode.org/versions/) of data
 pub use crate::ucd::UNICODE_VERSION;

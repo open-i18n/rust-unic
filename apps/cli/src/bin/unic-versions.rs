@@ -12,7 +12,7 @@
 
 //! Command-line tool to list versions of UNIC components.
 
-extern crate unic;
+use unic;
 
 macro_rules! print_component_desc {
     ( $component:tt ) => {

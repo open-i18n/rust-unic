@@ -11,7 +11,7 @@
 
 #![cfg(test)]
 
-extern crate unic_normal;
+
 
 use unic_normal::StrNormalForm;
 

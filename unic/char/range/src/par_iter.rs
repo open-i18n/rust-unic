@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate rayon;
+use rayon;
 
 use self::rayon::iter::plumbing::{Consumer, ProducerCallback, UnindexedConsumer};
 use self::rayon::prelude::*;

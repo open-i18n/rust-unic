@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate assert_cli;
+
 
 use assert_cli::Assert;
 

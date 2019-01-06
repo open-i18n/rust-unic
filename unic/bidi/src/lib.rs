@@ -71,7 +71,7 @@
 //!
 //! [tr9]: https://www.unicode.org/reports/tr9/
 
-extern crate unic_ucd_bidi;
+
 
 #[macro_use]
 extern crate matches;
@@ -80,8 +80,7 @@ extern crate matches;
 #[macro_use]
 extern crate serde;
 
-#[cfg(all(feature = "serde", test))]
-extern crate serde_test;
+
 
 pub use unic_ucd_bidi::UNICODE_VERSION;
 pub use unic_ucd_bidi::{bidi_class, BidiClass, BidiClassCategory};

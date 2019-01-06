@@ -20,8 +20,8 @@ extern crate lazy_static;
 #[macro_use]
 extern crate matches;
 
-extern crate itertools;
-extern crate regex;
+
+
 
 mod source;
 mod writer;

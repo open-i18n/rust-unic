@@ -18,13 +18,13 @@ pub trait ToRangeCharTable<T: Eq> {
     /// Convert this mapping to a `String`.
     fn to_range_char_table<F>(&self, display_fn: F) -> String
     where
-        F: Fn(&T, &mut fmt::Formatter) -> fmt::Result;
+        F: Fn(&T, &mut fmt::Formatter<'_>) -> fmt::Result;
 }
 
 impl<T: Eq> ToRangeCharTable<T> for BTreeMap<char, T> {
     fn to_range_char_table<F>(&self, display_fn: F) -> String
     where
-        F: Fn(&T, &mut fmt::Formatter) -> fmt::Result,
+        F: Fn(&T, &mut fmt::Formatter<'_>) -> fmt::Result,
     {
         let mut entries = self.iter();
         let mut out = String::from("CharDataTable::Range(&[\n");

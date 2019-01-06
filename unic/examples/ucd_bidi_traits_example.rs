@@ -11,7 +11,7 @@
 
 #![forbid(unsafe_code)]
 
-extern crate unic;
+
 
 use unic::ucd::bidi::{BidiClass, BidiClassCategory, CharBidiClass, StrBidiClass};
 

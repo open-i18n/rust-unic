@@ -23,7 +23,7 @@
 //!
 //! Core create indicating the version of Unicode Character Database.
 
-extern crate unic_common;
+
 
 pub use unic_common::version::UnicodeVersion;
 

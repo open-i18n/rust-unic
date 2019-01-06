@@ -16,7 +16,7 @@
     unsafe_code
 )]
 
-extern crate unic_char_basics;
+
 
 use unic_char_basics::unicode_notation;
 

@@ -6,7 +6,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate unic_idna;
+use unic_idna;
 
 use std::char;
 

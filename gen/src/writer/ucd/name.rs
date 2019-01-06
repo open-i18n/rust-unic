@@ -34,7 +34,7 @@ struct NameRecord<'a> {
 
 fn emit_name_tables(dir: &Path) {
     let mut values: BTreeSet<&str> = BTreeSet::default();
-    let map: BTreeMap<char, NameRecord> = UNICODE_DATA
+    let map: BTreeMap<char, NameRecord<'_>> = UNICODE_DATA
         .entries
         .iter()
         .filter(|x| !x.name.starts_with('<'))

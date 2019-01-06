@@ -78,10 +78,9 @@
 //! );
 //! ```
 
-extern crate unic_ucd_segment;
 
-#[cfg(test)]
-extern crate unic_ucd_common;
+
+
 
 pub use unic_ucd_segment::UNICODE_VERSION;
 

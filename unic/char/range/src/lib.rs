@@ -52,8 +52,7 @@
 //! [`TrustedLen`]: https://doc.rust-lang.org/std/iter/trait.TrustedLen.html
 //!
 
-#[cfg(feature = "std")]
-extern crate core;
+
 
 mod pkg_info;
 pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

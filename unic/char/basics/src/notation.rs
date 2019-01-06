@@ -29,7 +29,7 @@ pub struct UnicodeNotation {
 }
 
 impl fmt::Display for UnicodeNotation {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "U+{:04X}", self.codepoint as u32)
     }
 }

@@ -9,8 +9,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate rustc_serialize;
-extern crate unic_idna_punycode;
+
+
 
 use rustc_serialize::json::{self, Json};
 use unic_idna_punycode::{decode, encode_str};

@@ -19,7 +19,7 @@ extern crate matches;
 #[macro_use]
 extern crate unic_char_range;
 
-extern crate unic_ucd;
+
 
 use unic_ucd::bidi::BidiClass as BC;
 use unic_ucd::category::GeneralCategory as GC;

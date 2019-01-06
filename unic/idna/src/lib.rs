@@ -47,12 +47,12 @@
 #[macro_use]
 extern crate matches;
 
-extern crate unic_normal;
-extern crate unic_ucd_bidi;
-extern crate unic_ucd_normal;
 
-extern crate unic_idna_mapping as mapping;
-extern crate unic_idna_punycode as punycode;
+
+
+
+use unic_idna_mapping as mapping;
+use unic_idna_punycode as punycode;
 
 mod pkg_info;
 pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

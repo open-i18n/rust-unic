@@ -11,7 +11,7 @@
 
 #![forbid(unsafe_code)]
 
-extern crate unic;
+
 
 use unic::bidi::BidiInfo;
 use unic::normal::StrNormalForm;

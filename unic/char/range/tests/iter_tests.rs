@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate unic_char_range;
+
 
 use std::{char, u32, vec};
 

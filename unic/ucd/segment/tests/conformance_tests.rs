@@ -8,8 +8,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate unic_char_property;
-extern crate unic_ucd_segment;
+
+
 
 use unic_char_property::tables::CharDataTable;
 

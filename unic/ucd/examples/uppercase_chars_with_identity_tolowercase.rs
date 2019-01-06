@@ -8,10 +8,10 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate unic_char_basics;
-extern crate unic_char_range;
-extern crate unic_ucd_case;
-extern crate unic_ucd_category;
+
+
+
+
 
 use unic_char_basics::unicode_notation;
 use unic_char_range::CharRange;

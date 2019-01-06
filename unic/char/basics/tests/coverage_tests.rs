@@ -16,8 +16,8 @@
     unsafe_code
 )]
 
-extern crate unic_char_basics;
-extern crate unic_char_range;
+
+
 
 use unic_char_basics::{is_noncharacter, is_private_use};
 use unic_char_range::CharRange;

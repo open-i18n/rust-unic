@@ -11,7 +11,7 @@
 #[macro_use]
 extern crate unic_char_range;
 
-extern crate unic_ucd_age;
+
 
 use unic_ucd_age::{Age, UnicodeVersion, UNICODE_VERSION};
 

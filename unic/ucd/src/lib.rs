@@ -24,19 +24,19 @@
 //! This UNIC component provides access to character properties as defined in the [Unicode
 //! Standard Annex #44 - Unicode Character Database](http://unicode.org/reports/tr44/).
 
-pub extern crate unic_ucd_common as common;
-pub extern crate unic_ucd_version as version;
+pub use unic_ucd_common as common;
+pub use unic_ucd_version as version;
 
-pub extern crate unic_ucd_age as age;
-pub extern crate unic_ucd_bidi as bidi;
-pub extern crate unic_ucd_block as block;
-pub extern crate unic_ucd_case as case;
-pub extern crate unic_ucd_category as category;
-pub extern crate unic_ucd_hangul as hangul;
-pub extern crate unic_ucd_ident as ident;
-pub extern crate unic_ucd_name as name;
-pub extern crate unic_ucd_normal as normal;
-pub extern crate unic_ucd_segment as segment;
+pub use unic_ucd_age as age;
+pub use unic_ucd_bidi as bidi;
+pub use unic_ucd_block as block;
+pub use unic_ucd_case as case;
+pub use unic_ucd_category as category;
+pub use unic_ucd_hangul as hangul;
+pub use unic_ucd_ident as ident;
+pub use unic_ucd_name as name;
+pub use unic_ucd_normal as normal;
+pub use unic_ucd_segment as segment;
 
 pub use crate::version::UnicodeVersion;
 

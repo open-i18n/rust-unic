@@ -8,8 +8,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate unic_idna_mapping;
-extern crate unic_ucd_version;
+use unic_idna_mapping;
+use unic_ucd_version;
 
 #[test]
 fn test_version_against_ucd_version() {

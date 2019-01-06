@@ -36,7 +36,7 @@
 //! }
 //! ```
 
-extern crate unic_ucd_normal;
+
 
 mod decompose;
 mod recompose;

@@ -9,8 +9,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate unic_segment;
-extern crate unic_ucd_common;
+
+
 
 use unic_segment::{GraphemeIndices, Graphemes, WordBoundIndices, WordBounds, Words};
 use unic_ucd_common::is_alphanumeric;

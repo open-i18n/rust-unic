@@ -8,7 +8,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate unic_ucd_normal;
+use unic_ucd_normal;
 
 use self::unic_ucd_normal::{CanonicalCombiningClass as CCC, DecompositionType as DT};
 
