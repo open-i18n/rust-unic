@@ -1,0 +1,9 @@
+[submodule "external/unicode/idna"]
+	path = external/unicode/idna
+	url = https://github.com/open-i18n/data-unicode-idna.git
+[submodule "external/unicode/emoji"]
+	path = external/unicode/emoji
+	url = https://github.com/open-i18n/data-unicode-emoji.git
+[submodule "external/unicode/ucd"]
+	path = external/unicode/ucd
+	url = https://github.com/open-i18n/data-unicode-ucd.git
