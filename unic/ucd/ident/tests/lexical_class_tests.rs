@@ -43,7 +43,9 @@ fn test_id_derivation() {
              ",
         )
         .unwrap()
-        .captures_iter(include_str!("../../../../data/ucd/PropList.txt"))
+        .captures_iter(include_str!(
+            "../../../../external/unicode/ucd/data/PropList.txt"
+        ))
         .flat_map(|cap: regex::Captures| {
             let low = char::from_u32(u32::from_str_radix(&cap[1], 16).unwrap()).unwrap();
             let high = cap
@@ -66,7 +68,9 @@ fn test_id_derivation() {
              ",
         )
         .unwrap()
-        .captures_iter(include_str!("../../../../data/ucd/PropList.txt"))
+        .captures_iter(include_str!(
+            "../../../../external/unicode/ucd/data/PropList.txt"
+        ))
         .flat_map(|cap: regex::Captures| {
             let low = char::from_u32(u32::from_str_radix(&cap[1], 16).unwrap()).unwrap();
             let high = cap

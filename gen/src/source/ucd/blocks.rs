@@ -17,7 +17,11 @@ use regex::Regex;
 use source::utils::read;
 
 lazy_static! {
-    pub static ref BLOCKS_DATA: BlocksData = { read("data/ucd/Blocks.txt").parse().unwrap() };
+    pub static ref BLOCKS_DATA: BlocksData = {
+        read("external/unicode/ucd/data/Blocks.txt")
+            .parse()
+            .unwrap()
+    };
 }
 
 #[derive(Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]

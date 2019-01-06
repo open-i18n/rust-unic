@@ -16,8 +16,9 @@ extern crate unic_char_property;
 
 use unic_bidi::{format_chars, level, BidiClass, BidiInfo, Level};
 
-const BASIC_TEST_DATA: &str = include_str!("../../../data/ucd/test/BidiTest.txt");
-const CHAR_TEST_DATA: &str = include_str!("../../../data/ucd/test/BidiCharacterTest.txt");
+const BASIC_TEST_DATA: &str = include_str!("../../../external/unicode/ucd/data/BidiTest.txt");
+const CHAR_TEST_DATA: &str =
+    include_str!("../../../external/unicode/ucd/data/BidiCharacterTest.txt");
 
 #[derive(Debug)]
 struct Fail {

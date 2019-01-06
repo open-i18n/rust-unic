@@ -18,8 +18,11 @@ use source::utils::read;
 use regex::Regex;
 
 lazy_static! {
-    pub static ref GRAPHEME_BREAK_TESTS: GraphemeBreakTests =
-        { read("data/ucd/test/GraphemeBreakTest.txt").parse().unwrap() };
+    pub static ref GRAPHEME_BREAK_TESTS: GraphemeBreakTests = {
+        read("external/unicode/ucd/data/auxiliary/GraphemeBreakTest.txt")
+            .parse()
+            .unwrap()
+    };
 }
 
 pub struct GraphemeBreakTests {

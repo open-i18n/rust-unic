@@ -17,7 +17,11 @@ use regex::Regex;
 use source::utils::read;
 
 lazy_static! {
-    pub static ref AGE_DATA: AgeData = { read("data/ucd/DerivedAge.txt").parse().unwrap() };
+    pub static ref AGE_DATA: AgeData = {
+        read("external/unicode/ucd/data/DerivedAge.txt")
+            .parse()
+            .unwrap()
+    };
 }
 
 #[derive(Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]

@@ -21,8 +21,11 @@ pub struct EmojiDataVersion {
 }
 
 lazy_static! {
-    pub static ref EMOJI_VERSION: EmojiDataVersion =
-        { read("data/emoji/ReadMe.txt").parse().unwrap() };
+    pub static ref EMOJI_VERSION: EmojiDataVersion = {
+        read("external/unicode/emoji/data/ReadMe.txt")
+            .parse()
+            .unwrap()
+    };
 }
 
 impl FromStr for EmojiDataVersion {
