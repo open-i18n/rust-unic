@@ -11,8 +11,6 @@
 #[macro_use]
 extern crate quickcheck;
 
-
-
 use unic_cli::parsers;
 use unic_cli::writers;
 

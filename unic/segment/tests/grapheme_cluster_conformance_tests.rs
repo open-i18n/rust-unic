@@ -9,8 +9,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
-
 use unic_segment::Graphemes;
 
 type TestData = &'static [(

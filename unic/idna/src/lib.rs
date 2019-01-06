@@ -47,10 +47,6 @@
 #[macro_use]
 extern crate matches;
 
-
-
-
-
 use unic_idna_mapping as mapping;
 use unic_idna_punycode as punycode;
 

@@ -19,7 +19,7 @@ pub use self::range::ToRangeCharTable;
 pub use self::set::ToRangeCharSet;
 
 #[derive(Debug)]
-struct DisplayWrapper<'a, T: 'a, F: 'a>(&'a T, &'a F)
+struct DisplayWrapper<'a, T, F>(&'a T, &'a F)
 where
     F: Fn(&T, &mut fmt::Formatter<'_>) -> fmt::Result;
 

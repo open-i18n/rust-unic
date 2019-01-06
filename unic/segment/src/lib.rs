@@ -78,10 +78,6 @@
 //! );
 //! ```
 
-
-
-
-
 pub use unic_ucd_segment::UNICODE_VERSION;
 
 mod pkg_info;

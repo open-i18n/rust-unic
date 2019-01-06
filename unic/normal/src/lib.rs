@@ -36,8 +36,6 @@
 //! }
 //! ```
 
-
-
 mod decompose;
 mod recompose;
 

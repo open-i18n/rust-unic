@@ -16,10 +16,8 @@
     unsafe_code
 )]
 
-
 #[macro_use]
 extern crate unic_char_range;
-
 
 use unic_char::basics::{is_noncharacter, is_private_use, unicode_notation};
 use unic_char::range::CharRange;

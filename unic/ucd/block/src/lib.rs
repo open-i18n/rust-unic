@@ -27,8 +27,6 @@
 #[macro_use]
 extern crate unic_char_range;
 
-
-
 mod block;
 pub use crate::block::{Block, BlockIter};
 

@@ -8,9 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
-
-
 use unic_char_property::tables::CharDataTable;
 
 use unic_ucd_segment::grapheme_cluster_break::{self, GraphemeClusterBreak};

@@ -26,10 +26,8 @@
 //!
 //! * <https://www.unicode.org/reports/tr44/#Character_Age>
 
-
 #[macro_use]
 extern crate unic_char_range;
-
 
 pub use unic_ucd_version::UnicodeVersion;
 

@@ -11,8 +11,6 @@
 #[macro_use]
 extern crate unic_char_range;
 
-
-
 use unic_ucd_age::{Age, UnicodeVersion, UNICODE_VERSION};
 
 /// Character *assignement* values always have Unicode Micro (Update) Version value of zero (`0`).

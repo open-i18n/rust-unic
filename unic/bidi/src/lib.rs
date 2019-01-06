@@ -71,16 +71,12 @@
 //!
 //! [tr9]: https://www.unicode.org/reports/tr9/
 
-
-
 #[macro_use]
 extern crate matches;
 
 #[cfg(feature = "serde")]
 #[macro_use]
 extern crate serde;
-
-
 
 pub use unic_ucd_bidi::UNICODE_VERSION;
 pub use unic_ucd_bidi::{bidi_class, BidiClass, BidiClassCategory};

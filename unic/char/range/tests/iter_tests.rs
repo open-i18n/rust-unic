@@ -8,8 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
-
 use std::{char, u32, vec};
 
 use unic_char_range::CharRange;

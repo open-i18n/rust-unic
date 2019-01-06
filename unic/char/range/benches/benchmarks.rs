@@ -12,7 +12,6 @@
 
 extern crate test;
 
-
 use std::char;
 use unic_char_range::CharRange;
 

@@ -8,11 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
-
-
-
-
 use unic_char_basics::unicode_notation;
 use unic_char_range::CharRange;
 use unic_ucd_category::GeneralCategory;

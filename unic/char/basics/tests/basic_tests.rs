@@ -16,8 +16,6 @@
     unsafe_code
 )]
 
-
-
 use unic_char_basics::unicode_notation;
 
 /// Test Unicode Notation formatting for samples from Unicode Scalar Value range.

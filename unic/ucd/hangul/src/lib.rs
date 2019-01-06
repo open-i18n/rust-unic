@@ -46,7 +46,6 @@
 //! assert_eq!(composed, sample_hangul);
 //! ```
 
-
 use unic_ucd_version::UnicodeVersion;
 
 mod hangul;

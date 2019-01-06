@@ -11,8 +11,6 @@
 
 #![forbid(unsafe_code)]
 
-
-
 use unic::normal::StrNormalForm;
 use unic::ucd::normal::compose;
 

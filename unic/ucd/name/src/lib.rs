@@ -23,10 +23,6 @@
 //!
 //! Accessor for character Name properties from Unicode Character Database (UCD)
 
-
-
-
-
 mod pkg_info;
 pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 

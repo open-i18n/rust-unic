@@ -11,8 +11,6 @@
 
 #![forbid(unsafe_code)]
 
-
-
 use unic::bidi::BidiInfo;
 
 #[cfg_attr(rustfmt, rustfmt_skip)]

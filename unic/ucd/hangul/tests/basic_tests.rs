@@ -8,7 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
 use unic_ucd_hangul::{compose_syllable, decompose_syllable, is_syllable};
 
 #[test]

@@ -14,7 +14,6 @@
 
 extern crate test;
 
-
 use test::Bencher;
 
 use unic_bidi::BidiInfo;

@@ -16,9 +16,6 @@
     unsafe_code
 )]
 
-
-
-
 use unic_char_basics::{is_noncharacter, is_private_use};
 use unic_char_range::CharRange;
 

@@ -11,8 +11,6 @@
 
 #![cfg(test)]
 
-
-
 use unic_normal::StrNormalForm;
 
 type TestDatum = (

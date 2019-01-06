@@ -8,9 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-
-
-
 use unic_char_property::EnumeratedCharProperty;
 use unic_ucd_category::GeneralCategory;
 

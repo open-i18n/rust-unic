@@ -23,10 +23,8 @@
 //!
 //! * <https://www.unicode.org/reports/tr46/#IDNA_Mapping_Table>
 
-
 #[macro_use]
 extern crate unic_char_range;
-
 
 mod mapping;
 

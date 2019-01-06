@@ -14,8 +14,6 @@
 #[macro_use]
 extern crate unic_char_range;
 
-
-
 #[macro_use]
 extern crate matches;
 use regex;

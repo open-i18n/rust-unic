@@ -11,8 +11,6 @@
 
 #![forbid(unsafe_code)]
 
-
-
 use unic::ucd::bidi::{BidiClass, BidiClassCategory, CharBidiClass, StrBidiClass};
 
 #[cfg_attr(rustfmt, rustfmt_skip)]

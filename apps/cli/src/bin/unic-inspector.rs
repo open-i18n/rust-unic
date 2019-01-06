@@ -14,9 +14,6 @@ extern crate clap;
 #[macro_use]
 extern crate prettytable;
 
-
-
-
 use clap::Arg;
 use prettytable::format::TableFormat;
 use prettytable::Table;

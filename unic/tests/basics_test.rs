@@ -11,8 +11,6 @@
 
 #![forbid(unsafe_code)]
 
-
-
 use unic::bidi::BidiInfo;
 use unic::normal::StrNormalForm;
 use unic::segment::{GraphemeIndices, Graphemes, WordBoundIndices, WordBounds, Words};

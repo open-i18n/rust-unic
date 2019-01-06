@@ -11,9 +11,6 @@
 #[macro_use]
 extern crate unic_char_range;
 
-
-
-
 use unic_ucd_category::GeneralCategory;
 use unic_ucd_common::{is_alphabetic, is_alphanumeric, is_control, is_numeric, is_white_space};
 
