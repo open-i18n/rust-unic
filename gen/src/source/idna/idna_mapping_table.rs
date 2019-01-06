@@ -17,8 +17,11 @@ use regex::Regex;
 use source::utils::read;
 
 lazy_static! {
-    pub static ref IDNA_MAPPING: IdnaMapping =
-        { read("data/idna/IdnaMappingTable.txt").parse().unwrap() };
+    pub static ref IDNA_MAPPING: IdnaMapping = {
+        read("external/unicode/idna/data/IdnaMappingTable.txt")
+            .parse()
+            .unwrap()
+    };
 }
 
 #[derive(Clone, Debug, Eq, PartialEq)]

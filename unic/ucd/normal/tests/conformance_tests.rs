@@ -17,7 +17,8 @@ use std::collections::HashSet as Set;
 use std::{char, u32};
 use unic_ucd_normal::DecompositionType as DT;
 
-const DT_TEST_DATA: &str = include_str!("../../../../data/ucd/test/DecompositionTypeTest.txt");
+const DT_TEST_DATA: &str =
+    include_str!("../../../../external/unicode/ucd/data/extracted/DerivedDecompositionType.txt");
 
 #[derive(Debug)]
 struct Fail {

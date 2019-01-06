@@ -18,7 +18,7 @@ use source::utils::read;
 
 lazy_static! {
     pub static ref GRAPHEME_CLUSTER_BREAK_DATA: GraphemeClusterBreakData = {
-        read("data/ucd/GraphemeBreakProperty.txt")
+        read("external/unicode/ucd/data/auxiliary/GraphemeBreakProperty.txt")
             .parse()
             .expect("Failed parsing source data")
     };

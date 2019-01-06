@@ -16,7 +16,11 @@ use source::ucd::BINARY_PROPERTIES_REGEX;
 use source::utils::read;
 
 lazy_static! {
-    pub static ref EMOJI_DATA: EmojiData = { read("data/emoji/emoji-data.txt").parse().unwrap() };
+    pub static ref EMOJI_DATA: EmojiData = {
+        read("external/unicode/emoji/data/emoji-data.txt")
+            .parse()
+            .unwrap()
+    };
 }
 
 /// Emoji Character Properties

@@ -17,7 +17,11 @@ use source::utils::read;
 use super::BINARY_PROPERTIES_REGEX;
 
 lazy_static! {
-    pub static ref PROP_LIST: PropList = { read("data/ucd/PropList.txt").parse().unwrap() };
+    pub static ref PROP_LIST: PropList = {
+        read("external/unicode/ucd/data/PropList.txt")
+            .parse()
+            .unwrap()
+    };
 }
 
 #[derive(Clone, Debug, Default)]

@@ -16,8 +16,11 @@ use regex::Regex;
 use source::utils::read;
 
 lazy_static! {
-    pub static ref UNICODE_DATA: UnicodeData =
-        { read("data/ucd/UnicodeData.txt").parse().unwrap() };
+    pub static ref UNICODE_DATA: UnicodeData = {
+        read("external/unicode/ucd/data/UnicodeData.txt")
+            .parse()
+            .unwrap()
+    };
 }
 
 /// Data line from UnicodeData.txt

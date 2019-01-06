@@ -18,7 +18,7 @@ use unic_idna_punycode::{decode, encode_str};
 #[test]
 fn test_punycode_js_data() {
     let tests = match Json::from_str(include_str!(
-        "../../../../data/punycode/test/punycode.js_data.json"
+        "../../../../external/punycode.js/test/punycode.js_data.json"
     ))
     .unwrap()
     {

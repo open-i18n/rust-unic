@@ -18,8 +18,11 @@ use source::utils::read;
 use regex::Regex;
 
 lazy_static! {
-    pub static ref WORD_BREAK_TESTS: WordBreakTests =
-        { read("data/ucd/test/WordBreakTest.txt").parse().unwrap() };
+    pub static ref WORD_BREAK_TESTS: WordBreakTests = {
+        read("external/unicode/ucd/data/auxiliary/WordBreakTest.txt")
+            .parse()
+            .unwrap()
+    };
 }
 
 pub struct WordBreakTests {
