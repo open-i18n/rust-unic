@@ -28,7 +28,7 @@ extern crate unic_common;
 pub use unic_common::version::UnicodeVersion;
 
 mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
 mod unicode_version;
-pub use unicode_version::UNICODE_VERSION;
+pub use crate::unicode_version::UNICODE_VERSION;

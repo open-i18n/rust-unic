@@ -10,10 +10,10 @@
 
 use std::path::Path;
 
-use source::ucd::test::grapheme_break_test::{GraphemeBreakTest, GRAPHEME_BREAK_TESTS};
-use source::ucd::test::word_break_test::{WordBreakTest, WORD_BREAK_TESTS};
+use crate::source::ucd::test::grapheme_break_test::{GraphemeBreakTest, GRAPHEME_BREAK_TESTS};
+use crate::source::ucd::test::word_break_test::{WordBreakTest, WORD_BREAK_TESTS};
 
-use writer::utils::write;
+use crate::writer::utils::write;
 
 pub fn generate(dir: &Path) {
     emit_grapheme_cluster_break_test_data(dir);

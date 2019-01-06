@@ -12,12 +12,13 @@ extern crate rayon;
 
 use self::rayon::iter::plumbing::{Consumer, ProducerCallback, UnindexedConsumer};
 use self::rayon::prelude::*;
+use crate::step::{AFTER_SURROGATE, BEFORE_SURROGATE};
+use crate::CharRange;
 use core::char;
 use core::ops::Range;
-use step::{AFTER_SURROGATE, BEFORE_SURROGATE};
-use CharRange;
 
-const SKIP_LENGTH: u32 = ::step::AFTER_SURROGATE as u32 - ::step::BEFORE_SURROGATE as u32 - 1;
+const SKIP_LENGTH: u32 =
+    crate::step::AFTER_SURROGATE as u32 - crate::step::BEFORE_SURROGATE as u32 - 1;
 
 #[derive(Clone, Debug)]
 pub struct Iter(rayon::iter::Map<rayon::range::Iter<u32>, fn(u32) -> char>);

@@ -10,12 +10,12 @@
 
 use std::path::Path;
 
-use source::ucd::derived_core_properties::DERIVED_CORE_PROPERTIES;
-use source::ucd::readme::UNICODE_VERSION;
+use crate::source::ucd::derived_core_properties::DERIVED_CORE_PROPERTIES;
+use crate::source::ucd::readme::UNICODE_VERSION;
 
-use writer::common::emit_unicode_version;
-use writer::utils::tables::ToRangeCharSet;
-use writer::utils::write;
+use crate::writer::common::emit_unicode_version;
+use crate::writer::utils::tables::ToRangeCharSet;
+use crate::writer::utils::write;
 
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);

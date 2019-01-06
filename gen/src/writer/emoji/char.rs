@@ -10,11 +10,11 @@
 
 use std::path::Path;
 
-use source::emoji::emoji_data::EMOJI_DATA;
-use source::emoji::readme::{EmojiDataVersion, EMOJI_VERSION};
+use crate::source::emoji::emoji_data::EMOJI_DATA;
+use crate::source::emoji::readme::{EmojiDataVersion, EMOJI_VERSION};
 
-use writer::utils::tables::ToRangeCharSet;
-use writer::utils::write;
+use crate::writer::utils::tables::ToRangeCharSet;
+use crate::writer::utils::write;
 
 pub fn generate(dir: &Path) {
     emit_emoji_data_version(dir, &EMOJI_VERSION);

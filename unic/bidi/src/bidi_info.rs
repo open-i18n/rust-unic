@@ -18,14 +18,14 @@ use std::ops::Range;
 use unic_ucd_bidi::bidi_class::abbr_names::*;
 use unic_ucd_bidi::BidiClass;
 
-use explicit;
-use format_chars;
-use implicit;
-use level;
-use prepare;
+use crate::explicit;
+use crate::format_chars;
+use crate::implicit;
+use crate::level;
+use crate::prepare;
 
-use level::{Level, LTR_LEVEL, RTL_LEVEL};
-use prepare::LevelRun;
+use crate::level::{Level, LTR_LEVEL, RTL_LEVEL};
+use crate::prepare::LevelRun;
 
 /// Bidi information about a single paragraph
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]

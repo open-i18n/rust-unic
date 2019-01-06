@@ -53,10 +53,10 @@ extern crate unic_char_range;
 extern crate unic_ucd_version;
 
 mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
 mod category;
-pub use category::GeneralCategory;
+pub use crate::category::GeneralCategory;
 
 use unic_ucd_version::UnicodeVersion;
 

@@ -10,7 +10,7 @@
 
 mod char;
 
-use writer::utils::clean_dir;
+use crate::writer::utils::clean_dir;
 
 pub fn generate() {
     char::generate(&clean_dir("unic/emoji/char/tables"));

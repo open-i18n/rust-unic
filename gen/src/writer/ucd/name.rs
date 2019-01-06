@@ -13,13 +13,13 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::Write;
 use std::path::Path;
 
-use source::ucd::jamo::JAMO_DATA;
-use source::ucd::readme::UNICODE_VERSION;
-use source::ucd::unicode_data::UNICODE_DATA;
+use crate::source::ucd::jamo::JAMO_DATA;
+use crate::source::ucd::readme::UNICODE_VERSION;
+use crate::source::ucd::unicode_data::UNICODE_DATA;
 
-use writer::common::emit_unicode_version;
-use writer::utils::tables::ToDirectCharTable;
-use writer::utils::write;
+use crate::writer::common::emit_unicode_version;
+use crate::writer::utils::tables::ToDirectCharTable;
+use crate::writer::utils::write;
 
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);

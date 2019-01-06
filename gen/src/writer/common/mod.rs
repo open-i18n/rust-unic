@@ -10,9 +10,9 @@
 
 use std::path::Path;
 
-use source::common::unicode_version::UnicodeVersion;
+use crate::source::common::unicode_version::UnicodeVersion;
 
-use writer::utils::write;
+use crate::writer::utils::write;
 
 pub fn emit_unicode_version(dir: &Path, unicode_version: &UnicodeVersion) {
     write(

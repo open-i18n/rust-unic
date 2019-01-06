@@ -78,7 +78,7 @@ fn test_basic_macro_use() {
 
 #[test]
 fn test_fromstr_ignores_case() {
-    use abbr_names::V1;
+    use crate::abbr_names::V1;
 
     assert_eq!("variant_1".parse(), Ok(V1));
     assert_eq!("VaRiAnT_1".parse(), Ok(V1));

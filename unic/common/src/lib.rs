@@ -26,6 +26,6 @@
 //!  components.
 
 mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
 pub mod version;

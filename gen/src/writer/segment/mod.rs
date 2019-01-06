@@ -10,7 +10,7 @@
 
 mod segment_tests;
 
-use writer::utils::clean_dir;
+use crate::writer::utils::clean_dir;
 
 pub fn generate() {
     segment_tests::generate(&clean_dir("unic/segment/tests/tables"));

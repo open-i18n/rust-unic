@@ -56,13 +56,13 @@
 extern crate core;
 
 mod pkg_info;
-pub use pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
 mod iter;
-pub use iter::CharIter;
+pub use crate::iter::CharIter;
 
 mod range;
-pub use range::CharRange;
+pub use crate::range::CharRange;
 
 #[macro_use]
 mod macros;

@@ -14,7 +14,7 @@ use std::fmt::{self, Write};
 
 use unic_ucd_normal::{compose, CanonicalCombiningClass};
 
-use decompose::Decompositions;
+use crate::decompose::Decompositions;
 
 #[derive(Clone, Debug)]
 enum RecompositionState {

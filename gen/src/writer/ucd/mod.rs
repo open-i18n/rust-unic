@@ -22,7 +22,7 @@ mod normal;
 mod segment;
 mod segment_tests;
 
-use writer::utils::clean_dir;
+use crate::writer::utils::clean_dir;
 
 pub fn generate() {
     age::generate(&clean_dir("unic/ucd/age/tables"));
