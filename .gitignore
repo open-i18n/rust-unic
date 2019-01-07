@@ -1,6 +1,5 @@
 *.pyc
 *.rs.bk
 *.rs.rustfmt
-*.zip
 target/
 Cargo.lock
