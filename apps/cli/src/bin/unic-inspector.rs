@@ -19,7 +19,7 @@ use prettytable::format::TableFormat;
 use prettytable::Table;
 
 use unic::char::property::EnumeratedCharProperty;
-use unic::ucd::{GeneralCategory, Name};
+use unic::ucd::{GeneralCategory, Name, name_abbreviations_of};
 
 fn main() {
     let app = app_from_crate!()
@@ -59,14 +59,19 @@ fn main() {
     */
 
     string.chars().for_each(|chr| {
-        let name = Name::of(chr)
+        let display_name = Name::of(chr)
             .map(|n| n.to_string())
-            .unwrap_or_else(|| "<none>".to_owned());
+            .unwrap_or_else(|| {
+                match name_abbreviations_of(chr) {
+                    Some(abbrs) => abbrs[0].to_owned(),
+                    None => "<none>".to_owned(),
+                }
+            });
 
         table.add_row(row![
             cb  -> &format!("{}", chr),
             rFr -> &format!("U+{:04X}", chr as u32),
-            l   -> &name,
+            l   -> &display_name,
             l   -> &GeneralCategory::of(chr).long_name()
         ]);
     });
