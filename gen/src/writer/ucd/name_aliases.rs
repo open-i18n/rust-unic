@@ -10,12 +10,12 @@
 
 use std::path::Path;
 
-use source::ucd::name_aliases::NAME_ALIASES_DATA;
-use source::ucd::readme::UNICODE_VERSION;
+use crate::source::ucd::name_aliases::NAME_ALIASES_DATA;
+use crate::source::ucd::readme::UNICODE_VERSION;
 
-use writer::common::emit_unicode_version;
-use writer::utils::tables::ToDirectCharTable;
-use writer::utils::write;
+use crate::writer::common::emit_unicode_version;
+use crate::writer::utils::tables::ToDirectCharTable;
+use crate::writer::utils::write;
 
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);

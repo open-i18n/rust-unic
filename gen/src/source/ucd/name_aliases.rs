@@ -15,11 +15,11 @@ use std::vec::Vec;
 
 use regex::Regex;
 
-use source::utils::read;
+use crate::source::utils::read;
 
 lazy_static! {
     pub static ref NAME_ALIASES_DATA: NameAliasesData =
-        { read("data/ucd/NameAliases.txt").parse().unwrap() };
+        { read("external/unicode/ucd/data/NameAliases.txt").parse().unwrap() };
 }
 
 #[derive(Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]

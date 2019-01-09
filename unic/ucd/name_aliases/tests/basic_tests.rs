@@ -8,8 +8,6 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-extern crate unic_ucd_name_aliases;
-
 use unic_ucd_name_aliases::{
     name_corrections_of,
     control_code_names_of,
