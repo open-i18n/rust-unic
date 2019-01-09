@@ -14,7 +14,11 @@ extern crate clap;
 #[macro_use]
 extern crate unic_cli;
 
-use std::io::{self, Write};
+
+use std::time;
+use std::thread;
+use std::io::{self, Read, Write};
+use std::sync::{Arc, Mutex};
 
 use clap::{Arg, ErrorKind};
 
@@ -111,6 +115,7 @@ fn run() -> Result<()> {
         .arg(
             Arg::with_name("STRINGS")
                 .multiple(true)
+                .required(false)
                 .help("Input strings (expected valid Unicode)"),
         )
         .arg(
@@ -133,11 +138,32 @@ fn run() -> Result<()> {
     let matches = app.get_matches();
 
     // == Read input ==
-    let input: String = matches
+    let mut input: String = matches
         .values_of("STRINGS")
         .unwrap_or_default()
         .collect::<Vec<&str>>()
         .join(" ");
+
+    if input.len() == 0 {
+        let done = Arc::new(Mutex::new(false));
+        let done_clone = done.clone();
+
+        let handler = thread::spawn(move ||{
+            let mut input = String::new();
+            let _ = io::stdin().read_to_string(&mut input);
+
+            *done_clone.lock().unwrap() = true;
+
+            input
+        });
+        
+        thread::sleep(time::Duration::from_millis(300));
+        
+        if *done.lock().unwrap() {
+            input = handler.join().unwrap();
+        }
+    }
+
 
     let input_format =
         value_t!(matches, "input_format", InputFormat).unwrap_or_else(|err| match err.kind {

@@ -21,6 +21,12 @@ use prettytable::Table;
 use unic::char::property::EnumeratedCharProperty;
 use unic::ucd::{GeneralCategory, Name};
 
+use std::time;
+use std::thread;
+use std::io::{self, Read};
+use std::sync::{Arc, Mutex};
+
+
 fn main() {
     let app = app_from_crate!()
         .about(concat!(
@@ -31,16 +37,37 @@ fn main() {
         .arg(
             Arg::with_name("STRINGS")
                 .help("Input strings (expected valid Unicode)")
+                .required(false)
                 .multiple(true),
         );
     let matches = app.get_matches();
 
     // == Read input ==
-    let string: String = matches
+    let mut input: String = matches
         .values_of("STRINGS")
         .unwrap_or_default()
         .collect::<Vec<&str>>()
         .join(" ");
+
+    if input.len() == 0 {
+        let done = Arc::new(Mutex::new(false));
+        let done_clone = done.clone();
+
+        let handler = thread::spawn(move ||{
+            let mut input = String::new();
+            let _ = io::stdin().read_to_string(&mut input);
+
+            *done_clone.lock().unwrap() = true;
+
+            input
+        });
+        
+        thread::sleep(time::Duration::from_millis(300));
+        
+        if *done.lock().unwrap() {
+            input = handler.join().unwrap();
+        }
+    }
 
     // == Write output ==
     let mut table = Table::new();
@@ -58,7 +85,7 @@ fn main() {
     ]);
     */
 
-    string.chars().for_each(|chr| {
+    input.chars().for_each(|chr| {
         let name = Name::of(chr)
             .map(|n| n.to_string())
             .unwrap_or_else(|| "<none>".to_owned());
