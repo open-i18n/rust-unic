@@ -27,13 +27,7 @@ mod pkg_info;
 pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
 mod name_aliases;
-pub use crate::name_aliases::{
-    name_corrections_of,
-    control_code_names_of,
-    alternate_names_of,
-    figments_of,
-    name_abbreviations_of,
-};
+pub use crate::name_aliases::{name_aliases_of, NameAliasType};
 
 use unic_ucd_version::UnicodeVersion;
 

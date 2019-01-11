@@ -80,11 +80,8 @@ pub use crate::name::Name;
 pub use crate::normal::CanonicalCombiningClass;
 
 pub use crate::name_aliases::{
-    alternate_names_of,
-    control_code_names_of,
-    figments_of,
-    name_corrections_of,
-    name_abbreviations_of,
+    name_aliases_of,
+    NameAliasType,
 };
 
 pub use crate::segment::{GraphemeClusterBreak, SentenceBreak, WordBreak};

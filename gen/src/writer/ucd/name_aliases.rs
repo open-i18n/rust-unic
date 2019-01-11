@@ -19,7 +19,26 @@ use crate::writer::utils::write;
 
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
+    emit_unified_name_aliases_table(dir);
     emit_name_aliases_table(dir);
+}
+
+fn emit_unified_name_aliases_table(dir: &Path) {
+    write(
+        dir,
+        "name_alias_types.rsv",
+        &NAME_ALIASES_DATA.name_alias_types.to_direct_char_table(|alias_types, f| {
+            write!(
+                f,
+                "&[{}]",
+                alias_types
+                    .iter()
+                    .map(|alias_type_str| format!("{}", alias_type_str.to_owned()))
+                    .collect::<Vec<_>>()
+                    .join(", ")
+            )
+        }),
+    );
 }
 
 fn emit_name_aliases_table(dir: &Path) {

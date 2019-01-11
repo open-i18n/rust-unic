@@ -8,32 +8,47 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-/// Corrections for serious problems in the character names
-pub fn name_corrections_of(ch: char) -> Option<&'static [&'static str]> {
-    data::CORRECTIONS.find(ch)
+/// Types of Unicode Name Aliases
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
+pub enum NameAliasType {
+    /// Corrections for serious problems in the character names
+    NameCorrections,
+
+    /// ISO 6429 names for C0 and C1 control functions, and other
+    /// commonly occurring names for control codes
+    ControlCodeNames,
+
+    /// A few widely used alternate names for format characters
+    AlternateNames,
+
+    /// Several documented labels for C1 control code points which
+    /// were never actually approved in any standard
+    Figments,
+
+    /// Commonly occurring abbreviations (or acronyms) for control codes,
+    /// format characters, spaces, and variation selectors
+    NameAbbreviations,
 }
 
-/// ISO 6429 names for C0 and C1 control functions, and other
-/// commonly occurring names for control codes
-pub fn control_code_names_of(ch: char) -> Option<&'static [&'static str]> {
-    data::CONTROLS.find(ch)
+impl NameAliasType {
+    /// Find types of available Name Aliases for the given character
+    pub fn of(ch: char) -> Option<&'static [NameAliasType]> {
+        data::NAME_ALIAS_TYPES.find(ch)
+    }
 }
 
-/// A few widely used alternate names for format characters
-pub fn alternate_names_of(ch: char) -> Option<&'static [&'static str]> {
-    data::ALTERNATES.find(ch)
-}
-
-/// Several documented labels for C1 control code points which
-/// were never actually approved in any standard
-pub fn figments_of(ch: char) -> Option<&'static [&'static str]> {
-    data::FIGMENTS.find(ch)
-}
-
-/// Commonly occurring abbreviations (or acronyms) for control codes,
-/// format characters, spaces, and variation selectors
-pub fn name_abbreviations_of(ch: char) -> Option<&'static [&'static str]> {
-    data::ABBREVIATIONS.find(ch)
+/// Find Name Aliases for the given character with the specified type
+pub fn name_aliases_of(
+    ch: char,
+    name_alias_type: NameAliasType,
+) -> Option<&'static [&'static str]> {
+    match name_alias_type {
+        NameAliasType::NameCorrections => data::CORRECTIONS.find(ch),
+        NameAliasType::ControlCodeNames => data::CONTROLS.find(ch),
+        NameAliasType::AlternateNames => data::ALTERNATES.find(ch),
+        NameAliasType::Figments => data::FIGMENTS.find(ch),
+        NameAliasType::NameAbbreviations => data::ABBREVIATIONS.find(ch),
+    }
 }
 
 mod data {
@@ -43,4 +58,12 @@ mod data {
     pub const ALTERNATES: CharDataTable<&[&str]> = include!("../tables/alternates.rsv");
     pub const FIGMENTS: CharDataTable<&[&str]> = include!("../tables/figments.rsv");
     pub const ABBREVIATIONS: CharDataTable<&[&str]> = include!("../tables/abbreviations.rsv");
+
+    // Bring all enum cases into scope, because NameAliasType is omitted
+    // in name_alias_types.rsv to save space
+    use crate::NameAliasType::{
+        AlternateNames, ControlCodeNames, Figments, NameAbbreviations, NameCorrections,
+    };
+    pub const NAME_ALIAS_TYPES: CharDataTable<&[crate::NameAliasType]> =
+        include!("../tables/name_alias_types.rsv");
 }
