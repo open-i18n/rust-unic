@@ -74,7 +74,7 @@ pub fn resolve_weak(sequence: &IsolatingRunSequence, processing_classes: &mut [B
                 let next_class = indices
                     .clone()
                     .map(|j| processing_classes[j])
-                    .find(not_removed_by_x9)
+                    .find(|&x| not_removed_by_x9(x))
                     .unwrap_or(sequence.eos);
                 processing_classes[i] = match (prev_class, processing_classes[i], next_class) {
                     (EN, ES, EN) | (EN, CS, EN) => EN,

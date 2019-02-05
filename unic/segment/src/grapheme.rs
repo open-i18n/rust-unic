@@ -273,7 +273,7 @@ enum PairResult {
 fn check_pair(before: GCB, after: GCB) -> PairResult {
     use self::PairResult::*;
 
-    #[cfg_attr(feature = "cargo-clippy", allow(match_same_arms))]
+    #[allow(clippy::match_same_arms)]
     match (before, after) {
         // Do not break between a CR and LF. Otherwise, break before and after controls.
         (GCB::CR, GCB::LF) => NotBreak, // GB3
@@ -533,7 +533,7 @@ impl GraphemeCursor {
     // TODO(clippy): Fix clippy warning or leave it as allowed if really needed.
     // `warning: methods called `is_*` usually take self by reference or no self; consider choosing
     // a less ambiguous name`
-    #[cfg_attr(feature = "cargo-clippy", allow(wrong_self_convention))]
+    #[allow(clippy::wrong_self_convention)]
     /// Determine whether the current cursor location is a grapheme cluster boundary.
     /// Only a part of the string need be supplied. If `chunk_start` is nonzero or
     /// the length of `chunk` is not equal to `len` on creation, then this method

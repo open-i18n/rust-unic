@@ -69,7 +69,7 @@ pub fn decode_to_string(input: &str) -> Option<String> {
 /// Return None on malformed input or overflow.
 /// Overflow can only happen on inputs that take more than
 /// 63 encoded bytes, the DNS limit on domain name labels.
-#[cfg_attr(feature = "cargo-clippy", allow(cast_lossless))]
+#[allow(clippy::cast_lossless)]
 pub fn decode(input: &str) -> Option<Vec<char>> {
     // Handle "basic" (ASCII) code points.
     // They are encoded as-is before the last delimiter, if any.

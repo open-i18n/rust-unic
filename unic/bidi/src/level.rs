@@ -102,19 +102,19 @@ impl Level {
 
     /// The level number.
     #[inline]
-    pub fn number(&self) -> u8 {
+    pub fn number(self) -> u8 {
         self.0
     }
 
     /// If this level is left-to-right.
     #[inline]
-    pub fn is_ltr(&self) -> bool {
+    pub fn is_ltr(self) -> bool {
         self.0 % 2 == 0
     }
 
     /// If this level is right-to-left.
     #[inline]
-    pub fn is_rtl(&self) -> bool {
+    pub fn is_rtl(self) -> bool {
         self.0 % 2 == 1
     }
 
@@ -168,26 +168,26 @@ impl Level {
 
     /// The next LTR (even) level greater than this, or fail if number is larger than `max_depth`.
     #[inline]
-    pub fn new_explicit_next_ltr(&self) -> Result<Level, Error> {
+    pub fn new_explicit_next_ltr(self) -> Result<Level, Error> {
         Level::new_explicit((self.0 + 2) & !1)
     }
 
     /// The next RTL (odd) level greater than this, or fail if number is larger than `max_depth`.
     #[inline]
-    pub fn new_explicit_next_rtl(&self) -> Result<Level, Error> {
+    pub fn new_explicit_next_rtl(self) -> Result<Level, Error> {
         Level::new_explicit((self.0 + 1) | 1)
     }
 
     /// The lowest RTL (odd) level greater than or equal to this, or fail if number is larger than
     /// `max_depth + 1`.
     #[inline]
-    pub fn new_lowest_ge_rtl(&self) -> Result<Level, Error> {
+    pub fn new_lowest_ge_rtl(self) -> Result<Level, Error> {
         Level::new(self.0 | 1)
     }
 
     /// Generate a character type based on a level (as specified in steps X10 and N2).
     #[inline]
-    pub fn bidi_class(&self) -> BidiClass {
+    pub fn bidi_class(self) -> BidiClass {
         if self.is_rtl() {
             BidiClass::RightToLeft
         } else {

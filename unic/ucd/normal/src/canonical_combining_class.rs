@@ -46,7 +46,7 @@ impl TotalCharProperty for CanonicalCombiningClass {
 impl NumericCharProperty<u8> for CanonicalCombiningClass {
     /// Get numeric value for character property value
     fn number(&self) -> u8 {
-        Self::number(self)
+        Self::number(*self) // TODO: Should we change the trait to take `self` instead?
     }
 }
 
@@ -57,7 +57,7 @@ mod data {
         include!("../tables/canonical_combining_class_values.rsv");
 }
 
-#[cfg_attr(rustfmt, rustfmt_skip)]  // We want the consts ordered by value.
+#[rustfmt::skip] // We want the consts ordered by value.
 #[allow(non_upper_case_globals)]
 impl CanonicalCombiningClass {
     /// Find the character `Canonical_Combining_Class` property value.
@@ -125,17 +125,17 @@ impl fmt::Display for CanonicalCombiningClass {
 
 impl CanonicalCombiningClass {
     /// Get numeric `Canonical_Combining_Class` value
-    pub fn number(&self) -> u8 {
+    pub fn number(self) -> u8 {
         self.0
     }
 
     /// If the *ccc* has value `Not_Reordered` (`0`).
-    pub fn is_not_reordered(&self) -> bool {
+    pub fn is_not_reordered(self) -> bool {
         self.0 == 0
     }
 
     /// If the *ccc* any value other than `Not_Reordered` (`0`).
-    pub fn is_reordered(&self) -> bool {
+    pub fn is_reordered(self) -> bool {
         self.0 != 0
     }
 }

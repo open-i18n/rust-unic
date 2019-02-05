@@ -265,51 +265,51 @@ impl GeneralCategory {
 
 impl GeneralCategory {
     /// `Lu` | `Ll` | `Lt`  (Short form: `LC`)
-    pub fn is_cased_letter(&self) -> bool {
+    pub fn is_cased_letter(self) -> bool {
         use self::abbr_names::*;
-        matches!(*self, Lu | Ll | Lt)
+        matches!(self, Lu | Ll | Lt)
     }
 
     /// `Lu` | `Ll` | `Lt` | `Lm` | `Lo`  (Short form: `L`)
-    pub fn is_letter(&self) -> bool {
+    pub fn is_letter(self) -> bool {
         use self::abbr_names::*;
-        matches!(*self, Lu | Ll | Lt | Lm | Lo)
+        matches!(self, Lu | Ll | Lt | Lm | Lo)
     }
 
     /// `Mn` | `Mc` | `Me`  (Short form: `M`)
-    pub fn is_mark(&self) -> bool {
+    pub fn is_mark(self) -> bool {
         use self::abbr_names::*;
-        matches!(*self, Mn | Mc | Me)
+        matches!(self, Mn | Mc | Me)
     }
 
     /// `Nd` | `Nl` | `No`  (Short form: `N`)
-    pub fn is_number(&self) -> bool {
+    pub fn is_number(self) -> bool {
         use self::abbr_names::*;
-        matches!(*self, Nd | Nl | No)
+        matches!(self, Nd | Nl | No)
     }
 
     /// `Pc` | `Pd` | `Ps` | `Pe` | `Pi` | `Pf` | `Po`  (Short form: `P`)
-    pub fn is_punctuation(&self) -> bool {
+    pub fn is_punctuation(self) -> bool {
         use self::abbr_names::*;
-        matches!(*self, Pc | Pd | Ps | Pe | Pi | Pf | Po)
+        matches!(self, Pc | Pd | Ps | Pe | Pi | Pf | Po)
     }
 
     /// `Sm` | `Sc` | `Sk` | `So`  (Short form: `S`)
-    pub fn is_symbol(&self) -> bool {
+    pub fn is_symbol(self) -> bool {
         use self::abbr_names::*;
-        matches!(*self, Sm | Sc | Sk | So)
+        matches!(self, Sm | Sc | Sk | So)
     }
 
     /// `Zs` | `Zl` | `Zp`  (Short form: `Z`)
-    pub fn is_separator(&self) -> bool {
+    pub fn is_separator(self) -> bool {
         use self::abbr_names::*;
-        matches!(*self, Zs | Zl | Zp)
+        matches!(self, Zs | Zl | Zp)
     }
 
     /// `Cc` | `Cf` | `Cs` | `Co` | `Cn`  (Short form: `C`)
-    pub fn is_other(&self) -> bool {
+    pub fn is_other(self) -> bool {
         use self::abbr_names::*;
-        matches!(*self, Cc | Cf | Cs | Co | Cn)
+        matches!(self, Cc | Cf | Cs | Co | Cn)
     }
 }
 

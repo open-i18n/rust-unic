@@ -177,7 +177,7 @@ impl CharRange {
     /// assert!( ! CharRange:: open ('a', 'a').contains('a'));
     /// assert!( ! CharRange::closed('z', 'a').contains('g'));
     /// ```
-    pub fn contains(&self, ch: char) -> bool {
+    pub fn contains(self, ch: char) -> bool {
         self.low <= ch && ch <= self.high
     }
 
@@ -187,7 +187,7 @@ impl CharRange {
     ///
     /// Panics if the range is empty. This fn may be adjusted in the future to not panic
     /// in optimized builds. Even if so, an empty range will never compare as `Ordering::Equal`.
-    pub fn cmp_char(&self, ch: char) -> Ordering {
+    pub fn cmp_char(self, ch: char) -> Ordering {
         // possible optimization: only assert this in debug builds
         assert!(!self.is_empty(), "Cannot compare empty range's ordering");
         if self.high < ch {
@@ -200,18 +200,18 @@ impl CharRange {
     }
 
     /// How many characters are in this range?
-    pub fn len(&self) -> usize {
+    pub fn len(self) -> usize {
         self.iter().len()
     }
 
     /// Is this range empty?
-    pub fn is_empty(&self) -> bool {
+    pub fn is_empty(self) -> bool {
         self.low > self.high
     }
 
     /// Create an iterator over this range.
-    pub fn iter(&self) -> CharIter {
-        (*self).into()
+    pub fn iter(self) -> CharIter {
+        self.into()
     }
 }
 

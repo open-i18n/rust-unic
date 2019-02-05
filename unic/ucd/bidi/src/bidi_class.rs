@@ -236,8 +236,8 @@ impl BidiClass {
 
     /// If the `BidiClass` has strong or explicit Left-to-Right direction.
     #[inline]
-    pub fn category(&self) -> BidiClassCategory {
-        match *self {
+    pub fn category(self) -> BidiClassCategory {
+        match self {
             BidiClass::LeftToRight | BidiClass::RightToLeft | BidiClass::ArabicLetter => {
                 BidiClassCategory::Strong
             }
@@ -269,8 +269,8 @@ impl BidiClass {
 
     /// If the `BidiClass` has strong or explicit Left-to-Right direction.
     #[inline]
-    pub fn is_ltr(&self) -> bool {
-        match *self {
+    pub fn is_ltr(self) -> bool {
+        match self {
             BidiClass::LeftToRight
             | BidiClass::LeftToRightEmbedding
             | BidiClass::LeftToRightOverride
@@ -281,8 +281,8 @@ impl BidiClass {
 
     /// If the `BidiClass` has strong or explicit Right-To-Left direction.
     #[inline]
-    pub fn is_rtl(&self) -> bool {
-        match *self {
+    pub fn is_rtl(self) -> bool {
+        match self {
             BidiClass::RightToLeft
             | BidiClass::ArabicLetter
             | BidiClass::RightToLeftEmbedding

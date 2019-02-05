@@ -41,6 +41,7 @@ pub struct IsolatingRunSequence {
 /// whose matching PDI is the first character of the next level run in the sequence.
 ///
 /// Note: This function does *not* return the sequences in order by their first characters.
+#[allow(clippy::len_zero)]
 pub fn isolating_run_sequences(
     para_level: Level,
     original_classes: &[BidiClass],
@@ -98,7 +99,7 @@ pub fn isolating_run_sequences(
             #[cfg(test)]
             for run in sequence.clone() {
                 for idx in run {
-                    if not_removed_by_x9(&original_classes[idx]) {
+                    if not_removed_by_x9(original_classes[idx]) {
                         assert_eq!(seq_level, levels[idx]);
                     }
                 }
@@ -107,7 +108,7 @@ pub fn isolating_run_sequences(
             // Get the level of the last non-removed char before the runs.
             let pred_level = match original_classes[..start_of_seq]
                 .iter()
-                .rposition(not_removed_by_x9)
+                .rposition(|&x| not_removed_by_x9(x))
             {
                 Some(idx) => levels[idx],
                 None => para_level,
@@ -119,7 +120,7 @@ pub fn isolating_run_sequences(
             } else {
                 match original_classes[end_of_seq..]
                     .iter()
-                    .position(not_removed_by_x9)
+                    .position(|&x| not_removed_by_x9(x))
                 {
                     Some(idx) => levels[end_of_seq + idx],
                     None => para_level,
@@ -169,8 +170,8 @@ pub fn removed_by_x9(class: BidiClass) -> bool {
 }
 
 // For use as a predicate for `position` / `rposition`
-pub fn not_removed_by_x9(class: &BidiClass) -> bool {
-    !removed_by_x9(*class)
+pub fn not_removed_by_x9(class: BidiClass) -> bool {
+    !removed_by_x9(class)
 }
 
 #[cfg(test)]
@@ -187,7 +188,7 @@ mod tests {
     }
 
     // From <https://www.unicode.org/reports/tr9/#BD13>
-    #[cfg_attr(rustfmt, rustfmt_skip)]
+    #[rustfmt::skip]
     #[test]
     fn test_isolating_run_sequences() {
 
@@ -232,7 +233,7 @@ mod tests {
     }
 
     // From <https://www.unicode.org/reports/tr9/#X10>
-    #[cfg_attr(rustfmt, rustfmt_skip)]
+    #[rustfmt::skip]
     #[test]
     fn test_isolating_run_sequences_sos_and_eos() {
 
@@ -363,7 +364,7 @@ mod tests {
             L, R, AL, EN, ES, ET, AN, CS, NSM, B, S, WS, ON, LRI, RLI, FSI, PDI,
         ];
         for x in non_x9_classes {
-            assert_eq!(not_removed_by_x9(&x), true);
+            assert_eq!(not_removed_by_x9(*x), true);
         }
     }
 }

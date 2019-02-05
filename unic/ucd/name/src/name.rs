@@ -49,7 +49,7 @@ pub enum Name {
     NR3(&'static [&'static str]),
 }
 
-#[cfg_attr(feature = "cargo-clippy", allow(len_without_is_empty))]
+#[allow(clippy::len_without_is_empty)]
 impl Name {
     /// Find the character `Name` property value.
     pub fn of(ch: char) -> Option<Name> {
@@ -101,7 +101,7 @@ impl Name {
         }
     }
 
-    #[cfg_attr(feature = "cargo-clippy", allow(inline_always))]
+    #[allow(clippy::inline_always)]
     #[inline(always)]
     fn number_of_hex_digits(ch: char) -> usize {
         (32 - u32::leading_zeros(ch as u32) as usize + 3) / 4

@@ -131,6 +131,7 @@ impl DoubleEndedIterator for CharIter {
     }
 }
 
+#[allow(clippy::range_plus_one)] // RangeInclusive<u32> does not impl ExactSizeIterator
 impl ExactSizeIterator for CharIter {
     fn len(&self) -> usize {
         if self.is_finished() {

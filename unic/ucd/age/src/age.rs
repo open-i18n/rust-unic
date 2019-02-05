@@ -61,7 +61,7 @@ impl PartialCharProperty for Age {
 impl CustomCharProperty<UnicodeVersion> for Age {
     /// Get numeric value for character property value
     fn actual(&self) -> UnicodeVersion {
-        Self::actual(self)
+        Self::actual(*self) // TODO: Should we change the trait to take `self` instead?
     }
 }
 
@@ -78,7 +78,7 @@ impl Age {
     }
 
     /// Return the `UnicodeVersion` value of the age.
-    pub fn actual(&self) -> UnicodeVersion {
+    pub fn actual(self) -> UnicodeVersion {
         self.0
     }
 }

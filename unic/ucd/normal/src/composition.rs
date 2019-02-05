@@ -22,7 +22,7 @@ pub mod data {
     pub const CANONICAL_DECOMPOSITION_MAPPING: CharDataTable<&[char]> =
         include!("../tables/canonical_decomposition_mapping.rsv");
 
-    #[cfg_attr(rustfmt, rustfmt_skip)]
+    #[rustfmt::skip]
     pub const COMPATIBILITY_DECOMPOSITION_MAPPING: CharDataTable<(DecompositionType, &[char])> =
         include!("../tables/compatibility_decomposition_mapping.rsv");
 }
