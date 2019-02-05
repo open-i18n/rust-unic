@@ -14,7 +14,10 @@ use unic_ucd_name_aliases::{name_aliases_of, NameAliasType};
 fn test_name_alias_type_of() {
     assert_eq!(
         NameAliasType::of('\u{0000}').unwrap(),
-        &[NameAliasType::ControlCodeNames, NameAliasType::NameAbbreviations]
+        &[
+            NameAliasType::ControlCodeNames,
+            NameAliasType::NameAbbreviations
+        ]
     );
 
     assert_eq!(
@@ -29,7 +32,10 @@ fn test_name_alias_type_of() {
 
     assert_eq!(
         NameAliasType::of('\u{FEFF}').unwrap(),
-        &[NameAliasType::AlternateNames, NameAliasType::NameAbbreviations]
+        &[
+            NameAliasType::AlternateNames,
+            NameAliasType::NameAbbreviations
+        ]
     );
 
     assert_eq!(
@@ -37,10 +43,7 @@ fn test_name_alias_type_of() {
         &[NameAliasType::NameCorrections]
     );
 
-    assert_eq!(
-        NameAliasType::of('\u{0041}'),
-        None
-    );
+    assert_eq!(NameAliasType::of('\u{0041}'), None);
 }
 
 #[test]
