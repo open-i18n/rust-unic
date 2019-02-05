@@ -88,7 +88,7 @@ impl NumericCharPropertyValue for u8 {}
 /// Examples: `Numeric_Value`, `Canonical_Combining_Class`
 pub trait NumericCharProperty<NumericValue: NumericCharPropertyValue>: CharProperty {
     /// The numeric value for the property value.
-    fn number(&self) -> NumericValue;
+    fn number(self) -> NumericValue;
 }
 
 // == Custom Types ==
@@ -100,5 +100,5 @@ pub trait NumericCharProperty<NumericValue: NumericCharPropertyValue>: CharPrope
 /// Examples: `Age` property that returns a `UnicodeVersion` value.
 pub trait CustomCharProperty<Value>: CharProperty {
     /// The actual (inner) value for the property value.
-    fn actual(&self) -> Value;
+    fn actual(self) -> Value;
 }

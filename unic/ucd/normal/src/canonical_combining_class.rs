@@ -45,8 +45,8 @@ impl TotalCharProperty for CanonicalCombiningClass {
 
 impl NumericCharProperty<u8> for CanonicalCombiningClass {
     /// Get numeric value for character property value
-    fn number(&self) -> u8 {
-        Self::number(*self) // TODO: Should we change the trait to take `self` instead?
+    fn number(self) -> u8 {
+        Self::number(self)
     }
 }
 
