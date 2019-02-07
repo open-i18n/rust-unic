@@ -127,7 +127,7 @@ mod pattern {
             long => "Pattern_White_Space";
             human => "Pattern Whitespace";
 
-            data_table_path => "../tables/pattern_syntax.rsv";
+            data_table_path => "../tables/pattern_whitespace.rsv";
         }
 
         /// Is this a character that should be treated as whitespace in patterns?
