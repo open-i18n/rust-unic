@@ -4,7 +4,7 @@
 
 [![Travis](https://img.shields.io/travis/open-i18n/rust-unic/master.svg?label=Linux%20build)](https://travis-ci.org/open-i18n/rust-unic/)
 [![AppVeyor](https://img.shields.io/appveyor/ci/open-i18n/rust-unic/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/open-i18n/rust-unic)
-[![Rust-1.31.0+](https://img.shields.io/badge/rustc-1.28+-red.svg#MIN_RUST_VERSION)](https://www.rust-lang.org/)
+[![Rust-1.31.0+](https://img.shields.io/badge/rustc-1.31+-red.svg#MIN_RUST_VERSION)](https://www.rust-lang.org/)
 [![Unicode-10.0.0](https://img.shields.io/badge/unicode-10.0.0-red.svg)](https://www.unicode.org/versions/Unicode10.0.0/)
 [![Release](https://img.shields.io/github/release/open-i18n/rust-unic.svg)](https://github.com/open-i18n/rust-unic/)
 [![Crates.io](https://img.shields.io/crates/v/unic.svg)](https://crates.io/crates/unic/)
@@ -20,6 +20,9 @@ and Internationalization data and algorithms. In other words, it's like
 in *safe* mode, but also benefiting from performance gains of *unsafe* mode when
 possible.
 
+See [UNIC Changelog](CHANGELOG.md) for latest release details.
+
+
 ## Project Goal
 
 The goal for UNIC is to provide access to all levels of Unicode and
@@ -29,6 +32,7 @@ properties, to Unicode algorithms for processing text, and more advanced
 
 Other standards and best practices, like IETF RFCs, are also implemented, as
 needed by Unicode/CLDR components, or common demand.
+
 
 ## Project Status
 
@@ -40,6 +44,7 @@ planed.
 We expect to have the `1.0` version released in 2018 and maintain a stable API
 afterwards, with possibly one or two API updates per year for the first couple
 of years.
+
 
 ## Design Goals
 
@@ -58,6 +63,7 @@ of years.
     data and algorithms. Cross-component tests are used to catch any
     inconsistency between implementations, without slowing down development
     processes.
+
 
 ## Components and their Organization
 
@@ -117,6 +123,7 @@ this crate.
 -   [`unic-cli`](apps/cli): UNIC Command-Line Tools
     [![Crates.io](https://img.shields.io/crates/v/unic-cli.svg)](https://crates.io/crates/unic-cli/)
 
+
 ## Code Organization: Combined Repository
 
 Some of the reasons to have a combined repository these components are:
@@ -143,6 +150,7 @@ Some of the reasons to have a combined repository these components are:
     structured formats for the destination programming language. In a combined
     repository, it's easier to maintain these bootstrapping tools, expand
     coverage, and use better data structures for more efficiency.
+
 
 ## Documentation
 
@@ -298,6 +306,7 @@ fn main() {
 You can find more examples under [`examples`](examples/) and [`tests`](tests/)
 directories. (And more to be added as UNIC expands...)
 
+
 ## License
 
 Licensed under either of
@@ -314,6 +323,7 @@ at your option.
 Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
 dual licensed as above, without any additional terms or conditions.
+
 
 ## Code of Conduct
 
