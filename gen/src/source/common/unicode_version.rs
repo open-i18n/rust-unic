@@ -23,7 +23,7 @@ impl FromStr for UnicodeVersion {
 
     fn from_str(str: &str) -> Result<Self, Self::Err> {
         lazy_static! {
-            static ref REGEX: Regex = Regex::new(r"for Version (\d+).(\d+).(\d+)").unwrap();
+            static ref REGEX: Regex = Regex::new(r"for (?:Version|version) (\d+).(\d+).(\d+)").unwrap();
         }
 
         REGEX
