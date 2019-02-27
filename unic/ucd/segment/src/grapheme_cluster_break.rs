@@ -17,6 +17,7 @@
 //! * <https://www.unicode.org/reports/tr29/#Grapheme_Cluster_Break_Property_Values>
 
 use unic_char_property::TotalCharProperty;
+use unic_emoji_char::is_extended_pictographic;
 
 char_property! {
     /// Represents the Unicode character
@@ -293,6 +294,13 @@ char_property! {
             human => "Emoji Base and Glue After ZWJ",
         }
 
+        /// Extended_Pictographic
+        ExtPict {
+            abbr => EP,
+            long => ExtPict,
+            human => "Extended Pictographic",
+        }
+
         /// All other characters
         Other {
             abbr => XX,
@@ -342,7 +350,11 @@ mod data {
 impl GraphemeClusterBreak {
     /// Find the character `Grapheme_Cluster_Break` property value.
     pub fn of(ch: char) -> GraphemeClusterBreak {
-        data::GRAPHEME_CLUSTER_BREAK_TABLE.find_or_default(ch)
+        if is_extended_pictographic(ch) {
+            GraphemeClusterBreak::ExtPict
+        } else {
+            data::GRAPHEME_CLUSTER_BREAK_TABLE.find_or_default(ch)
+        }
     }
 }
 

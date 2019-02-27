@@ -45,3 +45,6 @@ pub use crate::emoji_modifier_base::{is_emoji_modifier_base, EmojiModifierBase};
 
 mod emoji_presentation;
 pub use crate::emoji_presentation::{is_emoji_presentation, EmojiPresentation};
+
+mod extended_pictographic;
+pub use crate::extended_pictographic::{is_extended_pictographic, ExtendedPictographic};
