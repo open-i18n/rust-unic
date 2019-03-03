@@ -18,7 +18,7 @@ use regex::Regex;
 use crate::source::utils::read;
 
 // String constants representing name alias types
-// Note: The string corresponds to unic_name_aliases::NameAliasType enum cases
+// Note: The string corresponds to unic_ucd_name_aliases::NameAliasType enum cases
 static TYPE_STR_CORRECTIONS: &str = "NameCorrections";
 static TYPE_STR_CONTROLS: &str = "ControlCodeNames";
 static TYPE_STR_ALTERNATES: &str = "AlternateNames";

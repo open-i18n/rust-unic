@@ -36,6 +36,7 @@ export COMPONENTS="
     unic/ucd/common
     unic/ucd/ident
     unic/ucd/name
+    unic/ucd/name_aliases
     unic/ucd/normal
     unic/ucd/segment
 
