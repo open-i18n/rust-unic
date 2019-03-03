@@ -1,4 +1,4 @@
-// Copyright 2017 The UNIC Project Developers.
+// Copyright 2017-2019 The UNIC Project Developers.
 //
 // See the COPYRIGHT file at the top-level directory of this distribution.
 //
@@ -25,11 +25,13 @@
 //!
 //! # Features
 //!
-//! - `xid` (default): the `XID_Start` and `XID_Continue` properties
-//! - `id` (optional): the `ID_Start` and `ID_Continue` properties;
-//!   _in most cases, you should prefer using the `XID` properties
-//!   because they are consistent under NFKC normalization_
-//! - `pattern` (optional): the `Pattern_Syntax` and `Pattern_White_Space` properties
+//! - `xid` (default): the `XID_Start` and `XID_Continue` properties.
+//!
+//! - `id` (optional): the `ID_Start` and `ID_Continue` properties.
+//!   NOTE: in most cases, you should prefer using the `XID` properties
+//!   because they are consistent under NFKC normalization.
+//!
+//! - `pattern` (optional): the `Pattern_Syntax` and `Pattern_White_Space` properties.
 //!
 //! [UAX31 Unicode Identifier and Pattern Syntax]: <https://www.unicode.org/reports/tr31/>
 
@@ -42,98 +44,17 @@ mod pkg_info;
 pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
 #[cfg(feature = "xid")]
-mod xid {
-    char_property! {
-        /// A character that can start an identifier, stable under NFKC.
-        pub struct XidStart(bool) {
-            abbr => "XIDS";
-            long => "XID_Start";
-            human => "XID Start";
-
-            data_table_path => "../tables/xid_start.rsv";
-        }
-
-        /// Is this a NFKC-safe identifier starting character?
-        pub fn is_xid_start(char) -> bool;
-    }
-    char_property! {
-        /// A character that can continue an identifier, stable under NFKC.
-        pub struct XidContinue(bool) {
-            abbr => "XIDC";
-            long => "XID_Continue";
-            human => "XID Continue";
-
-            data_table_path => "../tables/xid_continue.rsv";
-        }
-
-        /// Is this a NFKC-safe identifier continuing character?
-        pub fn is_xid_continue(char) -> bool;
-    }
-}
+mod xid;
 #[cfg(feature = "xid")]
 pub use crate::xid::{is_xid_continue, is_xid_start, XidContinue, XidStart};
 
 #[cfg(feature = "id")]
-mod id {
-    char_property! {
-        /// A character that can start an identifier.
-        pub struct IdStart(bool) {
-            abbr => "IDS";
-            long => "ID_Start";
-            human => "ID Start";
-
-            data_table_path => "../tables/id_start.rsv";
-        }
-
-        /// Is this a identifier starting character?
-        pub fn is_id_start(char) -> bool;
-    }
-    char_property! {
-        /// A character that can continue an identifier.
-        pub struct IdContinue(bool) {
-            abbr => "IDC";
-            long => "ID_Continue";
-            human => "ID Continue";
-
-            data_table_path => "../tables/id_continue.rsv";
-        }
-
-        /// Is this a identifier continuing character?
-        pub fn is_id_continue(char) -> bool;
-    }
-}
+mod id;
 #[cfg(feature = "id")]
 pub use crate::id::{is_id_continue, is_id_start, IdContinue, IdStart};
 
 #[cfg(feature = "pattern")]
-mod pattern {
-    char_property! {
-        /// A character that should be treated as a syntax character in patterns.
-        pub struct PatternSyntax(bool) {
-            abbr => "Pat_Syn";
-            long => "Pattern_Syntax";
-            human => "Pattern Syntax";
-
-            data_table_path => "../tables/pattern_syntax.rsv";
-        }
-
-        /// Is this a character that should be treated as syntax in patterns?
-        pub fn is_pattern_syntax(char) -> bool;
-    }
-    char_property! {
-        /// A character that should be treated as a whitespace in patterns.
-        pub struct PatternWhitespace(bool) {
-            abbr => "Pat_WS";
-            long => "Pattern_White_Space";
-            human => "Pattern Whitespace";
-
-            data_table_path => "../tables/pattern_white_space.rsv";
-        }
-
-        /// Is this a character that should be treated as whitespace in patterns?
-        pub fn is_pattern_whitespace(char) -> bool;
-    }
-}
+mod pattern;
 #[cfg(feature = "pattern")]
 pub use crate::pattern::{
     is_pattern_syntax,
