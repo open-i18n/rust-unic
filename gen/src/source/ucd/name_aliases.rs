@@ -18,7 +18,7 @@ use regex::Regex;
 use crate::source::utils::read;
 
 // String constants representing name alias types
-// Note: The string corresponds to unic_name_aliases::NameAliasType enum cases
+// Note: The string corresponds to unic_ucd_name_aliases::NameAliasType enum cases
 static TYPE_STR_CORRECTIONS: &str = "NameCorrections";
 static TYPE_STR_CONTROLS: &str = "ControlCodeNames";
 static TYPE_STR_ALTERNATES: &str = "AlternateNames";
@@ -26,8 +26,11 @@ static TYPE_STR_FIGMENTS: &str = "Figments";
 static TYPE_STR_ABBREVIATIONS: &str = "NameAbbreviations";
 
 lazy_static! {
-    pub static ref NAME_ALIASES_DATA: NameAliasesData =
-        { read("external/unicode/ucd/data/NameAliases.txt").parse().unwrap() };
+    pub static ref NAME_ALIASES_DATA: NameAliasesData = {
+        read("external/unicode/ucd/data/NameAliases.txt")
+            .parse()
+            .unwrap()
+    };
 }
 
 #[derive(Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -54,7 +57,8 @@ impl FromStr for NameAliasesData {
                   ;([[:alnum:]\ \-]*) # alias
                   ;([[:alpha:]]*)     # type
                 ",
-            ).unwrap();
+            )
+            .unwrap();
         }
 
         let mut name_alias_types: BTreeMap<char, Vec<String>> = BTreeMap::default();
@@ -73,9 +77,9 @@ impl FromStr for NameAliasesData {
                     if $map.contains_key(&chr) {
                         if let Some(values) = $map.get_mut(&chr) {
                             // Check for duplications because this macro is also used
-                            // for inserting types strings to name_alias_types. 
-                            // In case of a character having multiple values for the 
-                            // same type, if we don't check for duplications, the type 
+                            // for inserting types strings to name_alias_types.
+                            // In case of a character having multiple values for the
+                            // same type, if we don't check for duplications, the type
                             // string would be inserted more than once.
                             if !values.contains(&$value) {
                                 values.push($value);
@@ -84,7 +88,7 @@ impl FromStr for NameAliasesData {
                     } else {
                         $map.insert(chr, vec![$value]);
                     }
-                }
+                };
             }
 
             let alias = capture[2].to_owned();
@@ -119,7 +123,7 @@ impl FromStr for NameAliasesData {
             controls,
             alternates,
             figments,
-            abbreviations
+            abbreviations,
         })
     }
 }

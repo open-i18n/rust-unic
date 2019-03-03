@@ -79,10 +79,7 @@ pub use crate::name::Name;
 
 pub use crate::normal::CanonicalCombiningClass;
 
-pub use crate::name_aliases::{
-    name_aliases_of,
-    NameAliasType,
-};
+pub use crate::name_aliases::{name_aliases_of, NameAliasType};
 
 pub use crate::segment::{GraphemeClusterBreak, SentenceBreak, WordBreak};
 

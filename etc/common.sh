@@ -17,9 +17,9 @@ set -e
 export COMPONENTS="
     unic/common
 
-    unic/char/basics
     unic/char/range
 
+    unic/char/basics
     unic/char/property
 
     unic/char
@@ -36,6 +36,7 @@ export COMPONENTS="
     unic/ucd/common
     unic/ucd/ident
     unic/ucd/name
+    unic/ucd/name_aliases
     unic/ucd/normal
     unic/ucd/segment
 

@@ -1,6 +1,6 @@
 [package]
 name = "unic-ucd"
-version = "0.8.0"
+version = "0.9.0"
 edition = "2018"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/open-i18n/rust-unic/"
@@ -14,25 +14,25 @@ readme = "README.md"
 exclude = []
 
 [dependencies]
-unic-ucd-age = { path = "age/", version = "0.8.0" }
-unic-ucd-bidi = { path = "bidi/", version = "0.8.0" }
-unic-ucd-block = { path = "block/", version = "0.8.0" }
-unic-ucd-case = { path = "case/", version = "0.8.0" }
-unic-ucd-category = { path = "category/", version = "0.8.0" }
-unic-ucd-common = { path = "common/", version = "0.8.0" }
-unic-ucd-hangul = { path = "hangul/", version= "0.8.0" }
-unic-ucd-ident = { path = "ident/", version = "0.8.0" }
-unic-ucd-name = { path = "name/", version = "0.8.0" }
-unic-ucd-name_aliases = { path = "name_aliases/", version = "0.8.0" }
-unic-ucd-normal = { path = "normal/", version = "0.8.0", features = ["unic-ucd-category"] }
-unic-ucd-segment = { path = "segment/", version = "0.8.0" }
-unic-ucd-version = { path = "version/", version = "0.8.0" }
+unic-ucd-age = { path = "age/", version = "0.9.0" }
+unic-ucd-bidi = { path = "bidi/", version = "0.9.0" }
+unic-ucd-block = { path = "block/", version = "0.9.0" }
+unic-ucd-case = { path = "case/", version = "0.9.0" }
+unic-ucd-category = { path = "category/", version = "0.9.0" }
+unic-ucd-common = { path = "common/", version = "0.9.0" }
+unic-ucd-hangul = { path = "hangul/", version= "0.9.0" }
+unic-ucd-ident = { path = "ident/", version = "0.9.0" }
+unic-ucd-name = { path = "name/", version = "0.9.0" }
+unic-ucd-name_aliases = { path = "name_aliases/", version = "0.9.0" }
+unic-ucd-normal = { path = "normal/", version = "0.9.0", features = ["unic-ucd-category"] }
+unic-ucd-segment = { path = "segment/", version = "0.9.0" }
+unic-ucd-version = { path = "version/", version = "0.9.0" }
 
 [dev-dependencies]
 matches = "0.1"
-unic-char-basics = { path = "../char/basics/", version = "0.8.0" }
-unic-char-property = { path = "../char/property/", version = "0.8.0" }
-unic-char-range = { path = "../char/range/", version = "0.8.0" }
+unic-char-basics = { path = "../char/basics/", version = "0.9.0" }
+unic-char-property = { path = "../char/property/", version = "0.9.0" }
+unic-char-range = { path = "../char/range/", version = "0.9.0" }
 
 [badges]
 maintenance = { status = "actively-developed" }

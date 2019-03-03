@@ -1,6 +1,6 @@
 [package]
 name = "unic"
-version = "0.8.0"
+version = "0.9.0"
 edition = "2018"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/open-i18n/rust-unic/"
@@ -20,17 +20,17 @@ bench_it = ["unic-bidi/bench_it"]
 serde = ["unic-bidi/serde"]
 
 [dependencies]
-unic-bidi = { path = "bidi/", version = "0.8.0" }
-unic-char = { path = "char/", version = "0.8.0", features = ["std"] }
-unic-common = { path = "common/", version = "0.8.0" }
-unic-emoji = { path = "emoji/", version = "0.8.0" }
-unic-idna = { path = "idna/", version = "0.8.0" }
-unic-normal = { path = "normal/", version = "0.8.0" }
-unic-segment = { path = "segment/", version = "0.8.0" }
-unic-ucd = { path = "ucd/", version = "0.8.0" }
+unic-bidi = { path = "bidi/", version = "0.9.0" }
+unic-char = { path = "char/", version = "0.9.0", features = ["std"] }
+unic-common = { path = "common/", version = "0.9.0" }
+unic-emoji = { path = "emoji/", version = "0.9.0" }
+unic-idna = { path = "idna/", version = "0.9.0" }
+unic-normal = { path = "normal/", version = "0.9.0" }
+unic-segment = { path = "segment/", version = "0.9.0" }
+unic-ucd = { path = "ucd/", version = "0.9.0" }
 
 [dev-dependencies]
-unic-char-range = { path = "char/range/", version = "0.8.0" }
+unic-char-range = { path = "char/range/", version = "0.9.0" }
 
 [badges]
 maintenance = { status = "actively-developed" }

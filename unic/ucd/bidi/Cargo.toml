@@ -1,6 +1,6 @@
 [package]
 name = "unic-ucd-bidi"
-version = "0.8.0"
+version = "0.9.0"
 edition = "2018"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/open-i18n/rust-unic/"
@@ -13,9 +13,9 @@ categories = ["internationalization", "text-processing", "parsing", "rendering"]
 exclude = []
 
 [dependencies]
-unic-char-property = { path = "../../char/property/", version = "0.8.0" }
-unic-char-range = { path = "../../char/range", version = "0.8.0" }
-unic-ucd-version = { path = "../version/", version = "0.8.0" }
+unic-char-property = { path = "../../char/property/", version = "0.9.0" }
+unic-char-range = { path = "../../char/range", version = "0.9.0" }
+unic-ucd-version = { path = "../version/", version = "0.9.0" }
 
 [badges]
 maintenance = { status = "actively-developed" }
