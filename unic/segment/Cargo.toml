@@ -1,6 +1,6 @@
 [package]
 name = "unic-segment"
-version = "0.8.0"
+version = "0.9.0"
 edition = "2018"
 authors = ["The UNIC Project Developers"]
 repository = "https://github.com/open-i18n/rust-unic/"
@@ -14,11 +14,11 @@ readme = "README.md"
 exclude = []
 
 [dependencies]
-unic-ucd-segment = { path = "../ucd/segment/", version = "0.8.0" }
+unic-ucd-segment = { path = "../ucd/segment/", version = "0.9.0" }
 
 [dev-dependencies]
 quickcheck = "0.6"
-unic-ucd-common = { path = "../ucd/common/", version = "0.8.0" }
+unic-ucd-common = { path = "../ucd/common/", version = "0.9.0" }
 
 [badges]
 maintenance = { status = "actively-developed" }

@@ -9,7 +9,7 @@ description = "UNIC — Table Generation"
 publish = false
 
 [dependencies]
-unic-char-range = { path = "../unic/char/range/", version = "0.8.0" }
+unic-char-range = { path = "../unic/char/range/", version = "0.9.0" }
 
 # Command line argument parsing
 clap = "2.29"

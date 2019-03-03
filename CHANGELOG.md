@@ -2,7 +2,11 @@
 
 
 ## [Unreleased]
-[Unreleased]: https://github.com/open-i18n/rust-unic/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/open-i18n/rust-unic/compare/v0.9.0...HEAD
+
+
+## [v0.9.0] - 2019-03-02
+[v0.9.0]: https://github.com/open-i18n/rust-unic/compare/v0.8.0...v0.9.0
 
 ### Add
 
