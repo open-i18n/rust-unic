@@ -62,7 +62,11 @@ mod data {
     // Bring all enum cases into scope, because NameAliasType is omitted
     // in name_alias_types.rsv to save space
     use crate::NameAliasType::{
-        AlternateNames, ControlCodeNames, Figments, NameAbbreviations, NameCorrections,
+        AlternateNames,
+        ControlCodeNames,
+        Figments,
+        NameAbbreviations,
+        NameCorrections,
     };
     pub const NAME_ALIAS_TYPES: CharDataTable<&[crate::NameAliasType]> =
         include!("../tables/name_alias_types.rsv");

@@ -27,17 +27,19 @@ fn emit_unified_name_aliases_table(dir: &Path) {
     write(
         dir,
         "name_alias_types.rsv",
-        &NAME_ALIASES_DATA.name_alias_types.to_direct_char_table(|alias_types, f| {
-            write!(
-                f,
-                "&[{}]",
-                alias_types
-                    .iter()
-                    .map(|alias_type_str| format!("{}", alias_type_str.to_owned()))
-                    .collect::<Vec<_>>()
-                    .join(", ")
-            )
-        }),
+        &NAME_ALIASES_DATA
+            .name_alias_types
+            .to_direct_char_table(|alias_types, f| {
+                write!(
+                    f,
+                    "&[{}]",
+                    alias_types
+                        .iter()
+                        .map(|alias_type_str| format!("{}", alias_type_str.to_owned()))
+                        .collect::<Vec<_>>()
+                        .join(", ")
+                )
+            }),
     );
 }
 
@@ -59,7 +61,7 @@ fn emit_name_aliases_table(dir: &Path) {
                     )
                 }),
             );
-        }
+        };
     }
 
     write_map_to_file!(corrections, "corrections.rsv");
