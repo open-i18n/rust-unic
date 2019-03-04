@@ -18,6 +18,7 @@ default = []
 unstable = ["unic-common/unstable"]  # Rust nightly features
 bench_it = ["unic-bidi/bench_it"]
 serde = ["unic-bidi/serde"]
+unihan = ["unic-ucd/unihan"]
 
 [dependencies]
 unic-bidi = { path = "bidi/", version = "0.9.0" }
@@ -27,7 +28,7 @@ unic-emoji = { path = "emoji/", version = "0.9.0" }
 unic-idna = { path = "idna/", version = "0.9.0" }
 unic-normal = { path = "normal/", version = "0.9.0" }
 unic-segment = { path = "segment/", version = "0.9.0" }
-unic-ucd = { path = "ucd/", version = "0.9.0" }
+unic-ucd = { path = "ucd/", version = "0.9.0", features = [] }
 
 [dev-dependencies]
 unic-char-range = { path = "char/range/", version = "0.9.0" }
