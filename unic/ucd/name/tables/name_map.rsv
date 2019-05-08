@@ -11794,6 +11794,7 @@ CharDataTable::Direct(&[
     ('\u{32fc}', &[CIRCLED, KATAKANA, WI]),
     ('\u{32fd}', &[CIRCLED, KATAKANA, WE]),
     ('\u{32fe}', &[CIRCLED, KATAKANA, WO]),
+    ('\u{32ff}', &[SQUARE, ERA, NAME, REIWA]),
     ('\u{3300}', &[SQUARE, APAATO]),
     ('\u{3301}', &[SQUARE, ARUHUA]),
     ('\u{3302}', &[SQUARE, ANPEA]),

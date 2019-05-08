@@ -3121,7 +3121,7 @@ CharDataTable::Range(&[
     (chars!('\u{32fc}'..='\u{32fc}'), Mapped("\u{30f0}")),
     (chars!('\u{32fd}'..='\u{32fd}'), Mapped("\u{30f1}")),
     (chars!('\u{32fe}'..='\u{32fe}'), Mapped("\u{30f2}")),
-    (chars!('\u{32ff}'..='\u{32ff}'), Disallowed),
+    (chars!('\u{32ff}'..='\u{32ff}'), Mapped("\u{4ee4}\u{548c}")),
     (chars!('\u{3300}'..='\u{3300}'), Mapped("\u{30a2}\u{30d1}\u{30fc}\u{30c8}")),
     (chars!('\u{3301}'..='\u{3301}'), Mapped("\u{30a2}\u{30eb}\u{30d5}\u{30a1}")),
     (chars!('\u{3302}'..='\u{3302}'), Mapped("\u{30a2}\u{30f3}\u{30da}\u{30a2}")),

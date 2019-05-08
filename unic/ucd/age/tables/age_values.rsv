@@ -831,6 +831,7 @@ CharDataTable::Range(&[
     (chars!('\u{32c0}'..='\u{32cb}'), UnicodeVersion { major: 1, minor: 1, micro: 0 }),
     (chars!('\u{32cc}'..='\u{32cf}'), UnicodeVersion { major: 4, minor: 0, micro: 0 }),
     (chars!('\u{32d0}'..='\u{32fe}'), UnicodeVersion { major: 1, minor: 1, micro: 0 }),
+    (chars!('\u{32ff}'..='\u{32ff}'), UnicodeVersion { major: 12, minor: 1, micro: 0 }),
     (chars!('\u{3300}'..='\u{3376}'), UnicodeVersion { major: 1, minor: 1, micro: 0 }),
     (chars!('\u{3377}'..='\u{337a}'), UnicodeVersion { major: 4, minor: 0, micro: 0 }),
     (chars!('\u{337b}'..='\u{33dd}'), UnicodeVersion { major: 1, minor: 1, micro: 0 }),

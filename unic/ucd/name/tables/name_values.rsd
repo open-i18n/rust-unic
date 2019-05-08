@@ -10627,6 +10627,7 @@ const REGULUS_4: &str = "REGULUS-4";
 const REH: &str = "REH";
 const REI: &str = "REI";
 const REID: &str = "REID";
+const REIWA: &str = "REIWA";
 const REJANG: &str = "REJANG";
 const RELAA: &str = "RELAA";
 const RELATION: &str = "RELATION";
