@@ -16,6 +16,7 @@ use unic_ucd_segment::word_break::{self, WordBreak};
 #[test]
 fn test_grapheme_cluster_break_conformance() {
     use crate::grapheme_cluster_break::abbr_names::*;
+    use crate::grapheme_cluster_break::long_names::ExtPict;
     use crate::grapheme_cluster_break::long_names::*;
 
     const TEST_DATA: CharDataTable<GraphemeClusterBreak> =
@@ -29,6 +30,7 @@ fn test_grapheme_cluster_break_conformance() {
 #[test]
 fn test_word_break_conformance() {
     use crate::word_break::abbr_names::*;
+    use crate::word_break::long_names::ExtPict;
     use crate::word_break::long_names::*;
     // The test data file uses some unexpected names for some values
     use crate::word_break::long_names::{Extend as Extend_FE, Format as Format_FE, ZWJ as ZWJ_FE};

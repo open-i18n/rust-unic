@@ -301,14 +301,21 @@ char_property! {
             human => "Emoji Base and Glue After ZWJ",
         }
 
-        /// A rule in the WB algorithm makes use of that new property value to prevent word breaks 
-        /// within runs of whitespace characters. 
+        /// A rule in the WB algorithm makes use of that new property value to prevent word breaks
+        /// within runs of whitespace characters.
         ///
         /// See <http://unicode.org/versions/Unicode11.0.0/>
         WSegSpace {
             abbr => WSS,
             long => WSegSpace,
             human => "Whitespace characters",
+        }
+
+        /// Extended_Pictographic
+        ExtPict {
+            abbr => EP,
+            long => ExtPict,
+            human => "Extended Pictographic",
         }
 
         /// All other characters
