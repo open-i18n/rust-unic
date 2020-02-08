@@ -35,7 +35,7 @@
     // (test case from <https://github.com/unicode-rs/unicode-segmentation/issues/19>)
     (
         "\u{1F938}\u{1F3FE}\u{1F3FE}",
-        &["\u{1F938}\u{1F3FE}", "\u{1F3FE}"],
+        &["\u{1F938}\u{1F3FE}\u{1F3FE}"],
         None,
     ),
 ]

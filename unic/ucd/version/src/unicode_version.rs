@@ -20,10 +20,7 @@ mod tests {
 
     #[test]
     fn validate_version_values() {
-        assert!(UNICODE_VERSION.major > 0);
-
-        // Current release schedule of Unicode is to have one Major version update each year, with
-        // no Minor updates. We hard-code this internal policy while it stands.
-        assert!(UNICODE_VERSION.minor == 0);
+        assert!(UNICODE_VERSION.major == 12);
+        assert!(UNICODE_VERSION.minor == 1);
     }
 }
