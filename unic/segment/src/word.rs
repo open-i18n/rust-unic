@@ -237,11 +237,10 @@ impl<'a> Iterator for WordBounds<'a> {
             // however we are in the previous state for the purposes of all other rules.
             if prev_zwj {
                 match cat {
-                    WB::GlueAfterZwj => continue,
-                    WB::EBaseGAZ => {
+                    WB::ExtPict => {
                         state = Emoji;
                         continue;
-                    }
+                    },
                     _ => (),
                 }
             }
@@ -264,7 +263,6 @@ impl<'a> Iterator for WordBounds<'a> {
                     WB::LF | WB::Newline => break,    // rule WB3a
                     WB::ZWJ => Zwj,                   // rule WB3c
                     WB::WSegSpace => WSegSpace,       // rule WB3d
-                    WB::EBase | WB::EBaseGAZ => Emoji, // rule WB14
                     _ => {
                         if let Some(ncat) = self.get_next_cat(idx) {
                             // rule WB4
@@ -358,13 +356,9 @@ impl<'a> Iterator for WordBounds<'a> {
                 Regional(_) => {
                     unreachable!("RegionalState::Unknown should not occur on forward iteration")
                 }
-                Emoji => match cat {
-                    // rule WB14
-                    WB::EModifier => state,
-                    _ => {
-                        take_curr = false;
-                        break;
-                    }
+                Emoji => {
+                    take_curr = false;
+                    break;
                 },
                 FormatExtend(t) => match t {
                     // handle FormatExtends depending on what type
@@ -478,13 +472,13 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
             // Don't use `continue` in this match without updating `catb`
             state = match state {
                 Start | FormatExtend(AcceptAny) => match cat {
+                    WB::ExtPict => Zwj,
                     WB::ALetter => Letter,            // rule WB5, WB7, WB10, WB13b
                     WB::HebrewLetter => HLetter,      // rule WB5, WB7, WB7c, WB10, WB13b
                     WB::Numeric => Numeric,           // rule WB8, WB9, WB11, WB13b
                     WB::Katakana => Katakana,         // rule WB13, WB13b
                     WB::ExtendNumLet => ExtendNumLet, // rule WB13a
                     WB::RegionalIndicator => Regional(RegionalState::Unknown), // rule WB13c
-                    WB::GlueAfterZwj | WB::EBaseGAZ => Zwj, // rule WB3c
                     WB::WSegSpace => WSegSpace,             // rule WB3d
                     // rule WB4:
                     WB::Extend | WB::Format | WB::ZWJ => FormatExtend(AcceptAny),
@@ -492,7 +486,6 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
                         saveidx = idx;
                         FormatExtend(AcceptQLetter) // rule WB7a
                     }
-                    WB::EModifier => Emoji, // rule WB14
                     WB::CR | WB::LF | WB::Newline => {
                         if state == Start {
                             if cat == WB::LF {
@@ -597,8 +590,7 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
                     }
                 },
                 Emoji => match cat {
-                    // rule WB14
-                    WB::EBase | WB::EBaseGAZ => Zwj,
+                    WB::ExtPict => Zwj,
                     _ => {
                         take_curr = false;
                         break;
