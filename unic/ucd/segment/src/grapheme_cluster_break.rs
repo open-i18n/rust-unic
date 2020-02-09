@@ -295,6 +295,10 @@ char_property! {
         }
 
         /// Extended_Pictographic
+        /// FIXME:
+        ///   Remove this.
+        ///   Extended Pictographic is not a real grapheme cluster break type, we need to define this
+        ///   because of a mistake in design in unic_segment_grapheme.
         ExtPict {
             abbr => EP,
             long => ExtPict,

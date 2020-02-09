@@ -29,9 +29,6 @@ fn test_grapheme_cluster_break_conformance() {
 
 #[test]
 fn test_word_break_conformance() {
-    // FIXME: Words boundary implementation is broken since Unicode 11
-    return;
-
     use crate::word_break::abbr_names::*;
     use crate::word_break::long_names::ExtPict;
     use crate::word_break::long_names::*;

@@ -17,6 +17,7 @@
 //! * <https://www.unicode.org/reports/tr29/#Table_Word_Break_Property_Values>
 
 use unic_char_property::TotalCharProperty;
+use unic_emoji_char::is_extended_pictographic;
 
 char_property! {
     /// Represents the Unicode character
@@ -312,6 +313,10 @@ char_property! {
         }
 
         /// Extended_Pictographic
+        /// FIXME:
+        ///   Remove this.
+        ///   Extended Pictographic is not a real word break type, we need to define this
+        ///   because of a mistake in design in unic_segment_grapheme.
         ExtPict {
             abbr => EP,
             long => ExtPict,
@@ -367,7 +372,11 @@ mod data {
 impl WordBreak {
     /// Find the character `Word_Break` property value.
     pub fn of(ch: char) -> WordBreak {
-        data::WORD_BREAK_TABLE.find_or_default(ch)
+        if is_extended_pictographic(ch) {
+            WordBreak::ExtPict
+        } else {
+            data::WORD_BREAK_TABLE.find_or_default(ch)
+        }
     }
 }
 
