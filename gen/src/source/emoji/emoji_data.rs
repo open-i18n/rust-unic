@@ -17,7 +17,7 @@ use crate::source::utils::read;
 
 lazy_static! {
     pub static ref EMOJI_DATA: EmojiData = {
-        read("external/unicode/emoji/data/emoji-data.txt")
+        read("external/unicode/ucd/data/emoji/emoji-data.txt")
             .parse()
             .unwrap()
     };
