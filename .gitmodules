@@ -3,7 +3,7 @@
 	url = https://github.com/eyeplum/data-unicode-idna.git
 [submodule "external/unicode/emoji"]
 	path = external/unicode/emoji
-	url = https://github.com/open-i18n/data-unicode-emoji.git
+	url = https://github.com/eyeplum/data-unicode-emoji.git
 [submodule "external/unicode/ucd"]
 	path = external/unicode/ucd
 	url = https://github.com/eyeplum/data-unicode-ucd.git
