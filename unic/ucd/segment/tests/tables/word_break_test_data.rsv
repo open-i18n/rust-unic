@@ -25,7 +25,7 @@ CharDataTable::Direct(&[
     ('\u{200d}', ZWJ_FE),
     ('\u{2060}', Format_FE),
     ('\u{231a}', ExtPict),
-    ('\u{2701}', ExtPict), // It's an extended pictographic
+    ('\u{2701}', ExtPict),
     ('\u{3031}', Katakana),
     ('\u{1f1e6}', RI),
     ('\u{1f1e7}', RI),

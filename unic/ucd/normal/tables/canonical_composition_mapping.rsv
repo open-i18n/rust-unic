@@ -377,4 +377,5 @@ CharDataTable::Direct(&[
     ('\u{114b9}', CharDataTable::Direct(&[('\u{114b0}','\u{114bc}'),('\u{114ba}','\u{114bb}'),('\u{114bd}','\u{114be}'),])),
     ('\u{115b8}', CharDataTable::Direct(&[('\u{115af}','\u{115ba}'),])),
     ('\u{115b9}', CharDataTable::Direct(&[('\u{115af}','\u{115bb}'),])),
+    ('\u{11935}', CharDataTable::Direct(&[('\u{11930}','\u{11938}'),])),
 ])

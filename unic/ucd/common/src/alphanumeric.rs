@@ -83,7 +83,7 @@ mod tests {
         assert_eq!(is_alphanumeric('\u{10001}'), true);
 
         assert_eq!(is_alphanumeric('\u{20000}'), true);
-        assert_eq!(is_alphanumeric('\u{30000}'), false);
+        assert_eq!(is_alphanumeric('\u{30000}'), true);
         assert_eq!(is_alphanumeric('\u{40000}'), false);
         assert_eq!(is_alphanumeric('\u{50000}'), false);
         assert_eq!(is_alphanumeric('\u{60000}'), false);

@@ -77,5 +77,6 @@ CharDataTable::Range(&[
     (chars!('\u{1f8ae}'..='\u{1f8ff}'), ()),
     (chars!('\u{1f90c}'..='\u{1f93a}'), ()),
     (chars!('\u{1f93c}'..='\u{1f945}'), ()),
-    (chars!('\u{1f947}'..='\u{1fffd}'), ()),
+    (chars!('\u{1f947}'..='\u{1faff}'), ()),
+    (chars!('\u{1fc00}'..='\u{1fffd}'), ()),
 ])

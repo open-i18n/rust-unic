@@ -150,6 +150,7 @@ impl CharRange {
     /// - Plane 0: *Basic Multilingual Plane* (BMP)
     /// - Plane 1: *Supplementary Multilingual Plane* (SMP)
     /// - Plane 2: *Supplementary Ideographic Plane* (SIP)
+    /// - Plane 3: *Tertiary Ideographic Plane* (TIP)
     ///
     /// Unicode Plane 14, *Supplementary Special-purpose Plane* (SSP), is not included in this
     /// range, mainly because of the limit of `CharRange` only supporting a continuous range.
@@ -159,7 +160,7 @@ impl CharRange {
     /// Unicode Planes 15 and 16 are *Private Use Area* planes and won't have Unicode-assigned
     /// characters.
     pub fn assigned_normal_planes() -> CharRange {
-        CharRange::closed('\u{0}', '\u{2_FFFF}')
+        CharRange::closed('\u{0}', '\u{3_FFFF}')
     }
 }
 

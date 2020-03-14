@@ -73,7 +73,7 @@ mod tests {
         assert_eq!(is_alphabetic('\u{10001}'), true);
 
         assert_eq!(is_alphabetic('\u{20000}'), true);
-        assert_eq!(is_alphabetic('\u{30000}'), false);
+        assert_eq!(is_alphabetic('\u{30000}'), true);
         assert_eq!(is_alphabetic('\u{40000}'), false);
         assert_eq!(is_alphabetic('\u{50000}'), false);
         assert_eq!(is_alphabetic('\u{60000}'), false);

@@ -11,6 +11,7 @@
 use std::collections::BTreeMap;
 use std::path::Path;
 
+use crate::source::emoji::emoji_data::EMOJI_DATA;
 use crate::source::ucd::test::grapheme_break_test::{GraphemeBreakTest, GRAPHEME_BREAK_TESTS};
 use crate::source::ucd::test::word_break_test::{WordBreakTest, WORD_BREAK_TESTS};
 
@@ -36,12 +37,19 @@ fn emit_grapheme_cluster_break_test_data(dir: &Path) {
             let gcb = match char_gcbs[i].as_str() {
                 "Extend_ExtCccZwj" => "Extend",
                 "ZWJ_ExtCccZwj" => "ZWJ",
-                c => c
+                c => c,
             };
-            if map.contains_key(ch) {
-                assert_eq!(map[ch], gcb);
+
+            if EMOJI_DATA.extended_pictographic.contains(ch) {
+                // If the character is defined as "Extended Pictographic" in the emoji data,
+                // then treat it as an extended pictographic when generating the test table
+                map.insert(*ch, "ExtPict");
             } else {
-                map.insert(*ch, gcb.clone());
+                if map.contains_key(ch) {
+                    assert_eq!(map[ch], gcb);
+                } else {
+                    map.insert(*ch, gcb.clone());
+                }
             }
         }
     }
@@ -65,10 +73,17 @@ fn emit_word_break_test_data(dir: &Path) {
 
         for (i, ch) in chars.iter().enumerate() {
             let ref gcb = char_gcbs[i];
-            if map.contains_key(ch) {
-                assert_eq!(map[ch], *gcb);
+
+            if EMOJI_DATA.extended_pictographic.contains(ch) {
+                // If the character is defined as "Extended Pictographic" in the emoji data,
+                // then treat it as an extended pictographic when generating the test table
+                map.insert(*ch, "ExtPict".to_owned());
             } else {
-                map.insert(*ch, gcb.clone());
+                if map.contains_key(ch) {
+                    assert_eq!(map[ch], *gcb);
+                } else {
+                    map.insert(*ch, gcb.clone());
+                }
             }
         }
     }

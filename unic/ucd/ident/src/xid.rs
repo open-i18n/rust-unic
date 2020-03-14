@@ -103,7 +103,7 @@ mod tests {
         assert_eq!(is_xid_start('\u{10001}'), true);
 
         assert_eq!(is_xid_start('\u{20000}'), true);
-        assert_eq!(is_xid_start('\u{30000}'), false);
+        assert_eq!(is_xid_start('\u{30000}'), true);
         assert_eq!(is_xid_start('\u{40000}'), false);
         assert_eq!(is_xid_start('\u{50000}'), false);
         assert_eq!(is_xid_start('\u{60000}'), false);
@@ -195,7 +195,7 @@ mod tests {
         assert_eq!(is_xid_continue('\u{10001}'), true);
 
         assert_eq!(is_xid_continue('\u{20000}'), true);
-        assert_eq!(is_xid_continue('\u{30000}'), false);
+        assert_eq!(is_xid_continue('\u{30000}'), true);
         assert_eq!(is_xid_continue('\u{40000}'), false);
         assert_eq!(is_xid_continue('\u{50000}'), false);
         assert_eq!(is_xid_continue('\u{60000}'), false);

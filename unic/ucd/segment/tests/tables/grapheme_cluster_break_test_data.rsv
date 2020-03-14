@@ -19,7 +19,7 @@ CharDataTable::Direct(&[
     ('\u{11a8}', T),
     ('\u{200d}', ZWJ),
     ('\u{231a}', ExtPict),
-    ('\u{2701}', ExtPict), // It's an extended pictographic
+    ('\u{2701}', ExtPict),
     ('\u{ac00}', LV),
     ('\u{ac01}', LVT),
     ('\u{1f1e6}', RI),

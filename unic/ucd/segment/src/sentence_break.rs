@@ -337,7 +337,6 @@ mod tests {
 
     #[test]
     fn test_unassigned_planes() {
-        assert_eq!(SB::of('\u{30000}'), SB::Other);
         assert_eq!(SB::of('\u{40000}'), SB::Other);
         assert_eq!(SB::of('\u{50000}'), SB::Other);
         assert_eq!(SB::of('\u{60000}'), SB::Other);
