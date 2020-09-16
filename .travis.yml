@@ -30,7 +30,6 @@ script:
   - cargo doc   --verbose --all --no-deps
 
   - cargo test  --verbose --all
-  - cargo test  --verbose --all --features serde
 
   #  unic-ucd-normal is used in unic-ucd with non-default feature
   - cargo test  --verbose --manifest-path unic/ucd/normal/Cargo.toml
@@ -39,10 +38,6 @@ script:
 
   - test "$TRAVIS_RUST_VERSION" != "nightly" ||
     cargo test  --verbose --all --all-features
-
-  # This takes too long, let's disable for now.
-  - test "$TRAVIS_RUST_VERSION" != "nightly" ||
-    cargo build --benches --verbose --all --features 'bench_it'
 
 # TODO: - rustdoc --test README.md -L target/debug -L target/debug/deps
 

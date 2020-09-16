@@ -27,4 +27,3 @@ test_script:
   - cargo doc   --verbose --all --no-deps
 
   - cargo test  --verbose --all
-  - cargo test  --verbose --all --features serde
