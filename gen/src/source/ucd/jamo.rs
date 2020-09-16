@@ -18,7 +18,7 @@ use crate::source::utils::read;
 
 lazy_static! {
     pub static ref JAMO_DATA: JamoData =
-        { read("external/unicode/ucd/data/Jamo.txt").parse().unwrap() };
+        read("external/unicode/ucd/data/Jamo.txt").parse().unwrap();
 }
 
 #[derive(Clone, Default, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
