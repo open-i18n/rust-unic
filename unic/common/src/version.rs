@@ -12,9 +12,6 @@
 
 use core::fmt;
 
-#[cfg(feature = "unstable")]
-use core::char;
-
 /// Represents a *Unicode Version* type.
 ///
 /// UNIC's *Unicode Version* type is used for Unicode datasets and specifications, including The
@@ -45,25 +42,25 @@ impl fmt::Display for UnicodeVersion {
     }
 }
 
-#[cfg(feature = "unstable")]
 /// Convert from Rust's internal Unicode Version.
-impl From<char::UnicodeVersion> for UnicodeVersion {
-    fn from(value: char::UnicodeVersion) -> UnicodeVersion {
+///
+/// `std::char::UNICODE_VERSION` is a tuple of the format `(major, minor, macro)`.
+impl From<(u8, u8, u8)> for UnicodeVersion {
+    fn from(value: (u8, u8, u8)) -> UnicodeVersion {
         UnicodeVersion {
-            major: value.major as u16,
-            minor: value.minor as u16,
-            micro: value.micro as u16,
+            major: value.0 as u16,
+            minor: value.1 as u16,
+            micro: value.2 as u16,
         }
     }
 }
 
 #[cfg(test)]
 mod tests {
-    #[cfg(feature = "unstable")]
+    use core::char;
+
     #[test]
     fn test_against_rust_internal() {
-        use core::char;
-
         use super::UnicodeVersion;
 
         let core_unicode_version: UnicodeVersion = char::UNICODE_VERSION.into();

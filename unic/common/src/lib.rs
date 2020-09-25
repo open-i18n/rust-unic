@@ -16,7 +16,6 @@
     unconditional_recursion
 )]
 #![forbid(unsafe_code)]
-#![cfg_attr(feature = "unstable", feature(unicode_version))]
 
 //! # UNIC — Common Utilities
 //!
