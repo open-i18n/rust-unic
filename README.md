@@ -4,7 +4,7 @@
 
 [![Travis](https://img.shields.io/travis/open-i18n/rust-unic/master.svg?label=Linux%20build)](https://travis-ci.org/open-i18n/rust-unic/)
 [![AppVeyor](https://img.shields.io/appveyor/ci/open-i18n/rust-unic/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/open-i18n/rust-unic)
-[![Rust-1.31.0+](https://img.shields.io/badge/rustc-1.31+-red.svg#MIN_RUST_VERSION)](https://www.rust-lang.org/)
+[![Rust-1.45+](https://img.shields.io/badge/rustc-1.45+-red.svg#MIN_RUST_VERSION)](https://www.rust-lang.org/)
 [![Unicode-10.0.0](https://img.shields.io/badge/unicode-10.0.0-red.svg)](https://www.unicode.org/versions/Unicode10.0.0/)
 [![Release](https://img.shields.io/github/release/open-i18n/rust-unic.svg)](https://github.com/open-i18n/rust-unic/)
 [![Crates.io](https://img.shields.io/crates/v/unic.svg)](https://crates.io/crates/unic/)
