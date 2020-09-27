@@ -18,22 +18,19 @@ use core::fmt;
 /// Unicode Standard (TUS), Unicode Character Database (UCD), Common Local Data Repository (CLDR),
 /// IDNA, Emoji, etc.
 ///
-/// TODO: *Unicode Version* is guaranteed to have three integer fields between 0 and 255. We are
-/// going to switch over to `u8` after Unicode 11.0.0 release.
-///
 /// Refs:
 /// - <https://www.unicode.org/versions/>
 /// - <https://www.unicode.org/L2/L2017/17222.htm#152-C3>
 #[derive(Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Debug, Hash, Default)]
 pub struct UnicodeVersion {
     /// Major version.
-    pub major: u16,
+    pub major: u8,
 
     /// Minor version.
-    pub minor: u16,
+    pub minor: u8,
 
     /// Micro (or Update) version.
-    pub micro: u16,
+    pub micro: u8,
 }
 
 impl fmt::Display for UnicodeVersion {
@@ -46,11 +43,11 @@ impl fmt::Display for UnicodeVersion {
 ///
 /// `std::char::UNICODE_VERSION` is a tuple of the format `(major, minor, macro)`.
 impl From<(u8, u8, u8)> for UnicodeVersion {
-    fn from(value: (u8, u8, u8)) -> UnicodeVersion {
+    fn from((major, minor, micro): (u8, u8, u8)) -> UnicodeVersion {
         UnicodeVersion {
-            major: value.0 as u16,
-            minor: value.1 as u16,
-            micro: value.2 as u16,
+            major,
+            minor,
+            micro,
         }
     }
 }
