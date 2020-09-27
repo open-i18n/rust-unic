@@ -26,10 +26,10 @@ env:
     - RUST_BACKTRACE=full
 
 script:
-  - cargo build --verbose --all
-  - cargo doc   --verbose --all --no-deps
+  - cargo build --verbose --workspace
+  - cargo doc   --verbose --workspace --no-deps
 
-  - cargo test  --verbose --all
+  - cargo test  --verbose --workspace
 
   #  unic-ucd-normal is used in unic-ucd with non-default feature
   - cargo test  --verbose --manifest-path unic/ucd/normal/Cargo.toml
@@ -37,7 +37,7 @@ script:
   # == Nightly-only ==
 
   - test "$TRAVIS_RUST_VERSION" != "nightly" ||
-    cargo test  --verbose --all --all-features
+    cargo test  --verbose --workspace --all-features
 
 # TODO: - rustdoc --test README.md -L target/debug -L target/debug/deps
 

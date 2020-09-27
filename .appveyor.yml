@@ -23,7 +23,7 @@ environment:
     CARGO_HTTP_CHECK_REVOKE: false
 
 test_script:
-  - cargo build --verbose --all
-  - cargo doc   --verbose --all --no-deps
+  - cargo build --verbose --workspace
+  - cargo doc   --verbose --workspace --no-deps
 
-  - cargo test  --verbose --all
+  - cargo test  --verbose --workspace
