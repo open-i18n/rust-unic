@@ -667,10 +667,7 @@ mod tests {
         assert_eq!(reorder_paras("A אבג?"), vec!["A גבא?"]);
 
         // Testing neutral characters with Implicit RTL Marker
-        assert_eq!(
-            reorder_paras("A אבג?\u{200F}"),
-            vec!["A \u{200F}?גבא"]
-        );
+        assert_eq!(reorder_paras("A אבג?\u{200F}"), vec!["A \u{200F}?גבא"]);
         assert_eq!(reorder_paras("אבג abc"), vec!["abc גבא"]);
         assert_eq!(
             reorder_paras("abc\u{2067}.-\u{2069}ghi"),
@@ -686,10 +683,7 @@ mod tests {
         assert_eq!(reorder_paras("א(ב)ג."), vec![".ג)ב(א"]);
 
         // With mirrorable characters on level boundry
-        assert_eq!(
-            reorder_paras("אב(גד[&ef].)gh"),
-            vec!["ef].)gh&[דג(בא"]
-        );
+        assert_eq!(reorder_paras("אב(גד[&ef].)gh"), vec!["ef].)gh&[דג(בא"]);
     }
 
     fn reordered_levels_for_paras(text: &str) -> Vec<Vec<Level>> {

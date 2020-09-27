@@ -20,10 +20,7 @@ use unic_bidi::BidiInfo;
 
 const LTR_TEXTS: &[&str] = &["abc\ndef\nghi", "abc 123\ndef 456\nghi 789"];
 
-const BIDI_TEXTS: &[&str] = &[
-    "ابجد\nهوز\nحتی",
-    "ابجد ۱۲۳\nهوز ۴۵۶\nحتی ۷۸۹\nabc\ndef",
-];
+const BIDI_TEXTS: &[&str] = &["ابجد\nهوز\nحتی", "ابجد ۱۲۳\nهوز ۴۵۶\nحتی ۷۸۹\nabc\ndef"];
 
 fn bench_bidi_info_new(b: &mut Bencher, texts: &[&str]) {
     for text in texts {

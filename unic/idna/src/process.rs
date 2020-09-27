@@ -465,10 +465,7 @@ mod tests {
         assert_eq!(_to_ascii("אבּג"), Ok("xn--kdb3bdf".to_owned()));
         assert_eq!(_to_ascii("ابج"), Ok("xn--mgbcm".to_owned()));
         assert_eq!(_to_ascii("abc.ابج"), Ok("abc.xn--mgbcm".to_owned()));
-        assert_eq!(
-            _to_ascii("אבּג.ابج"),
-            Ok("xn--kdb3bdf.xn--mgbcm".to_owned())
-        );
+        assert_eq!(_to_ascii("אבּג.ابج"), Ok("xn--kdb3bdf.xn--mgbcm".to_owned()));
 
         // Bidi domain names cannot start with digits
         assert!(_to_ascii("0a.\u{05D0}").is_err());
