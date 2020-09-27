@@ -57,6 +57,7 @@ pub fn isolating_run_sequences(
     let mut stack = vec![Vec::new()];
 
     for run in runs {
+        #[allow(clippy::len_zero)]
         assert!(run.len() > 0);
         assert!(!stack.is_empty());
 

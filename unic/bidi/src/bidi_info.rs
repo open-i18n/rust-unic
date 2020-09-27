@@ -238,7 +238,7 @@ impl<'text> BidiInfo<'text> {
     /// Re-order a line based on resolved levels and return only the embedding levels, one `Level`
     /// per *byte*.
     pub fn reordered_levels(&self, para: &ParagraphInfo, line: Range<usize>) -> Vec<Level> {
-        let (levels, _) = self.visual_runs(para, line.clone());
+        let (levels, _) = self.visual_runs(para, line);
         levels
     }
 
@@ -259,7 +259,7 @@ impl<'text> BidiInfo<'text> {
 
         // If all isolating run sequences are LTR, no reordering is needed
         if runs.iter().all(|run| levels[run.start].is_ltr()) {
-            return self.text[line.clone()].into();
+            return self.text[line].into();
         }
 
         let mut result = String::with_capacity(line.len());
@@ -278,7 +278,7 @@ impl<'text> BidiInfo<'text> {
     /// `line` is a range of bytes indices within `levels`.
     ///
     /// <https://www.unicode.org/reports/tr9/#Reordering_Resolved_Levels>
-    #[cfg_attr(feature = "cargo-clippy", allow(needless_range_loop))]
+    #[cfg_attr(feature = "cargo-clippy", allow(clippy::needless_range_loop))]
     pub fn visual_runs(
         &self,
         para: &ParagraphInfo,
