@@ -19,15 +19,13 @@ use unic_char_range::CharRange;
 /// All Assigned characters have a Block property value, but Reserved characters may or may not
 /// have a Block.
 #[derive(Clone, Copy, Debug)]
+#[non_exhaustive]
 pub struct Block {
     /// The Character range of the Block.
     pub range: CharRange,
 
     /// The unique name of the Block.
     pub name: &'static str,
-
-    // Private field to keep struct expandable.
-    _priv: (),
 }
 
 impl Block {
@@ -35,11 +33,7 @@ impl Block {
     pub fn of(ch: char) -> Option<Block> {
         match data::BLOCKS.find_with_range(ch) {
             None => None,
-            Some((range, name)) => Some(Block {
-                range,
-                name,
-                _priv: (),
-            }),
+            Some((range, name)) => Some(Block { range, name }),
         }
     }
 }
@@ -80,11 +74,7 @@ impl<'a> Iterator for BlockIter<'a> {
     fn next(&mut self) -> Option<Block> {
         match self.iter.next() {
             None => None,
-            Some((range, name)) => Some(Block {
-                range,
-                name,
-                _priv: (),
-            }),
+            Some((range, name)) => Some(Block { range, name }),
         }
     }
 }
