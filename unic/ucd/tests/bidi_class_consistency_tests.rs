@@ -23,7 +23,7 @@ use unic_ucd::bidi::BidiClass as BC;
 use unic_ucd::category::GeneralCategory as GC;
 
 #[test]
-#[cfg_attr(feature = "cargo-clippy", allow(match_same_arms))]
+#[allow(match_same_arms)]
 fn test_from_bidi_class() {
     for cp in chars!(..) {
         match BC::of(cp) {

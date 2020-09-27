@@ -24,9 +24,7 @@ mod mark {
 
 #[cfg(feature = "unic-ucd-category")]
 mod mark {
-    use unic_ucd_category;
-
-    use self::unic_ucd_category::GeneralCategory;
+    use unic_ucd_category::GeneralCategory;
 
     /// Return whether the given character is a combining mark (`General_Category=Mark`)
     pub fn is_combining_mark(c: char) -> bool {

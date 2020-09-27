@@ -278,7 +278,7 @@ impl<'text> BidiInfo<'text> {
     /// `line` is a range of bytes indices within `levels`.
     ///
     /// <https://www.unicode.org/reports/tr9/#Reordering_Resolved_Levels>
-    #[cfg_attr(feature = "cargo-clippy", allow(clippy::needless_range_loop))]
+    #[allow(clippy::needless_range_loop)]
     pub fn visual_runs(
         &self,
         para: &ParagraphInfo,

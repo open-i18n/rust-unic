@@ -159,7 +159,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
 }
 
 // https://www.unicode.org/reports/tr46/#Validity_Criteria
-#[cfg_attr(feature = "cargo-clippy", allow(if_same_then_else))]
+#[allow(clippy::if_same_then_else)]
 fn validate(label: &str, is_bidi_domain: bool, flags: Flags, errors: &mut Vec<Error>) {
     let first_char = label.chars().next();
 
@@ -296,7 +296,7 @@ pub struct Flags {
 }
 
 /// Error types recorded during UTS #46 processing.
-#[cfg_attr(feature = "cargo-clippy", allow(enum_variant_names))]
+#[allow(clippy::enum_variant_names)]
 #[derive(PartialEq, Eq, Clone, Copy, Debug)]
 enum Error {
     PunycodeError,

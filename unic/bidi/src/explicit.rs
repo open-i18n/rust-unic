@@ -62,7 +62,7 @@ pub fn compute(
                     last_level.new_explicit_next_ltr()
                 };
                 // Until `let_chains` feature is stabilized.
-                #[cfg_attr(feature = "cargo-clippy", allow(clippy::unnecessary_unwrap))]
+                #[allow(clippy::unnecessary_unwrap)]
                 if new_level.is_ok() && overflow_isolate_count == 0 && overflow_embedding_count == 0
                 {
                     let new_level = new_level.unwrap();
