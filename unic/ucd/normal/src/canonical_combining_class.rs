@@ -57,7 +57,7 @@ mod data {
         include!("../tables/canonical_combining_class_values.rsv");
 }
 
-#[cfg_attr(rustfmt, rustfmt_skip)]  // We want the consts ordered by value.
+#[rustfmt::skip]  // We want the consts ordered by value.
 #[allow(non_upper_case_globals)]
 impl CanonicalCombiningClass {
     /// Find the character `Canonical_Combining_Class` property value.

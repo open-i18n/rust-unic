@@ -187,7 +187,7 @@ mod tests {
     }
 
     // From <https://www.unicode.org/reports/tr9/#BD13>
-    #[cfg_attr(rustfmt, rustfmt_skip)]
+    #[rustfmt::skip]
     #[test]
     fn test_isolating_run_sequences() {
 
@@ -232,7 +232,7 @@ mod tests {
     }
 
     // From <https://www.unicode.org/reports/tr9/#X10>
-    #[cfg_attr(rustfmt, rustfmt_skip)]
+    #[rustfmt::skip]
     #[test]
     fn test_isolating_run_sequences_sos_and_eos() {
 
