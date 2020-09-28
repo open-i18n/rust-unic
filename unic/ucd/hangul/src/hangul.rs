@@ -23,8 +23,8 @@ pub const T_BASE: u32 = 0x11A7;
 pub const L_COUNT: u32 = 19;
 pub const V_COUNT: u32 = 21;
 pub const T_COUNT: u32 = 28;
-pub const N_COUNT: u32 = (V_COUNT * T_COUNT);
-pub const S_COUNT: u32 = (L_COUNT * N_COUNT);
+pub const N_COUNT: u32 = V_COUNT * T_COUNT;
+pub const S_COUNT: u32 = L_COUNT * N_COUNT;
 
 /// Whether the character is a (precomposed) Hangul Syllable
 pub fn is_syllable(ch: char) -> bool {

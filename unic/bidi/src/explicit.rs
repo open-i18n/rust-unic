@@ -63,6 +63,8 @@ pub fn compute(
                 };
                 if new_level.is_ok() && overflow_isolate_count == 0 && overflow_embedding_count == 0
                 {
+                    // Until `let_chains` feature is stabilized.
+                    #[allow(clippy::unnecessary_unwrap)]
                     let new_level = new_level.unwrap();
                     stack.push(
                         new_level,

@@ -238,7 +238,7 @@ impl<'text> BidiInfo<'text> {
     /// Re-order a line based on resolved levels and return only the embedding levels, one `Level`
     /// per *byte*.
     pub fn reordered_levels(&self, para: &ParagraphInfo, line: Range<usize>) -> Vec<Level> {
-        let (levels, _) = self.visual_runs(para, line.clone());
+        let (levels, _) = self.visual_runs(para, line);
         levels
     }
 
@@ -259,7 +259,7 @@ impl<'text> BidiInfo<'text> {
 
         // If all isolating run sequences are LTR, no reordering is needed
         if runs.iter().all(|run| levels[run.start].is_ltr()) {
-            return self.text[line.clone()].into();
+            return self.text[line].into();
         }
 
         let mut result = String::with_capacity(line.len());
@@ -278,7 +278,7 @@ impl<'text> BidiInfo<'text> {
     /// `line` is a range of bytes indices within `levels`.
     ///
     /// <https://www.unicode.org/reports/tr9/#Reordering_Resolved_Levels>
-    #[cfg_attr(feature = "cargo-clippy", allow(needless_range_loop))]
+    #[allow(clippy::needless_range_loop)]
     pub fn visual_runs(
         &self,
         para: &ParagraphInfo,
@@ -617,22 +617,22 @@ mod tests {
 
     #[test]
     fn test_reorder_line() {
-        /// Bidi_Class: L L L B L L L B L L L
+        // Bidi_Class: L L L B L L L B L L L
         assert_eq!(
             reorder_paras("abc\ndef\nghi"),
             vec!["abc\n", "def\n", "ghi"]
         );
 
-        /// Bidi_Class: L L EN B L L EN B L L EN
+        // Bidi_Class: L L EN B L L EN B L L EN
         assert_eq!(
             reorder_paras("ab1\nde2\ngh3"),
             vec!["ab1\n", "de2\n", "gh3"]
         );
 
-        /// Bidi_Class: L L L B AL AL AL
+        // Bidi_Class: L L L B AL AL AL
         assert_eq!(reorder_paras("abc\nابج"), vec!["abc\n", "جبا"]);
 
-        /// Bidi_Class: AL AL AL B L L L
+        // Bidi_Class: AL AL AL B L L L
         assert_eq!(reorder_paras("ابج\nabc"), vec!["\nجبا", "abc"]);
 
         assert_eq!(reorder_paras("1.-2"), vec!["1.-2"]);
@@ -667,10 +667,7 @@ mod tests {
         assert_eq!(reorder_paras("A אבג?"), vec!["A גבא?"]);
 
         // Testing neutral characters with Implicit RTL Marker
-        assert_eq!(
-            reorder_paras("A אבג?\u{200F}"),
-            vec!["A \u{200F}?גבא"]
-        );
+        assert_eq!(reorder_paras("A אבג?\u{200F}"), vec!["A \u{200F}?גבא"]);
         assert_eq!(reorder_paras("אבג abc"), vec!["abc גבא"]);
         assert_eq!(
             reorder_paras("abc\u{2067}.-\u{2069}ghi"),
@@ -686,10 +683,7 @@ mod tests {
         assert_eq!(reorder_paras("א(ב)ג."), vec![".ג)ב(א"]);
 
         // With mirrorable characters on level boundry
-        assert_eq!(
-            reorder_paras("אב(גד[&ef].)gh"),
-            vec!["ef].)gh&[דג(בא"]
-        );
+        assert_eq!(reorder_paras("אב(גד[&ef].)gh"), vec!["ef].)gh&[דג(בא"]);
     }
 
     fn reordered_levels_for_paras(text: &str) -> Vec<Vec<Level>> {

@@ -12,17 +12,11 @@
 
 use core::fmt;
 
-#[cfg(feature = "unstable")]
-use core::char;
-
 /// Represents a *Unicode Version* type.
 ///
 /// UNIC's *Unicode Version* type is used for Unicode datasets and specifications, including The
 /// Unicode Standard (TUS), Unicode Character Database (UCD), Common Local Data Repository (CLDR),
 /// IDNA, Emoji, etc.
-///
-/// TODO: *Unicode Version* is guaranteed to have three integer fields between 0 and 255. We are
-/// going to switch over to `u8` after Unicode 11.0.0 release.
 ///
 /// Refs:
 /// - <https://www.unicode.org/versions/>
@@ -30,13 +24,13 @@ use core::char;
 #[derive(Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Debug, Hash, Default)]
 pub struct UnicodeVersion {
     /// Major version.
-    pub major: u16,
+    pub major: u8,
 
     /// Minor version.
-    pub minor: u16,
+    pub minor: u8,
 
     /// Micro (or Update) version.
-    pub micro: u16,
+    pub micro: u8,
 }
 
 impl fmt::Display for UnicodeVersion {
@@ -45,25 +39,25 @@ impl fmt::Display for UnicodeVersion {
     }
 }
 
-#[cfg(feature = "unstable")]
 /// Convert from Rust's internal Unicode Version.
-impl From<char::UnicodeVersion> for UnicodeVersion {
-    fn from(value: char::UnicodeVersion) -> UnicodeVersion {
+///
+/// `std::char::UNICODE_VERSION` is a tuple of the format `(major, minor, macro)`.
+impl From<(u8, u8, u8)> for UnicodeVersion {
+    fn from((major, minor, micro): (u8, u8, u8)) -> UnicodeVersion {
         UnicodeVersion {
-            major: value.major as u16,
-            minor: value.minor as u16,
-            micro: value.micro as u16,
+            major,
+            minor,
+            micro,
         }
     }
 }
 
 #[cfg(test)]
 mod tests {
-    #[cfg(feature = "unstable")]
+    use core::char;
+
     #[test]
     fn test_against_rust_internal() {
-        use core::char;
-
         use super::UnicodeVersion;
 
         let core_unicode_version: UnicodeVersion = char::UNICODE_VERSION.into();

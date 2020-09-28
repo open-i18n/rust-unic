@@ -18,7 +18,7 @@ use unic::ucd::common::is_alphanumeric;
 use unic::ucd::normal::compose;
 use unic::ucd::{is_cased, Age, BidiClass, CharAge, CharBidiClass, StrBidiClass, UnicodeVersion};
 
-#[cfg_attr(rustfmt, rustfmt_skip)]
+#[rustfmt::skip]
 #[test]
 fn test_sample() {
 

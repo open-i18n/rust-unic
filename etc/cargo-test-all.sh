@@ -10,8 +10,9 @@
 # option. This file may not be copied, modified, or distributed
 # except according to those terms.
 
-# Since `cargo publish --all` does not exist yet, we use this dumb alternative
-# solution for now.
+# Since `cargo publish --workspace` does not exist yet, we use this dumb
+# alternative solution for now to test all components in their isolated form,
+# before publishing them.
 #
 # Main downside of this approch is that there are separate `target/`
 # directories used for each component, increasing the test and publish process

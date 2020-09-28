@@ -17,7 +17,7 @@ use crate::mapping::Mapping;
 use crate::punycode;
 
 /// Prefix used in Punycode encoding.
-pub static PUNYCODE_PREFIX: &'static str = "xn--";
+pub static PUNYCODE_PREFIX: &str = "xn--";
 
 fn map_char(codepoint: char, flags: Flags, output: &mut String, errors: &mut Vec<Error>) {
     match Mapping::of(codepoint) {
@@ -159,7 +159,7 @@ fn passes_bidi(label: &str, is_bidi_domain: bool) -> bool {
 }
 
 // https://www.unicode.org/reports/tr46/#Validity_Criteria
-#[cfg_attr(feature = "cargo-clippy", allow(if_same_then_else))]
+#[allow(clippy::if_same_then_else)]
 fn validate(label: &str, is_bidi_domain: bool, flags: Flags, errors: &mut Vec<Error>) {
     let first_char = label.chars().next();
 
@@ -296,7 +296,7 @@ pub struct Flags {
 }
 
 /// Error types recorded during UTS #46 processing.
-#[cfg_attr(feature = "cargo-clippy", allow(enum_variant_names))]
+#[allow(clippy::enum_variant_names)]
 #[derive(PartialEq, Eq, Clone, Copy, Debug)]
 enum Error {
     PunycodeError,
@@ -465,10 +465,7 @@ mod tests {
         assert_eq!(_to_ascii("אבּג"), Ok("xn--kdb3bdf".to_owned()));
         assert_eq!(_to_ascii("ابج"), Ok("xn--mgbcm".to_owned()));
         assert_eq!(_to_ascii("abc.ابج"), Ok("abc.xn--mgbcm".to_owned()));
-        assert_eq!(
-            _to_ascii("אבּג.ابج"),
-            Ok("xn--kdb3bdf.xn--mgbcm".to_owned())
-        );
+        assert_eq!(_to_ascii("אבּג.ابج"), Ok("xn--kdb3bdf.xn--mgbcm".to_owned()));
 
         // Bidi domain names cannot start with digits
         assert!(_to_ascii("0a.\u{05D0}").is_err());

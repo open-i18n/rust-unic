@@ -13,7 +13,7 @@
 
 use unic::bidi::BidiInfo;
 
-#[cfg_attr(rustfmt, rustfmt_skip)]
+#[rustfmt::skip]
 fn main() {
     let text = concat![
         "א",

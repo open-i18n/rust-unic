@@ -12,11 +12,11 @@ use core::cmp::Ordering;
 use core::fmt;
 use unic_ucd_hangul::decompose_syllable;
 
-pub static PREFIX_HANGUL_SYLLABLE: &'static str = "HANGUL SYLLABLE ";
-pub static PREFIX_CJK_UNIFIED_IDEOGRAPH: &'static str = "CJK UNIFIED IDEOGRAPH-";
-pub static PREFIX_TANGUT_IDEOGRAPH: &'static str = "TANGUT IDEOGRAPH-";
-pub static PREFIX_NUSHU_CHARACTER: &'static str = "NUSHU CHARACTER-";
-pub static PREFIX_CJK_COMPATIBILITY_IDEOGRAPH: &'static str = "CJK COMPATIBILITY IDEOGRAPH-";
+pub static PREFIX_HANGUL_SYLLABLE: &str = "HANGUL SYLLABLE ";
+pub static PREFIX_CJK_UNIFIED_IDEOGRAPH: &str = "CJK UNIFIED IDEOGRAPH-";
+pub static PREFIX_TANGUT_IDEOGRAPH: &str = "TANGUT IDEOGRAPH-";
+pub static PREFIX_NUSHU_CHARACTER: &str = "NUSHU CHARACTER-";
+pub static PREFIX_CJK_COMPATIBILITY_IDEOGRAPH: &str = "CJK COMPATIBILITY IDEOGRAPH-";
 
 const JAMO_BUFFER_SIZE: usize = 3;
 
@@ -49,7 +49,7 @@ pub enum Name {
     NR3(&'static [&'static str]),
 }
 
-#[cfg_attr(feature = "cargo-clippy", allow(len_without_is_empty))]
+#[allow(clippy::len_without_is_empty)]
 impl Name {
     /// Find the character `Name` property value.
     pub fn of(ch: char) -> Option<Name> {
@@ -101,7 +101,7 @@ impl Name {
         }
     }
 
-    #[cfg_attr(feature = "cargo-clippy", allow(inline_always))]
+    #[allow(clippy::inline_always)]
     #[inline(always)]
     fn number_of_hex_digits(ch: char) -> usize {
         (32 - u32::leading_zeros(ch as u32) as usize + 3) / 4
