@@ -23,5 +23,3 @@ unic-ucd-version = { path = "../ucd/version/", version = "0.9.0" }
 maintenance = { status = "actively-developed" }
 is-it-maintained-issue-resolution = { repository = "open-i18n/rust-unic" }
 is-it-maintained-open-issues = { repository = "open-i18n/rust-unic" }
-appveyor = { repository = "open-i18n/rust-unic", branch = "master", service = "github" }
-travis-ci = { repository = "open-i18n/rust-unic", branch = "master" }
