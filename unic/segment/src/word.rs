@@ -401,7 +401,7 @@ impl<'a> Iterator for WordBounds<'a> {
 
 impl<'a> DoubleEndedIterator for WordBounds<'a> {
     #[inline]
-    #[allow(clippy::cyclomatic_complexity)]
+    #[allow(clippy::cognitive_complexity)]
     fn next_back(&mut self) -> Option<&'a str> {
         use self::FormatExtendType::*;
         use self::WordBoundsState::*;

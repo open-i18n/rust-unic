@@ -17,7 +17,7 @@ use crate::mapping::Mapping;
 use crate::punycode;
 
 /// Prefix used in Punycode encoding.
-pub static PUNYCODE_PREFIX: &'static str = "xn--";
+pub static PUNYCODE_PREFIX: &str = "xn--";
 
 fn map_char(codepoint: char, flags: Flags, output: &mut String, errors: &mut Vec<Error>) {
     match Mapping::of(codepoint) {

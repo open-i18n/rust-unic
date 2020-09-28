@@ -12,8 +12,6 @@
 
 //! Command-line tool to list versions of UNIC components.
 
-use unic;
-
 macro_rules! print_component_desc {
     ( $component:tt ) => {
         println!("Component: {}", unic::$component::PKG_DESCRIPTION);
