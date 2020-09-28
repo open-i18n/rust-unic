@@ -1,7 +1,11 @@
 language: rust
 sudo: false
-os: linux
-dist: trusty
+
+jobs:
+  include:
+    - os: linux
+      dist: trusty
+    - os: windows
 
 rust:
   - nightly
