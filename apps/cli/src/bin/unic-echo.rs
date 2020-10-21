@@ -14,7 +14,8 @@ extern crate clap;
 #[macro_use]
 extern crate unic_cli;
 
-use std::io::{self, Write};
+use std::env;
+use std::io::{self, Read, Write};
 
 use clap::{Arg, ErrorKind};
 
@@ -111,6 +112,7 @@ fn run() -> Result<()> {
         .arg(
             Arg::with_name("STRINGS")
                 .multiple(true)
+                .required(false)
                 .help("Input strings (expected valid Unicode)"),
         )
         .arg(
@@ -133,11 +135,20 @@ fn run() -> Result<()> {
     let matches = app.get_matches();
 
     // == Read input ==
-    let input: String = matches
+    let mut input: String = matches
         .values_of("STRINGS")
         .unwrap_or_default()
         .collect::<Vec<&str>>()
         .join(" ");
+
+    if input.len() == 0 {
+        if let Some(last_arg) = env::args().last() {
+            if last_arg == "--" {
+                input.clear();
+                io::stdin().read_to_string(&mut input).unwrap();
+            }
+        }
+    }
 
     let input_format =
         value_t!(matches, "input_format", InputFormat).unwrap_or_else(|err| match err.kind {
