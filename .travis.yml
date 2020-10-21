@@ -1,21 +1,32 @@
 language: rust
 sudo: false
-os: linux
-dist: trusty
 
-rust:
-  - nightly
-  - beta
-  - stable
-  - 1.45.0  # = MIN_RUST_VERSION
+matrix:
+  fast_finish: true
+  include:
+
+    # Linux
+    - rust: nightly
+    - rust: beta
+    - rust: stable
+    - rust: 1.45.0  # = MIN_RUST_VERSION
+
+    # MacOS
+    - os: osx
+      rust: beta
+    - os: osx
+      rust: stable
+
+    # Windows
+    - os: windows
+      rust: beta
+    - os: windows
+      rust: stable
 
 branches:
   except:
     - staging.tmp
     - trying.tmp
-
-matrix:
-  fast_finish: true
 
 notifications:
   email:
