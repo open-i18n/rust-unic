@@ -292,10 +292,12 @@ impl<'text> BidiInfo<'text> {
         // Reset some whitespace chars to paragraph level.
         // <https://www.unicode.org/reports/tr9/#L1>
         let line_str: &str = &self.text[line.clone()];
+        let line_classes = &self.original_classes[line.clone()];
+        let line_levels = &mut levels[line.clone()];
         let mut reset_from: Option<usize> = Some(0);
         let mut reset_to: Option<usize> = None;
         for (i, c) in line_str.char_indices() {
-            match self.original_classes[i] {
+            match line_classes[i] {
                 // Ignored by X9
                 RLE | LRE | RLO | LRO | PDF | BN => {}
                 // Segment separator, Paragraph separator
@@ -318,7 +320,7 @@ impl<'text> BidiInfo<'text> {
             }
             if let (Some(from), Some(to)) = (reset_from, reset_to) {
                 for j in from..to {
-                    levels[j] = para.level;
+                    line_levels[j] = para.level;
                 }
                 reset_from = None;
                 reset_to = None;
@@ -326,7 +328,7 @@ impl<'text> BidiInfo<'text> {
         }
         if let Some(from) = reset_from {
             for j in from..line_str.len() {
-                levels[j] = para.level;
+                line_levels[j] = para.level;
             }
         }
 
@@ -749,6 +751,16 @@ mod tests {
         assert_eq!(
             format!("{}", BidiInfo::new("abc\nאבּג", None)),
             "2 paragraphs with a maximum bidirectional level of 1"
+        );
+    }
+
+    #[test]
+    fn test_reordered_levels_line() {
+        let text = "aa טֶ";
+        let bidi_info = BidiInfo::new(text, None);
+        assert_eq!(
+            bidi_info.reordered_levels(&bidi_info.paragraphs[0], 3..7),
+            Level::vec(&[0, 0, 0, 1, 1, 1, 1]),
         );
     }
 }
