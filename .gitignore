@@ -3,3 +3,4 @@
 *.rs.rustfmt
 target/
 Cargo.lock
+.idea/
