@@ -292,10 +292,10 @@ mod tests {
         assert_eq!(SB::of('\u{07C0}'), SB::Numeric);
         assert_eq!(SB::of('\u{085F}'), SB::Other);
         assert_eq!(SB::of('\u{0860}'), SB::OLetter);
-        assert_eq!(SB::of('\u{0870}'), SB::Other);
-        assert_eq!(SB::of('\u{089F}'), SB::Other);
+        assert_eq!(SB::of('\u{0870}'), SB::OLetter);
+        assert_eq!(SB::of('\u{089F}'), SB::Extend);
         assert_eq!(SB::of('\u{08A0}'), SB::OLetter);
-        assert_eq!(SB::of('\u{089F}'), SB::Other);
+        assert_eq!(SB::of('\u{089F}'), SB::Extend);
         assert_eq!(SB::of('\u{08FF}'), SB::Extend);
 
         // Default ET

@@ -185,9 +185,9 @@ mod tests {
         assert_eq!(CCC::of('\u{085F}'), CCC::NotReordered);
         assert_eq!(CCC::of('\u{0860}'), CCC::NotReordered);
         assert_eq!(CCC::of('\u{0870}'), CCC::NotReordered);
-        assert_eq!(CCC::of('\u{089F}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{089F}'), CCC(230));
         assert_eq!(CCC::of('\u{08A0}'), CCC::NotReordered);
-        assert_eq!(CCC::of('\u{089F}'), CCC::NotReordered);
+        assert_eq!(CCC::of('\u{089F}'), CCC(230));
         assert_eq!(CCC::of('\u{08FF}'), CCC::Above);
 
         //  Currency Symbols

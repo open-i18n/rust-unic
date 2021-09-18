@@ -20,7 +20,7 @@ mod tests {
 
     #[test]
     fn validate_version_values() {
-        assert!(UNICODE_VERSION.major == 13);
+        assert!(UNICODE_VERSION.major == 14);
         assert!(UNICODE_VERSION.minor == 0);
         assert!(UNICODE_VERSION.micro == 0);
     }

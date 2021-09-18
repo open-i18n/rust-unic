@@ -394,9 +394,9 @@ mod tests {
         assert_eq!(GCB::of('\u{085F}'), GCB::Other);
         assert_eq!(GCB::of('\u{0860}'), GCB::Other);
         assert_eq!(GCB::of('\u{0870}'), GCB::Other);
-        assert_eq!(GCB::of('\u{089F}'), GCB::Other);
+        assert_eq!(GCB::of('\u{089F}'), GCB::Extend);
         assert_eq!(GCB::of('\u{08A0}'), GCB::Other);
-        assert_eq!(GCB::of('\u{089F}'), GCB::Other);
+        assert_eq!(GCB::of('\u{089F}'), GCB::Extend);
         assert_eq!(GCB::of('\u{08FF}'), GCB::Extend);
 
         // Default ET

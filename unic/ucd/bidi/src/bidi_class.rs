@@ -403,10 +403,10 @@ mod tests {
         assert_eq!(BidiClass::of('\u{07C0}'), R);
         assert_eq!(BidiClass::of('\u{085F}'), R);
         assert_eq!(BidiClass::of('\u{0860}'), AL);
-        assert_eq!(BidiClass::of('\u{0870}'), R);
-        assert_eq!(BidiClass::of('\u{089F}'), R);
+        assert_eq!(BidiClass::of('\u{0870}'), AL);
+        assert_eq!(BidiClass::of('\u{089F}'), NSM);
         assert_eq!(BidiClass::of('\u{08A0}'), AL);
-        assert_eq!(BidiClass::of('\u{089F}'), R);
+        assert_eq!(BidiClass::of('\u{089F}'), NSM);
         assert_eq!(BidiClass::of('\u{08FF}'), NSM);
 
         // Default ET
@@ -417,9 +417,9 @@ mod tests {
         assert_eq!(BidiClass::of('\u{FB1D}'), R);
         assert_eq!(BidiClass::of('\u{FB4F}'), R);
         assert_eq!(BidiClass::of('\u{FB50}'), AL);
-        assert_eq!(BidiClass::of('\u{FDCF}'), AL);
+        assert_eq!(BidiClass::of('\u{FDCF}'), ON);
         assert_eq!(BidiClass::of('\u{FDF0}'), AL);
-        assert_eq!(BidiClass::of('\u{FDFF}'), AL);
+        assert_eq!(BidiClass::of('\u{FDFF}'), ON);
         assert_eq!(BidiClass::of('\u{FE70}'), AL);
         assert_eq!(BidiClass::of('\u{FEFE}'), AL);
         assert_eq!(BidiClass::of('\u{FEFF}'), BN);

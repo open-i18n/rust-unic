@@ -411,10 +411,10 @@ mod tests {
         assert_eq!(WB::of('\u{07C0}'), WB::Numeric);
         assert_eq!(WB::of('\u{085F}'), WB::Other);
         assert_eq!(WB::of('\u{0860}'), WB::ALetter);
-        assert_eq!(WB::of('\u{0870}'), WB::Other);
-        assert_eq!(WB::of('\u{089F}'), WB::Other);
+        assert_eq!(WB::of('\u{0870}'), WB::ALetter);
+        assert_eq!(WB::of('\u{089F}'), WB::Extend);
         assert_eq!(WB::of('\u{08A0}'), WB::ALetter);
-        assert_eq!(WB::of('\u{089F}'), WB::Other);
+        assert_eq!(WB::of('\u{089F}'), WB::Extend);
         assert_eq!(WB::of('\u{08FF}'), WB::Extend);
 
         // Default ET
