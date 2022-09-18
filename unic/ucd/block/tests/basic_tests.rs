@@ -22,7 +22,7 @@ fn test_block_of() {
 fn test_block_iter() {
     // High Surrogates, High Private Use Surrogates and Low Surrogates
     // are omitted in the block iterator
-    assert_eq!(BlockIter::new().count(), 317);
+    assert_eq!(BlockIter::new().count(), 324);
 
     let basic_latin = BlockIter::new().nth(0).unwrap();
     assert_eq!(basic_latin.range.low, '\u{0}');

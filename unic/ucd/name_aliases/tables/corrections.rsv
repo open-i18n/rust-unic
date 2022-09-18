@@ -3,6 +3,7 @@
 CharDataTable::Direct(&[
     ('\u{1a2}', &["LATIN CAPITAL LETTER GHA"]),
     ('\u{1a3}', &["LATIN SMALL LETTER GHA"]),
+    ('\u{616}', &["ARABIC SMALL HIGH LIGATURE ALEF WITH YEH BARREE"]),
     ('\u{709}', &["SYRIAC SUBLINEAR COLON SKEWED LEFT"]),
     ('\u{cde}', &["KANNADA LETTER LLLA"]),
     ('\u{e9d}', &["LAO LETTER FO FON"]),
@@ -14,6 +15,7 @@ CharDataTable::Direct(&[
     ('\u{11ed}', &["HANGUL JONGSEONG YESIEUNG-SSANGKIYEOK"]),
     ('\u{11ee}', &["HANGUL JONGSEONG SSANGYESIEUNG"]),
     ('\u{11ef}', &["HANGUL JONGSEONG YESIEUNG-KHIEUKH"]),
+    ('\u{1bbd}', &["SUNDANESE LETTER ARCHAIC I"]),
     ('\u{2118}', &["WEIERSTRASS ELLIPTIC FUNCTION"]),
     ('\u{2448}', &["MICR ON US SYMBOL"]),
     ('\u{2449}', &["MICR DASH SYMBOL"]),
