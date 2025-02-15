@@ -180,7 +180,7 @@ mod tests {
         assert_eq!(is_xid_continue('\u{061c}'), false);
         assert_eq!(is_xid_continue('\u{061d}'), false);
 
-        assert_eq!(is_xid_continue('\u{200d}'), false);
+        assert_eq!(is_xid_continue('\u{200d}'), true);
         assert_eq!(is_xid_continue('\u{200e}'), false);
         assert_eq!(is_xid_continue('\u{200f}'), false);
         assert_eq!(is_xid_continue('\u{2010}'), false);

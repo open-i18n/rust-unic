@@ -14,7 +14,7 @@ readme = "README.md"
 exclude = ["tests/punycode_tests.rs"]
 
 [dev-dependencies]
-rustc-serialize = "0.3"
+rustc-serialize = "0.3.25"
 
 [badges]
 maintenance = { status = "actively-developed" }

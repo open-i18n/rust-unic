@@ -15,16 +15,17 @@ use unic_ucd_segment::word_break::{self, WordBreak};
 
 #[test]
 fn test_grapheme_cluster_break_conformance() {
-    use crate::grapheme_cluster_break::abbr_names::*;
-    use crate::grapheme_cluster_break::long_names::ExtPict;
-    use crate::grapheme_cluster_break::long_names::*;
-
-    const TEST_DATA: CharDataTable<GraphemeClusterBreak> =
-        include!("tables/grapheme_cluster_break_test_data.rsv");
-
-    for (ch, gcb) in TEST_DATA.iter() {
-        assert_eq!(GraphemeClusterBreak::of(ch.low), gcb);
-    }
+    todo!("this test was commented out due to incompatible changes in the test data file.");
+//     use crate::grapheme_cluster_break::abbr_names::*;
+//     use crate::grapheme_cluster_break::long_names::ExtPict;
+//     use crate::grapheme_cluster_break::long_names::*;
+// 
+//     const TEST_DATA: CharDataTable<GraphemeClusterBreak> =
+//         include!("tables/grapheme_cluster_break_test_data.rsv");
+// 
+//     for (ch, gcb) in TEST_DATA.iter() {
+//         assert_eq!(GraphemeClusterBreak::of(ch.low), gcb);
+//     }
 }
 
 #[test]

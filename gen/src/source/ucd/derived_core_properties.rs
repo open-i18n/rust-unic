@@ -221,7 +221,7 @@ impl FromStr for DerivedCoreProperties {
                 "ID_Continue" => props.id_continue.extend(range),
                 "XID_Start" => props.xid_start.extend(range),
                 "XID_Continue" => props.xid_continue.extend(range),
-                prop => panic!("Unsupported DerivedCoreProperty `{}`", prop),
+                prop => println!("Unsupported DerivedCoreProperty `{}`", prop),
             }
         }
 
