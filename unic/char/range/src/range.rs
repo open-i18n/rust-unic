@@ -34,7 +34,7 @@ use crate::CharIter;
 /// If constructed in reverse order, such that `self.high` is ordered before `self.low`,
 /// the range is empty. If you want to iterate in decreasing order, use `.iter().rev()`.
 /// All empty ranges are considered equal no matter the internal state.
-#[derive(Copy, Clone, Debug, Eq)]
+#[derive(Copy, Clone, Debug, Eq, Hash)]
 pub struct CharRange {
     /// The lowest character in this range (inclusive).
     pub low: char,
