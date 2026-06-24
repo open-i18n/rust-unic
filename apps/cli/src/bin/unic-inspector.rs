@@ -21,6 +21,10 @@ use prettytable::Table;
 use unic::char::property::EnumeratedCharProperty;
 use unic::ucd::{name_aliases_of, GeneralCategory, Name, NameAliasType};
 
+use std::env;
+use std::io::{self, Read};
+
+
 fn main() {
     let app = app_from_crate!()
         .about(concat!(
@@ -31,16 +35,26 @@ fn main() {
         .arg(
             Arg::with_name("STRINGS")
                 .help("Input strings (expected valid Unicode)")
+                .required(false)
                 .multiple(true),
         );
     let matches = app.get_matches();
 
     // == Read input ==
-    let string: String = matches
+    let mut input: String = matches
         .values_of("STRINGS")
         .unwrap_or_default()
         .collect::<Vec<&str>>()
         .join(" ");
+
+    if input.len() == 0 {
+        if let Some(last_arg) = env::args().last() {
+            if last_arg == "--" {
+                input.clear();
+                io::stdin().read_to_string(&mut input).unwrap();
+            }
+        }
+    }
 
     // == Write output ==
     let mut table = Table::new();
@@ -58,7 +72,7 @@ fn main() {
     ]);
     */
 
-    string.chars().for_each(|chr| {
+    input.chars().for_each(|chr| {
         let display_name = Name::of(chr).map(|n| n.to_string()).unwrap_or_else(|| {
             match name_aliases_of(chr, NameAliasType::NameAbbreviations) {
                 Some(abbrs) => abbrs[0].to_owned(),
