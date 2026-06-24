@@ -20,6 +20,7 @@ mod ident;
 mod name;
 mod name_aliases;
 mod normal;
+mod numeric;
 mod segment;
 mod segment_tests;
 
@@ -38,6 +39,7 @@ pub fn generate() {
     name::generate(&clean_dir("unic/ucd/name/tables"));
     name_aliases::generate(&clean_dir("unic/ucd/name_aliases/tables"));
     normal::generate(&clean_dir("unic/ucd/normal/tables"));
+    numeric::generate(&clean_dir("unic/ucd/numeric/tables"));
     segment::generate(&clean_dir("unic/ucd/segment/tables"));
     segment_tests::generate(&clean_dir("unic/ucd/segment/tests/tables"));
 }

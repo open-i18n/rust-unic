@@ -37,6 +37,7 @@ pub use unic_ucd_ident as ident;
 pub use unic_ucd_name as name;
 pub use unic_ucd_name_aliases as name_aliases;
 pub use unic_ucd_normal as normal;
+pub use unic_ucd_numeric as numeric;
 pub use unic_ucd_segment as segment;
 
 pub use crate::version::UnicodeVersion;
@@ -80,6 +81,8 @@ pub use crate::name::Name;
 pub use crate::normal::CanonicalCombiningClass;
 
 pub use crate::name_aliases::{name_aliases_of, NameAliasType};
+
+pub use crate::numeric::NumericValue;
 
 pub use crate::segment::{GraphemeClusterBreak, SentenceBreak, WordBreak};
 

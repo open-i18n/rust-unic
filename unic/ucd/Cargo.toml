@@ -25,6 +25,7 @@ unic-ucd-ident = { path = "ident/", version = "0.9.0" }
 unic-ucd-name = { path = "name/", version = "0.9.0" }
 unic-ucd-name_aliases = { path = "name_aliases/", version = "0.9.0" }
 unic-ucd-normal = { path = "normal/", version = "0.9.0", features = ["unic-ucd-category"] }
+unic-ucd-numeric = { path = "numeric/", version = "0.9.0" }
 unic-ucd-segment = { path = "segment/", version = "0.9.0" }
 unic-ucd-version = { path = "version/", version = "0.9.0" }
 
