@@ -85,3 +85,10 @@ pub use crate::segment::{GraphemeClusterBreak, SentenceBreak, WordBreak};
 
 mod pkg_info;
 pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
+
+#[cfg(feature = "unihan")]
+pub use unic_ucd_unihan as unihan;
+
+#[cfg(feature = "unihan")]
+pub use crate::unihan::{definition_of, mandarin_of, simplified_variant_of, traditional_variant_of};
+

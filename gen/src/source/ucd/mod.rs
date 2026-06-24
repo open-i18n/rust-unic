@@ -21,6 +21,7 @@ pub mod prop_list;
 pub mod readme;
 pub mod sentence_break_property;
 pub mod unicode_data;
+pub mod unihan;
 pub mod word_break_property;
 
 use regex::Regex;
