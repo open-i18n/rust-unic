@@ -284,7 +284,7 @@ mod tests {
         assert_eq!(SB::of('\u{05FF}'), SB::Other);
 
         // Arabic
-        assert_eq!(SB::of('\u{0600}'), SB::Format);
+        assert_eq!(SB::of('\u{0600}'), SB::Numeric);
         assert_eq!(SB::of('\u{0627}'), SB::OLetter);
         assert_eq!(SB::of('\u{07BF}'), SB::Other);
 

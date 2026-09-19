@@ -18,6 +18,7 @@
 use std::cmp;
 use std::iter::Filter;
 
+use unic_emoji_char::is_extended_pictographic;
 use unic_ucd_segment::WordBreak as WB;
 
 /// An iterator over the substrings of a string which, after splitting the string on [word
@@ -235,14 +236,21 @@ impl<'a> Iterator for WordBounds<'a> {
             // state enum; the state enum represents the last non-zwj state encountered.
             // When prev_zwj is true, for the purposes of WB3c, we are in the Zwj state,
             // however we are in the previous state for the purposes of all other rules.
-            if prev_zwj {
-                match cat {
-                    WB::ExtPict => {
-                        state = Emoji;
-                        continue;
-                    },
-                    _ => (),
-                }
+            if prev_zwj && is_extended_pictographic(ch) {
+                // rule WB3c: ZWJ × \p{Extended_Pictographic}
+                //
+                // `Extended_Pictographic` is a separate property, not a Word_Break value: a
+                // pictograph can also be a letter (e.g. U+24C2 CIRCLED LATIN CAPITAL LETTER M),
+                // in which case the boundaries after it follow the rules for its Word_Break value.
+                state = match cat {
+                    WB::ALetter => Letter,
+                    WB::HebrewLetter => HLetter,
+                    WB::Numeric => Numeric,
+                    WB::Katakana => Katakana,
+                    WB::ExtendNumLet => ExtendNumLet,
+                    _ => Emoji,
+                };
+                continue;
             }
             // Don't use `continue` in this match without updating `cat`
             state = match state {
@@ -429,6 +437,9 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
 
         let mut skipped_format_extend = false;
 
+        // Whether the character following the current one is Extended_Pictographic, for WB3c.
+        let mut next_ext_pict = false;
+
         for (curr, ch) in self.string.char_indices().rev() {
             previdx = idx;
             idx = curr;
@@ -440,15 +451,25 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
             };
             take_cat = true;
 
+            // rule WB3c: ZWJ × \p{Extended_Pictographic}
+            // This has priority over folding the ZWJ into the preceding character (rule WB4).
+            // The character before the ZWJ is then accepted unconditionally, as WB4 attaches
+            // the ZWJ to it.
+            if cat == WB::ZWJ && next_ext_pict {
+                next_ext_pict = false;
+                state = FormatExtend(AcceptAny);
+                continue;
+            }
+            next_ext_pict = is_extended_pictographic(ch);
+
             // backward iterator over word boundaries. Mostly the same as the forward
             // iterator, with two weirdnesses:
             // (1) If we encounter a single quote in the Start state, we have to check for a
             //     Hebrew Letter immediately before it.
             // (2) Format and Extend char handling takes some gymnastics.
 
-            if cat == WB::Extend || cat == WB::Format || (cat == WB::ZWJ && state != Zwj) {
-                // WB3c has more priority so we should not
-                // fold in that case
+            if cat == WB::Extend || cat == WB::Format || cat == WB::ZWJ {
+                // (WB3c has more priority, and is handled above)
                 if match state {
                     FormatExtend(_) | Start => false,
                     _ => true,
@@ -472,7 +493,6 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
             // Don't use `continue` in this match without updating `catb`
             state = match state {
                 Start | FormatExtend(AcceptAny) => match cat {
-                    WB::ExtPict => Zwj,
                     WB::ALetter => Letter,            // rule WB5, WB7, WB10, WB13b
                     WB::HebrewLetter => HLetter,      // rule WB5, WB7, WB7c, WB10, WB13b
                     WB::Numeric => Numeric,           // rule WB8, WB9, WB11, WB13b
@@ -499,16 +519,16 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
                         }
                         break; // rule WB3a
                     }
+                    // An Extended_Pictographic that is not a letter: the preceding character may
+                    // still be a ZWJ (rule WB3c), which is checked at the top of the loop.
+                    _ if is_extended_pictographic(ch) => Zwj,
                     _ => break, // rule WB999
                 },
-                Zwj => match cat {
-                    // rule WB3c
-                    WB::ZWJ => FormatExtend(AcceptAny),
-                    _ => {
-                        take_curr = false;
-                        break;
-                    }
-                },
+                Zwj => {
+                    // rule WB3c did not apply (a ZWJ would have been handled above)
+                    take_curr = false;
+                    break;
+                }
                 Letter | HLetter => match cat {
                     WB::ALetter => Letter,            // rule WB5
                     WB::HebrewLetter => HLetter,      // rule WB5
@@ -589,13 +609,9 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
                         break;
                     }
                 },
-                Emoji => match cat {
-                    WB::ExtPict => Zwj,
-                    _ => {
-                        take_curr = false;
-                        break;
-                    }
-                },
+                Emoji => {
+                    unreachable!("WordBoundsState::Emoji should not occur on backward iteration")
+                }
                 FormatExtend(t) => match t {
                     RequireNumeric if cat == WB::Numeric => Numeric, // rule WB12
                     RequireLetter if cat == WB::ALetter => Letter,   // rule WB6

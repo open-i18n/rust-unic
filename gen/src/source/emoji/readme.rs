@@ -33,15 +33,25 @@ impl FromStr for EmojiDataVersion {
 
     fn from_str(str: &str) -> Result<Self, Self::Err> {
         lazy_static! {
-            static ref REGEX: Regex = Regex::new(r"Unicode Emoji, Version (\d+).(\d+)").unwrap();
+            static ref REGEX: Regex = Regex::new(
+                r"(?:Unicode Emoji, Version|version) (\d+)\.(\d+)(?:\.\d+)? of\s+UTS #51|Unicode Emoji, Version (\d+)\.(\d+)"
+            )
+            .unwrap();
         }
 
         REGEX
             .captures(str)
-            .map(|m| EmojiDataVersion {
-                major: m[1].parse().unwrap(),
-                minor: m[2].parse().unwrap(),
-                micro: 0,
+            .map(|m| {
+                let (major, minor) = if m.get(1).is_some() {
+                    (&m[1], &m[2])
+                } else {
+                    (&m[3], &m[4])
+                };
+                EmojiDataVersion {
+                    major: major.parse().unwrap(),
+                    minor: minor.parse().unwrap(),
+                    micro: 0,
+                }
             })
             .ok_or(())
     }

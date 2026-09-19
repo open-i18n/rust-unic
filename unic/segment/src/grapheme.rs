@@ -18,6 +18,7 @@
 use std::cmp;
 
 use unic_ucd_segment::GraphemeClusterBreak as GCB;
+use unic_ucd_segment::IndicConjunctBreak as InCB;
 
 /// External iterator for grapheme clusters and byte offsets.
 #[derive(Clone, Debug)]
@@ -190,6 +191,30 @@ enum GraphemeState {
     // The codepoint after is in the E_Modifier category, so whether it's a boundary
     // depends on pre-context according to GB10.
     Emoji,
+    // The codepoint after has Indic_Conjunct_Break=Consonant, so whether it's a boundary
+    // depends on pre-context according to GB9c.
+    IndicConjunct,
+}
+
+/// The break-related properties of a single codepoint.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+struct Cat {
+    gcb: GCB,
+    incb: InCB,
+}
+
+impl Cat {
+    #[inline]
+    fn of(ch: char) -> Cat {
+        let gcb = GCB::of(ch);
+        // Every character with a non-default `Indic_Conjunct_Break` value has
+        // `Grapheme_Cluster_Break` of `Other`, `Extend` or `ZWJ`, so skip the lookup otherwise.
+        let incb = match gcb {
+            GCB::Other | GCB::Extend | GCB::ZWJ => InCB::of(ch),
+            _ => InCB::None,
+        };
+        Cat { gcb, incb }
+    }
 }
 
 /// Cursor-based segmenter for grapheme clusters.
@@ -209,10 +234,10 @@ pub struct GraphemeCursor {
     state: GraphemeState,
 
     /// Category of codepoint immediately preceding cursor, if known.
-    cat_before: Option<GCB>,
+    cat_before: Option<Cat>,
 
     /// Category of codepoint immediately after cursor, if known.
-    cat_after: Option<GCB>,
+    cat_after: Option<Cat>,
 
     /// If set, at least one more codepoint immediately preceding this offset is needed to resolve
     /// whether there's a boundary at `offset`.
@@ -268,13 +293,16 @@ enum PairResult {
 
     /// a break if preceded by Emoji Base and (Extend)*
     Emoji,
+
+    /// a break if not in extended mode, or not preceded by InCB=Linker and (InCB=Extend)*
+    IndicConjunct,
 }
 
-fn check_pair(before: GCB, after: GCB) -> PairResult {
+fn check_pair(before: Cat, after: Cat) -> PairResult {
     use self::PairResult::*;
 
     #[allow(clippy::match_same_arms)]
-    match (before, after) {
+    match (before.gcb, after.gcb) {
         // Do not break between a CR and LF. Otherwise, break before and after controls.
         (GCB::CR, GCB::LF) => NotBreak, // GB3
         (GCB::Control, _) => Break,     // GB4
@@ -304,6 +332,10 @@ fn check_pair(before: GCB, after: GCB) -> PairResult {
         // Do not break before SpacingMarks, or after Prepend characters.
         (_, GCB::SpacingMark) => Extended, // GB9a
         (GCB::Prepend, _) => Extended,     // GB9b
+
+        // Only for extended grapheme clusters:
+        // Do not break within certain combinations with Indic_Conjunct_Break (InCB)=Linker.
+        (_, _) if after.incb == InCB::Consonant => IndicConjunct, // GB9c
 
         // Do not break within Emoji Modifier Sequences or Emoji ZWJ Sequences.
         (_, GCB::ExtPict) => Emoji, // GB11
@@ -458,6 +490,7 @@ impl GraphemeCursor {
         match self.state {
             GraphemeState::Regional => self.handle_regional(chunk, chunk_start),
             GraphemeState::Emoji => self.handle_emoji(chunk, chunk_start),
+            GraphemeState::IndicConjunct => self.handle_indic_conjunct(chunk, chunk_start),
             _ => panic!("invalid state"),
         }
     }
@@ -532,6 +565,28 @@ impl GraphemeCursor {
         self.pre_context_offset = Some(chunk_start);
     }
 
+    // GB9c: \p{InCB=Linker} \p{InCB=Extend}* × \p{InCB=Consonant}
+    fn handle_indic_conjunct(&mut self, chunk: &str, chunk_start: usize) {
+        for ch in chunk.chars().rev() {
+            match InCB::of(ch) {
+                InCB::Extend => (),
+                InCB::Linker => {
+                    self.decide(false);
+                    return;
+                }
+                _ => {
+                    self.decide(true);
+                    return;
+                }
+            }
+        }
+        if chunk_start == 0 {
+            self.decide(true);
+            return;
+        }
+        self.pre_context_offset = Some(chunk_start);
+    }
+
     // TODO(clippy): Fix clippy warning or leave it as allowed if really needed.
     // `warning: methods called `is_*` usually take self by reference or no self; consider choosing
     // a less ambiguous name`
@@ -581,13 +636,23 @@ impl GraphemeCursor {
         let offset_in_chunk = self.offset - chunk_start;
         if self.cat_after.is_none() {
             let ch = chunk[offset_in_chunk..].chars().next().unwrap();
-            self.cat_after = Some(GCB::of(ch));
+            self.cat_after = Some(Cat::of(ch));
         }
         if self.offset == chunk_start {
             let mut need_pre_context = true;
             match self.cat_after.unwrap() {
-                GCB::RegionalIndicator => self.state = GraphemeState::Regional,
-                GCB::EModifier => self.state = GraphemeState::Emoji,
+                Cat {
+                    gcb: GCB::RegionalIndicator,
+                    ..
+                } => self.state = GraphemeState::Regional,
+                Cat {
+                    gcb: GCB::EModifier,
+                    ..
+                } => self.state = GraphemeState::Emoji,
+                Cat {
+                    incb: InCB::Consonant,
+                    ..
+                } if self.is_extended => self.state = GraphemeState::IndicConjunct,
                 _ => need_pre_context = self.cat_before.is_none(),
             }
             if need_pre_context {
@@ -597,7 +662,7 @@ impl GraphemeCursor {
         }
         if self.cat_before.is_none() {
             let ch = chunk[..offset_in_chunk].chars().rev().next().unwrap();
-            self.cat_before = Some(GCB::of(ch));
+            self.cat_before = Some(Cat::of(ch));
         }
         match check_pair(self.cat_before.unwrap(), self.cat_after.unwrap()) {
             PairResult::NotBreak => self.decision(false),
@@ -615,6 +680,13 @@ impl GraphemeCursor {
             }
             PairResult::Emoji => {
                 self.handle_emoji(&chunk[..offset_in_chunk], chunk_start);
+                self.is_boundary_result()
+            }
+            PairResult::IndicConjunct => {
+                if !self.is_extended {
+                    return self.decision(true);
+                }
+                self.handle_indic_conjunct(&chunk[..offset_in_chunk], chunk_start);
                 self.is_boundary_result()
             }
         }
@@ -665,23 +737,23 @@ impl GraphemeCursor {
         loop {
             if self.resuming {
                 if self.cat_after.is_none() {
-                    self.cat_after = Some(GCB::of(ch));
+                    self.cat_after = Some(Cat::of(ch));
                 }
             } else {
                 self.offset += ch.len_utf8();
                 self.state = GraphemeState::Unknown;
                 self.cat_before = self.cat_after.take();
                 if self.cat_before.is_none() {
-                    self.cat_before = Some(GCB::of(ch));
+                    self.cat_before = Some(Cat::of(ch));
                 }
-                if self.cat_before == Some(GCB::RegionalIndicator) {
+                if self.cat_before.map(|c| c.gcb) == Some(GCB::RegionalIndicator) {
                     self.ris_count = self.ris_count.map(|c| c + 1);
                 } else {
                     self.ris_count = Some(0);
                 }
                 if let Some(next_ch) = iter.next() {
                     ch = next_ch;
-                    self.cat_after = Some(GCB::of(ch));
+                    self.cat_after = Some(Cat::of(ch));
                 } else if self.offset == self.len {
                     self.decide(true);
                 } else {
@@ -747,7 +819,7 @@ impl GraphemeCursor {
                 return Err(GraphemeIncomplete::PrevChunk);
             }
             if self.resuming {
-                self.cat_before = Some(GCB::of(ch));
+                self.cat_before = Some(Cat::of(ch));
             } else {
                 self.offset -= ch.len_utf8();
                 self.cat_after = self.cat_before.take();
@@ -761,7 +833,7 @@ impl GraphemeCursor {
                 }
                 if let Some(prev_ch) = iter.next() {
                     ch = prev_ch;
-                    self.cat_before = Some(GCB::of(ch));
+                    self.cat_before = Some(Cat::of(ch));
                 } else if self.offset == 0 {
                     self.decide(true);
                 } else {

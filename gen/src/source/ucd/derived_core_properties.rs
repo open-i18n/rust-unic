@@ -9,8 +9,10 @@
 // except according to those terms.
 
 use std::char;
-use std::collections::BTreeSet;
+use std::collections::{BTreeMap, BTreeSet};
 use std::str::FromStr;
+
+use regex::Regex;
 
 use crate::source::utils::read;
 
@@ -184,13 +186,46 @@ pub struct DerivedCoreProperties {
     ///
     /// [UAX31]: http://unicode.org/reports/tr41/tr41-21.html#UAX31
     pub xid_continue: BTreeSet<char>,
+
+    /// `Indic_Conjunct_Break` (`InCB`) property values (`Consonant`, `Extend`, `Linker`), used by
+    /// rule GB9c of the grapheme cluster boundary algorithm, as described in
+    /// [Unicode Standard Annex #29, "Unicode Text Segmentation"][UAX29].
+    ///
+    /// Characters not present in the map have the default value `None`.
+    ///
+    /// [UAX29]: https://www.unicode.org/reports/tr29/
+    pub indic_conjunct_break: BTreeMap<char, String>,
 }
 
 impl FromStr for DerivedCoreProperties {
     type Err = ();
 
     fn from_str(str: &str) -> Result<Self, Self::Err> {
+        lazy_static! {
+            static ref INCB_REGEX: Regex = Regex::new(
+                r"(?xm)^
+                  ([[:xdigit:]]{4,6})          # low
+                  (?:\.\.([[:xdigit:]]{4,6}))? # high
+                  \s+;\s+InCB\s*;\s+
+                  (\w+)                        # value
+                 ",
+            )
+            .unwrap();
+        }
+
         let mut props = DerivedCoreProperties::default();
+
+        for capture in INCB_REGEX.captures_iter(str) {
+            let low = char::from_u32(u32::from_str_radix(&capture[1], 16).unwrap()).unwrap();
+            let high = capture
+                .get(2)
+                .map(|s| u32::from_str_radix(s.as_str(), 16).unwrap())
+                .map(|u| char::from_u32(u).unwrap())
+                .unwrap_or(low);
+            for ch in chars!(low..=high) {
+                props.indic_conjunct_break.insert(ch, capture[3].to_owned());
+            }
+        }
 
         for capture in BINARY_PROPERTIES_REGEX.captures_iter(str) {
             let low = char::from_u32(u32::from_str_radix(&capture[1], 16).unwrap()).unwrap();
@@ -221,6 +256,7 @@ impl FromStr for DerivedCoreProperties {
                 "ID_Continue" => props.id_continue.extend(range),
                 "XID_Start" => props.xid_start.extend(range),
                 "XID_Continue" => props.xid_continue.extend(range),
+                "InCB" => { /* enumerated property, handled above */ }
                 prop => println!("Unsupported DerivedCoreProperty `{}`", prop),
             }
         }

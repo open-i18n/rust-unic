@@ -17,7 +17,6 @@
 //! * <https://www.unicode.org/reports/tr29/#Table_Word_Break_Property_Values>
 
 use unic_char_property::TotalCharProperty;
-use unic_emoji_char::is_extended_pictographic;
 
 char_property! {
     /// Represents the Unicode character
@@ -313,16 +312,6 @@ char_property! {
         }
 
         /// Extended_Pictographic
-        /// FIXME:
-        ///   Remove this.
-        ///   Extended Pictographic is not a real word break type, we need to define this
-        ///   because of a mistake in design in unic_segment_grapheme.
-        ExtPict {
-            abbr => EP,
-            long => ExtPict,
-            human => "Extended Pictographic",
-        }
-
         /// All other characters
         Other {
             abbr => XX,
@@ -372,11 +361,7 @@ mod data {
 impl WordBreak {
     /// Find the character `Word_Break` property value.
     pub fn of(ch: char) -> WordBreak {
-        if is_extended_pictographic(ch) {
-            WordBreak::ExtPict
-        } else {
-            data::WORD_BREAK_TABLE.find_or_default(ch)
-        }
+        data::WORD_BREAK_TABLE.find_or_default(ch)
     }
 }
 
@@ -403,7 +388,7 @@ mod tests {
         assert_eq!(WB::of('\u{05FF}'), WB::Other);
 
         // Arabic
-        assert_eq!(WB::of('\u{0600}'), WB::Format);
+        assert_eq!(WB::of('\u{0600}'), WB::Numeric);
         assert_eq!(WB::of('\u{0627}'), WB::ALetter);
         assert_eq!(WB::of('\u{07BF}'), WB::Other);
 
