@@ -17,6 +17,7 @@
 //! * <https://www.unicode.org/reports/tr29/#Grapheme_Cluster_Break_Property_Values>
 
 use unic_char_property::TotalCharProperty;
+use unic_emoji_char::is_extended_pictographic;
 
 char_property! {
     /// Represents the Unicode character
@@ -293,6 +294,17 @@ char_property! {
             human => "Emoji Base and Glue After ZWJ",
         }
 
+        /// Extended_Pictographic
+        /// FIXME:
+        ///   Remove this.
+        ///   Extended Pictographic is not a real grapheme cluster break type, we need to define this
+        ///   because of a mistake in design in unic_segment_grapheme.
+        ExtPict {
+            abbr => EP,
+            long => ExtPict,
+            human => "Extended Pictographic",
+        }
+
         /// All other characters
         Other {
             abbr => XX,
@@ -342,7 +354,11 @@ mod data {
 impl GraphemeClusterBreak {
     /// Find the character `Grapheme_Cluster_Break` property value.
     pub fn of(ch: char) -> GraphemeClusterBreak {
-        data::GRAPHEME_CLUSTER_BREAK_TABLE.find_or_default(ch)
+        if is_extended_pictographic(ch) {
+            GraphemeClusterBreak::ExtPict
+        } else {
+            data::GRAPHEME_CLUSTER_BREAK_TABLE.find_or_default(ch)
+        }
     }
 }
 
@@ -378,9 +394,9 @@ mod tests {
         assert_eq!(GCB::of('\u{085F}'), GCB::Other);
         assert_eq!(GCB::of('\u{0860}'), GCB::Other);
         assert_eq!(GCB::of('\u{0870}'), GCB::Other);
-        assert_eq!(GCB::of('\u{089F}'), GCB::Other);
+        assert_eq!(GCB::of('\u{089F}'), GCB::Extend);
         assert_eq!(GCB::of('\u{08A0}'), GCB::Other);
-        assert_eq!(GCB::of('\u{089F}'), GCB::Other);
+        assert_eq!(GCB::of('\u{089F}'), GCB::Extend);
         assert_eq!(GCB::of('\u{08FF}'), GCB::Extend);
 
         // Default ET

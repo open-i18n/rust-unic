@@ -35,7 +35,30 @@
     // (test case from <https://github.com/unicode-rs/unicode-segmentation/issues/19>)
     (
         "\u{1F938}\u{1F3FE}\u{1F3FE}",
-        &["\u{1F938}\u{1F3FE}", "\u{1F3FE}"],
+        &["\u{1F938}\u{1F3FE}\u{1F3FE}"],
+        None,
+    ),
+
+    // GB9c: Devanagari conjunct KA + VIRAMA + SSA, followed by a vowel sign (क्षि).
+    // Legacy grapheme clusters break before the consonant after the virama.
+    (
+        "\u{915}\u{94D}\u{937}\u{93F}",
+        &["\u{915}\u{94D}\u{937}\u{93F}"],
+        Some(&["\u{915}\u{94D}", "\u{937}", "\u{93F}"]),
+    ),
+
+    // GB9c: a ZWJ (InCB=Extend) between the linker and the consonant does not break the conjunct;
+    // a virama not followed by a consonant does not start a new cluster.
+    (
+        "\u{915}\u{94D}\u{200D}\u{937}\u{94D}\u{20}",
+        &["\u{915}\u{94D}\u{200D}\u{937}\u{94D}", "\u{20}"],
+        Some(&["\u{915}\u{94D}\u{200D}", "\u{937}\u{94D}", "\u{20}"]),
+    ),
+
+    // GB9c does not apply without a linker: KA + NUKTA (InCB=Extend) + SSA breaks.
+    (
+        "\u{915}\u{93C}\u{937}",
+        &["\u{915}\u{93C}", "\u{937}"],
         None,
     ),
 ]

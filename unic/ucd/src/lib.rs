@@ -38,6 +38,7 @@ pub use unic_ucd_name as name;
 pub use unic_ucd_name_aliases as name_aliases;
 pub use unic_ucd_normal as normal;
 pub use unic_ucd_segment as segment;
+pub use unic_ucd_unihan as unihan;
 
 pub use crate::version::UnicodeVersion;
 
@@ -82,6 +83,8 @@ pub use crate::normal::CanonicalCombiningClass;
 pub use crate::name_aliases::{name_aliases_of, NameAliasType};
 
 pub use crate::segment::{GraphemeClusterBreak, SentenceBreak, WordBreak};
+
+pub use crate::unihan::{definition_of, mandarin_of, simplified_variant_of, traditional_variant_of};
 
 mod pkg_info;
 pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};

@@ -4,6 +4,25 @@
 ## [Unreleased]
 [Unreleased]: https://github.com/open-i18n/rust-unic/compare/v0.9.0...HEAD
 
+### Add
+
+- `unic-ucd-unihan`: Unihan character properties (`kDefinition`, `kMandarin`,
+  simplified and traditional variants).
+- `unic-ucd-segment`: `IndicConjunctBreak` (`InCB`) character property.
+
+### Changed
+
+- Update all Unicode data to Unicode 18.0.0 (UCD, IDNA, Emoji).
+- `unic-segment`: Implement the UAX #29 rule changes up to Unicode 18.0,
+  including GB9c, GB11, WB3c, and WB3d.
+- `unic-ucd-segment`: `WordBreak::ExtPict` is removed (breaking change).
+- `unic-ucd-name`: Derive NR2 name ranges from `DerivedName.txt`, so newer
+  ideograph ranges have names.
+
+### Fixed
+
+- `unic-ucd-hangul`: Do not compose an LV syllable with U+11A7.
+
 
 ## [v0.9.0] - 2019-03-02
 [v0.9.0]: https://github.com/open-i18n/rust-unic/compare/v0.8.0...v0.9.0

@@ -30,8 +30,6 @@ fn test_grapheme_cluster_break_conformance() {
 fn test_word_break_conformance() {
     use crate::word_break::abbr_names::*;
     use crate::word_break::long_names::*;
-    // The test data file uses some unexpected names for some values
-    use crate::word_break::long_names::{Extend as Extend_FE, Format as Format_FE, ZWJ as ZWJ_FE};
 
     const TEST_DATA: CharDataTable<WordBreak> = include!("tables/word_break_test_data.rsv");
 

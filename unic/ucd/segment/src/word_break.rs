@@ -301,6 +301,17 @@ char_property! {
             human => "Emoji Base and Glue After ZWJ",
         }
 
+        /// A rule in the WB algorithm makes use of that new property value to prevent word breaks
+        /// within runs of whitespace characters.
+        ///
+        /// See <http://unicode.org/versions/Unicode11.0.0/>
+        WSegSpace {
+            abbr => WSS,
+            long => WSegSpace,
+            human => "Whitespace characters",
+        }
+
+        /// Extended_Pictographic
         /// All other characters
         Other {
             abbr => XX,
@@ -377,7 +388,7 @@ mod tests {
         assert_eq!(WB::of('\u{05FF}'), WB::Other);
 
         // Arabic
-        assert_eq!(WB::of('\u{0600}'), WB::Format);
+        assert_eq!(WB::of('\u{0600}'), WB::Numeric);
         assert_eq!(WB::of('\u{0627}'), WB::ALetter);
         assert_eq!(WB::of('\u{07BF}'), WB::Other);
 
@@ -385,10 +396,10 @@ mod tests {
         assert_eq!(WB::of('\u{07C0}'), WB::Numeric);
         assert_eq!(WB::of('\u{085F}'), WB::Other);
         assert_eq!(WB::of('\u{0860}'), WB::ALetter);
-        assert_eq!(WB::of('\u{0870}'), WB::Other);
-        assert_eq!(WB::of('\u{089F}'), WB::Other);
+        assert_eq!(WB::of('\u{0870}'), WB::ALetter);
+        assert_eq!(WB::of('\u{089F}'), WB::Extend);
         assert_eq!(WB::of('\u{08A0}'), WB::ALetter);
-        assert_eq!(WB::of('\u{089F}'), WB::Other);
+        assert_eq!(WB::of('\u{089F}'), WB::Extend);
         assert_eq!(WB::of('\u{08FF}'), WB::Extend);
 
         // Default ET

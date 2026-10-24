@@ -29,11 +29,18 @@ extern crate unic_char_property;
 #[macro_use]
 extern crate unic_char_range;
 
+extern crate unic_emoji_char;
+
+extern crate unic_ucd_version;
+
 mod pkg_info;
 pub use crate::pkg_info::{PKG_DESCRIPTION, PKG_NAME, PKG_VERSION};
 
 pub mod grapheme_cluster_break;
 pub use crate::grapheme_cluster_break::GraphemeClusterBreak;
+
+pub mod indic_conjunct_break;
+pub use crate::indic_conjunct_break::IndicConjunctBreak;
 
 pub mod sentence_break;
 pub use crate::sentence_break::SentenceBreak;

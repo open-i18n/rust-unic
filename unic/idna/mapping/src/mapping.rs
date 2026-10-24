@@ -58,11 +58,11 @@ mod tests {
     fn test_mapping() {
         use crate::Mapping::*;
 
-        assert_eq!(Mapping::of('\u{0}'), DisallowedStd3Valid);
+        assert_eq!(Mapping::of('\u{0}'), Valid);
         assert_eq!(Mapping::of('-'), Valid);
         assert_eq!(Mapping::of('A'), Mapped("a"));
         assert_eq!(Mapping::of('\u{80}'), Disallowed);
-        assert_eq!(Mapping::of('\u{a0}'), DisallowedStd3Mapped(" "));
+        assert_eq!(Mapping::of('\u{a0}'), Mapped(" "));
         assert_eq!(Mapping::of('\u{ad}'), Ignored);
         assert_eq!(Mapping::of('\u{200c}'), Deviation(""));
     }

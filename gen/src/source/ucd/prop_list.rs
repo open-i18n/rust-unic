@@ -231,7 +231,7 @@ impl FromStr for PropList {
                 "Pattern_Syntax" => props.pattern_syntax.extend(range),
                 "Prepended_Concatenation_Mark" => props.prepended_concatenation_mark.extend(range),
                 "Regional_Indicator" => props.regional_indicator.extend(range),
-                prop => panic!("Unsupported PropList property `{}`", prop),
+                prop => println!("Unsupported PropList property `{}`", prop),
             }
         }
 

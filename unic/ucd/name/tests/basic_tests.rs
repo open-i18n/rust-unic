@@ -111,3 +111,18 @@ fn test_name_cmp() {
     name_cmp_assert!('A', >, '理');
     name_cmp_assert!('A', <, 'B');
 }
+
+#[test]
+fn test_nr2_ranges_from_derived_name() {
+    // Ranges added after the hard-coded list was written (Unicode 13.0 – 18.0)
+    assert_eq!(Name::of('\u{18E15}').unwrap().to_string(), "JURCHEN CHARACTER-18E15");
+    assert_eq!(Name::of('\u{18B00}').unwrap().to_string(), "KHITAN SMALL SCRIPT CHARACTER-18B00");
+    assert_eq!(Name::of('\u{13460}').unwrap().to_string(), "EGYPTIAN HIEROGLYPH-13460");
+    assert_eq!(Name::of('\u{3D000}').unwrap().to_string(), "SMALL SEAL CHARACTER-3D000");
+    assert_eq!(Name::of('\u{31350}').unwrap().to_string(), "CJK UNIFIED IDEOGRAPH-31350");
+    assert_eq!(Name::of('\u{2EBF0}').unwrap().to_string(), "CJK UNIFIED IDEOGRAPH-2EBF0");
+    assert_eq!(Name::of('\u{9FFF}').unwrap().to_string(), "CJK UNIFIED IDEOGRAPH-9FFF");
+    assert_eq!(Name::of('\u{18D08}').unwrap().to_string(), "TANGUT IDEOGRAPH-18D08");
+    // Just outside a range
+    assert!(Name::of('\u{19192}').is_none());
+}

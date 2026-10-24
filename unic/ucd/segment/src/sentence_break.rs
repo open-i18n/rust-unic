@@ -284,7 +284,7 @@ mod tests {
         assert_eq!(SB::of('\u{05FF}'), SB::Other);
 
         // Arabic
-        assert_eq!(SB::of('\u{0600}'), SB::Format);
+        assert_eq!(SB::of('\u{0600}'), SB::Numeric);
         assert_eq!(SB::of('\u{0627}'), SB::OLetter);
         assert_eq!(SB::of('\u{07BF}'), SB::Other);
 
@@ -292,10 +292,10 @@ mod tests {
         assert_eq!(SB::of('\u{07C0}'), SB::Numeric);
         assert_eq!(SB::of('\u{085F}'), SB::Other);
         assert_eq!(SB::of('\u{0860}'), SB::OLetter);
-        assert_eq!(SB::of('\u{0870}'), SB::Other);
-        assert_eq!(SB::of('\u{089F}'), SB::Other);
+        assert_eq!(SB::of('\u{0870}'), SB::OLetter);
+        assert_eq!(SB::of('\u{089F}'), SB::Extend);
         assert_eq!(SB::of('\u{08A0}'), SB::OLetter);
-        assert_eq!(SB::of('\u{089F}'), SB::Other);
+        assert_eq!(SB::of('\u{089F}'), SB::Extend);
         assert_eq!(SB::of('\u{08FF}'), SB::Extend);
 
         // Default ET
@@ -337,7 +337,6 @@ mod tests {
 
     #[test]
     fn test_unassigned_planes() {
-        assert_eq!(SB::of('\u{30000}'), SB::Other);
         assert_eq!(SB::of('\u{40000}'), SB::Other);
         assert_eq!(SB::of('\u{50000}'), SB::Other);
         assert_eq!(SB::of('\u{60000}'), SB::Other);

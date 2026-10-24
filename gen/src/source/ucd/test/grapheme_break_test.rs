@@ -57,7 +57,7 @@ impl FromStr for GraphemeBreakTests {
                     (\w.*\w)              # source captured
                     \s+ ÷ \s*             # source end
                     \#                    # delimiter
-                    \s* ÷ \s+ \[0\.2\]    # comment begin
+                    \s* ÷ \s+ \[\d+\.\d+\] # comment begin (sot rule)
                     (.*)                  # comment captured
                 \s*$"
             )

@@ -17,7 +17,7 @@ use crate::source::utils::read;
 
 lazy_static! {
     pub static ref EMOJI_DATA: EmojiData = {
-        read("external/unicode/emoji/data/emoji-data.txt")
+        read("external/unicode/ucd/data/emoji/emoji-data.txt")
             .parse()
             .unwrap()
     };
@@ -34,7 +34,7 @@ pub struct EmojiData {
     /// Characters that have emoji presentation by default.
     pub emoji_presentation: BTreeSet<char>,
 
-    /// Characters that are emoji modifiers
+    /// Characters that are emoji modifiers.
     pub emoji_modifier: BTreeSet<char>,
 
     /// Characters that can serve as a base for emoji modifiers.
@@ -43,6 +43,10 @@ pub struct EmojiData {
     /// Characters that normally do not appear on emoji keyboards as separate choices, such as
     /// Keycap base characters, Regional_Indicators, ….
     pub emoji_component: BTreeSet<char>,
+
+    /// Characters that are pictographic, or otherwise similar in kind to characters with the
+    /// Emoji property.
+    pub extended_pictographic: BTreeSet<char>,
 }
 
 impl FromStr for EmojiData {
@@ -66,6 +70,7 @@ impl FromStr for EmojiData {
                 "Emoji_Modifier" => props.emoji_modifier.extend(range),
                 "Emoji_Modifier_Base" => props.emoji_modifier_base.extend(range),
                 "Emoji_Component" => props.emoji_component.extend(range),
+                "Extended_Pictographic" => props.extended_pictographic.extend(range),
                 prop => panic!("Unsupported EmojiData property `{}`", prop),
             }
         }

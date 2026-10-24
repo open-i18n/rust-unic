@@ -18,6 +18,7 @@
 use std::cmp;
 use std::iter::Filter;
 
+use unic_emoji_char::is_extended_pictographic;
 use unic_ucd_segment::WordBreak as WB;
 
 /// An iterator over the substrings of a string which, after splitting the string on [word
@@ -138,6 +139,7 @@ enum WordBoundsState {
     FormatExtend(FormatExtendType),
     Zwj,
     Emoji,
+    WSegSpace,
 }
 
 // subtypes for FormatExtend state in WordBoundsState
@@ -188,6 +190,8 @@ impl<'a> Iterator for WordBounds<'a> {
         // Whether or not the previous category was ZWJ
         // ZWJs get collapsed, so this handles precedence of WB3c over WB4
         let mut prev_zwj;
+        // If extend/format/zwj were skipped. Handles precedence of WB3d over WB4
+        let mut skipped_format_extend = false;
         for (curr, ch) in self.string.char_indices() {
             idx = curr;
             prev_zwj = cat == WB::ZWJ;
@@ -208,7 +212,10 @@ impl<'a> Iterator for WordBounds<'a> {
             // then the "correct" interpretation of WB4 becomes apparent.)
             if state != Start {
                 match cat {
-                    WB::Extend | WB::Format | WB::ZWJ => continue,
+                    WB::Extend | WB::Format | WB::ZWJ => {
+                        skipped_format_extend = true;
+                        continue
+                    },
                     _ => {}
                 }
             }
@@ -229,15 +236,21 @@ impl<'a> Iterator for WordBounds<'a> {
             // state enum; the state enum represents the last non-zwj state encountered.
             // When prev_zwj is true, for the purposes of WB3c, we are in the Zwj state,
             // however we are in the previous state for the purposes of all other rules.
-            if prev_zwj {
-                match cat {
-                    WB::GlueAfterZwj => continue,
-                    WB::EBaseGAZ => {
-                        state = Emoji;
-                        continue;
-                    }
-                    _ => (),
-                }
+            if prev_zwj && is_extended_pictographic(ch) {
+                // rule WB3c: ZWJ × \p{Extended_Pictographic}
+                //
+                // `Extended_Pictographic` is a separate property, not a Word_Break value: a
+                // pictograph can also be a letter (e.g. U+24C2 CIRCLED LATIN CAPITAL LETTER M),
+                // in which case the boundaries after it follow the rules for its Word_Break value.
+                state = match cat {
+                    WB::ALetter => Letter,
+                    WB::HebrewLetter => HLetter,
+                    WB::Numeric => Numeric,
+                    WB::Katakana => Katakana,
+                    WB::ExtendNumLet => ExtendNumLet,
+                    _ => Emoji,
+                };
+                continue;
             }
             // Don't use `continue` in this match without updating `cat`
             state = match state {
@@ -257,7 +270,7 @@ impl<'a> Iterator for WordBounds<'a> {
                     WB::RegionalIndicator => Regional(RegionalState::Half), // rule WB13c
                     WB::LF | WB::Newline => break,    // rule WB3a
                     WB::ZWJ => Zwj,                   // rule WB3c
-                    WB::EBase | WB::EBaseGAZ => Emoji, // rule WB14
+                    WB::WSegSpace => WSegSpace,       // rule WB3d
                     _ => {
                         if let Some(ncat) = self.get_next_cat(idx) {
                             // rule WB4
@@ -351,13 +364,9 @@ impl<'a> Iterator for WordBounds<'a> {
                 Regional(_) => {
                     unreachable!("RegionalState::Unknown should not occur on forward iteration")
                 }
-                Emoji => match cat {
-                    // rule WB14
-                    WB::EModifier => state,
-                    _ => {
-                        take_curr = false;
-                        break;
-                    }
+                Emoji => {
+                    take_curr = false;
+                    break;
                 },
                 FormatExtend(t) => match t {
                     // handle FormatExtends depending on what type
@@ -371,6 +380,13 @@ impl<'a> Iterator for WordBounds<'a> {
                         break;
                     }
                     _ => break, // rewind (in if statement below)
+                },
+                WSegSpace => match cat {
+                    WB::WSegSpace if !skipped_format_extend => WSegSpace,
+                    _ => {
+                        take_curr = false;
+                        break;
+                    },
                 },
             }
         }
@@ -419,6 +435,11 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
         let mut savestate = Start;
         let mut cat = WB::Other;
 
+        let mut skipped_format_extend = false;
+
+        // Whether the character following the current one is Extended_Pictographic, for WB3c.
+        let mut next_ext_pict = false;
+
         for (curr, ch) in self.string.char_indices().rev() {
             previdx = idx;
             idx = curr;
@@ -430,15 +451,25 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
             };
             take_cat = true;
 
+            // rule WB3c: ZWJ × \p{Extended_Pictographic}
+            // This has priority over folding the ZWJ into the preceding character (rule WB4).
+            // The character before the ZWJ is then accepted unconditionally, as WB4 attaches
+            // the ZWJ to it.
+            if cat == WB::ZWJ && next_ext_pict {
+                next_ext_pict = false;
+                state = FormatExtend(AcceptAny);
+                continue;
+            }
+            next_ext_pict = is_extended_pictographic(ch);
+
             // backward iterator over word boundaries. Mostly the same as the forward
             // iterator, with two weirdnesses:
             // (1) If we encounter a single quote in the Start state, we have to check for a
             //     Hebrew Letter immediately before it.
             // (2) Format and Extend char handling takes some gymnastics.
 
-            if cat == WB::Extend || cat == WB::Format || (cat == WB::ZWJ && state != Zwj) {
-                // WB3c has more priority so we should not
-                // fold in that case
+            if cat == WB::Extend || cat == WB::Format || cat == WB::ZWJ {
+                // (WB3c has more priority, and is handled above)
                 if match state {
                     FormatExtend(_) | Start => false,
                     _ => true,
@@ -456,6 +487,7 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
                 state = savestate;
                 previdx = saveidx;
                 take_cat = false;
+                skipped_format_extend = true;
             }
 
             // Don't use `continue` in this match without updating `catb`
@@ -467,14 +499,13 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
                     WB::Katakana => Katakana,         // rule WB13, WB13b
                     WB::ExtendNumLet => ExtendNumLet, // rule WB13a
                     WB::RegionalIndicator => Regional(RegionalState::Unknown), // rule WB13c
-                    WB::GlueAfterZwj | WB::EBaseGAZ => Zwj, // rule WB3c
+                    WB::WSegSpace => WSegSpace,             // rule WB3d
                     // rule WB4:
                     WB::Extend | WB::Format | WB::ZWJ => FormatExtend(AcceptAny),
                     WB::SingleQuote => {
                         saveidx = idx;
                         FormatExtend(AcceptQLetter) // rule WB7a
                     }
-                    WB::EModifier => Emoji, // rule WB14
                     WB::CR | WB::LF | WB::Newline => {
                         if state == Start {
                             if cat == WB::LF {
@@ -488,16 +519,16 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
                         }
                         break; // rule WB3a
                     }
+                    // An Extended_Pictographic that is not a letter: the preceding character may
+                    // still be a ZWJ (rule WB3c), which is checked at the top of the loop.
+                    _ if is_extended_pictographic(ch) => Zwj,
                     _ => break, // rule WB999
                 },
-                Zwj => match cat {
-                    // rule WB3c
-                    WB::ZWJ => FormatExtend(AcceptAny),
-                    _ => {
-                        take_curr = false;
-                        break;
-                    }
-                },
+                Zwj => {
+                    // rule WB3c did not apply (a ZWJ would have been handled above)
+                    take_curr = false;
+                    break;
+                }
                 Letter | HLetter => match cat {
                     WB::ALetter => Letter,            // rule WB5
                     WB::HebrewLetter => HLetter,      // rule WB5
@@ -578,14 +609,9 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
                         break;
                     }
                 },
-                Emoji => match cat {
-                    // rule WB14
-                    WB::EBase | WB::EBaseGAZ => Zwj,
-                    _ => {
-                        take_curr = false;
-                        break;
-                    }
-                },
+                Emoji => {
+                    unreachable!("WordBoundsState::Emoji should not occur on backward iteration")
+                }
                 FormatExtend(t) => match t {
                     RequireNumeric if cat == WB::Numeric => Numeric, // rule WB12
                     RequireLetter if cat == WB::ALetter => Letter,   // rule WB6
@@ -593,6 +619,13 @@ impl<'a> DoubleEndedIterator for WordBounds<'a> {
                     AcceptQLetter if cat == WB::HebrewLetter => HLetter, // rule WB7a
                     RequireHLetter if cat == WB::HebrewLetter => HLetter, // rule WB7b
                     _ => break,                                      // backtrack will happens
+                },
+                WSegSpace => match cat {
+                    WB::WSegSpace if !skipped_format_extend => WSegSpace,
+                    _ => {
+                        take_curr = false;
+                        break;
+                    },
                 },
             }
         }
@@ -688,7 +721,7 @@ mod tests {
     fn test_word_bounds() {
         assert_eq!(
             WordBounds::new("The quick (\"brown\")  fox").collect::<Vec<&str>>(),
-            &["The", " ", "quick", " ", "(", "\"", "brown", "\"", ")", " ", " ", "fox"]
+            &["The", " ", "quick", " ", "(", "\"", "brown", "\"", ")", "  ", "fox"]
         );
     }
 

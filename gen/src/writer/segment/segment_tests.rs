@@ -34,7 +34,8 @@ fn chars_escape(cs: &[char]) -> String {
 }
 
 fn legacy_should_break(rule: &String) -> bool {
-    const EXTENDED_ONLY_RULES: &[&str] = &["9.1", "9.2"];
+    // GB9a, GB9b and GB9c only apply to extended grapheme clusters.
+    const EXTENDED_ONLY_RULES: &[&str] = &["9.1", "9.2", "9.3"];
     EXTENDED_ONLY_RULES.contains(&rule.as_str())
 }
 

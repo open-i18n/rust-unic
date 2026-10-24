@@ -10,6 +10,7 @@
 
 use std::path::Path;
 
+use crate::source::ucd::derived_core_properties::DERIVED_CORE_PROPERTIES;
 use crate::source::ucd::grapheme_break_property::GRAPHEME_CLUSTER_BREAK_DATA;
 use crate::source::ucd::readme::UNICODE_VERSION;
 use crate::source::ucd::sentence_break_property::SENTENCE_BREAK_DATA;
@@ -24,6 +25,7 @@ pub fn generate(dir: &Path) {
     emit_grapheme_cluster_break(dir);
     emit_word_break(dir);
     emit_sentence_break(dir);
+    emit_indic_conjunct_break(dir);
 }
 
 fn emit_grapheme_cluster_break(dir: &Path) {
@@ -33,6 +35,16 @@ fn emit_grapheme_cluster_break(dir: &Path) {
         &GRAPHEME_CLUSTER_BREAK_DATA
             .map
             .to_range_char_table(|v, f| write!(f, "GCB::{}", v)),
+    );
+}
+
+fn emit_indic_conjunct_break(dir: &Path) {
+    write(
+        dir,
+        "indic_conjunct_break.rsv",
+        &DERIVED_CORE_PROPERTIES
+            .indic_conjunct_break
+            .to_range_char_table(|v, f| write!(f, "InCB::{}", v)),
     );
 }
 

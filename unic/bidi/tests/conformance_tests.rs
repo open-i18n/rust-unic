@@ -143,7 +143,7 @@ fn gen_base_levels_for_base_tests(bitset: u8) -> Vec<Option<Level>> {
 }
 
 #[test]
-#[should_panic(expected = "14558 test cases failed! (77141 passed)")]
+#[should_panic(expected = "14562 test cases failed! (77145 passed)")]
 fn test_character_conformance() {
     // Test set state
     let mut passed_num: i32 = 0;

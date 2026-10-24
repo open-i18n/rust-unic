@@ -323,7 +323,6 @@ mod tests {
             }))
         );
 
-        assert_eq!(Age::of('\u{30000}'), None);
         assert_eq!(Age::of('\u{40000}'), None);
         assert_eq!(Age::of('\u{50000}'), None);
         assert_eq!(Age::of('\u{60000}'), None);

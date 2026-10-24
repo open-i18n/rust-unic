@@ -59,7 +59,7 @@ mod tests {
         assert_eq!(is_emoji_component('\u{061c}'), false);
         assert_eq!(is_emoji_component('\u{061d}'), false);
 
-        assert_eq!(is_emoji_component('\u{200d}'), false);
+        assert_eq!(is_emoji_component('\u{200d}'), true);
         assert_eq!(is_emoji_component('\u{200e}'), false);
         assert_eq!(is_emoji_component('\u{200f}'), false);
         assert_eq!(is_emoji_component('\u{2010}'), false);

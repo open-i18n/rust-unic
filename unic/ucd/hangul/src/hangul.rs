@@ -72,7 +72,8 @@ pub fn compose_syllable(jamo1: char, jamo2: char) -> Option<char> {
     }
     // Compose an LVPart and a TPart
     if S_BASE <= l && l <= (S_BASE+S_COUNT-T_COUNT) // l should be a syllable block
-        && T_BASE <= v && v < (T_BASE+T_COUNT) // v should be a T jongseong jamo
+        && T_BASE < v && v < (T_BASE+T_COUNT) // v should be a T jongseong jamo (T_BASE itself is the
+                                               // "no trailing consonant" index, and U+11A7 is a V jamo)
         && (l - S_BASE) % T_COUNT == 0
     {
         // l should be an LV syllable block (not LVT)

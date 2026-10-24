@@ -13,17 +13,19 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::Write;
 use std::path::Path;
 
+use crate::source::ucd::derived_name::DERIVED_NAME_DATA;
 use crate::source::ucd::jamo::JAMO_DATA;
 use crate::source::ucd::readme::UNICODE_VERSION;
 use crate::source::ucd::unicode_data::UNICODE_DATA;
 
 use crate::writer::common::emit_unicode_version;
-use crate::writer::utils::tables::ToDirectCharTable;
+use crate::writer::utils::tables::{ToDirectCharTable, ToRangeCharTable};
 use crate::writer::utils::write;
 
 pub fn generate(dir: &Path) {
     emit_unicode_version(dir, &UNICODE_VERSION);
     emit_name_tables(dir);
+    emit_name_range_tables(dir);
     emit_jamo_tables(dir);
 }
 
@@ -72,6 +74,17 @@ fn emit_name_tables(dir: &Path) {
                     .join(", ")
             )
         }),
+    );
+}
+
+/// Ranges of characters named by rule NR2, mapped to their name prefix.
+fn emit_name_range_tables(dir: &Path) {
+    write(
+        dir,
+        "name_ranges.rsv",
+        &DERIVED_NAME_DATA
+            .prefix_map
+            .to_range_char_table(|prefix, f| write!(f, "\"{}\"", prefix)),
     );
 }
 
