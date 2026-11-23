@@ -2,8 +2,8 @@
 
 [![UNIC-logo](docs/images/UNIC-logo.png)](https://github.com/open-i18n/rust-unic/)
 
-[![Travis](https://img.shields.io/travis/open-i18n/rust-unic/master.svg?label=Linux%20build)](https://travis-ci.org/open-i18n/rust-unic/)
-[![Rust-1.45+](https://img.shields.io/badge/rustc-1.45+-red.svg#MIN_RUST_VERSION)](https://www.rust-lang.org/)
+[![CI](https://github.com/open-i18n/rust-unic/actions/workflows/ci.yml/badge.svg)](https://github.com/open-i18n/rust-unic/actions/workflows/ci.yml)
+[![Rust 1.88+](https://img.shields.io/badge/rustc-1.88+-red.svg#MIN_RUST_VERSION)](https://www.rust-lang.org/)
 [![Unicode-18.0.0](https://img.shields.io/badge/unicode-18.0.0-red.svg)](https://www.unicode.org/versions/Unicode18.0.0/)
 [![Release](https://img.shields.io/github/release/open-i18n/rust-unic.svg)](https://github.com/open-i18n/rust-unic/)
 [![Crates.io](https://img.shields.io/crates/v/unic.svg)](https://crates.io/crates/unic/)
@@ -20,6 +20,11 @@ in *safe* mode, but also benefiting from performance gains of *unsafe* mode when
 possible.
 
 See [UNIC Changelog](CHANGELOG.md) for latest release details.
+
+CI checks workspace builds and tests on stable Rust and on the minimum supported
+Rust version (MSRV), 1.88.0. With the current dependency resolution, a build
+without tests works on Rust 1.66.0, but the workspace test dependencies require
+Rust 1.88.0.
 
 
 ## Project Goal

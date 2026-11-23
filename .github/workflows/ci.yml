@@ -1,0 +1,44 @@
+name: CI
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  stable:
+    name: Stable
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo build --workspace
+      - run: cargo test --workspace
+      - run: cargo test --manifest-path unic/ucd/normal/Cargo.toml
+
+  regenerate:
+    name: Regenerate Unicode tables
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo run --package=unic-gen
+      - run: git diff --exit-code
+
+  msrv:
+    name: MSRV
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: '1.88.0'
+      - run: cargo build --workspace
+      - run: cargo test --workspace
+      - run: cargo test --manifest-path unic/ucd/normal/Cargo.toml
