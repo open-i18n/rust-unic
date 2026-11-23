@@ -27,7 +27,14 @@ jobs:
           submodules: recursive
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo run --package=unic-gen
-      - run: git diff --exit-code
+      - name: Check for generated changes
+        run: |
+          status=$(git status --porcelain=v1 --untracked-files=all)
+          if [ -n "$status" ]; then
+            printf '%s\n' "$status"
+            git diff HEAD --
+            exit 1
+          fi
 
   msrv:
     name: MSRV
